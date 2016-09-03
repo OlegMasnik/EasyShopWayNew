@@ -1,10 +1,7 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 
 import javax.servlet.ServletException;
 
@@ -22,7 +19,6 @@ public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private JSONObject object;
-	private User user;
 
 	public RegistrationServlet() {
 		super();
