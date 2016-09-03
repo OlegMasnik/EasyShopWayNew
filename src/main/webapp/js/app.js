@@ -54,9 +54,9 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     };
 });
 
-app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('LoginCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
     $scope.sendLoginData = function () {
-        console.log('hello ' + $scope.email)
+        console.log('hello' + $scope.email)
         var data = $.param({
             email: $scope.email,
             password: $scope.password
@@ -74,7 +74,9 @@ app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
                 data, config).success(
                 function (data, status, headers,
                     config) {
-
+                    if (data.emailErrMsg == undefined) {
+                        $window.location.href = 'cabinet';
+                    }
                     console.log(data.emailErrMsg);
                 }).error(
                 function (data, status, header,
