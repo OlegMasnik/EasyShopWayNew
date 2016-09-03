@@ -1,10 +1,18 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.Date;
 
+=======
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+>>>>>>> master
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +24,6 @@ import com.alibaba.fastjson.JSON;
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
 
-@WebServlet("/reg")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
