@@ -45,12 +45,12 @@ public class RegistrationServlet extends HttpServlet {
 			String password = MD5Util.md5Custom(request.getParameter("password"));
 			User user = new User(firstName, lastName, email, password, true, "user", "en");
 			user.setDateOfBirth(birthday);
+			object = new JSONObject();
 			if (UserService.insert(user) == null){
 				object.put("emailErrMsg", "This email has already exists.");
-				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write(object.toString());
-			}else 
-				request.getRequestDispatcher("/SuccessRegisteration").forward(request, response);
+			}
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(object.toString());
 		}catch (Exception e){
 			e.printStackTrace();
 		}
