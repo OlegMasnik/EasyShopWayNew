@@ -63,5 +63,15 @@
 		<servlet-name>CabinetServlet</servlet-name>
 		<url-pattern>/cabinet</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>UserInfoServlet</servlet-name>
+		<display-name>UserInfoServlet</display-name>
+		<description></description>
+		<servlet-class>com.epam.easyshopway.controller.UserInfoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserInfoServlet</servlet-name>
+		<url-pattern>/info</url-pattern>
+	</servlet-mapping>
 	
 </web-app>
