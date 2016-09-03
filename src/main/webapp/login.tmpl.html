@@ -12,11 +12,11 @@
                 <form name="logForm" action="/login">
                     <md-input-container>
                         <label>Email</label>
-                        <input id="email" type="email" ng-model="email" name="email" required> </md-input-container>
+                        <input id="emailL" type="email" ng-model="email" name="email" required  minlength="10" maxlength="100" > </md-input-container>
                     <br>
                     <md-input-container>
                         <label>Password</label>
-                        <input id="password" type="password" ng-model="password" name="password" required> </md-input-container>
+                        <input id="passwordL" type="password" ng-model="password" name="password" required  minlength="6" maxlength="25" > </md-input-container>
                     <div>
                         <md-button type="submit" ng-click='sendLoginData()'>Submit</md-button>
                     </div>

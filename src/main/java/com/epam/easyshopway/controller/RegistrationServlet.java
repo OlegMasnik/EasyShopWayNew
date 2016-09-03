@@ -1,8 +1,9 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
-
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServlet;
@@ -14,10 +15,11 @@ import org.json.simple.JSONObject;
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
 import com.epam.easyshopway.utils.MD5Util;
+import com.epam.easyshopway.utils.MailUtil;
 
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private JSONObject object;
 
 	public RegistrationServlet() {
@@ -41,15 +43,25 @@ public class RegistrationServlet extends HttpServlet {
 			String password = MD5Util.md5Custom(request.getParameter("password"));
 			User user = new User(firstName, lastName, email, password, true, "user", "en");
 			user.setDateOfBirth(birthday);
+
+			System.out.println(firstName.equals(""));
 			object = new JSONObject();
-			if (UserService.insert(user) == null){
+			if (firstName == "" || lastName == "" || email == "" || birthday == "" || password == "") {
+				object.put("emailErrMsg", "Please enter all value.");
+				System.out.println("SDFGHJKL:SDFGHJKL:DFGHJKL");
+			}
+			System.out.println("WHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHAT");
+			if (UserService.hasEmail(email)) {
 				object.put("emailErrMsg", "This email has already exists.");
+			} else {
+				MailUtil.sendEmailRegistrationLink(email, MD5Util.md5Custom(request.getParameter("password")));
+				request.getSession().setAttribute("pre_user", user);
 			}
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
- 
+
 	}
 }

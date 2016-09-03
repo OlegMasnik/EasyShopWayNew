@@ -5,10 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
-
-
-
 import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.User;
 
@@ -20,14 +16,15 @@ public class UserDAO extends AbstractDAO<User> {
 	private final String UPDATE = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password = ?, date_of_birth = ?, active = ?, role = ?, language = ? WHERE id = ?;";
 	private final String DELETE = "UPDATE user SET active = 0 WHERE id = ?;";
 	private final String GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user WHERE email = ? AND password = ?";
+	private final String CHECK_EMAIL = "SELECT * FROM user WHERE email like ?";
 
 	public UserDAO() {
 		super();
 	}
-	
+
 	@Deprecated
-	public int insert(User user) throws SQLException{
-		//stub. 
+	public int insert(User user) throws SQLException {
+		// stub.
 		return 0;
 	}
 
@@ -50,14 +47,14 @@ public class UserDAO extends AbstractDAO<User> {
 	public List<User> getAll() throws SQLException, IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_ALL);
 		ResultSet resultSet = statement.executeQuery(SELECT_ALL);
-		List<User> users =new Transformer<User>(User.class).fromRStoCollection(resultSet); 
+		List<User> users = new Transformer<User>(User.class).fromRStoCollection(resultSet);
 		statement.close();
 		return users;
 
 	}
-	
+
 	@Override
-	public User getById (Integer id) throws SQLException, IllegalAccessException, InstantiationException {
+	public User getById(Integer id) throws SQLException, IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
 		statement.setInt(1, id);
 		ResultSet resultSet = statement.executeQuery();
@@ -68,9 +65,8 @@ public class UserDAO extends AbstractDAO<User> {
 		else
 			return null;
 	}
-	
-	
-	public User getByEmail (String email) throws SQLException, IllegalAccessException, InstantiationException {
+
+	public User getByEmail(String email) throws SQLException, IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_BY_EMAIL);
 		statement.setString(1, email);
 		ResultSet resultSet = statement.executeQuery();
@@ -83,7 +79,7 @@ public class UserDAO extends AbstractDAO<User> {
 	}
 
 	@Override
-	public int update (Integer userId, User user) throws SQLException {
+	public int update(Integer userId, User user) throws SQLException {
 		PreparedStatement statement = connection.prepareStatement(UPDATE);
 		statement.setString(1, user.getFirstName());
 		statement.setString(2, user.getLastName());
@@ -108,14 +104,24 @@ public class UserDAO extends AbstractDAO<User> {
 		return result;
 	}
 
-	public boolean validateUser(String email, String password) throws SQLException, InstantiationException, IllegalAccessException {
+	public boolean validateUser(String email, String password)
+			throws SQLException, InstantiationException, IllegalAccessException {
 		PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_LOGIN_AND_PASSWORD);
-        preparedStatement.setString(1, email);
-        preparedStatement.setString(2, password);
-        ResultSet rs = preparedStatement.executeQuery();
-        List<User> users = new Transformer<User>(User.class).fromRStoCollection(rs);
+		preparedStatement.setString(1, email);
+		preparedStatement.setString(2, password);
+		ResultSet rs = preparedStatement.executeQuery();
+		List<User> users = new Transformer<User>(User.class).fromRStoCollection(rs);
 		preparedStatement.close();
 
-		return users.size() !=0;
+		return users.size() != 0;
+	}
+
+	public boolean hasEmail(String email) throws SQLException, InstantiationException, IllegalAccessException {
+		PreparedStatement preparedStatement = connection.prepareStatement(CHECK_EMAIL);
+		preparedStatement.setString(1, email);
+		ResultSet rs = preparedStatement.executeQuery();
+		List<User> users = new Transformer<User>(User.class).fromRStoCollection(rs);
+		preparedStatement.close();
+		return users.size() != 0;
 	}
 }

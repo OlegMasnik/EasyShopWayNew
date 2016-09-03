@@ -1,18 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js'></script>
 <md-toolbar class="md-hue-2">
 <div class="md-toolbar-tools" ng-controller="AppCtrl">
-	<md-button aria-label="Go Back"> Go Back </md-button>
-	<h2>
-		<span>EasyShopWay</span>
-	</h2>
+
+	<md-button href="/EasyShopWayNew/home">
+	EasyShopWay
+	</md-button>
+
 	<span flex=""></span>
-	<md-button class="md-raised"
-		ng-click="showLogInForm($scope, $mdDialog)"> LogIn </md-button>
-	<md-button class="md-raised"
-		ng-click="showRegistrationInFrom($scope, $mdDialog)">
-	SignUp </md-button>
+
+	<c:choose>
+		<c:when test="${user == null}">
+			<md-button class="md-raised"
+				ng-click="showLogInForm($scope, $mdDialog)"> LogIn </md-button>
+			<md-button class="md-raised"
+				ng-click="showRegistrationInFrom($scope, $mdDialog)">
+			SignUp </md-button>
+		</c:when>
+		<c:otherwise>
+			<md-button class="md-raised" href="/EasyShopWayNew/logout">
+			LogOut </md-button>
+		</c:otherwise>
+	</c:choose>
 </div>
 </md-toolbar>

@@ -44,8 +44,12 @@ public class LoginServlet extends HttpServlet {
 		} else if (user.getPassword().equals(MD5Util.md5Custom(password))) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", user);
+<<<<<<< HEAD
 			request.setAttribute("user", user);
 
+=======
+			System.out.println(user.getFirstName());
+>>>>>>> master
 		} else {
 			object.put("passwordErrMsg", "Uncorrect password.");
 		}
