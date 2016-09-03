@@ -18,8 +18,10 @@ import com.epam.easyshopway.service.UserService;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	JSONObject object;
-	User user;
+	private JSONObject object;
+	private User user;
+	private String email;
+	private String password;
 
 	public LoginServlet() {
 		super();
@@ -33,9 +35,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		System.out.println(email + " " + password);
+		email = request.getParameter("email");
+		password = request.getParameter("password");
 
 		user = UserService.getByEmail(email);
 		object = new JSONObject();
