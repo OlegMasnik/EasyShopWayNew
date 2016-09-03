@@ -7,18 +7,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
-import com.alibaba.fastjson.JSON;
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
+import com.epam.easyshopway.utils.MD5Util;
 
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,33 +42,19 @@ public class RegistrationServlet extends HttpServlet {
 			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
 			String birthday = request.getParameter("birthday");
-			DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
-			Date date = (Date) sourceFormat.parse(birthday);
-			String password = request.getParameter("password");
-			
+			DateFormat sourceFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Date dateOfBirth = (Date) sourceFormat.parse(birthday);
+			String password = MD5Util.md5Custom(request.getParameter("password"));
+			User user = new User(firstName, lastName, email, password, dateOfBirth, true, "user", "en");
+			if (UserService.insert(user) == null){
+				object.put("emailErrMsg", "This email has already exists.");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(object.toString());
+			}else 
+				request.getRequestDispatcher("/SuccessRegisteration").forward(request, response);
 		}catch (ParseException e){
 			e.printStackTrace();
 		}
  
-//		user = UserService.getByEmail(email);
-//		object = new JSONObject();
-//
-//		if (user == null) {
-//			object.put("emailErrMsg", "Uncorrect email.");
-//		} else if (user.getPassword().equals(password)) {
-//			HttpSession session = request.getSession(true);
-//			session.setAttribute("user", user);
-//
-//			System.out.println(user.getFirstName());
-//
-//			response.sendRedirect("HomePage.do");
-//		} else {
-//			object.put("passwordErrMsg", "Uncorrect password.");
-//		}
-//
-//		response.setCharacterEncoding("UTF-8");
-//		response.getWriter().write(object.toString());
-//
-//		System.out.println(object);
 	}
 }

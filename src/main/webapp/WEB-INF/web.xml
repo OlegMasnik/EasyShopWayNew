@@ -32,6 +32,12 @@
 		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.RegistrationServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>SuccessRegistration</servlet-name>
+		<display-name>SuccessRegistration</display-name>
+		<description></description>
+		<servlet-class>com.epam.easyshopway.controller.SuccessRegistration</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
 		<url-pattern>/home</url-pattern>
@@ -43,6 +49,10 @@
 	<servlet-mapping>
 		<servlet-name>RegistrationServlet</servlet-name>
 		<url-pattern>/reg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SuccessRegistration</servlet-name>
+		<url-pattern>/SuccessRegistration</url-pattern>
 	</servlet-mapping>
 	
 </web-app>
