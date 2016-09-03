@@ -110,6 +110,7 @@ app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
                 function (data, status, headers,
                     config) {
                     console.log("QWEER" + data);
+                    alert('please check your email');
                 }).error(
                 function (data, status, header,
                     config) {

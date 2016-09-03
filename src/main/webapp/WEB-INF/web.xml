@@ -59,9 +59,29 @@
 		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.CabinetServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<display-name>LogoutServlet</display-name>
+		<description></description>
+		<servlet-class>com.epam.easyshopway.controller.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>VerifyRegisteredEmailHash</servlet-name>
+		<display-name>VerifyRegisteredEmailHash</display-name>
+		<description></description>
+		<servlet-class>com.epam.easyshopway.controller.VerifyRegisteredEmailHash</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>CabinetServlet</servlet-name>
 		<url-pattern>/cabinet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>VerifyRegisteredEmailHash</servlet-name>
+		<url-pattern>/VerifyRegisteredEmailHash</url-pattern>
 	</servlet-mapping>
 	
 </web-app>
