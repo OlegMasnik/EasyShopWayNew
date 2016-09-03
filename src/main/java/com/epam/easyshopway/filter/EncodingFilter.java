@@ -7,10 +7,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@WebFilter("/*")
 public class EncodingFilter implements Filter {
 	// FilterConfig object
 	private FilterConfig filterConfig = null;
@@ -27,26 +26,16 @@ public class EncodingFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// Setting the character set for the request
-		System.out.println("Inside doFilter");
+		System.out.println("Inside doFilter Encodig");
+		HttpServletResponse res = (HttpServletResponse) response;
+		HttpServletRequest req = (HttpServletRequest) request;
 
 		request.setCharacterEncoding("UTF-8");
 
-		// Setting the character set for the response
-		response.setContentType("text/html; charset=UTF-8");
-
-		HttpServletRequest req = (HttpServletRequest) request;
-
-		String uri = req.getRequestURI();
-		StringBuffer url = req.getRequestURL();
-
 		if ("/EasyShopWayNew/".equals(req.getRequestURI())) {
-			req.getRequestDispatcher("/home").forward(request, response);
-		}
-		
-
-		// pass the request on
-		chain.doFilter(request, response);
+			res.sendRedirect("/EasyShopWayNew/home");
+		} else
+			chain.doFilter(request, response);
 
 	}
 

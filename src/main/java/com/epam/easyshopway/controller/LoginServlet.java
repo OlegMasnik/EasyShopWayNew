@@ -1,8 +1,6 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
-
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +12,6 @@ import org.json.simple.JSONObject;
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
 
-@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -47,8 +44,6 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("user", user);
 
 			System.out.println(user.getFirstName());
-
-			response.sendRedirect("HomePage.do");
 		} else {
 			object.put("passwordErrMsg", "Uncorrect password.");
 		}
@@ -60,3 +55,4 @@ public class LoginServlet extends HttpServlet {
 	}
 
 }
+
