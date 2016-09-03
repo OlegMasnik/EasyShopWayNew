@@ -46,15 +46,12 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("user", user);
 			request.setAttribute("user", user);
 
-			System.out.println(user.getFirstName());
 		} else {
 			object.put("passwordErrMsg", "Uncorrect password.");
 		}
 
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(object.toString());
-		System.out.println();
-		System.out.println(object);
 	}
 
 }

@@ -21,3 +21,7 @@
 .profile-img:hover {
 	border-radius: 3px;
 }
+
+.block{
+	display: block;
+}
