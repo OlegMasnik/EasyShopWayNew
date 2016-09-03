@@ -74,6 +74,18 @@ app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
     // });
 						}]);
 
+
+app.controller('SignUpCtrl', function($scope) {
+	$scope.project = {
+		description : 'Nuclear Missile Defense System',
+		rate : 500
+	};
+});
+
+app.controller('DatePickerCtrl', function($scope) {
+	$scope.myDate = new Date();
+});
+
 function DialogController($scope, $mdDialog) {
     $scope.hide = function () {
         $mdDialog.hide();

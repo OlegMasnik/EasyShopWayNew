@@ -9,6 +9,6 @@
 	<span flex=""></span>
 	<md-button class="md-raised"
 		ng-click="showLogInForm($scope, $mdDialog)"> LogIn </md-button>
-	<md-button class="md-raised" ng-click=""> SignUp </md-button>
+	<md-button class="md-raised" ng-click="showRegistrationInFrom($scope, $mdDialog)"> SignUp </md-button>
 </div>
 </md-toolbar>
