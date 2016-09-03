@@ -1,15 +1,11 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
-<<<<<<< HEAD
-import java.util.Date;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
-=======
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
->>>>>>> master
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -43,32 +39,38 @@ public class RegistrationServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String email = request.getParameter("email");
-		Date birthday = Date.request.getParameter("birthday");
-		String password = request.getParameter("password");
-
-		user = UserService.getByEmail(email);
-		object = new JSONObject();
-
-		if (user == null) {
-			object.put("emailErrMsg", "Uncorrect email.");
-		} else if (user.getPassword().equals(password)) {
-			HttpSession session = request.getSession(true);
-			session.setAttribute("user", user);
-
-			System.out.println(user.getFirstName());
-
-			response.sendRedirect("HomePage.do");
-		} else {
-			object.put("passwordErrMsg", "Uncorrect password.");
+		try {
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
+			String email = request.getParameter("email");
+			String birthday = request.getParameter("birthday");
+			DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+			Date date = (Date) sourceFormat.parse(birthday);
+			String password = request.getParameter("password");
+			
+		}catch (ParseException e){
+			e.printStackTrace();
 		}
-
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(object.toString());
-
-		System.out.println(object);
+ 
+//		user = UserService.getByEmail(email);
+//		object = new JSONObject();
+//
+//		if (user == null) {
+//			object.put("emailErrMsg", "Uncorrect email.");
+//		} else if (user.getPassword().equals(password)) {
+//			HttpSession session = request.getSession(true);
+//			session.setAttribute("user", user);
+//
+//			System.out.println(user.getFirstName());
+//
+//			response.sendRedirect("HomePage.do");
+//		} else {
+//			object.put("passwordErrMsg", "Uncorrect password.");
+//		}
+//
+//		response.setCharacterEncoding("UTF-8");
+//		response.getWriter().write(object.toString());
+//
+//		System.out.println(object);
 	}
 }
