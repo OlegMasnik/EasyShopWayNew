@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+	<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     <html>
 
     <head>
-        <title>${user.firstName} ${user.lastName}</title>
+        <title><c:out value="${user.firstName }"></c:out></title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/cabinet-style.css">
         <link rel="stylesheet" href="css/angular-material.min.css">
@@ -17,7 +18,7 @@
             <md-slidenav md-is-locked-open="true" layout="row" flex md-whiteframe="4">
                 <md-content layout="column" flex layout-margin>
                     <div>
-                        <img src="images/admin.png" alt="" class="profile-img"> ${user.firstName} ${user.lastName}
+                        <img src="images/admin.png" alt="" class="profile-img"><c:out value="${user.firstName }"></c:out>
                     </div>
                     <md-button>Edit map</md-button>
                     <md-button>Statistic</md-button>

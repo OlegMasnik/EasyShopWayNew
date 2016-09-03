@@ -28,12 +28,9 @@ public class CabinetServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
-//		User user = (User) session.getAttribute("user");
-		
-		User user = new User();
-		user.setRole("admin");
+		User user = (User) session.getAttribute("user");
 		
 		if (user != null) {
 			if ("admin".equals(user.getRole())) {
