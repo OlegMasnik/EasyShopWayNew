@@ -4,7 +4,7 @@
     <html>
 
     <head>
-        <title>Admin</title>
+        <title>${user.firstName} ${user.lastName}</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/cabinet-style.css">
         <link rel="stylesheet" href="css/angular-material.min.css">
@@ -17,11 +17,11 @@
             <md-slidenav md-is-locked-open="true" layout="row" flex md-whiteframe="4">
                 <md-content layout="column" flex layout-margin>
                     <div>
-                        <img src="images/admin.png" alt="" class="profile-img"> Admin
+                        <img src="images/admin.png" alt="" class="profile-img"> ${user.firstName} ${user.lastName}
                     </div>
                     <md-button>Edit map</md-button>
                     <md-button>Statistic</md-button>
-                    <md-button>вапвпвапва</md-button>
+                    <md-button>Users</md-button>
                     <md-button>Products</md-button>
                 </md-content>
             </md-slidenav>
