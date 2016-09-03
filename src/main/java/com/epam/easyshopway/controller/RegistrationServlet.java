@@ -42,17 +42,16 @@ public class RegistrationServlet extends HttpServlet {
 			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
 			String birthday = request.getParameter("birthday");
-			DateFormat sourceFormat = new SimpleDateFormat("dd-MM-yyyy");
-			Date dateOfBirth = (Date) sourceFormat.parse(birthday);
 			String password = MD5Util.md5Custom(request.getParameter("password"));
-			User user = new User(firstName, lastName, email, password, dateOfBirth, true, "user", "en");
+			User user = new User(firstName, lastName, email, password, true, "user", "en");
+			user.setDateOfBirth(birthday);
 			if (UserService.insert(user) == null){
 				object.put("emailErrMsg", "This email has already exists.");
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(object.toString());
 			}else 
 				request.getRequestDispatcher("/SuccessRegisteration").forward(request, response);
-		}catch (ParseException e){
+		}catch (Exception e){
 			e.printStackTrace();
 		}
  
