@@ -31,10 +31,14 @@ public class EncodingFilter implements Filter {
 
 		request.setCharacterEncoding("UTF-8");
 
+		response.setContentType("text/html; charset=UTF-8");
+		
 		if ("/EasyShopWayNew/".equals(req.getRequestURI())) {
 			res.sendRedirect("/EasyShopWayNew/home");
 		} else
 			chain.doFilter(request, response);
+		
+		
 
 	}
 
