@@ -17,6 +17,8 @@
                     <md-input-container>
                         <label>Password</label>
                         <input id="passwordL" type="password" ng-model="password" name="password" required  minlength="6" maxlength="25" > </md-input-container>
+                   	<br>
+                    <span style="color : red" ng-bind="error"></span>
                     <div>
                         <md-button type="submit" ng-click='sendLoginData()'>Submit</md-button>
                     </div>

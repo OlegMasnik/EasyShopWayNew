@@ -33,21 +33,30 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		email = request.getParameter("email");
-		password = request.getParameter("password");
-
-		user = UserService.getByEmail(email);
 		object = new JSONObject();
-
-		if (user == null) {
-			object.put("emailErrMsg", "Uncorrect email.");
-		} else if (user.getPassword().equals(MD5Util.md5Custom(password))) {
-			HttpSession session = request.getSession(true);
-			session.setAttribute("user", user);
-			System.out.println(user.getFirstName());
-		} else {
-			object.put("passwordErrMsg", "Uncorrect password.");
+		
+		
+		
+		if(request.getSession().getAttribute("pre_user") != null){
+			object.put("emailErrMsg", "Please check your email.");
+		}else{
+			
+			email = request.getParameter("email");
+			password = request.getParameter("password");
+			
+			user = UserService.getByEmail(email);
+			System.out.println(user);
+			if (user == null) {
+				object.put("emailErrMsg", "Uncorrect email.");
+			} else if (user.getPassword().equals(MD5Util.md5Custom(password))) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("user", user);
+				System.out.println(user.getFirstName());
+			} else {
+				object.put("passwordErrMsg", "Uncorrect password.");
+			}
 		}
+
 
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(object.toString());

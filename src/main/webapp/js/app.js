@@ -84,6 +84,8 @@ app
                                     headers, config) {
                                     if (data.emailErrMsg == undefined) {
                                         $window.location.href = 'cabinet';
+                                    } else{
+                                    	$scope.error = data.emailErrMsg;
                                     }
                                     console
                                         .log(data.emailErrMsg);

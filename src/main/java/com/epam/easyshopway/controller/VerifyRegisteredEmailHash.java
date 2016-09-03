@@ -30,8 +30,8 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
 			if (preUser == null) {
 				request.getRequestDispatcher("/WEB-INF/email/emailError.jsp").forward(request, response);
 			} else if (preUser.getPassword().equals(hash)) {
-				UserService.insert(preUser);
 				request.getSession().setAttribute("pre_user", null);
+				UserService.insert(preUser);
 				request.getRequestDispatcher("/WEB-INF/email/emailSuccess.jsp").forward(request, response);
 			}
 		}
