@@ -56,22 +56,6 @@ app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
                     console.log('fail');
                 });
     };
-
-    // var req = {
-    // method : 'POST',
-    // url :
-    // 'http://localhost:8080/EasyShopWayNew/login',
-    // data : {
-    // email : email,
-    // password: pass
-    // }
-    // }
-    //
-    // $http(req).then(function() {
-    // console.log("success")
-    // }, function() {
-    //			
-    // });
 						}]);
 
 
