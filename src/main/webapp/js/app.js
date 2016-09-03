@@ -45,54 +45,6 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
         });
     };
 });
-<<<<<<< HEAD
-app.controller('LoginCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
-    $scope.sendLoginData = function () {
-        console.log('hello' + $scope.email)
-        var data = $.param({
-            email: $scope.email
-            , password: $scope.password
-        });
-        console.log('Read ' + data);
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-        $http.post('http://localhost:8080/EasyShopWayNew/login', data, config).success(function (data, status, headers, config) {
-            if (data.emailErrMsg == undefined) {
-                $window.location.href = 'cabinet';
-            }
-            console.log(data.emailErrMsg);
-        }).error(function (data, status, header, config) {
-            console.log('fail');
-        });
-    };
-}]);
-
-app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.sendRegData = function () {
-        var data = $.param({
-            email: $scope.email
-            , password: $scope.password
-            , firstName: $scope.firstName
-            , lastName: $scope.lastName
-            , birthday: dateBirthday
-        });
-        console.log('Read ' + data);
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-        $http.post('http://localhost:8080/EasyShopWayNew/reg', data, config).success(function (data, status, headers, config) {
-            console.log("QWEER" + data);
-        }).error(function (data, status, header, config) {
-            console.log('fail');
-        });
-    };
-}]);
-=======
 
 app
     .controller(
@@ -197,15 +149,6 @@ app
                 };
 						}]);
 
->>>>>>> master
-app.controller('DatePickerCtrl', function ($scope) {
-    $scope.myDate = new Date();
-}).config(function ($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.formatDate = function (date) {
-        dateBirthday = moment(date).format('YYYY-MM-DD');
-        return moment(date).format('YYYY-MM-DD');
-    };
-});
 app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.showInfo = function () {
     	

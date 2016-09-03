@@ -58,36 +58,3 @@
 <script src='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0/angular-material.js'></script>
   </body>
 </html>
-=======
-    <body ng-app="MyApp" layout="column">
-        <jsp:include page="../parts/header.jsp"></jsp:include>
-
-        <div layout="row" flex>
-            <md-slidenav md-is-locked-open="true" layout="row" flex md-whiteframe="4">
-                <md-content layout="column" flex layout-margin>
-                    <div>
-                        <img src="images/admin.png" alt="" class="profile-img"><c:out value="${user.firstName }"></c:out>
-                    </div>
-                    <md-button>Edit map</md-button>
-                    <md-button>Statistic</md-button>
-                    <md-button>Users</md-button>
-                    <md-button>Products</md-button>
-                </md-content>
-            </md-slidenav>
-            <md-content flex="70"> Content </md-content>
-        </div>
-        
-        
-
-        <script src="js/jquery.min.js"></script>
-        <script src='js/angular.min.js'></script>
-        <script src='js/angular-aria.js'></script>
-        <script src='js/angular-animate.js'></script>
-        <script src='js/angular-material.min.js'></script>
-        <script src='js/app.js'></script>
-
-
-    </body>
-
-    </html>
->>>>>>> master
