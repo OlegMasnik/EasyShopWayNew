@@ -1,0 +1,28 @@
+<md-dialog aria-label="" ng-controller="LoginCtrl">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>LogIn</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px;max-height:810px; ">
+            <md-content layout-padding>
+                <form name="logForm" action="">
+                    <md-input-container>
+                        <label>Email</label>
+                        <input id="email" type="email" ng-model="email" name=email required> </md-input-container>
+                    <br>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input id="password" type="password" ng-model="password" name=password required> </md-input-container>
+                    <div>
+                        <md-button type="submit" ng-click='sendLoginData()'>Submit</md-button>
+                    </div>
+
+                </form>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>
