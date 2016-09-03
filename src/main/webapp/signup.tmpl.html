@@ -20,21 +20,21 @@
                             <input required name="lastName" ng-model="lastName">
                         </md-input-container>
 
-                        <div ng-controller="DatePickerCtrl" ng-cloak>
-                            <label>Date of birth</label>
-                            <md-datepicker md-max-date="birthday" name="birthday" ng-model="birthday" md-placeholder="Enter date"></md-datepicker>
+                        <div ng-app="MyApp" ng-controller="DatePickerCtrl">
+                            <md-content>
+                                <md-datepicker ng-model="myDate" md-placeholder="Enter date" name="myDate"></md-datepicker>
+                            </md-content>
                         </div>
 
                         <md-input-container class="md-block">
                             <label>Email</label>
                             <input required type="email" name="email" ng-model="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-                        </md-input-container>	
+                        </md-input-container>
 
                         <md-input-container class="md-block">
                             <label>Password</label>
                             <input required type="password" name="password" ng-model="password">
                         </md-input-container>
-
                         <div>
                             <md-button type="submit" ng-click="sendRegData()">Submit</md-button>
                         </div>

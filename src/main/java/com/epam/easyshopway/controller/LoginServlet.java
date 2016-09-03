@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
+import com.epam.easyshopway.utils.MD5Util;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (user == null) {
 			object.put("emailErrMsg", "Uncorrect email.");
-		} else if (user.getPassword().equals(password)) {
+		} else if (user.getPassword().equals(MD5Util.md5Custom(password))) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", user);
 
@@ -56,4 +57,3 @@ public class LoginServlet extends HttpServlet {
 	}
 
 }
-
