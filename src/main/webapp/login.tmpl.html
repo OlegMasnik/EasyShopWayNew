@@ -9,14 +9,14 @@
         </md-toolbar>
         <md-dialog-content style="max-width:800px;max-height:810px; ">
             <md-content layout-padding>
-                <form name="logForm" action="">
+                <form name="logForm" action="/login">
                     <md-input-container>
                         <label>Email</label>
-                        <input id="email" type="email" ng-model="email" name=email required> </md-input-container>
+                        <input id="email" type="email" ng-model="email" name="email" required> </md-input-container>
                     <br>
                     <md-input-container>
                         <label>Password</label>
-                        <input id="password" type="password" ng-model="password" name=password required> </md-input-container>
+                        <input id="password" type="password" ng-model="password" name="password" required> </md-input-container>
                     <div>
                         <md-button type="submit" ng-click='sendLoginData()'>Submit</md-button>
                     </div>

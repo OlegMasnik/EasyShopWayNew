@@ -7,10 +7,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
+
+import com.epam.easyshopway.model.User;
+import com.epam.easyshopway.service.UserService;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	JSONObject object;
+	User user;
 
 	public LoginServlet() {
 		super();
@@ -23,7 +32,31 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		System.out.println(email + " " + password);
+
+		user = UserService.getByEmail(email);
+		object = new JSONObject();
+
+		if (user == null) {
+			object.put("emailErrMsg", "Uncorrect email.");
+		} else if (user.getPassword().equals(password)) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", user);
+
+			System.out.println(user.getFirstName());
+
+			response.sendRedirect("HomePage.do");
+		} else {
+			object.put("passwordErrMsg", "Uncorrect password.");
+		}
+
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(object.toString());
+
+		System.out.println(object);
 	}
 
 }

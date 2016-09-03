@@ -29,26 +29,50 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     };
 });
 
-app.controller('LoginCtrl', ['$scope', function ($scope) {
+app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.sendLoginData = function () {
         console.log('hello ' + $scope.email)
-        var req = {
-            method: 'POST',
-            url: 'http://localhost:8080/EasyShopWayNew/login',
+        var data = $.param({
+            email: $scope.email,
+            password: $scope.password
+        });
+        console.log('Read ' + data);
+
+        var config = {
             headers: {
-                'Content-Type': undefined
-            },
-            data: {
-                email: $scope.email,
-                pass: $scope.password
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
         }
-
-        //        $http(req).then(function () {...
-        //        }, function () {...
-        //        });
+        $http
+            .post(
+                'http://localhost:8080/EasyShopWayNew/login',
+                data, config).success(
+                function (data, status, headers,
+                    config) {
+                    console.log(data);
+                }).error(
+                function (data, status, header,
+                    config) {
+                    console.log('fail');
+                });
     };
-}]);
+
+    // var req = {
+    // method : 'POST',
+    // url :
+    // 'http://localhost:8080/EasyShopWayNew/login',
+    // data : {
+    // email : email,
+    // password: pass
+    // }
+    // }
+    //
+    // $http(req).then(function() {
+    // console.log("success")
+    // }, function() {
+    //			
+    // });
+						}]);
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function () {
