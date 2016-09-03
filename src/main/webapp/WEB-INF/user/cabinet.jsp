@@ -12,7 +12,6 @@
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/angular-material.min.css"> </head>
 
-<<<<<<< HEAD
       <body ng-app="MyApp" layout="column">
           <jsp:include page="../parts/header.jsp"></jsp:include>
           <div layout="row" flex>
