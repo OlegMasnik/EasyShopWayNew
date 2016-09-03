@@ -1,53 +1,43 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-<web-app>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" 
+         version="2.5" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
 	<display-name>Archetype Created Web Application</display-name>
+
 	<servlet>
 		<servlet-name>CabinetServlet</servlet-name>
-		<display-name>CabinetServlet</display-name>
-		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.CabinetServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>HomeServlet</servlet-name>
-		<display-name>HomeServlet</display-name>
-		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.HomeServlet</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<display-name>LoginServlet</display-name>
-		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.LoginServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>LogoutServlet</servlet-name>
-		<display-name>LogoutServlet</display-name>
-		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.LogoutServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>RegistrationServlet</servlet-name>
-		<display-name>RegistrationServlet</display-name>
-		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.RegistrationServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>UserInfoServlet</servlet-name>
-		<display-name>UserInfoServlet</display-name>
-		<description></description>
 		<servlet-class>com.epam.easyshopway.controller.UserInfoServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>VerifyRegisteredEmailHash</servlet-name>
-		<display-name>VerifyRegisteredEmailHash</display-name>
 		<servlet-class>com.epam.easyshopway.controller.VerifyRegisteredEmailHash</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>AppErrorHandler</servlet-name>
-		<display-name>AppErrorHandler</display-name>
 		<servlet-class>com.epam.easyshopway.controller.AppErrorHandler</servlet-class>
 	</servlet>
 
@@ -92,8 +82,6 @@
 
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
-		<display-name>EncodingFilter</display-name>
-		<description></description>
 		<filter-class>com.epam.easyshopway.filter.EncodingFilter</filter-class>
 	</filter>
 	<filter-mapping>
@@ -109,5 +97,5 @@
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/AppErrorHandler</location>
 	</error-page>
-
+	
 </web-app>
