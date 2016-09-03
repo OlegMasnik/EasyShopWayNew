@@ -27,6 +27,29 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
         });
 
     };
+    $scope.showRegistrationInFrom = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'signup.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        }).then(function (answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+        }, function () {
+            $scope.status = 'You cancelled the dialog.';
+        });
+
+        $scope.$watch(function () {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function (wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+
+    };
 });
 
 app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
@@ -57,17 +80,37 @@ app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
                 });
     };
 						}]);
+app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.sendRegData = function () {
+        console.log('hello ' + $scope.email)
+            //        var data = $.param({
+            //            email: $scope.email,
+            //            password: $scope.password
+            //        });
+            //        console.log('Read ' + data);
+            //
+            //        var config = {
+            //            headers: {
+            //                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            //            }
+            //        }
+            //        $http
+            //            .post(
+            //                'http://localhost:8080/EasyShopWayNew/login',
+            //                data, config).success(
+            //                function (data, status, headers,
+            //                    config) {
+            //                    console.log(data);
+            //                }).error(
+            //                function (data, status, header,
+            //                    config) {
+            //                    console.log('fail');
+            //                });
+    };
+}]);
 
-
-app.controller('SignUpCtrl', function($scope) {
-	$scope.project = {
-		description : 'Nuclear Missile Defense System',
-		rate : 500
-	};
-});
-
-app.controller('DatePickerCtrl', function($scope) {
-	$scope.myDate = new Date();
+app.controller('DatePickerCtrl', function ($scope) {
+    $scope.myDate = new Date();
 });
 
 function DialogController($scope, $mdDialog) {

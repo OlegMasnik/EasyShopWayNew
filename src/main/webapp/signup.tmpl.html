@@ -1,4 +1,4 @@
-<md-dialog aria-label="Registration">
+<md-dialog aria-label="Registration" ng-controller="SignUpCtrl">
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -9,7 +9,7 @@
         <md-dialog-content style="max-width:400px;max-height:810px; ">
             <div layout="column" ng-cloak>
                 <md-content layout-padding>
-                    <form name="regForm" >
+                    <form name="regForm" action="/reg">
                         <md-input-container class="md-block">
                             <label>First name</label>
                             <input required name="firstName" ng-model="firstName">
@@ -28,7 +28,7 @@
                         <md-input-container class="md-block">
                             <label>Email</label>
                             <input required type="email" name="email" ng-model="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-                        </md-input-container>
+                        </md-input-container>	
 
                         <md-input-container class="md-block">
                             <label>Password</label>
@@ -36,7 +36,7 @@
                         </md-input-container>
 
                         <div>
-                            <md-button type="submit">Submit</md-button>
+                            <md-button type="submit" ng-click="sendRegData()">Submit</md-button>
                         </div>
 
                     </form>
@@ -44,4 +44,4 @@
             </div>
         </md-dialog-content>
     </form>
-</md-dialog> 
+</md-dialog>
