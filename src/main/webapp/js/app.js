@@ -54,78 +54,67 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     };
 });
 
-app
-    .controller(
-        'LoginCtrl', [
-						'$scope',
-						'$http',
-						function ($scope, $http) {
-                $scope.sendLoginData = function () {
-                    console.log('hello ' + $scope.email)
-                    var data = $.param({
-                        email: $scope.email,
-                        password: $scope.password
-                    });
-                    console.log('Read ' + data);
+app.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.sendLoginData = function () {
+        console.log('hello ' + $scope.email)
+        var data = $.param({
+            email: $scope.email,
+            password: $scope.password
+        });
+        console.log('Read ' + data);
 
-                    var config = {
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                        }
-                    }
-                    $http
-                        .post(
-                            'http://localhost:8080/EasyShopWayNew/login',
-                            data, config).success(
-                            function (data, status, headers,
-                                config) {
-                                console.log(data);
-                            }).error(
-                            function (data, status, header,
-                                config) {
-                                console.log('fail');
-                            });
-                };
-						}]);
-app
-    .controller(
-        'SignUpCtrl', [
-						'$scope',
-						'$http',
-						function ($scope, $http) {
-                $scope.sendRegData = function () {
-                    console.log('hello ' + $scope.email)
-                    console.log("date " + dateBirthday)
-                    var data = $.param({
-                        email: $scope.email,
-                        password: $scope.password,
-                        firstName: $scope.firstName,
-                        lastName: $scope.lastName,
-                        birthday: dateBirthday
-                    });
-                    console.log('Read ' + data);
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+        $http
+            .post(
+                'http://localhost:8080/EasyShopWayNew/login',
+                data, config).success(
+                function (data, status, headers,
+                    config) {
 
-                    var config = {
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                        }
-                    }
-                    $http
-                        .post(
-                            'http://localhost:8080/EasyShopWayNew/reg',
-                            data, config).success(
-                            function (data, status, headers,
-                                config) {
-                                alert("Hello");
-                                console.log("QWEER" + data);
-                            }).error(
-                            function (data, status, header,
-                                config) {
-                                alert("BAd");
-                                console.log('fail');
-                            });
-                };
+                    console.log(data.emailErrMsg);
+                }).error(
+                function (data, status, header,
+                    config) {
+                    console.log('fail');
+                });
+    };
 						}]);
+app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.sendRegData = function () {
+        console.log('hello ' + $scope.email)
+        console.log("date " + dateBirthday)
+        var data = $.param({
+            email: $scope.email,
+            password: $scope.password,
+            firstName: $scope.firstName,
+            lastName: $scope.lastName,
+            birthday: dateBirthday
+        });
+        console.log('Read ' + data);
+
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+        $http
+            .post(
+                'http://localhost:8080/EasyShopWayNew/reg',
+                data, config).success(
+                function (data, status, headers,
+                    config) {
+                    console.log("QWEER" + data);
+                }).error(
+                function (data, status, header,
+                    config) {
+                    console.log('fail');
+                });
+    };
+}]);
 
 app.controller('DatePickerCtrl', function ($scope) {
     $scope.myDate = new Date();
