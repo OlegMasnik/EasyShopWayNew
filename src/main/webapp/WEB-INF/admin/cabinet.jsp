@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="css/angular-material.min.css">
     </head>
 
-    <body ng-app="AdminApp" layout="column">
+    <body ng-app="MyApp" layout="column">
         <jsp:include page="../parts/header.jsp"></jsp:include>
 
         <div layout="row" flex>
@@ -33,7 +33,7 @@
         <script src='js/angular-aria.js'></script>
         <script src='js/angular-animate.js'></script>
         <script src='js/angular-material.min.js'></script>
-        <script src='js/admin-app.js'></script>
+        <script src='js/app.js'></script>
 
 
     </body>
