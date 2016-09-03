@@ -105,6 +105,17 @@ footer {
     background-color: #ccc;
 }
 
+<<<<<<< HEAD
+ .inputdemoIcons .inputIconDemo {
+    min-height: 48px; }
+  .inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.email {
+    color: green; }
+  .inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.name {
+    color: dodgerblue; }
+  .inputdemoIcons md-input-container.md-input-invalid > md-icon.email,
+  .inputdemoIcons md-input-container.md-input-invalid > md-icon.name {
+    color: red; }
+=======
 .inputdemoIcons {
     /*
 .right-icon {
@@ -159,3 +170,4 @@ footer {
 .container .text-muted {
   margin: 20px 0;
 }
+>>>>>>> master
