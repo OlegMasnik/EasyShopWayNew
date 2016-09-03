@@ -54,70 +54,106 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     };
 });
 
-app.controller('LoginCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
-    $scope.sendLoginData = function () {
-        console.log('hello' + $scope.email)
-        var data = $.param({
-            email: $scope.email,
-            password: $scope.password
-        });
-        console.log('Read ' + data);
+app
+    .controller(
+        'LoginCtrl', [
+						'$scope',
+						'$http',
+						'$window',
+						function ($scope, $http, $window) {
+                $scope.sendLoginData = function () {
+                    console.log('hello' + $scope.email)
+                    var data = $.param({
+                        email: $scope.email,
+                        password: $scope.password
+                    });
+                    console.log('Read ' + data);
 
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-        $http
-            .post(
-                'http://localhost:8080/EasyShopWayNew/login',
-                data, config).success(
-                function (data, status, headers,
-                    config) {
-                    if (data.emailErrMsg == undefined) {
-                        $window.location.href = 'cabinet';
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                        }
                     }
-                    console.log(data.emailErrMsg);
-                }).error(
-                function (data, status, header,
-                    config) {
-                    console.log('fail');
-                });
-    };
+                    if ($('#emailL').valid() && $('#passwordL').valid()) {
+                        $http
+                            .post(
+                                'http://localhost:8080/EasyShopWayNew/login',
+                                data, config)
+                            .success(
+                                function (data, status,
+                                    headers, config) {
+                                    if (data.emailErrMsg == undefined) {
+                                        $window.location.href = 'cabinet';
+                                    }
+                                    console
+                                        .log(data.emailErrMsg);
+                                }).error(
+                                function (data, status,
+                                    header, config) {
+                                    console.log('fail');
+                                });
+                    } else {
+                        cosole.log("sory");
+                    }
+                };
 						}]);
-app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.sendRegData = function () {
-        console.log('hello ' + $scope.email)
-        console.log("date " + dateBirthday)
-        var data = $.param({
-            email: $scope.email,
-            password: $scope.password,
-            firstName: $scope.firstName,
-            lastName: $scope.lastName,
-            birthday: dateBirthday
-        });
-        console.log('Read ' + data);
+app
+    .controller(
+        'SignUpCtrl', [
+						'$scope',
+						'$http',
+						function ($scope, $http) {
 
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-        $http
-            .post(
-                'http://localhost:8080/EasyShopWayNew/reg',
-                data, config).success(
-                function (data, status, headers,
-                    config) {
-                    console.log("QWEER" + data);
-                    alert('please check your email');
-                }).error(
-                function (data, status, header,
-                    config) {
-                    console.log('fail');
-                });
-    };
-}]);
+                $scope.sendRegData = function () {
+                    console.log('hello ' + $scope.email)
+                    console.log("date " + dateBirthday)
+                    var data = $.param({
+                        email: $scope.email,
+                        password: $scope.password,
+                        firstName: $scope.firstName,
+                        lastName: $scope.lastName,
+                        birthday: dateBirthday
+                    });
+                    console.log('Read ' + data);
+
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                        }
+                    }
+
+                    if ($('#emailR').valid() && $('#fName').valid() && $('#lName').valid() && $('#passwordR').valid()) {
+
+                        $http
+                            .post(
+                                'http://localhost:8080/EasyShopWayNew/reg',
+                                data, config)
+                            .success(
+                                function (data, status,
+                                    headers, config) {
+                                    console
+                                        .log("QWEER" + data.emailErrMsg);
+                                    $scope.error = data.emailErrMsg;
+                                    if (data.emailErrMsg == undefined) {
+                                        $scope.success = "Check your email";
+                                    }
+                                    var esc = $
+                                        .Event(
+                                            "keydown", {
+                                                keyCode: 27
+                                            });
+                                    $("body").trigger(esc);
+
+                                }).error(
+                                function (data, status,
+                                    header, config) {
+                                    console.log('fail');
+                                });
+                    } else {
+                        console.log("oq");
+                    }
+                };
+						}]);
 
 app.controller('DatePickerCtrl', function ($scope) {
     $scope.myDate = new Date();

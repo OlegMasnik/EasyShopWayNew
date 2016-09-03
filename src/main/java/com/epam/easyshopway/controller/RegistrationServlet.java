@@ -43,12 +43,19 @@ public class RegistrationServlet extends HttpServlet {
 			String password = MD5Util.md5Custom(request.getParameter("password"));
 			User user = new User(firstName, lastName, email, password, true, "user", "en");
 			user.setDateOfBirth(birthday);
-			
-			MailUtil.sendEmailRegistrationLink(email, MD5Util.md5Custom(request.getParameter("password")));
-			request.getSession().setAttribute("pre_user", user);
+
+			System.out.println(firstName.equals(""));
 			object = new JSONObject();
+			if (firstName == "" || lastName == "" || email == "" || birthday == "" || password == "") {
+				object.put("emailErrMsg", "Please enter all value.");
+				System.out.println("SDFGHJKL:SDFGHJKL:DFGHJKL");
+			}
+			System.out.println("WHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHAT");
 			if (UserService.hasEmail(email)) {
 				object.put("emailErrMsg", "This email has already exists.");
+			} else {
+				MailUtil.sendEmailRegistrationLink(email, MD5Util.md5Custom(request.getParameter("password")));
+				request.getSession().setAttribute("pre_user", user);
 			}
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());

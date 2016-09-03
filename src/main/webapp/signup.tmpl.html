@@ -9,32 +9,33 @@
         <md-dialog-content style="max-width:400px;max-height:810px; ">
             <div layout="column" ng-cloak>
                 <md-content layout-padding>
-                    <form name="regForm" action="/reg">
+                    <form id="regForm" ng-model="regForm" name="regForm" action="/reg">
                         <md-input-container class="md-block">
                             <label>First name</label>
-                            <input required name="firstName" ng-model="firstName">
+                            <input id="fName" required name="firstName" ng-model="firstName">
                         </md-input-container>
-
                         <md-input-container class="md-block">
                             <label>Last name</label>
-                            <input required name="lastName" ng-model="lastName">
+                            <input id="lName" required name="lastName" ng-model="lastName">
                         </md-input-container>
 
-                        <div ng-app="MyApp" ng-controller="DatePickerCtrl">
+                        <div>
                             <md-content>
-                                <md-datepicker ng-model="myDate" md-placeholder="Enter date" name="myDate"></md-datepicker>
+                                <md-datepicker id="birthday" ng-model="myDate" md-placeholder="Enter date" name="myDate"></md-datepicker>
                             </md-content>
                         </div>
 
                         <md-input-container class="md-block">
                             <label>Email</label>
-                            <input required type="email" name="email" ng-model="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+                            <input id="emailR" required type="email" name="email" ng-model="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
                         </md-input-container>
 
                         <md-input-container class="md-block">
                             <label>Password</label>
-                            <input required type="password" name="password" ng-model="password">
+                            <input id="passwordR" required type="password" name="password" ng-model="password"  minlength="6" maxlength="25" >
                         </md-input-container>
+                        <span style="color : red" ng-bind="error"></span>
+                        <span style="color : green" ng-bind="success"></span>
                         <div>
                             <md-button type="submit" ng-click="sendRegData()">Submit</md-button>
                         </div>
