@@ -41,11 +41,30 @@
 		<servlet-class>com.epam.easyshopway.controller.AppErrorHandler</servlet-class>
 	</servlet>
 	<servlet>
+<<<<<<< HEAD
+		<servlet-name>GooglePlusLoginServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.GooglePlusLoginServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>GooglePlusInfoServlet</display-name>
+		<servlet-name>GooglePlusInfoServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.GooglePlusInfoServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>FacebookLogin</display-name>
+		<servlet-name>FacebookLogin</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.FacebookLogin</servlet-class>
+=======
 		<description>
 		</description>
 		<display-name>UserStatisticServlet</display-name>
 		<servlet-name>UserStatisticServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.UserStatisticServlet</servlet-class>
+>>>>>>> branch 'master' of https://github.com/OlegMasnik/EasyShopWayNew.git
 	</servlet>
 
 	<servlet-mapping>
@@ -87,8 +106,21 @@
 		<url-pattern>/AppErrorHandler</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+<<<<<<< HEAD
+		<servlet-name>GooglePlusLoginServlet</servlet-name>
+		<url-pattern>/google-plus-login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GooglePlusInfoServlet</servlet-name>
+		<url-pattern>/home/google-plus-user-info</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FacebookLogin</servlet-name>
+		<url-pattern>/FacebookLogin</url-pattern>
+=======
 		<servlet-name>UserStatisticServlet</servlet-name>
 		<url-pattern>/UserStatisticServlet</url-pattern>
+>>>>>>> branch 'master' of https://github.com/OlegMasnik/EasyShopWayNew.git
 	</servlet-mapping>
 
 	<filter>

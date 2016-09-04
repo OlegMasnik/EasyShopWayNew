@@ -2,20 +2,26 @@ var adminApp = angular.module('MyApp');
 
 app.config(function($routeProvider) {
 	$routeProvider.when("/", {
-		templateUrl : "template/info.html"
+		templateUrl : "template/admin/info.jsp",
+		controller : 'InfoCtrl'
 	}).when("/map", {
-		templateUrl : "template/map.html"
+		templateUrl : "template/admin/map.html"
 	}).when("/history", {
-		templateUrl : "template/history.html"
+		templateUrl : "template/admin/history.html"
 	}).when("/products", {
-		templateUrl : "template/products.html"
+		templateUrl : "template/admin/products.html"
 	}).when("/users", {
-		templateUrl : "template/users.html"
+		templateUrl : "template/admin/users.html"
 	}).when("/statistic", {
-		templateUrl : "template/statistic.html"
+		templateUrl : "template/admin/statistics.html"
 	});
 });
 
 adminApp.controller('AdminCtrl', function($scope, $http) {
-	$scope.qwer = 'Hello world';
+	
 });
+
+adminApp.controller('InfoCtrl', function($scope, $http) {
+	$scope.qwer = "Hello world";
+});
+

@@ -93,7 +93,11 @@ public class User {
 	}
 
 	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = Date.valueOf(dateOfBirth);
+		if (dateOfBirth.equalsIgnoreCase("null")) {
+			this.dateOfBirth = new Date(new java.util.Date().getTime());
+		} else {
+			this.dateOfBirth = Date.valueOf(dateOfBirth);
+		}
 	}
 
 	public Boolean isActive() {
