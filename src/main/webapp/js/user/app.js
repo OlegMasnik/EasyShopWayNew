@@ -1,4 +1,4 @@
-var app = angular.module('MyApp');
+var app = angular.module('MyApp', ['ngMaterial']);
 
 app.controller('ChartCtrl', function($scope) {
 	$scope.getFoodData = function () {
