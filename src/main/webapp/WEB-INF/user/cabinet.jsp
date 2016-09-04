@@ -15,14 +15,12 @@
 
         <body ng-app="MyApp" layout="column">
             <jsp:include page="../parts/header.jsp"></jsp:include>
-            <div layout="row" class="main-page" flex>
+            <md-content layout="row" class="main-page" flex>
                 <md-slidenav md-is-locked-open="true" layout="column" flex md-whiteframe="4">
                     <md-content layout="column" flex>
                         <a href="">
                             <div class="cab-user-logo" layot="row" layout-padding>
-
                                 <img src="images/admin.png" alt="" class="profile-img">
-
                                 <div>
                                     <c:out value="${user.firstName }"></c:out>
                                     <c:out value="${user.lastName }"></c:out>
@@ -30,13 +28,12 @@
 
                             </div>
                         </a>
-
                         <md-button>Statistic</md-button>
                         <md-button>History</md-button>
                     </md-content>
                 </md-slidenav>
 
-                <div flex="80" class="content" layout-margin layout-padding>
+                <div flex class="content">
 
                     <h3 class="cab-title">Profile</h3>
 
@@ -89,7 +86,7 @@
 
 
                 </div>
-            </div>
+            </md-content>
             <script src="js/jquery.min.js"></script>
             <script src='js/angular.min.js'></script>
             <script src='js/angular-aria.js'></script>

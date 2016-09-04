@@ -3,7 +3,7 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <script src='js/moment.js'></script>
 
-<md-toolbar class="md-hue-2">
+<md-toolbar class="md-hue-2" flex="none">
 <div class="md-toolbar-tools" ng-controller="AppCtrl" md-whiteframe="4">
 
 	<md-button href="/EasyShopWayNew/home"> EasyShopWay </md-button>

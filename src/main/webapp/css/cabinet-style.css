@@ -1,7 +1,22 @@
 @CHARSET "UTF-8";
-
 md-content {
     background-color: white;
+}
+
+md-toolbar {
+}
+
+md-slidenav {
+    position: fixed;
+    top: 63px;
+    height: 100%;
+    width: 250px;
+}
+
+.content {
+    background-color: transparent;
+    margin-left: 250px;
+    padding: 30px;
 }
 
 .profile-img {
@@ -33,24 +48,28 @@ md-content {
 
 /*        SideNav:         ;*/
 
-body, .main-page {
+body,
+.main-page {
     background-color: #f5f5f5;
 }
 
 a {
-    color: black; /* Цвет обычной ссылки */ 
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-   }
-   a:visited {
-    color: black; /* Цвет посещённой ссылки */
-   } 
-   a:hover {
-    color: black; /* Цвет ссылки при наведении на нее курсора мыши */  
-    text-decoration: none; /* Добавляем подчеркивание */
-   }
+    color: black;
+    /* Цвет обычной ссылки */
+    text-decoration: none;
+    /* Убираем подчеркивание у ссылок */
+}
 
-.content {
-    background-color: transparent;
+a:visited {
+    color: black;
+    /* Цвет посещённой ссылки */
+}
+
+a:hover {
+    color: black;
+    /* Цвет ссылки при наведении на нее курсора мыши */
+    text-decoration: none;
+    /* Добавляем подчеркивание */
 }
 
 .cab-sidenav {
@@ -79,6 +98,11 @@ a {
     text-transform: uppercase;
 }
 
+
 /* .cab-icon { */
+
+
 /*     fill: blue; */
+
+
 /* } */
