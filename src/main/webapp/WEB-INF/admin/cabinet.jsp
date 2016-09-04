@@ -23,7 +23,7 @@
 			<c:out value="${user.firstName } ${user.lastName}"></c:out>
 		</div>
 	</div>
-	</md-button> <md-button href="#map" class="md-no-focus">Map</md-button> <md-button href="#products">Products</md-button>
+	</md-button> <md-button href="#map">Map</md-button> <md-button href="#products">Products</md-button>
 	<md-button href="#users">Users</md-button> <md-button href="#statistic">Statistic</md-button>
 	<md-button href="#history">History</md-button> </md-content> </md-slidenav>
 
@@ -43,5 +43,6 @@
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
+	
 </body>
 </html>

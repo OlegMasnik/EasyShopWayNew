@@ -2,7 +2,7 @@ var adminApp = angular.module('MyApp');
 
 app.config(function($routeProvider) {
 	$routeProvider.when("/", {
-		templateUrl : "template/admin/info.jsp",
+		templateUrl : "template/shared/info.jsp",
 		controller : 'InfoCtrl'
 	}).when("/map", {
 		templateUrl : "template/admin/map.html"
