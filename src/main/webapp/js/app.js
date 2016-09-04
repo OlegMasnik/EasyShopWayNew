@@ -1,5 +1,5 @@
 var dateBirthday;
-var app = angular.module('MyApp', ['ngMaterial' , 'ngRoute']);
+var app = angular.module('MyApp', ['ngMaterial' , 'ngRoute', 'datatables']);
 
 
 app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
