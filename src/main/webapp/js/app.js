@@ -1,5 +1,6 @@
 var dateBirthday;
-var app = angular.module('MyApp', ['ngMaterial']);
+var app = angular.module('MyApp', ['ngMaterial' , 'ngRoute']);
+
 
 app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     $scope.status = '  ';
@@ -100,7 +101,11 @@ app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
             }
         }
 
-        if ($('#emailR').valid() && $('#fName').valid() && $('#lName').valid() && $('#passwordR').valid()) {
+        console.log($('#fName1').val());
+        console.log($('#lName1').val());
+
+        console.log($('#emailR').valid() +" "+ $('#fName1').valid() +" "+ $('#lName1').valid() +" "+ $('#passwordR').valid())
+        if ($('#emailR').valid() && $('#passwordR').valid()) {
 
             $http.post('http://localhost:8080/EasyShopWayNew/reg', data, config)
                 .success(function (data, status, headers, config) {
@@ -109,12 +114,12 @@ app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
                     if (data.emailErrMsg == undefined) {
                         $scope.success = "Check your email";
                     }
-                    var esc = $
-                        .Event(
-                            "keydown", {
-                                keyCode: 27
-                            });
-                    $("body").trigger(esc);
+//                    var esc = $
+//                        .Event(
+//                            "keydown", {
+//                                keyCode: 27
+//                            });
+//                    $("body").trigger(esc);
 
                 }).error(
                     function (data, status,
@@ -154,7 +159,7 @@ app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.get('http://localhost:8080/EasyShopWayNew/info', config)
             .success(function (data, status, headers,
                 config) {
-                alert(data);
+                console.log(data);
                 $scope.firstName = data.firstName;
                 $scope.lastName = data.lastName;
                 $scope.birthday = data.birthday;
@@ -163,11 +168,10 @@ app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
             }).error(
                 function (data, status, header,
                     config) {
-                    alert(data);
                     console.log('fail');
                 });
     }
-						}]);
+}]);
 
 app.controller('DemoCtrl', function ($scope) {
     $scope.user = {

@@ -4,7 +4,7 @@
 <script src='js/moment.js'></script>
 
 <md-toolbar class="md-hue-2">
-<div class="md-toolbar-tools" ng-controller="AppCtrl">
+<div class="md-toolbar-tools" ng-controller="AppCtrl" md-whiteframe="4">
 
 	<md-button href="/EasyShopWayNew/home"> EasyShopWay </md-button>
 

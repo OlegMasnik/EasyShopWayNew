@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -11,30 +12,25 @@
 <link rel="stylesheet" href="css/angular-material.min.css">
 </head>
 
-<body ng-app="MyApp" layout="column">
+<body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
 	<jsp:include page="../parts/header.jsp"></jsp:include>
+	<p>
+		<a href="#/">Info</a>
+	</p>
+	<a href="#map">map</a>
+	<a href="#history">history</a>
+	<a href="#products">products</a>
+	<a href="#users">products</a>
+	<a href="#statistic">statistic</a>
 
-	<div layout="row" flex>
-		<md-slidenav md-is-locked-open="true" layout="row" flex
-			md-whiteframe="4"> <md-content layout="column" flex
-			layout-margin>
-		<div>
-			<img src="images/admin.png" alt="" class="profile-img">
-			<c:out value="${user.firstName }"></c:out>
-		</div>
-		<md-button>Edit map</md-button> <md-button>Statistic</md-button> <md-button>Users</md-button>
-		<md-button>Products</md-button> </md-content> </md-slidenav>
-		<md-content flex="70"> Content </md-content>
-	</div>
-
+	<div ng-view></div>
 	<script src="js/jquery.min.js"></script>
 	<script src='js/angular.min.js'></script>
+	<script src='js/angular-route.min.js'></script>
 	<script src='js/angular-aria.js'></script>
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/app.js'></script>
-
-
+	<script src='js/admin/app.js'></script>
 </body>
-
 </html>
