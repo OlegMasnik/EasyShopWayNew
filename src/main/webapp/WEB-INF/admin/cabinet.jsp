@@ -11,31 +11,29 @@
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
 </head>
-
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
 	<jsp:include page="../parts/header.jsp"></jsp:include>
-	<div layout="row" flex>
-		<md-slidenav md-is-locked-open="true" layout="row" flex
-			md-whiteframe="4"> <md-content layout="column" flex
-			layout-padding sticky-box> <md-button href="#/" layot="row">
-		<div>
-			<img src="images/admin.png" alt="" class="profile-img">
-			<div flex>
-				<c:out value="${user.firstName } ${user.lastName}"></c:out>
-			</div>
-		</div>
-		</md-button> <md-button href="#map">Map</md-button> <md-button href="#products">Products</md-button>
-		<md-button href="#users">Users</md-button> <md-button
-			href="#statistic">Statistic</md-button> <md-button href="#history">History</md-button>
-		</md-content> </md-slidenav>
-
-		<div flex="80" layout-margin layout-padding>
-
-			<div ng-view></div>
-
-						
+	<md-content layout="row" class="main-page" flex> <md-slidenav
+		md-is-locked-open="true" layout="row" flex md-whiteframe="4">
+	<md-content layout="column" flex layout-padding sticky-box>
+	<md-button href="#/" layot="row">
+	<div>
+		<img src="images/admin.png" alt="" class="profile-img">
+		<div flex>
+			<c:out value="${user.firstName } ${user.lastName}"></c:out>
 		</div>
 	</div>
+	</md-button> <md-button href="#map">Map</md-button> <md-button href="#products">Products</md-button>
+	<md-button href="#users">Users</md-button> <md-button href="#statistic">Statistic</md-button>
+	<md-button href="#history">History</md-button> </md-content> </md-slidenav>
+
+	<div flex="80" class="content">
+
+		<div ng-view></div>
+
+
+	</div>
+	</md-content>
 
 	<script src="js/jquery.min.js"></script>
 	<script src='js/angular.min.js'></script>
@@ -45,5 +43,6 @@
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
+	
 </body>
 </html>

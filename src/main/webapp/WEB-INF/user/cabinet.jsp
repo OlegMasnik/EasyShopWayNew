@@ -1,17 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
-    <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-        <html>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 
-        <head>
-            <title>
-                <c:out value="${user.firstName }"></c:out>
-            </title>
-            <link rel="stylesheet" href="css/style.css">
-            <link rel="stylesheet" href="css/cabinet-style.css">
-            <link rel="stylesheet" href="css/angular-material.min.css">
-        </head>
+<head>
+<title><c:out value="${user.firstName }"></c:out></title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/cabinet-style.css">
+<link rel="stylesheet" href="css/angular-material.min.css">
+</head>
 
         <body ng-app="MyApp" layout="column">
             <jsp:include page="../parts/header.jsp"></jsp:include>
@@ -21,19 +19,15 @@
                         <a href="#">
                             <div class="cab-user-logo" layot="row" layout-padding>
 
-                                <img src="images/admin.png" alt="" class="profile-img">
+			<img src="images/admin.png" alt="" class="profile-img">
 
-                                <div>
-                                    <c:out value="${user.firstName }"></c:out>
-                                    <c:out value="${user.lastName }"></c:out>
-                                </div>
+			<div>
+				<c:out value="${user.firstName }"></c:out>
+				<c:out value="${user.lastName }"></c:out>
+			</div>
 
-                            </div>
-                        </a>
-                        <md-button>Statistic</md-button>
-                        <md-button>History</md-button>
-                    </md-content>
-                </md-slidenav>
+		</div>
+	</a> <md-button>Statistic</md-button> <md-button>History</md-button> </md-content> </md-slidenav>
 
                 <div flex class="content" layout="column">
 
@@ -51,4 +45,4 @@
             <script src='js/user/app.js'></script>
         </body>
 
-        </html>
+</html>
