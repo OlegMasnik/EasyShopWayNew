@@ -17,7 +17,7 @@
 	<div layout="row" flex>
 		<md-slidenav md-is-locked-open="true" layout="row" flex
 			md-whiteframe="4"> <md-content layout="column" flex
-			layout-padding> <md-button href="#/" layot="row">
+			layout-padding sticky-box> <md-button href="#/" layot="row">
 		<div>
 			<img src="images/admin.png" alt="" class="profile-img">
 			<div flex>
