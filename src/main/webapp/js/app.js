@@ -158,7 +158,7 @@ app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.get('http://localhost:8080/EasyShopWayNew/info', config)
             .success(function (data, status, headers,
                 config) {
-                alert(data);
+                console.log(data);
                 $scope.firstName = data.firstName;
                 $scope.lastName = data.lastName;
                 $scope.birthday = data.birthday;
@@ -167,7 +167,6 @@ app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
             }).error(
                 function (data, status, header,
                     config) {
-                    alert(data);
                     console.log('fail');
                 });
     }
