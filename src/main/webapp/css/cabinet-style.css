@@ -33,9 +33,21 @@ md-content {
 
 /*        SideNav:         ;*/
 
-.main-page {
+body, .main-page {
     background-color: #f5f5f5;
 }
+
+a {
+    color: black; /* Цвет обычной ссылки */ 
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+   }
+   a:visited {
+    color: black; /* Цвет посещённой ссылки */
+   } 
+   a:hover {
+    color: black; /* Цвет ссылки при наведении на нее курсора мыши */  
+    text-decoration: none; /* Добавляем подчеркивание */
+   }
 
 .content {
     background-color: transparent;
@@ -64,4 +76,9 @@ md-content {
     background-image: url("../images/wall-material.png");
     /*     background-size: 100%; */
     text-align: center;
+    text-transform: uppercase;
 }
+
+/* .cab-icon { */
+/*     fill: blue; */
+/* } */
