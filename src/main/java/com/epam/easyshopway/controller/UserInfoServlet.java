@@ -30,8 +30,6 @@ public class UserInfoServlet extends HttpServlet {
 		object.put("birthday", user.getDateOfBirth().toString());
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(object.toString());
-		System.out.println(object);
-		
 	}
 
 	
