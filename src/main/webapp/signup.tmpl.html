@@ -19,9 +19,9 @@
                             <input id="lName" required name="lastName" ng-model="lastName">
                         </md-input-container>
 
-                        <div>
+                        <div ng-controller="DatePickerCtrl">
                             <md-content>
-                                <md-datepicker id="birthday" ng-model="myDate" md-placeholder="Enter date" name="myDate"></md-datepicker>
+                                <md-datepicker md-open-on-focus="" md-min-date="minDate" md-max-date="maxDate" id="birthday" ng-model="myDate" md-placeholder="Enter date" name="myDate"></md-datepicker>
                             </md-content>
                         </div>
 

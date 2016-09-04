@@ -54,7 +54,7 @@ public class RegistrationServlet extends HttpServlet {
 			if (UserService.hasEmail(email)) {
 				object.put("emailErrMsg", "This email has already exists.");
 			} else {
-				MailUtil.sendEmailRegistrationLink(email, MD5Util.md5Custom(request.getParameter("password")));
+				MailUtil.sendEmailRegistrationLink(email, firstName + " " + lastName, MD5Util.md5Custom(request.getParameter("password")));
 				request.getSession().setAttribute("pre_user", user);
 			}
 			response.setCharacterEncoding("UTF-8");
