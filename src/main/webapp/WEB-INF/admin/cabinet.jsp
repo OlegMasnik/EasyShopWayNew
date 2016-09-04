@@ -14,16 +14,29 @@
 
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
 	<jsp:include page="../parts/header.jsp"></jsp:include>
-	<p>
-		<a href="#/">Info</a>
-	</p>
-	<a href="#map">map</a>
-	<a href="#history">history</a>
-	<a href="#products">products</a>
-	<a href="#users">products</a>
-	<a href="#statistic">statistic</a>
+	<div layout="row" flex>
+		<md-slidenav md-is-locked-open="true" layout="row" flex
+			md-whiteframe="4"> <md-content layout="column" flex
+			layout-padding> <md-button href="#/" layot="row">
+		<div>
+			<img src="images/admin.png" alt="" class="profile-img">
+			<div flex>
+				<c:out value="${user.firstName } ${user.lastName}"></c:out>
+			</div>
+		</div>
+		</md-button> <md-button href="#map">Map</md-button> <md-button href="#products">Products</md-button>
+		<md-button href="#users">Users</md-button> <md-button
+			href="#statistic">Statistic</md-button> <md-button href="#history">History</md-button>
+		</md-content> </md-slidenav>
 
-	<div ng-view></div>
+		<div flex="80" layout-margin layout-padding>
+
+			<div ng-view></div>
+
+						
+		</div>
+	</div>
+
 	<script src="js/jquery.min.js"></script>
 	<script src='js/angular.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
