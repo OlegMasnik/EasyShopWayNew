@@ -30,6 +30,46 @@
                         <md-button>History</md-button>
                     </md-content>
                 </md-slidenav>
+      <body ng-app="MyApp" layout="column">
+          <jsp:include page="../parts/header.jsp"></jsp:include>
+          <div layout="row" flex>
+              <md-slidenav md-is-locked-open="true" layout="row" flex md-whiteframe="4">
+                  <md-content layout="column" flex layout-margin>
+                      <div> <img src="images/admin.png" alt="" class="profile-img">
+                          <c:out value="${user.firstName }"></c:out>
+                      </div>
+                      <md-button>Information</md-button>
+                      <md-button><a href="/EasyShopWayNew/UserStatisticServlet">Statistic</a></md-button>
+                      <md-button>History</md-button>
+                  </md-content>
+              </md-slidenav>
+              <md-content flex="70">
+                  <form name="userForm" ng-controller="formCtrl" data-ng-init="showInfo()">
+                      <md-input-container class="md-block" flex-gt-sm="">
+                          <label> <span><md-icon md-svg-src="images/icons/person.svg" class="name"></md-icon></span> First Name</label>
+                          <input ng-model="firstName"> </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm="">
+                          <label> <span><md-icon md-svg-src="images/icons/person.svg" class="name"></md-icon></span> Last Name</label>
+                          <input ng-model="lastName"> </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm="">
+                          <label> <span><md-icon md-svg-src="images/icons/birth.svg" class="name"></md-icon></span> Birth Day</label>
+                          <input ng-model="birthday"> </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm="">
+                          <label> <span><md-icon md-svg-src="images/icons/email.svg" class="name"></md-icon></span> Email</label>
+                          <input ng-model="email"> </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm="">
+                          <label> <span><md-icon md-svg-src="images/icons/lang.svg" class="name"></md-icon></span> Preferred language</label>
+                          <input ng-model="language"> </md-input-container>
+                    </form>
+              </md-content>
+<script src="js/jquery.min.js"></script>
+<script src='js/angular.min.js'></script>
+<script src='js/angular-aria.js'></script>
+<script src='js/angular-animate.js'></script>
+<script src='js/angular-material.min.js'></script>
+<script src='js/app.js'></script>
+  </body>
+</html>
 
                 <div flex="80" class="content" layout-margin layout-padding>
 

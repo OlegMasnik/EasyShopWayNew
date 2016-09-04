@@ -1,6 +1,7 @@
 var dateBirthday;
 var app = angular.module('MyApp', ['ngMaterial' , 'ngRoute']);
 
+
 app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     $scope.status = '  ';
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
@@ -170,7 +171,7 @@ app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
                     console.log('fail');
                 });
     }
-						}]);
+}]);
 
 app.controller('DemoCtrl', function ($scope) {
     $scope.user = {

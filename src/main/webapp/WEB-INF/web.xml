@@ -40,6 +40,13 @@
 		<servlet-name>AppErrorHandler</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.AppErrorHandler</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>UserStatisticServlet</display-name>
+		<servlet-name>UserStatisticServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.UserStatisticServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -78,6 +85,10 @@
 	<servlet-mapping>
 		<servlet-name>AppErrorHandler</servlet-name>
 		<url-pattern>/AppErrorHandler</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserStatisticServlet</servlet-name>
+		<url-pattern>/UserStatisticServlet</url-pattern>
 	</servlet-mapping>
 
 	<filter>
