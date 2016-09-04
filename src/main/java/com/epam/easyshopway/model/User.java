@@ -123,4 +123,12 @@ public class User {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", dateOfBirth=" + dateOfBirth + ", active=" + active + ", role=" + role
+				+ ", language=" + language + "]";
+	}
+	
 }

@@ -1,3 +1,20 @@
 <div>
 	<h1>USERS</h1>
+
+	<table datatable="" class="row-border hover">
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Surname</td>
+				<td>Email</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="x in users">
+				<td>{{ x.fn}}</td>
+				<td>{{ x.ln }}</td>
+				<td>{{ x.e }}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
