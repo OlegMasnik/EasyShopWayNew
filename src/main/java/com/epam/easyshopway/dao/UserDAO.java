@@ -34,6 +34,11 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setString(2, user.getLastName());
 		statement.setString(3, user.getEmail());
 		statement.setString(4, user.getPassword());
+		if (user.getDateOfBirth() == null) {
+			statement.setNull(5, java.sql.Types. DATE);
+		} else {
+			statement.setDate(5, user.getDateOfBirth());
+		}
 		statement.setDate(5, user.getDateOfBirth());
 		statement.setBoolean(6, user.isActive());
 		statement.setString(7, user.getRole());
