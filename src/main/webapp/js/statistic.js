@@ -64,39 +64,16 @@ app.controller('ChartCtrl', function($scope) {
                     }, {
                         name: 'Chrome',
                         y: 24.03,
-                        sliced: true,
-                        selected: true
+                       
                     },
                     {
                         name: 'Chrome',
                         y: 24.03,
                         sliced: true,
                         selected: true
+                        
                     },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },{
+                     {
                         name: 'Firefox',
                         y: 10.38
                     }, {
