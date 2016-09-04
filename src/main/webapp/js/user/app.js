@@ -1,6 +1,6 @@
-var app = angular.module('MyApp', ['ngMaterial']);
+var userApp = angular.module('MyApp');
 
-app.controller('ChartCtrl', function($scope) {
+userApp.controller('ChartCtrl', function($scope) {
 	$scope.getFoodData = function () {
 //        console.log('hello' + $scope.email)
 //        
@@ -36,19 +36,6 @@ app.controller('ChartCtrl', function($scope) {
 	            }
 	        }
 		 
-		 $http.post('http://localhost:8080/EasyShopWayNew/', data, config)
-       .success(function (data, status,
-           headers, config) {
-           if (data.emailErrMsg == undefined) {
-               $window.location.href = 'cabinet';
-           } else {
-               $scope.error = data.emailErrMsg;
-           }
-           console.log(data.emailErrMsg);
-       }).error(function (data, status,
-           header, config) {
-           console.log('fail');
-       });
 		
 
             // Build the chart

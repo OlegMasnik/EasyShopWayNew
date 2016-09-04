@@ -114,7 +114,7 @@
 
 	<servlet-mapping>
 		<servlet-name>UserStatisticServlet</servlet-name>
-		<url-pattern>/UserStatisticServlet</url-pattern>
+		<url-pattern>/userStats</url-pattern>
 	</servlet-mapping>
 
 	<filter>

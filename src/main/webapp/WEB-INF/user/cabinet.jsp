@@ -30,7 +30,7 @@
 
                             </div>
                         </a>
-                        <md-button>Statistic</md-button>
+                        <md-button><a href="${pageContext.request.contextPath}/userStats">Statistic</a></md-button>
                         <md-button>History</md-button>
                     </md-content>
                 </md-slidenav>
