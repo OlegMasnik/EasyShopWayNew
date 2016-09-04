@@ -21,7 +21,7 @@
 
                         <div ng-controller="DatePickerCtrl">
                             <md-content>
-                                <md-datepicker md-open-on-focus="" md-min-date="minDate" md-max-date="maxDate" id="birthday" ng-model="myDate" md-placeholder="Enter date" name="myDate"></md-datepicker>
+                                <md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="dt" is-open="showdp" max-date="dtmax" id="birthday" md-placeholder="Enter date" name="myDate"></md-datepicker>
                             </md-content>
                         </div>
 

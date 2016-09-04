@@ -102,27 +102,21 @@ app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
 
         if ($('#emailR').valid() && $('#fName').valid() && $('#lName').valid() && $('#passwordR').valid()) {
 
-            $http
-                .post(
-                    'http://localhost:8080/EasyShopWayNew/reg',
-                    data, config)
-                .success(
-                    function (data, status,
-                        headers, config) {
-                        console
-                            .log("QWEER" + data.emailErrMsg);
-                        $scope.error = data.emailErrMsg;
-                        if (data.emailErrMsg == undefined) {
-                            $scope.success = "Check your email";
-                        }
-                        var esc = $
-                            .Event(
-                                "keydown", {
-                                    keyCode: 27
-                                });
-                        $("body").trigger(esc);
+            $http.post('http://localhost:8080/EasyShopWayNew/reg', data, config)
+                .success(function (data, status, headers, config) {
+                    console.log("QWEER" + data.emailErrMsg);
+                    $scope.error = data.emailErrMsg;
+                    if (data.emailErrMsg == undefined) {
+                        $scope.success = "Check your email";
+                    }
+                    var esc = $
+                        .Event(
+                            "keydown", {
+                                keyCode: 27
+                            });
+                    $("body").trigger(esc);
 
-                    }).error(
+                }).error(
                     function (data, status,
                         header, config) {
                         console.log('fail');
@@ -131,15 +125,21 @@ app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
             console.log("oq");
         }
     };
-						}]);
+}]);
 
 app.controller('DatePickerCtrl', function ($scope) {
-    $scope.myDate = new Date();
-}).config(function ($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.formatDate = function (date) {
-        dateBirthday = moment(date).format('YYYY-MM-DD');
-        return moment(date).format('YYYY-MM-DD');
+
+    $scope.today = function () {
+        $scope.dt = new Date();
     };
+    $scope.dateformat = "MM/dd/yyyy";
+    $scope.today();
+    $scope.showcalendar = function ($event) {
+        $scope.showdp = true;
+    };
+    $scope.showdp = false;
+    $scope.dtmax = new Date();
+    dateBirthday = moment($scope.dt).format('YYYY-MM-DD');
 });
 
 app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
