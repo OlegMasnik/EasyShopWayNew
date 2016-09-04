@@ -22,5 +22,11 @@
 	<script src='js/app.js'></script>
 	<script src="js/jquery.validate.min.js"></script>
 
+
+
 </body>
+	<script type='text/ng-template' id='info.html'>
+    <!-- List -->
+    <p>Choose an Item</p>
+</script>
 </html>
