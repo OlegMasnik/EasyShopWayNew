@@ -28,7 +28,28 @@ app.controller('ChartCtrl', function($scope) {
 //            cosole.log("sory");
 //        }
 //        
-        $(document).ready(function () {
+		 var data = null;
+		
+		 var config = {
+	            headers: {
+	                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+	            }
+	        }
+		 
+		 $http.post('http://localhost:8080/EasyShopWayNew/', data, config)
+       .success(function (data, status,
+           headers, config) {
+           if (data.emailErrMsg == undefined) {
+               $window.location.href = 'cabinet';
+           } else {
+               $scope.error = data.emailErrMsg;
+           }
+           console.log(data.emailErrMsg);
+       }).error(function (data, status,
+           header, config) {
+           console.log('fail');
+       });
+		
 
             // Build the chart
             $('#container').highcharts({
@@ -39,7 +60,7 @@ app.controller('ChartCtrl', function($scope) {
                     type: 'pie'
                 },
                 title: {
-                    text: 'Browser market shares January, 2015 to May, 2015'
+                    text: 'Food'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -64,39 +85,16 @@ app.controller('ChartCtrl', function($scope) {
                     }, {
                         name: 'Chrome',
                         y: 24.03,
-                        sliced: true,
-                        selected: true
+                       
                     },
                     {
                         name: 'Chrome',
                         y: 24.03,
                         sliced: true,
                         selected: true
+                        
                     },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Chrome',
-                        y: 24.03,
-                        sliced: true,
-                        selected: true
-                    },{
+                     {
                         name: 'Firefox',
                         y: 10.38
                     }, {
@@ -111,7 +109,7 @@ app.controller('ChartCtrl', function($scope) {
                     }]
                 }]
             });
-        });
+       
         
         
     };

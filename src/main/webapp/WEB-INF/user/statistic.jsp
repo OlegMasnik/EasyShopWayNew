@@ -11,8 +11,7 @@
     </title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cabinet-style.css">
-    <link rel="stylesheet" href="css/angular-material.min.css"> 
-    <link rel="stylesheet" href="css/user-statistic.css"/>    
+    <link rel="stylesheet" href="css/angular-material.min.css">  
    </head>
 
 <body ng-app="MyApp" layout="column"  >
@@ -36,6 +35,7 @@
         <script src='js/angular.min.js'></script>
         <script src='js/angular-aria.js'></script>
         <script src='js/angular-animate.js'></script>
+        <script src='js/angular-route.min.js'></script>
         <script src='js/angular-material.min.js'></script>
 	  	<script src="js/highcharts.js"></script>
 		<script src="js/exporting.js"></script>
