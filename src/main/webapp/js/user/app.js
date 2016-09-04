@@ -1,6 +1,12 @@
-var app = angular.module('MyApp', ['ngMaterial']);
+var userApp = angular.module('MyApp');
 
-app.controller('ChartCtrl', function($scope) {
+userApp.config(function($routeProvider) {
+	$routeProvider.when("/", {
+		templateUrl : "template/shared/info.jsp"
+	});
+});
+
+userApp.controller('ChartCtrl', function($scope) {
 	$scope.getFoodData = function () {
 //        console.log('hello' + $scope.email)
 //        

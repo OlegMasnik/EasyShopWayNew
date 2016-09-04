@@ -7,7 +7,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>404 - Page not found</title>
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/cabinet-style.css">
         <link rel="stylesheet" href="css/angular-material.min.css">
 
         <style>
