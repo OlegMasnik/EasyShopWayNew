@@ -49,15 +49,22 @@
 		<servlet-class>com.epam.easyshopway.controller.GooglePlusInfoServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<display-name>FacebookLogin</display-name>
-		<servlet-name>FacebookLogin</servlet-name>
-		<servlet-class>com.epam.easyshopway.controller.FacebookLogin</servlet-class>
+		<display-name>VKLoginServlet</display-name>
+		<servlet-name>VKLoginServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.VKLoginServlet</servlet-class>
 
 	</servlet>
 	<servlet>
 		<display-name>UserStatisticServlet</display-name>
 		<servlet-name>UserStatisticServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.UserStatisticServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>VKInfoServlet</display-name>
+		<servlet-name>VKInfoServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.VKInfoServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -108,13 +115,17 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>FacebookLogin</servlet-name>
-		<url-pattern>/FacebookLogin</url-pattern>
+		<servlet-name>VKLoginServlet</servlet-name>
+		<url-pattern>/vk-login</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>UserStatisticServlet</servlet-name>
 		<url-pattern>/userStats</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>VKInfoServlet</servlet-name>
+		<url-pattern>/vk-user-info</url-pattern>
 	</servlet-mapping>
 
 	<filter>
