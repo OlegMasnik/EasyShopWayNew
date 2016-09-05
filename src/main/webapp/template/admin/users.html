@@ -1,3 +1,54 @@
-<div>
-	<h1>USERS</h1>
+<div ng-controller="UsersCtrl1">
+	<md-toolbar class="md-whiteframe-1dp">
+	<div class="md-toolbar-tools">
+		<div class="md-title">
+			Users
+			<md-icon md-font-set="fa">&#xf0f3</md-icon>
+		</div>
+	</div>
+	</md-toolbar>
+	<!--Toolbar-->
+	<md-card> <md-content flex="" layout-padding="">
+	<md-whiteframe layout="row"> <md-switch
+		ng-model="smart" aria-label="Smart Search"> Smart Search:
+	{{ smart ? "ON" : "OFF" }} </md-switch> </md-whiteframe> <md-whiteframe layout="row"
+		ng-repeat="single in multisearch"> <md-input-container>
+	<label>Column</label> <md-select ng-model="single.column"
+		ng-change="updateDataTable()"> <md-optgroup label="Column">
+	<md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
+	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>Search</label>
+	<input ng-change="updateDataTable()" ng-model="single.ident"> </md-input-container>
+	<md-button class="md-fab md-warn" ng-click="deleteRow(single.id)"
+		ng-disabled="multisearch.length == 1"> - </md-button> <md-button
+		class="md-fab md-raised" ng-click="addRow()"> + </md-button> </md-whiteframe> </md-content> </md-card>
+	<!--AMADTS Table-->
+	<md-card> <md-content layout="column" flex> <md-table-container>
+	<table md-table>
+		<thead md-head md-order="query.order">
+			<tr md-row>
+				<th md-column ng-repeat="column in autocolumn"
+					md-order-by="{{column.name}}"><span>{{column.display}}</span>
+				</th>
+			</tr>
+		</thead>
+		<tbody md-body>
+			<tr md-row
+				ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+				<td md-cell>{{row.fn}}</td>
+				<td md-cell>{{row.ln}}</td>
+				<td md-cell>{{row.e}}</td>
+				<td><md-button ng-click="" class="md-fab md-mini md-primary"
+						aria-label="Use Android"><i class="material-icons">mail</i>
+					</md-button><md-button class="md-fab md-mini red-btn"
+						aria-label="Use Android"><i class="material-icons">not_interested</i>
+					</md-button><md-button ng-show="{{row.active}}" class="md-fab md-mini green-btn"
+						aria-label="Use Android"><i class="material-icons">done</i>
+					</md-button></td>
+			</tr>
+		</tbody>
+	</table>
+	</md-table-container> <md-table-pagination md-limit="query.limit"
+		md-limit-options="limitOptions" md-page="query.page"
+		md-total="{{datatable.count}}" md-page-select="options.pageSelect"></md-table-pagination>
+	</md-content> </md-card>
 </div>

@@ -12,11 +12,16 @@ public class ProductPlacement {
 	@Column("cupboard_id")
 	private Integer cupboardId;
 
-	public ProductPlacement(Integer id, Integer productId, Integer cupboardId) {
+	@Column("place")
+	private Integer place;
+
+	public ProductPlacement(Integer id, Integer productId, Integer cupboardId,
+			Integer place) {
 		super();
 		this.id = id;
 		this.productId = productId;
 		this.cupboardId = cupboardId;
+		this.place = place;
 	}
 
 	public ProductPlacement() {
@@ -45,6 +50,14 @@ public class ProductPlacement {
 
 	public void setCupboardId(Integer cupboardId) {
 		this.cupboardId = cupboardId;
+	}
+
+	public Integer getPlace() {
+		return place;
+	}
+
+	public void setPlace(Integer place) {
+		this.place = place;
 	}
 
 }

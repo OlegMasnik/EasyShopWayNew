@@ -9,14 +9,15 @@ import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.User;
 
 public class UserDAO extends AbstractDAO<User> {
-	private final String INSERT = "INSERT INTO user (first_name, last_name, email, password, date_of_birth, active, role, language) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+	private final String INSERT = "INSERT INTO user (first_name, last_name, email, password, date_of_birth, active, role, language, image) "
+			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	private final String SELECT_ALL = "SELECT * FROM user WHERE active = 1;";
 	private final String SELECT_BY_ID = "SELECT * FROM user WHERE id = ?;";
-	private final String SELECT_BY_EMAIL = "SELECT * FROM user WHERE email LIKE ?;";
-	private final String UPDATE = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password = ?, date_of_birth = ?, active = ?, role = ?, language = ? WHERE id = ?;";
+	private final String SELECT_BY_EMAIL = "SELECT * FROM user WHERE email LIKE ? and active=1;";
+	private final String UPDATE = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password = ?, date_of_birth = ?, active = ?, role = ?, language = ?, image=? WHERE id = ?;";
 	private final String DELETE = "UPDATE user SET active = 0 WHERE id = ?;";
-	private final String GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user WHERE email = ? AND password = ?";
-	private final String CHECK_EMAIL = "SELECT * FROM user WHERE email like ?";
+	private final String GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user WHERE email = ? AND password = ? and active = 1";
+	private final String CHECK_EMAIL = "SELECT * FROM user WHERE email like ? and active = 1";
 
 	public UserDAO() {
 		super();
@@ -28,14 +29,15 @@ public class UserDAO extends AbstractDAO<User> {
 		return 0;
 	}
 
-	public User insertUser(User user) throws SQLException, InstantiationException, IllegalAccessException {
+	public User insertUser(User user) throws SQLException,
+			InstantiationException, IllegalAccessException {
 		PreparedStatement statement = connection.prepareStatement(INSERT);
 		statement.setString(1, user.getFirstName());
 		statement.setString(2, user.getLastName());
 		statement.setString(3, user.getEmail());
 		statement.setString(4, user.getPassword());
 		if (user.getDateOfBirth() == null) {
-			statement.setNull(5, java.sql.Types. DATE);
+			statement.setNull(5, java.sql.Types.DATE);
 		} else {
 			statement.setDate(5, user.getDateOfBirth());
 		}
@@ -43,27 +45,33 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setBoolean(6, user.isActive());
 		statement.setString(7, user.getRole());
 		statement.setString(8, user.getLanguage());
+		statement.setString(9, user.getImage());
+
 		statement.executeUpdate();
 		statement.close();
 		return getByEmail(user.getEmail());
 	}
 
 	@Override
-	public List<User> getAll() throws SQLException, IllegalAccessException, InstantiationException {
+	public List<User> getAll() throws SQLException, IllegalAccessException,
+			InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_ALL);
 		ResultSet resultSet = statement.executeQuery(SELECT_ALL);
-		List<User> users = new Transformer<User>(User.class).fromRStoCollection(resultSet);
+		List<User> users = new Transformer<User>(User.class)
+				.fromRStoCollection(resultSet);
 		statement.close();
 		return users;
 
 	}
 
 	@Override
-	public User getById(Integer id) throws SQLException, IllegalAccessException, InstantiationException {
+	public User getById(Integer id) throws SQLException,
+			IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
 		statement.setInt(1, id);
 		ResultSet resultSet = statement.executeQuery();
-		List<User> users = new Transformer<User>(User.class).fromRStoCollection(resultSet);
+		List<User> users = new Transformer<User>(User.class)
+				.fromRStoCollection(resultSet);
 		statement.close();
 		if (users.size() > 0)
 			return users.iterator().next();
@@ -71,11 +79,14 @@ public class UserDAO extends AbstractDAO<User> {
 			return null;
 	}
 
-	public User getByEmail(String email) throws SQLException, IllegalAccessException, InstantiationException {
-		PreparedStatement statement = connection.prepareStatement(SELECT_BY_EMAIL);
+	public User getByEmail(String email) throws SQLException,
+			IllegalAccessException, InstantiationException {
+		PreparedStatement statement = connection
+				.prepareStatement(SELECT_BY_EMAIL);
 		statement.setString(1, email);
 		ResultSet resultSet = statement.executeQuery();
-		List<User> users = new Transformer<User>(User.class).fromRStoCollection(resultSet);
+		List<User> users = new Transformer<User>(User.class)
+				.fromRStoCollection(resultSet);
 		statement.close();
 		if (users.size() > 0)
 			return users.iterator().next();
@@ -94,7 +105,8 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setBoolean(6, user.isActive());
 		statement.setString(7, user.getRole());
 		statement.setString(8, user.getLanguage());
-		statement.setInt(9, userId);
+		statement.setString(9, user.getImage());
+		statement.setInt(10, userId);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
@@ -111,21 +123,26 @@ public class UserDAO extends AbstractDAO<User> {
 
 	public boolean validateUser(String email, String password)
 			throws SQLException, InstantiationException, IllegalAccessException {
-		PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_LOGIN_AND_PASSWORD);
+		PreparedStatement preparedStatement = connection
+				.prepareStatement(GET_USER_BY_LOGIN_AND_PASSWORD);
 		preparedStatement.setString(1, email);
 		preparedStatement.setString(2, password);
 		ResultSet rs = preparedStatement.executeQuery();
-		List<User> users = new Transformer<User>(User.class).fromRStoCollection(rs);
+		List<User> users = new Transformer<User>(User.class)
+				.fromRStoCollection(rs);
 		preparedStatement.close();
 
 		return users.size() != 0;
 	}
 
-	public boolean hasEmail(String email) throws SQLException, InstantiationException, IllegalAccessException {
-		PreparedStatement preparedStatement = connection.prepareStatement(CHECK_EMAIL);
+	public boolean hasEmail(String email) throws SQLException,
+			InstantiationException, IllegalAccessException {
+		PreparedStatement preparedStatement = connection
+				.prepareStatement(CHECK_EMAIL);
 		preparedStatement.setString(1, email);
 		ResultSet rs = preparedStatement.executeQuery();
-		List<User> users = new Transformer<User>(User.class).fromRStoCollection(rs);
+		List<User> users = new Transformer<User>(User.class)
+				.fromRStoCollection(rs);
 		preparedStatement.close();
 		return users.size() != 0;
 	}
