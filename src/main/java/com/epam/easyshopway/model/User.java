@@ -41,9 +41,8 @@ public class User {
 
 	public User(String firstName, String lastName, String email,
 			String password, Boolean active, String role,
-			String language, String image) {
+			String language, String image, Date dateOfBirth) {
 		super();
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

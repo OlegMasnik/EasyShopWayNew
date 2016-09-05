@@ -6,7 +6,7 @@ import java.util.List;
 import com.epam.easyshopway.dao.ProductPlacementDAO;
 import com.epam.easyshopway.model.ProductPlacement;
 
-public class ProductPlacementServic {
+public class ProductPlacementService {
 	public int insert(ProductPlacement productList) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
 			return productDAO.insert(productList);

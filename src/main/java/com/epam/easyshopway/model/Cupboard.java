@@ -22,9 +22,9 @@ public class Cupboard {
 		super();
 	}
 
-	public Cupboard(Integer id, Integer boardAmount, String descriptionEn, String descriptionUk, Boolean active) {
+	public Cupboard(Integer boardAmount, String descriptionEn,
+			String descriptionUk, Boolean active) {
 		super();
-		this.id = id;
 		this.boardAmount = boardAmount;
 		this.descriptionEn = descriptionEn;
 		this.descriptionUk = descriptionUk;
