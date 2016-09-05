@@ -16,7 +16,7 @@
             <md-content layout="row" class="main-page" flex>
                 <md-slidenav md-is-locked-open="true" layout="column" flex md-whiteframe="4">
                     <md-content layout="column" flex>
-                        <a href="#">
+                        <a href="#/">
                             <div class="cab-user-logo" layot="row" layout-padding>
 
 			<img src="images/admin.png" alt="" class="profile-img">
@@ -25,9 +25,8 @@
 				<c:out value="${user.firstName }"></c:out>
 				<c:out value="${user.lastName }"></c:out>
 			</div>
-
 		</div>
-	</a> <md-button>Statistic</md-button> <md-button>History</md-button> </md-content> </md-slidenav>
+	</a> <md-button href="#statistic">Statistic</md-button> <md-button href="#history">History</md-button> </md-content> </md-slidenav>
 
                 <div flex class="content" layout="column">
 
@@ -41,6 +40,8 @@
 	<script src='js/angular-aria.js'></script>
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
+	<script src="js/shared/highcharts.js"></script>
+	<script src="js/shared/exporting.js"></script>
 	<script src='js/app.js'></script>
             <script src='js/user/app.js'></script>
         </body>

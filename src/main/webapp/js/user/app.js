@@ -3,11 +3,15 @@ var userApp = angular.module('MyApp');
 userApp.config(function($routeProvider) {
 	$routeProvider.when("/", {
 		templateUrl : "template/shared/info.jsp"
+	}).when("/statistic", {
+		templateUrl : "template/shared/statistic.jsp"
+	}).when("/history", {
+		templateUrl : "template/shared/history.jsp"
 	});
 });
 
 userApp.controller('ChartCtrl', function($scope) {
-	$scope.getFoodData = function () {
+	$scope.getFoodData = function ($http) {
 //        console.log('hello' + $scope.email)
 //        
 //
