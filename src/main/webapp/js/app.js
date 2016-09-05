@@ -1,6 +1,5 @@
 var dateBirthday;
-var app = angular.module('MyApp', ['ngMaterial' , 'ngRoute']);
-
+var app = angular.module('MyApp', ['ngMaterial', 'ngRoute']);
 
 app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     $scope.status = '  ';
@@ -104,7 +103,7 @@ app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
         console.log($('#fName1').val());
         console.log($('#lName1').val());
 
-        console.log($('#emailR').valid() +" "+ $('#fName1').valid() +" "+ $('#lName1').valid() +" "+ $('#passwordR').valid())
+        console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
         if ($('#emailR').valid() && $('#passwordR').valid()) {
 
             $http.post('http://localhost:8080/EasyShopWayNew/reg', data, config)
@@ -114,12 +113,12 @@ app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
                     if (data.emailErrMsg == undefined) {
                         $scope.success = "Check your email";
                     }
-//                    var esc = $
-//                        .Event(
-//                            "keydown", {
-//                                keyCode: 27
-//                            });
-//                    $("body").trigger(esc);
+                    //                    var esc = $
+                    //                        .Event(
+                    //                            "keydown", {
+                    //                                keyCode: 27
+                    //                            });
+                    //                    $("body").trigger(esc);
 
                 }).error(
                     function (data, status,
