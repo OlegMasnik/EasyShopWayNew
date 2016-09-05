@@ -66,6 +66,13 @@
 		<servlet-name>VKInfoServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.VKInfoServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>UsersControlServlet</display-name>
+		<servlet-name>UsersControlServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.UsersControlServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -125,7 +132,11 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>VKInfoServlet</servlet-name>
-		<url-pattern>/vk-user-info</url-pattern>
+		<url-pattern>/home/vk-user-info</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsersControlServlet</servlet-name>
+		<url-pattern>/users</url-pattern>
 	</servlet-mapping>
 
 	<filter>

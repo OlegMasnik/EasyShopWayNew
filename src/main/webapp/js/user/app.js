@@ -102,4 +102,4 @@ userApp.controller('ChartCtrl', function($scope, $http) {
       
         
     };
-});
+}]);

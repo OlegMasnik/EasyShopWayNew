@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -10,7 +9,12 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
+<link href="css/icon.css" rel="stylesheet">
+
+<link rel="stylesheet" href="css/datatable/md-data-table.css">
+
 </head>
+
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
 	<jsp:include page="../parts/header.jsp"></jsp:include>
 	<md-content layout="row" class="main-page" flex> <md-slidenav
@@ -41,8 +45,13 @@
 	<script src='js/angular-aria.js'></script>
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
+	<script src="js/datatable/md-data-table.js"></script>
+	
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
-	
+
+
+
 </body>
+
 </html>

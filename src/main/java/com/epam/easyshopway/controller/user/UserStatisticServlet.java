@@ -52,8 +52,8 @@ public class UserStatisticServlet extends HttpServlet {
 		JSONArray data = new JSONArray();
 		inSeries.put("colorByPoint", true);
 		boolean isEnglish = "en".equals(user.getLanguage());
-		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "Групи товарів, які Ви часто шукали:"));
-		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках:");
+		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:"));
+		inSeries.put("name", isEnglish ? "Persentage" : "пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:");
 		for (int i=0; i<userProducts.size(); i++){
 			JSONObject foodType = new JSONObject();
 			String productTypeName = isEnglish ? userProducts.get(i).getNameEnglish() : userProducts.get(i).getNameEnglish() ;

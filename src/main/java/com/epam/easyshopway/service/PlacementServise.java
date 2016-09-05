@@ -3,13 +3,13 @@ package com.epam.easyshopway.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.epam.easyshopway.dao.PaydeskDAO;
-import com.epam.easyshopway.model.Paydesk;
+import com.epam.easyshopway.dao.PlacementDAO;
+import com.epam.easyshopway.model.Placement;
 
-public class PaydeskServise {
-	public static int update(Integer paydeskId, Paydesk paydesk) {
-		try (PaydeskDAO paydeskDAO = new PaydeskDAO()) {
-			return paydeskDAO.update(paydeskId, paydesk);
+public class PlacementServise {
+	public static int update(Integer placementId, Placement placement) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.update(placementId, placement);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -19,8 +19,8 @@ public class PaydeskServise {
 	}
 
 	public static int delete(Integer id) {
-		try (PaydeskDAO paydeskDAO = new PaydeskDAO()) {
-			return paydeskDAO.delete(id);
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.delete(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -29,9 +29,9 @@ public class PaydeskServise {
 		return 0;
 	}
 
-	public static int insert(Paydesk paydesk) {
-		try (PaydeskDAO paydeskDAO = new PaydeskDAO()) {
-			return paydeskDAO.insert(paydesk);
+	public static int insert(Placement placement) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.insert(placement);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -40,9 +40,9 @@ public class PaydeskServise {
 		return 0;
 	}
 
-	public static Paydesk getById(Integer id) {
-		try (PaydeskDAO paydeskDAO = new PaydeskDAO()) {
-			return paydeskDAO.getById(id);
+	public static Placement getById(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getById(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {
@@ -53,9 +53,9 @@ public class PaydeskServise {
 		return null;
 	}
 
-	public static List<Paydesk> getAll() {
-		try (PaydeskDAO paydeskDAO = new PaydeskDAO()) {
-			return paydeskDAO.getAll();
+	public static List<Placement> getAll() {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getAll();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {
