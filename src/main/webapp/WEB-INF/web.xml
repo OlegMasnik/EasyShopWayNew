@@ -147,7 +147,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>UploadImageServlet</servlet-name>
-		<url-pattern>/upload-picture</url-pattern>
+		<url-pattern>cabinet/image-upload</url-pattern>
 	</servlet-mapping>
 
 	<filter>
