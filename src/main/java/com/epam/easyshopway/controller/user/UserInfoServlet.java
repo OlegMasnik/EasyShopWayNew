@@ -1,4 +1,4 @@
-package com.epam.easyshopway.controller;
+package com.epam.easyshopway.controller.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
