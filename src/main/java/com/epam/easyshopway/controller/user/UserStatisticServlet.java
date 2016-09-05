@@ -42,6 +42,7 @@ public class UserStatisticServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("asda");
 		response.setCharacterEncoding("utf-8");
 		User user = (User) request.getSession().getAttribute("user");
 		List<UserProductType> userProducts = UserProductTypeService.getUserProductTypes(user.getId());
@@ -51,15 +52,13 @@ public class UserStatisticServlet extends HttpServlet {
 		JSONArray data = new JSONArray();
 		inSeries.put("colorByPoint", true);
 		boolean isEnglish = "en".equals(user.getLanguage());
-		JSONObject title = new JSONObject();
-		title.put("text", isEnglish ? "Often searched groups of food" : "Групи товарів, які Ви часто шукали");
-		responseObject.put("title", title);
-		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках");
+		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:"));
+		inSeries.put("name", isEnglish ? "Persentage" : "пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:");
 		for (int i=0; i<userProducts.size(); i++){
 			JSONObject foodType = new JSONObject();
-			String productTypeName = isEnglish ? userProducts.get(i).getNameEnglish() : userProducts.get(i).getNameUkrainian() ;
+			String productTypeName = isEnglish ? userProducts.get(i).getNameEnglish() : userProducts.get(i).getNameEnglish() ;
 			foodType.put("name", productTypeName);
-			double percent = userProducts.get(i).getCount();
+			double percent = 1.0 / userProducts.get(i).getCount() * 100;
 			foodType.put("y", percent);
 			if (i == 0){
 				foodType.put("sliced", true);
@@ -71,5 +70,6 @@ public class UserStatisticServlet extends HttpServlet {
 		series.add(inSeries);
 		responseObject.put("series", series);
 		response.getWriter().write(responseObject.toString());
+		
 	}
 }

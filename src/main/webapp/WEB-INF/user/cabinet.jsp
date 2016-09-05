@@ -58,7 +58,12 @@
                     </md-content>
                 </md-slidenav>
 
-                <div flex class="content" layout="column">
+                            </div>
+                        </a>
+                        <md-button href="">Statistic</md-button>
+                        <md-button>History</md-button>
+                    </md-content>
+                </md-slidenav>
 
                     <div ng-view onload="getFoodData()"></div>
 
