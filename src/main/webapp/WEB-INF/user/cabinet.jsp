@@ -8,33 +8,11 @@
             <title>
                 <c:out value="${user.firstName }"></c:out>
             </title>
-            <link rel="stylesheet" href="css/style.css">
-            <link rel="stylesheet" href="css/cabinet-style.css">
+            
+            
             <link rel="stylesheet" href="css/angular-material.min.css">
-            <style>
-                .product-card {
-                    width: 300px;
-                    height: 400px;
-                    margin: 10px;
-                    background-color: #fff;
-                    display: inline-block;
-                }
-                
-                .product-list {
-                    width: 220px;
-                    height: 300px;
-                    background-color: #fff;
-                    display: inline-block;
-                }
-                
-                .left-column3 {
-                    width: 250px;
-                    height: 100px;
-                    margin: 10px;
-                    background-color: #fff;
-                    display: inline-block;
-                }
-            </style>
+          <link rel="stylesheet" href="css/cabinet-style.css">
+          <link rel="stylesheet" href="css/style.css">
         </head>
 
         <body ng-app="MyApp" layout="column">
@@ -58,18 +36,13 @@
                     </md-content>
                 </md-slidenav>
 
-                            </div>
-                        </a>
-                        <md-button href="">Statistic</md-button>
-                        <md-button>History</md-button>
-                    </md-content>
-                </md-slidenav>
+                <div flex class="content" layout="column">
 
                     <div ng-view onload="getFoodData()"></div>
 
                 </div>
             </md-content>
-            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-3.1.0.min.js"></script>
             <script src='js/angular.min.js'></script>
             <script src='js/angular-route.min.js'></script>
             <script src='js/angular-aria.js'></script>
@@ -80,6 +53,7 @@
             <script src='js/app.js'></script>
             <script src='js/user/app.js'></script>
             <script src='js/user/user-history.js'></script>
+            <script src="js/shared/statistic.js"></script>
         </body>
 
         </html>
