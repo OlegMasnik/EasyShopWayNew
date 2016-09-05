@@ -36,7 +36,7 @@
                     </md-content>
                 </md-slidenav>
 
-                <div class="content">   
+                <div flex class="content" layout="column">
 
                     <div ng-view onload="getFoodData()"></div>
 
