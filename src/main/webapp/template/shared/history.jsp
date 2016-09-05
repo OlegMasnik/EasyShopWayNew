@@ -3,12 +3,27 @@
 
     <h3 class="cab-title">History</h3>
 
-    <div layout="row" flex="none">
 
-        <md-card flex="50" md-theme-watch>
-            <md-card-content>
-                
-                
+
+    <div flex ng-controller="UserHistoryCtrl">
+
+        <md-card class="product-card" layout="column" ng-repeat="historyItem in history">
+            <md-card-title>
+                {{historyItem.date}}
+            </md-card-title>
+            <md-card-content layout="column">
+                <md-content class="product-list">
+                    <md-list class="md-dense" flex="">
+                        <md-list-item class="md-3-line" ng-repeat="item in historyItem.list">
+                            <img ng-src="{{item.img}}" class="md-avatar" alt="{{item.name}}">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{ item.name }}</h3>
+                                <h4>{{ item.type }}</h4>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
             </md-card-content>
         </md-card>
+
     </div>

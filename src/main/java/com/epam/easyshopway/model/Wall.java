@@ -2,14 +2,14 @@ package com.epam.easyshopway.model;
 
 import com.epam.easyshopway.dao.transformer.annotation.Column;
 
-public class Paydesk {
+public class Wall {
 	@Column("id")
 	private Integer id;
 
 	@Column("placement_id")
 	private Integer placementId;
 
-	public Paydesk() {
+	public Wall() {
 		super();
 	}
 
@@ -28,5 +28,5 @@ public class Paydesk {
 	public void setPlacementId(Integer placementId) {
 		this.placementId = placementId;
 	}
-	
+
 }
