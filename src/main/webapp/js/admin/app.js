@@ -28,18 +28,6 @@ adminApp.controller('InfoCtrl', function ($scope, $http) {
     $scope.qwer = "Hello world";
 });
 
-adminApp.controller('UsersCtrl', function ($scope, $http) {
-    $http({
-        method: "GET",
-        url: "/EasyShopWayNew/users"
-    }).then(function mySucces(response) {
-        $scope.users = response.data.users;
-        console.log($scope.users);
-    }, function myError(response) {
-        console.log(response.statusText);
-    });
-});
-
 adminApp.controller('UsersCtrl1', ['$http', '$scope', function ($http, $scope) {
 
     var original = {};
@@ -50,14 +38,14 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', function ($http, $scope) {
     }).then(function mySucces(response) {
         $scope.data = response.data;
         original.users = $scope.data.users;
-        original.count = $scope.data.length;
+        original.count = $scope.data.users.length;
         console.log("kinder " + original.users);
         $scope.datatable = angular.copy(original);
     }, function myError(response) {
         console.log(response.statusText);
     });
     $scope.smart = true;
-
+    
     $scope.autocolumn = [{
         name: "fn",
         display: "First Name"
@@ -68,8 +56,8 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', function ($http, $scope) {
         name: "e",
         display: "Email"
 							}, {
-						        name: "e",
-						        display: "Email"
+						        name: "",
+						        display: "Option"
 													}];
     $scope.multisearch = Array();
     $scope.multisearch[0] = {
@@ -102,7 +90,7 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', function ($http, $scope) {
     
     $scope.query = {
         order: 'fn',
-        limit: 15,
+        limit: 5,
         page: 1
     };
 
@@ -172,6 +160,12 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', function ($http, $scope) {
         }
         dt.count = dt.users.length;
         $scope.datatable = angular.copy(dt);
+    };
+    $scope.lock = function(email){
+    	
+    };
+    $scope.unlock = function(email){
+    	
     };
 }]);
 

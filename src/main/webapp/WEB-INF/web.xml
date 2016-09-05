@@ -29,7 +29,7 @@
 	</servlet>
 	<servlet>
 		<servlet-name>UserInfoServlet</servlet-name>
-		<servlet-class>com.epam.easyshopway.controller.UserInfoServlet</servlet-class>
+		<servlet-class>com.epam.easyshopway.controller.user.UserInfoServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>VerifyRegisteredEmailHash</servlet-name>
@@ -57,7 +57,7 @@
 	<servlet>
 		<display-name>UserStatisticServlet</display-name>
 		<servlet-name>UserStatisticServlet</servlet-name>
-		<servlet-class>com.epam.easyshopway.controller.UserStatisticServlet</servlet-class>
+		<servlet-class>com.epam.easyshopway.controller.user.UserStatisticServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<description>
@@ -128,7 +128,7 @@
 
 	<servlet-mapping>
 		<servlet-name>UserStatisticServlet</servlet-name>
-		<url-pattern>/UserStatisticServlet</url-pattern>
+		<url-pattern>/userStat</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>VKInfoServlet</servlet-name>

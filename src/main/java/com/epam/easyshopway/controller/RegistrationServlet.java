@@ -41,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String birthday = request.getParameter("birthday");
 			String password = MD5Util.md5Custom(request.getParameter("password"));
-			User user = new User(firstName, lastName, email, password, true, "user", "en");
+			User user = new User(firstName, lastName, email, password, true, "user", "en", "");
 			user.setDateOfBirth(birthday);
 
 			System.out.println(firstName.equals(""));

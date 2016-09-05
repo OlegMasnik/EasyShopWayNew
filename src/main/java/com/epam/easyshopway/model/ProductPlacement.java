@@ -12,28 +12,20 @@ public class ProductPlacement {
 	@Column("cupboard_id")
 	private Integer cupboardId;
 
-	@Column("x_start")
-	private Integer xStart;
-
-	@Column("x_end")
-	private Integer xEnd;
-
-	@Column("board_number")
-	private Integer boardNumber;
-
-	public ProductPlacement() {
-		super();
-	}
+	@Column("place")
+	private Integer place;
 
 	public ProductPlacement(Integer id, Integer productId, Integer cupboardId,
-			Integer xStart, Integer xEnd, Integer boardNumber) {
+			Integer place) {
 		super();
 		this.id = id;
 		this.productId = productId;
 		this.cupboardId = cupboardId;
-		this.xStart = xStart;
-		this.xEnd = xEnd;
-		this.boardNumber = boardNumber;
+		this.place = place;
+	}
+
+	public ProductPlacement() {
+		super();
 	}
 
 	public Integer getId() {
@@ -60,27 +52,12 @@ public class ProductPlacement {
 		this.cupboardId = cupboardId;
 	}
 
-	public Integer getxStart() {
-		return xStart;
+	public Integer getPlace() {
+		return place;
 	}
 
-	public void setxStart(Integer xStart) {
-		this.xStart = xStart;
+	public void setPlace(Integer place) {
+		this.place = place;
 	}
 
-	public Integer getxEnd() {
-		return xEnd;
-	}
-
-	public void setxEnd(Integer xEnd) {
-		this.xEnd = xEnd;
-	}
-
-	public Integer getBoardNumber() {
-		return boardNumber;
-	}
-
-	public void setBoardNumber(Integer boardNumber) {
-		this.boardNumber = boardNumber;
-	}
 }

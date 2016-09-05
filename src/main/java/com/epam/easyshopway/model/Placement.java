@@ -2,7 +2,7 @@ package com.epam.easyshopway.model;
 
 import com.epam.easyshopway.dao.transformer.annotation.Column;
 
-public class Entry {
+public class Placement {
 	@Column("id")
 	private Integer id;
 
@@ -12,15 +12,19 @@ public class Entry {
 	@Column("place")
 	private Integer place;
 
-	public Entry() {
-		super();
-	}
+	@Column("type")
+	private String type;
 
-	public Entry(Integer id, Integer mapId, Integer place) {
+	public Placement(Integer id, Integer mapId, Integer place, String type) {
 		super();
 		this.id = id;
 		this.mapId = mapId;
 		this.place = place;
+		this.type = type;
+	}
+
+	public Placement() {
+		super();
 	}
 
 	public Integer getId() {
@@ -46,4 +50,13 @@ public class Entry {
 	public void setPlace(Integer place) {
 		this.place = place;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 }
