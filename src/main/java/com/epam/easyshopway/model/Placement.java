@@ -15,9 +15,8 @@ public class Placement {
 	@Column("type")
 	private String type;
 
-	public Placement(Integer id, Integer mapId, Integer place, String type) {
+	public Placement(Integer mapId, Integer place, String type) {
 		super();
-		this.id = id;
 		this.mapId = mapId;
 		this.place = place;
 		this.type = type;

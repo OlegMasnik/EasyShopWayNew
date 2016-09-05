@@ -11,11 +11,12 @@ import com.epam.easyshopway.model.User;
 public class UserDAO extends AbstractDAO<User> {
 	private final String INSERT = "INSERT INTO user (first_name, last_name, email, password, date_of_birth, active, role, language, image) "
 			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private final String SELECT_ALL = "SELECT * FROM user WHERE active = 1;";
+	private final String SELECT_ALL = "SELECT * FROM user where role like 'user';";
 	private final String SELECT_BY_ID = "SELECT * FROM user WHERE id = ?;";
 	private final String SELECT_BY_EMAIL = "SELECT * FROM user WHERE email LIKE ? and active=1;";
 	private final String UPDATE = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password = ?, date_of_birth = ?, active = ?, role = ?, language = ?, image=? WHERE id = ?;";
 	private final String DELETE = "UPDATE user SET active = 0 WHERE id = ?;";
+	private final String UPDATE_ACTIVE = "UPDATE user SET active = ? WHERE email = ?;";
 	private final String GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user WHERE email = ? AND password = ? and active = 1";
 	private final String CHECK_EMAIL = "SELECT * FROM user WHERE email like ? and active = 1";
 
@@ -133,6 +134,15 @@ public class UserDAO extends AbstractDAO<User> {
 		preparedStatement.close();
 
 		return users.size() != 0;
+	}
+	
+	public int setActive(String email, boolean active) throws SQLException{
+		PreparedStatement statement = connection.prepareStatement(UPDATE_ACTIVE);
+		statement.setBoolean(1, active);
+		statement.setString(2, email);
+		int result = statement.executeUpdate();
+		statement.close();
+		return result;
 	}
 
 	public boolean hasEmail(String email) throws SQLException,

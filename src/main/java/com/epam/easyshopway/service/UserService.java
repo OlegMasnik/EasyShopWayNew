@@ -80,6 +80,17 @@ public class UserService {
 		return 0;
 	}
 
+	public static int setActive(String email, boolean active) {
+		try (UserDAO userDAO = new UserDAO()) {
+			return userDAO.setActive(email, active);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	public static boolean validateUser(String email, String password) {
 		try (UserDAO userDAO = new UserDAO()) {
 			return userDAO.validateUser(email, password);

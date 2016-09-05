@@ -16,9 +16,8 @@ public class Map {
 		super();
 	}
 
-	public Map(Integer id, Integer weight, Integer height) {
+	public Map(Integer weight, Integer height) {
 		super();
-		this.id = id;
 		this.weight = weight;
 		this.height = height;
 	}

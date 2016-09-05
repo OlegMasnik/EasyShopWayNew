@@ -29,6 +29,7 @@
 				<th md-column ng-repeat="column in autocolumn"
 					md-order-by="{{column.name}}"><span>{{column.display}}</span>
 				</th>
+				<th>Option</th>
 			</tr>
 		</thead>
 		<tbody md-body>
@@ -39,10 +40,12 @@
 				<td md-cell>{{row.e}}</td>
 				<td><md-button ng-click="" class="md-fab md-mini md-primary"
 						aria-label="Use Android"><i class="material-icons">mail</i>
-					</md-button><md-button class="md-fab md-mini red-btn"
-						aria-label="Use Android"><i class="material-icons">not_interested</i>
-					</md-button><md-button ng-show="{{row.active}}" class="md-fab md-mini green-btn"
-						aria-label="Use Android"><i class="material-icons">done</i>
+					</md-button>
+					<md-button ng-show="{{!row.active}}" ng-model="row.e" ng-click="active(row, $index)" class="md-fab md-mini red-btn"
+						><i class="material-icons">not_interested</i>
+					</md-button>
+					<md-button ng-show="{{row.active}}" ng-model="row.e" ng-click="active(row, $index)" class="md-fab md-mini green-btn"
+						><i class="material-icons">done</i>
 					</md-button></td>
 			</tr>
 		</tbody>

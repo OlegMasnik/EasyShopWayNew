@@ -15,10 +15,8 @@ public class ProductPlacement {
 	@Column("place")
 	private Integer place;
 
-	public ProductPlacement(Integer id, Integer productId, Integer cupboardId,
-			Integer place) {
+	public ProductPlacement(Integer productId, Integer cupboardId, Integer place) {
 		super();
-		this.id = id;
 		this.productId = productId;
 		this.cupboardId = cupboardId;
 		this.place = place;

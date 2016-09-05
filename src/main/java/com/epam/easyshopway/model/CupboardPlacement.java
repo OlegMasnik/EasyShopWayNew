@@ -16,6 +16,12 @@ public class CupboardPlacement {
 		super();
 	}
 
+	public CupboardPlacement(Integer cupboardId, Integer placementId) {
+		super();
+		this.cupboardId = cupboardId;
+		this.placementId = placementId;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -39,5 +45,5 @@ public class CupboardPlacement {
 	public void setPlacementId(Integer placementId) {
 		this.placementId = placementId;
 	}
-	
+
 }

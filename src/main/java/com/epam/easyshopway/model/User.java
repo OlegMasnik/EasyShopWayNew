@@ -43,7 +43,6 @@ public class User {
 			String password, Boolean active, String role,
 			String language, String image) {
 		super();
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
