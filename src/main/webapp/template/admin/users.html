@@ -1,11 +1,7 @@
-<div>
-	<h1>USERS</h1>
-
 	<div ng-controller="UsersCtrl1">
-    <!--Header-->
     <md-toolbar class="md-whiteframe-1dp">
       <div class="md-toolbar-tools">
-        <div class="md-title">Material Design Data Table</div>
+        <div class="md-title">Users</div>
       </div>
     </md-toolbar>
     <!--Toolbar-->
@@ -51,17 +47,10 @@
               </tr>
             </thead>
             <tbody md-body>
-              <tr md-row  ng-repeat="row in datatable.data | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
-                <td md-cell>{{row.name}}</td>
-                <td md-cell>{{row.type}}</td>
-                <td md-cell>{{row.calories | number: 2}}</td>
-                <td md-cell>{{row.fat | number: 2}}</td>
-                <td md-cell>{{row.carbs | number: 2}}</td>
-                <td md-cell>{{row.protein | number: 2}}</td>
-                <td md-cell>{{row.sodium | number: 2}}</td>
-                <td md-cell>{{row.calcium | number: 2}}</td>
-                <td md-cell>{{row.iron | number: 2}}</td>
-                <td md-cell>{{row.comment}}</td>
+              <tr md-row  ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                <td md-cell>{{row.fn}}</td>
+                <td md-cell>{{row.ln}}</td>
+                <td md-cell>{{row.e}}</td>
               </tr>
             </tbody>
           </table>
@@ -70,4 +59,3 @@
       </md-content>
     </md-card>
   </div>
-</div>
