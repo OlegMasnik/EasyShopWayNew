@@ -10,7 +10,7 @@ userApp.config(function($routeProvider) {
 	});
 });
 
-userApp.controller('ChartCtrl', function($scope) {
+userApp.controller('ChartCtrl', function($scope, $http) {
 	$scope.getFoodData = function ($http) {
 //        console.log('hello' + $scope.email)
 //        
