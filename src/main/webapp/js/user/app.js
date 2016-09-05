@@ -1,28 +1,28 @@
 var userApp = angular.module('MyApp');
-
-userApp.config(function ($routeProvider) {
-    $routeProvider.when("/", {
-        templateUrl: "template/shared/info.jsp",
-    }).when("/history", {
-        templateUrl: "template/shared/history.html",
-        controller : 'ChartCtrl'
-    }).when("/statistic", {
-        templateUrl: "template/shared/statistic.html",
-        controller : 'ChartCtrl'
-    });
+      
+userApp.config(function($routeProvider) {
+	$routeProvider.when("/", {
+		templateUrl : "template/shared/info.jsp"
+	}).when("/statistic", {
+		templateUrl : "template/shared/statistic.jsp",
+		controller : "ChartCtrl"
+	}).when("/history", {
+		templateUrl : "template/shared/history.jsp",
+		controller : "UserHistoryCtrl"
+	});
 });
 
 userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.getFoodData = function () {
-		alert("asdasd");
-      
-        var responsik = undefined;
-
+		var responsik = undefined;
+		
+		//Build the chart
         $http({
         	  method: 'POST',
-        	  url: '/EasyShopWay/userStat'
+        	  url: '/EasyShopWayNew/userStat'
         	}).then(function successCallback(response) {
-        	   responsik = response;
+        	   responsik = response.data;
+        	   console.log(responsik);
         	   $('#container').highcharts({
         		      chart: {
         		          plotBackgroundColor: null,
@@ -50,6 +50,5 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
         	  }, function errorCallback(response) {
         	    console.log("fail");
         	  });
-        
     };
 }]);
