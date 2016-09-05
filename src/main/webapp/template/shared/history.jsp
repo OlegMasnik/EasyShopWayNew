@@ -6,11 +6,13 @@
 
 
     <div flex ng-controller="UserHistoryCtrl">
-
+        
         <md-card class="product-card" layout="column" ng-repeat="historyItem in history">
-            <md-card-title>
-                {{historyItem.date}}
+            <md-card-title class="prod-card-title" layout="column">
+                <div class="prod-card-date" flex>Date: {{historyItem.date}}</div>
+                <div class="prod-card-time" flex>Time: {{historyItem.date}}</div>
             </md-card-title>
+            <md-divider></md-divider>
             <md-card-content layout="column">
                 <md-content class="product-list">
                     <md-list class="md-dense" flex="">
@@ -23,6 +25,10 @@
                         </md-list-item>
                     </md-list>
                 </md-content>
+                <md-divider></md-divider>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-raised">Show on map</md-button>
+                </md-card-actions>
             </md-card-content>
         </md-card>
 
