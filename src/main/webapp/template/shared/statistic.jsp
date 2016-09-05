@@ -13,8 +13,8 @@
             <md-datepicker flex md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="startDate" is-open="showdp" ng-min-date="stMinDt" ng-max-date="stMaxDt" id="startDate" md-placeholder="Enter date" name="startDate"></md-datepicker>
             
             <md-datepicker flex md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="endDate" is-open="showdp" ng-min-date="stMinDt" ng-max-date="stMaxDt" id="endDate" md-placeholder="Enter date" name="endDate"></md-datepicker>
+        <md-button>Show</md-button>
         </md-card-content>
-
     </md-card>
 
 
