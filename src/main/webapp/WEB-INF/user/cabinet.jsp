@@ -12,28 +12,7 @@
             <link rel="stylesheet" href="css/cabinet-style.css">
             <link rel="stylesheet" href="css/angular-material.min.css">
             <style>
-                .product-card {
-                    width: 300px;
-                    height: 400px;
-                    margin: 10px;
-                    background-color: #fff;
-                    display: inline-block;
-                }
-                
-                .product-list {
-                    width: 220px;
-                    height: 300px;
-                    background-color: #fff;
-                    display: inline-block;
-                }
-                
-                .left-column3 {
-                    width: 250px;
-                    height: 100px;
-                    margin: 10px;
-                    background-color: #fff;
-                    display: inline-block;
-                }
+               
             </style>
         </head>
 
@@ -58,12 +37,7 @@
                     </md-content>
                 </md-slidenav>
 
-                            </div>
-                        </a>
-                        <md-button href="">Statistic</md-button>
-                        <md-button>History</md-button>
-                    </md-content>
-                </md-slidenav>
+                <div class="content">   
 
                     <div ng-view onload="getFoodData()"></div>
 
