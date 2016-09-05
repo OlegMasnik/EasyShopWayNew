@@ -9,14 +9,18 @@ public class Placement {
 	@Column("map_id")
 	private Integer mapId;
 
-	@Column("value")
-	private Integer value;
+	@Column("place")
+	private Integer place;
 
-	public Placement(Integer id, Integer mapId, Integer value) {
+	@Column("type")
+	private String type;
+
+	public Placement(Integer id, Integer mapId, Integer place, String type) {
 		super();
 		this.id = id;
 		this.mapId = mapId;
-		this.value = value;
+		this.place = place;
+		this.type = type;
 	}
 
 	public Placement() {
@@ -39,12 +43,20 @@ public class Placement {
 		this.mapId = mapId;
 	}
 
-	public Integer getValue() {
-		return value;
+	public Integer getPlace() {
+		return place;
 	}
 
-	public void setValue(Integer value) {
-		this.value = value;
+	public void setPlace(Integer place) {
+		this.place = place;
 	}
-	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 }

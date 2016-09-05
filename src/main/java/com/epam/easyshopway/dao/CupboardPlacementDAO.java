@@ -11,27 +11,23 @@ import com.epam.easyshopway.model.CupboardPlacement;
 public class CupboardPlacementDAO extends AbstractDAO<CupboardPlacement> {
 	private final String SELECT_ALL = "SELECT * FROM cupboard_placement;";
 	private final String SELECT_BY_ID = "SELECT * FROM cupboard_placement WHERE id = ?";
-	private final String INSERT = "INSERT INTO cupboard_placement (map_id, cupboard_id, x_start,  x_end) VALUES ( ?, ?, ?, ?);";
-	private final String UPDATE = "UPDATE cupboard_placement SET map_id = ?, cupboard_id = ?, x_start = ?,  x_end = ? where id =? ";
+	private final String INSERT = "INSERT INTO cupboard_placement (cupboard_id, placement_id) VALUES ( ?, ?);";
+	private final String UPDATE = "UPDATE cupboard_placement SET cupboard_id = ?, placement_id = ? where id =? ";
 
 	@Override
 	public int insert(CupboardPlacement el) throws SQLException {
 		PreparedStatement statement = connection.prepareStatement(INSERT);
-		statement.setInt(1, el.getMapId());
-		statement.setInt(2, el.getCupboardId());
-		statement.setInt(3, el.getXStart());
-		statement.setInt(4, el.getXEnd());
+		statement.setInt(1, el.getCupboardId());
+		statement.setInt(2, el.getPlacementId());
 		return statement.executeUpdate();
 	}
 
 	@Override
 	public int update(Integer id, CupboardPlacement el) throws SQLException {
 		PreparedStatement statement = connection.prepareStatement(UPDATE);
-		statement.setInt(1, el.getMapId());
-		statement.setInt(2, el.getCupboardId());
-		statement.setInt(3, el.getXStart());
-		statement.setInt(4, el.getXEnd());
-		statement.setInt(5, id);
+		statement.setInt(1, el.getCupboardId());
+		statement.setInt(2, el.getPlacementId());
+		statement.setInt(3, id);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
