@@ -23,16 +23,16 @@ public class PaydeskDAO extends AbstractDAO<Paydesk> {
 		return statement.executeUpdate();
 	}
 
-	@Override
-	public int update(Integer id, Paydesk el) throws SQLException {
-		PreparedStatement statement = connection.prepareStatement(UPDATE);
-		statement.setInt(1, el.getMapId());
-		statement.setInt(2, el.getPlace());
-		statement.setInt(3, id);
-		int result = statement.executeUpdate();
-		statement.close();
-		return result;
-	}
+//	@Override
+//	public int update(Integer id, Paydesk el) throws SQLException {
+//		PreparedStatement statement = connection.prepareStatement(UPDATE);
+//		statement.setInt(1, el.getMapId());
+//		statement.setInt(2, el.getPlace());
+//		statement.setInt(3, id);
+//		int result = statement.executeUpdate();
+//		statement.close();
+//		return result;
+//	}
 
 	@Override
 	public int delete(Integer id) throws SQLException {

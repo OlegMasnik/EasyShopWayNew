@@ -35,9 +35,11 @@
                     </md-content>
                 </md-slidenav>
 		
-		<div flex="70" ng-controller="ChartCtrl" id="container"></div>
+		
 		</md-content>
-
+		
+		<div flex="70" ng-controller="ChartCtrl" id="container" data-ng-init="getFoodData()"></div>
+	
 		<script src="js/jquery-1.4.4.min.js"></script>
 		<script src='js/angular.min.js'></script>
 		<script src='js/angular-aria.js'></script>
@@ -46,8 +48,8 @@
 		<script src='js/angular-route.min.js'></script>
 		<script src='js/app.js'></script>
 		<script src='js/user/app.js'></script>
-		<script src="template/shared/highcharts.js"></script>
-		<script src="template/shared/exporting.js"></script>
+		<script src="js/shared/highcharts.js"></script>
+		<script src="js/shared/exporting.js"></script>
 </body>
 
 
