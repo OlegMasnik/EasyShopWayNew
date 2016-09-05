@@ -36,13 +36,13 @@
             </style>
         </head>
 
-        <body ng-app="MyApp" layout="column">
-            <jsp:include page="../parts/header.jsp"></jsp:include>
-            <md-content layout="row" class="main-page" flex>
-                <md-slidenav md-is-locked-open="true" layout="column" flex md-whiteframe="4">
-                    <md-content layout="column" flex>
-                        <a href="#/">
-                            <div class="cab-user-logo" layot="row" layout-padding>
+.left-column2 {
+	width: 250px;
+	height: 400px;
+	margin: 10px;
+	background-color: #fff;
+	display: inline-block;
+}
 
                                 <img src="images/admin.png" alt="" class="profile-img">
 
@@ -57,9 +57,9 @@
                     </md-content>
                 </md-slidenav>
 
-                <div flex class="content" layout="column">
+	<div flex class="content" layout="column">
 
-                    <div ng-view></div>
+	<div ng-view onload="getFoodData()" > </div>
 
                 </div>
             </md-content>

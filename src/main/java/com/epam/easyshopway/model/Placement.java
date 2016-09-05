@@ -2,25 +2,25 @@ package com.epam.easyshopway.model;
 
 import com.epam.easyshopway.dao.transformer.annotation.Column;
 
-public class Woll {
+public class Placement {
 	@Column("id")
 	private Integer id;
 
 	@Column("map_id")
 	private Integer mapId;
 
-	@Column("place")
-	private Integer place;
+	@Column("value")
+	private Integer value;
 
-	public Woll() {
-		super();
-	}
-
-	public Woll(Integer id, Integer mapId, Integer place) {
+	public Placement(Integer id, Integer mapId, Integer value) {
 		super();
 		this.id = id;
 		this.mapId = mapId;
-		this.place = place;
+		this.value = value;
+	}
+
+	public Placement() {
+		super();
 	}
 
 	public Integer getId() {
@@ -39,12 +39,12 @@ public class Woll {
 		this.mapId = mapId;
 	}
 
-	public Integer getPlace() {
-		return place;
+	public Integer getValue() {
+		return value;
 	}
 
-	public void setPlace(Integer place) {
-		this.place = place;
+	public void setValue(Integer value) {
+		this.value = value;
 	}
-
+	
 }

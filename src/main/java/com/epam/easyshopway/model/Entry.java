@@ -1,7 +1,7 @@
 package com.epam.easyshopway.model;
 
 import com.epam.easyshopway.dao.transformer.annotation.Column;
-
+@Deprecated
 public class Entry {
 	@Column("id")
 	private Integer id;
