@@ -132,7 +132,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>VKInfoServlet</servlet-name>
-		<url-pattern>/vk-user-info</url-pattern>
+		<url-pattern>/home/vk-user-info</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>UsersControlServlet</servlet-name>

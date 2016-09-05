@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.github.scribejava.apis.FacebookApi;
 import com.github.scribejava.apis.VkontakteApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
@@ -35,7 +34,7 @@ public class VKLoginServlet extends HttpServlet {
 		OAuth20Service service = new ServiceBuilder() 
 	    		.apiKey(CLIENT_ID) 
 	    		.apiSecret(CLIENT_SECRET)
-	    		.scope("email")
+	    		.scope("email,photo_200")
 	    		.callback("http://localhost:8080/EasyShopWayNew/home/vk-user-info")
 	    		.build(VkontakteApi.instance());
 	    		
