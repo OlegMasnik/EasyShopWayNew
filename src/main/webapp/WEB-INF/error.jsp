@@ -6,12 +6,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>404 - Page not found</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/angular-material.min.css">
+        <link rel="stylesheet" href="/EasyShopWayNew/css/style.css">
+        <link rel="stylesheet" href="/EasyShopWayNew/css/angular-material.min.css">
 
         <style>
             body {
-                background-image: url('images/404.gif');
+                background-image: url('/EasyShopWayNew/images/404.gif');
                 background-repeat: no-repeat;
                 background-size: 100%;
             }
@@ -48,14 +48,14 @@
         </div>
         
         
-    <script src="js/jquery-1.4.4.min.js"></script>
-	<script src='js/angular.min.js'></script>
-	<script src='js/angular-aria.js'></script>
-	<script src='js/angular-animate.js'></script>
-	<script src='js/angular-material.min.js'></script>
-	<script src='js/angular-route.min.js'></script>
-	<script src='js/app.js'></script>
-	<script src="js/jquery.validate.min.js"></script>
+    <script src="/EasyShopWayNew/js/jquery-1.4.4.min.js"></script>
+	<script src='/EasyShopWayNew/js/angular.min.js'></script>
+	<script src='/EasyShopWayNew/js/angular-aria.js'></script>
+	<script src='/EasyShopWayNew/js/angular-animate.js'></script>
+	<script src='/EasyShopWayNew/js/angular-material.min.js'></script>
+	<script src='/EasyShopWayNew/js/angular-route.min.js'></script>
+	<script src='/EasyShopWayNew/js/app.js'></script>
+	<script src="/EasyShopWayNew/js/jquery.validate.min.js"></script>
 
     </body>
 

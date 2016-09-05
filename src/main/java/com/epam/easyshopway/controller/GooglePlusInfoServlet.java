@@ -61,12 +61,14 @@ public class GooglePlusInfoServlet extends HttpServlet {
 				null, // password
 				true, // active user
 				"user", "en"); // native language
-		if (UserService.getByEmail(user.getEmail()) == null) {
+		User invokedUser = UserService.getByEmail(user.getEmail());
+		if (invokedUser == null) {
 			UserService.insert(user);
-		} else {
 			sess.setAttribute("user", user);
+		} else {
+			sess.setAttribute("user", invokedUser);
 		}
-		req.getRequestDispatcher("/cabinet").forward(req, resp);
+		resp.sendRedirect(req.getContextPath() + "/cabinet");
 	}
 
 	/**

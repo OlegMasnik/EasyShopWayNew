@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
-<link rel="stylesheet" href="css/datatable/angular-datatables.css">
+
+<link rel="stylesheet" href="css/datatable/md-data-table.css">
 
 </head>
 
@@ -43,9 +44,8 @@
 	<script src='js/angular-aria.js'></script>
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
-	<script src="js/datatable/jquery.dataTables.min.js"></script>
-	<script src="js/datatable/angular-datatables.min.js"></script>
-
+	<script src="js/datatable/md-data-table.js"></script>
+	
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
 
