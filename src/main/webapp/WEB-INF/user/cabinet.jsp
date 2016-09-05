@@ -8,12 +8,11 @@
             <title>
                 <c:out value="${user.firstName }"></c:out>
             </title>
-            <link rel="stylesheet" href="css/style.css">
-            <link rel="stylesheet" href="css/cabinet-style.css">
+            
+            
             <link rel="stylesheet" href="css/angular-material.min.css">
-            <style>
-               
-            </style>
+          <link rel="stylesheet" href="css/cabinet-style.css">
+          <link rel="stylesheet" href="css/style.css">
         </head>
 
         <body ng-app="MyApp" layout="column">
@@ -43,7 +42,7 @@
 
                 </div>
             </md-content>
-            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-1.4.4.min.js"></script>
             <script src='js/angular.min.js'></script>
             <script src='js/angular-route.min.js'></script>
             <script src='js/angular-aria.js'></script>
@@ -54,6 +53,7 @@
             <script src='js/app.js'></script>
             <script src='js/user/app.js'></script>
             <script src='js/user/user-history.js'></script>
+            <script src="js/shared/statistic.js"></script>
         </body>
 
         </html>
