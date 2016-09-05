@@ -31,15 +31,15 @@
 	<md-button href="#users">Users</md-button> <md-button href="#statistic">Statistic</md-button>
 	<md-button href="#history">History</md-button> </md-content> </md-slidenav>
 
-	<div flex="80" class="content">
+	<div flex="" class="content">
 
 		<div ng-view></div>
 
 
 	</div>
 	</md-content>
-
-	<script src="js/jquery-1.4.4.min.js"></script>
+	
+	<script src="js/jquery.min.js"></script>
 	<script src='js/angular.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
 	<script src='js/angular-aria.js'></script>
