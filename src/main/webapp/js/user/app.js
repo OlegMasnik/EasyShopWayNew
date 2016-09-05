@@ -4,10 +4,10 @@ userApp.config(function ($routeProvider) {
     $routeProvider.when("/", {
         templateUrl: "template/shared/info.jsp",
     }).when("/history", {
-        templateUrl: "template/shared/history.html",
-        controller : 'ChartCtrl'
+        templateUrl: "template/shared/history.jsp",
+        controller : 'UserHistoryCtrl'
     }).when("/statistic", {
-        templateUrl: "template/shared/statistic.html",
+        templateUrl: "template/shared/statistic.jsp",
         controller : 'ChartCtrl'
     });
 });
@@ -20,7 +20,7 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 
         $http({
         	  method: 'POST',
-        	  url: '/EasyShopWay/userStat'
+        	  url: '/EasyShopWayNew/userStat'
         	}).then(function successCallback(response) {
         	   responsik = response;
         	   $('#container').highcharts({
