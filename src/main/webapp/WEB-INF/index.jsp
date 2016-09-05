@@ -4,11 +4,15 @@
 
     <html>
 
-    <head>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/angular-material.min.css">
-        <link href="css/icon.css" rel="stylesheet">
-    </head>
+	<script src="js/jquery-1.4.4.min.js"></script>
+	<script src='js/angular.min.js'></script>
+	<script src='js/angular-aria.js'></script>
+	<script src='js/angular-animate.js'></script>
+	<script src='js/angular-material.min.js'></script>
+	<script src='js/angular-route.min.js'></script>
+	
+	<script src='js/app.js'></script>
+	<script src="js/jquery.validate.min.js"></script>
 
     <body ng-app="MyApp">
         <jsp:include page="parts/header.jsp"></jsp:include>

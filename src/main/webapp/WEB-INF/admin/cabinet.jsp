@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
+<link href="css/icon.css" rel="stylesheet">
 
 <link rel="stylesheet" href="css/datatable/md-data-table.css">
 
