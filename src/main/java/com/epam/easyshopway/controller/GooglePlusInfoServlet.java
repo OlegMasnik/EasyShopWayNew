@@ -1,6 +1,5 @@
 package com.epam.easyshopway.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONReader;
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
 import com.epam.easyshopway.utils.GooglePlusUserJSON;
@@ -61,12 +58,14 @@ public class GooglePlusInfoServlet extends HttpServlet {
 				null, // password
 				true, // active user
 				"user", "en"); // native language
-		if (UserService.getByEmail(user.getEmail()) == null) {
+		User invokedUser = UserService.getByEmail(user.getEmail());
+		if (invokedUser == null) {
 			UserService.insert(user);
-		} else {
 			sess.setAttribute("user", user);
+		} else {
+			sess.setAttribute("user", invokedUser);
 		}
-		req.getRequestDispatcher("/cabinet").forward(req, resp);
+		resp.sendRedirect(req.getContextPath() + "/cabinet");
 	}
 
 	/**

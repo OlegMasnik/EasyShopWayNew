@@ -2,6 +2,14 @@
     color: white;
 }
 
+.green-btn {
+	background-color: green !important;
+}
+
+.red-btn {
+	background-color: red !important;
+}
+
 
 /* SignUp fields*/
 

@@ -28,24 +28,31 @@ public class User {
 
 	@Column("role")
 	private String role;
-	
+
 	@Column("language")
 	private String language;
+
+	@Column("image")
+	private String image;
 
 	public User() {
 		super();
 	}
 
-	public User(String firstName, String lastName, String email, String password,
-			Boolean active, String role, String language) {
+	public User(Integer id, String firstName, String lastName, String email,
+			String password, Date dateOfBirth, Boolean active, String role,
+			String language, String image) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.dateOfBirth = dateOfBirth;
 		this.active = active;
 		this.role = role;
 		this.language = language;
+		this.image = image;
 	}
 
 	public Integer getId() {
@@ -93,7 +100,7 @@ public class User {
 	}
 
 	public void setDateOfBirth(String dateOfBirth) {
-		if (dateOfBirth.equalsIgnoreCase("null")) {
+		if ("null".equalsIgnoreCase(dateOfBirth)) {
 			this.dateOfBirth = new Date(new java.util.Date().getTime());
 		} else {
 			this.dateOfBirth = Date.valueOf(dateOfBirth);
@@ -123,4 +130,13 @@ public class User {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 }
