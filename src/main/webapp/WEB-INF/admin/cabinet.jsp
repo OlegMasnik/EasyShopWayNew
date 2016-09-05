@@ -39,7 +39,7 @@
 	</div>
 	</md-content>
 
-	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-1.4.4.min.js"></script>
 	<script src='js/angular.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
 	<script src='js/angular-aria.js'></script>

@@ -1,7 +1,7 @@
 ﻿--
 -- Скрипт сгенерирован Devart dbForge Studio for MySQL, Версия 7.1.13.0
 -- Домашняя страница продукта: http://www.devart.com/ru/dbforge/mysql/studio
--- Дата скрипта: 05.09.2016 13:56:03
+-- Дата скрипта: 05.09.2016 18:57:23
 -- Версия сервера: 5.7.12-log
 -- Версия клиента: 4.1
 --
@@ -151,6 +151,25 @@ COLLATE utf8_general_ci
 ROW_FORMAT = DYNAMIC;
 
 --
+-- Описание для таблицы product_list
+--
+CREATE TABLE IF NOT EXISTS product_list (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11) NOT NULL,
+  date DATE NOT NULL,
+  time TIME NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_product_list_user_id FOREIGN KEY (user_id)
+    REFERENCES user(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+)
+ENGINE = INNODB
+AUTO_INCREMENT = 4
+AVG_ROW_LENGTH = 8192
+CHARACTER SET utf8
+COLLATE utf8_general_ci
+ROW_FORMAT = DYNAMIC;
+
+--
 -- Описание для таблицы cupboard_placement
 --
 CREATE TABLE IF NOT EXISTS cupboard_placement (
@@ -173,23 +192,20 @@ COLLATE utf8_general_ci
 ROW_FORMAT = DYNAMIC;
 
 --
--- Описание для таблицы product_list
+-- Описание для таблицы list_and_product
 --
-CREATE TABLE IF NOT EXISTS product_list (
+CREATE TABLE IF NOT EXISTS list_and_product (
   id INT(11) NOT NULL AUTO_INCREMENT,
-  user_id INT(11) NOT NULL,
   product_id INT(11) NOT NULL,
-  date DATE NOT NULL,
-  time TIME NOT NULL,
+  product_list_id INT(11) NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT FK_product_list_commodity_id FOREIGN KEY (product_id)
-    REFERENCES product(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT FK_product_list_user_id FOREIGN KEY (user_id)
-    REFERENCES user(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT FK_list_and_product_product_id FOREIGN KEY (product_id)
+    REFERENCES product(id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT FK_list_and_product_product_list_id FOREIGN KEY (product_list_id)
+    REFERENCES product_list(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 )
 ENGINE = INNODB
-AUTO_INCREMENT = 4
-AVG_ROW_LENGTH = 8192
+AUTO_INCREMENT = 1
 CHARACTER SET utf8
 COLLATE utf8_general_ci
 ROW_FORMAT = DYNAMIC;
@@ -270,17 +286,23 @@ INSERT INTO product VALUES
 (3, 3, 'С…Р»С–Р±', 'bread', 1);
 
 -- 
+-- Вывод данных для таблицы product_list
+--
+INSERT INTO product_list VALUES
+(2, 1, '2015-10-11', '23:36:0'),
+(3, 2, '2016-02-11', '12:43:0');
+
+-- 
 -- Вывод данных для таблицы cupboard_placement
 --
 
 -- Таблица easy_shop_way.cupboard_placement не содержит данных
 
 -- 
--- Вывод данных для таблицы product_list
+-- Вывод данных для таблицы list_and_product
 --
-INSERT INTO product_list VALUES
-(2, 1, 1, '2015-10-11', '23:36:0'),
-(3, 2, 2, '2016-02-11', '12:43:0');
+
+-- Таблица easy_shop_way.list_and_product не содержит данных
 
 -- 
 -- Вывод данных для таблицы product_placement

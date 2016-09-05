@@ -12,9 +12,6 @@ public class ProductList {
 	@Column("user_id")
 	private Integer userId;
 
-	@Column("product_id")
-	private Integer productId;
-
 	@Column("date")
 	private Date date;
 
@@ -25,11 +22,10 @@ public class ProductList {
 		super();
 	}
 
-	public ProductList(Integer id, Integer userId, Integer productId, Date date, Time time) {
+	public ProductList(Integer userId, Date date, Time time) {
 		super();
-		this.id = id;
+
 		this.userId = userId;
-		this.productId = productId;
 		this.date = date;
 		this.time = time;
 	}
@@ -48,14 +44,6 @@ public class ProductList {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-
-	public Integer getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Integer productId) {
-		this.productId = productId;
 	}
 
 	public Date getDate() {

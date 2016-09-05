@@ -22,9 +22,9 @@ public class ProductType {
 		super();
 	}
 
-	public ProductType(Integer id, String nameEn, String nameUk, String imageUrl, boolean active) {
+	public ProductType(String nameEn, String nameUk, String imageUrl,
+			boolean active) {
 		super();
-		this.id = id;
 		this.nameEn = nameEn;
 		this.nameUk = nameUk;
 		this.imageUrl = imageUrl;
