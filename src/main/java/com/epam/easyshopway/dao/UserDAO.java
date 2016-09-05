@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.epam.easyshopway.dao.transformer.Transformer;
+import com.epam.easyshopway.dao.transformer.UserTransformer;
 import com.epam.easyshopway.model.User;
 
 public class UserDAO extends AbstractDAO<User> {
@@ -15,6 +16,7 @@ public class UserDAO extends AbstractDAO<User> {
 	private final String SELECT_BY_ID = "SELECT * FROM user WHERE id = ?;";
 	private final String SELECT_BY_EMAIL = "SELECT * FROM user WHERE email LIKE ? and active=1;";
 	private final String UPDATE = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password = ?, date_of_birth = ?, active = ?, role = ?, language = ?, image=? WHERE id = ?;";
+	private final String UPDATE_PICTURE = "UPDATE user SET image=? WHERE id = ?";
 	private final String DELETE = "UPDATE user SET active = 0 WHERE id = ?;";
 	private final String UPDATE_ACTIVE = "UPDATE user SET active = ? WHERE email = ?;";
 	private final String GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user WHERE email = ? AND password = ? and active = 1";
@@ -37,9 +39,7 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setString(2, user.getLastName());
 		statement.setString(3, user.getEmail());
 		statement.setString(4, user.getPassword());
-		if (user.getDateOfBirth() == null) {
-			statement.setNull(5, java.sql.Types.DATE);
-		} else {
+		if (user.getDateOfBirth() != null) {
 			statement.setDate(5, user.getDateOfBirth());
 		}
 		statement.setDate(5, user.getDateOfBirth());
@@ -58,8 +58,7 @@ public class UserDAO extends AbstractDAO<User> {
 			InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_ALL);
 		ResultSet resultSet = statement.executeQuery(SELECT_ALL);
-		List<User> users = new Transformer<User>(User.class)
-				.fromRStoCollection(resultSet);
+		List<User> users = new UserTransformer().getAllUsers(resultSet);
 		statement.close();
 		return users;
 
@@ -71,13 +70,14 @@ public class UserDAO extends AbstractDAO<User> {
 		PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
 		statement.setInt(1, id);
 		ResultSet resultSet = statement.executeQuery();
-		List<User> users = new Transformer<User>(User.class)
-				.fromRStoCollection(resultSet);
-		statement.close();
-		if (users.size() > 0)
-			return users.iterator().next();
-		else
-			return null;
+		User user = new UserTransformer().getUser(resultSet);
+//		List<User> users = new Transformer<User>(User.class)
+//				.fromRStoCollection(resultSet);
+//		statement.close();
+//		if (users.size() > 0)
+			return user;
+//		else
+//			return null;
 	}
 
 	public User getByEmail(String email) throws SQLException,
@@ -86,13 +86,8 @@ public class UserDAO extends AbstractDAO<User> {
 				.prepareStatement(SELECT_BY_EMAIL);
 		statement.setString(1, email);
 		ResultSet resultSet = statement.executeQuery();
-		List<User> users = new Transformer<User>(User.class)
-				.fromRStoCollection(resultSet);
-		statement.close();
-		if (users.size() > 0)
-			return users.iterator().next();
-		else
-			return null;
+		User user = new UserTransformer().getUser(resultSet);
+		return user;
 	}
 
 	@Override
@@ -108,6 +103,15 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setString(8, user.getLanguage());
 		statement.setString(9, user.getImage());
 		statement.setInt(10, userId);
+		int result = statement.executeUpdate();
+		statement.close();
+		return result;
+	}
+	
+	public int updatePicture(Integer userId, String imageAddress) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(UPDATE_PICTURE);
+		statement.setString(1, imageAddress);
+		statement.setInt(2, userId);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
@@ -132,7 +136,6 @@ public class UserDAO extends AbstractDAO<User> {
 		List<User> users = new Transformer<User>(User.class)
 				.fromRStoCollection(rs);
 		preparedStatement.close();
-
 		return users.size() != 0;
 	}
 	
