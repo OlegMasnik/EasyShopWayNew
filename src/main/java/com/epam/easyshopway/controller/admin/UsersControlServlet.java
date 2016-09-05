@@ -36,6 +36,16 @@ public class UsersControlServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String email = request.getParameter("email");
+		boolean active = new Boolean(request.getParameter("active"));
+
+		System.out.println(email + " " + active);
+
+		UserService.setActive(email, active);
+	}
+
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 	}
 
@@ -54,4 +64,3 @@ public class UsersControlServlet extends HttpServlet {
 	}
 
 }
-
