@@ -101,4 +101,15 @@ public class UserService {
 		}
 		return false;
 	}
+	
+	public static int updatePicture(Integer index, String imageAddress) {
+		try (UserDAO userDAO = new UserDAO()) {
+			return userDAO.updatePicture(index, imageAddress);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }
