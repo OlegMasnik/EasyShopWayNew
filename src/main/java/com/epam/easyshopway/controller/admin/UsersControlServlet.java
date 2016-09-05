@@ -47,6 +47,7 @@ public class UsersControlServlet extends HttpServlet {
 			object.put("fn", u.getFirstName());
 			object.put("ln", u.getLastName());
 			object.put("e", u.getEmail());
+			object.put("active", u.isActive());
 			jsonArray.add(object);
 		}
 		return jsonArray;
