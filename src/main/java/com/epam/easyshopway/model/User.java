@@ -39,8 +39,8 @@ public class User {
 		super();
 	}
 
-	public User(Integer id, String firstName, String lastName, String email,
-			String password, Date dateOfBirth, Boolean active, String role,
+	public User(String firstName, String lastName, String email,
+			String password, Boolean active, String role,
 			String language, String image) {
 		super();
 		this.id = id;
