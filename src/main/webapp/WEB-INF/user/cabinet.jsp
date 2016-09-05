@@ -12,17 +12,17 @@
             <link rel="stylesheet" href="css/cabinet-style.css">
             <link rel="stylesheet" href="css/angular-material.min.css">
             <style>
-                .left-column {
-                    width: 250px;
-                    height: 300px;
+                .product-card {
+                    width: 300px;
+                    height: 400px;
                     margin: 10px;
                     background-color: #fff;
                     display: inline-block;
                 }
-                .left-column2 {
-                    width: 250px;
-                    height: 400px;
-                    margin: 10px;
+                .product-list {
+                    width: 220px;
+                    height: 300px;
+                    
                     background-color: #fff;
                     display: inline-block;
                 }
@@ -73,6 +73,7 @@
             <script src="js/shared/exporting.js"></script>
             <script src='js/app.js'></script>
             <script src='js/user/app.js'></script>
+            <script src='js/user/user-history.js'></script>
         </body>
 
         </html>

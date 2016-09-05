@@ -6,7 +6,8 @@ userApp.config(function($routeProvider) {
 	}).when("/statistic", {
 		templateUrl : "template/shared/statistic.jsp"
 	}).when("/history", {
-		templateUrl : "template/shared/history.jsp"
+		templateUrl : "template/shared/history.jsp",
+		controller : "UserHistoryCtrl"
 	});
 });
 
