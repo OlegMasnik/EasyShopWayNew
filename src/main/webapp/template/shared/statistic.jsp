@@ -8,12 +8,12 @@
 
 
 
-    <md-card flex md-theme-watch ng-content="StatisticDateCtrl">
+    <md-card flex md-theme-watch ng-controller="ChartCtrl">
         <md-card-content layout="row">
-            <md-datepicker flex md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="startDate" is-open="showdp" ng-min-date="stMinDt" ng-max-date="stMaxDt" id="startDate" md-placeholder="Enter date" name="startDate"></md-datepicker>
+            <md-datepicker flex md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="startDate"  ng-min-date="maxDate" ng-max-date="minDate" id="startDate" md-placeholder="start date" name="startDate"></md-datepicker>
             
-            <md-datepicker flex md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="endDate" is-open="showdp" ng-min-date="stMinDt" ng-max-date="stMaxDt" id="endDate" md-placeholder="Enter date" name="endDate"></md-datepicker>
-        <md-button>Show</md-button>
+            <md-datepicker flex md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="endDate"  ng-min-date="maxDate" ng-max-date="minDate" id="endDate" md-placeholder="end date" name="endDate"></md-datepicker>
+        <md-button ng-click="getFoodData()">Show</md-button>
         </md-card-content>
     </md-card>
 
