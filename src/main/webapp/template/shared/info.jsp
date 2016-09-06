@@ -9,10 +9,6 @@
         </div>
     </md-toolbar>
 
-.md-toolbar-tools {
-	font-weight: 100 !important;
-}
-
         <md-card flex="50" ng-controller="formCtrl" md-theme-watch>
             <md-card-title>
                 <md-card-title-text>
@@ -78,23 +74,6 @@
                     </md-card-actions>
                 </form>
             </md-card>
-
-.material-icons.md-24 {
-	font-size: 24px;
-}
-
-.material-icons.md-36 {
-	font-size: 36px;
-}
-
-.material-icons.md-48 {
-	font-size: 48px;
-}
-
-label>.md-24 {
-	line-height: 48px;
-}
-</style>
 
 <h3 class="cab-title">Profile</h3>
 
