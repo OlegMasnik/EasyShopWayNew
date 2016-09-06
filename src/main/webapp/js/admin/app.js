@@ -219,7 +219,54 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 	    	console.log("Decline edit type");
 	    });
 	  };
-	  	
+	  
+	  $scope.showPromptProd = function(item, types) {
+		  
+		  console.log($scope.item);
+		  
+		  $mdDialog.show({
+		      controller: DialogController,
+		      templateUrl: 'template/admin/edit.prod.tmpl.html',
+		      parent: angular.element(document.body),
+		      resolve: {
+		          item: function () { return item; },
+          types: function () { return types; }
+		      },
+		      clickOutsideToClose:true,
+		      fullscreen: $scope.customFullscreen // Only for -xs, -sm
+													// breakpoints.
+		    })
+		    .then(function(answer) {
+		      $scope.status = 'You said the information was "' + answer + '".';
+		    }, function() {
+		      $scope.status = 'You cancelled the dialog.';
+		    });
+	  };
+	  
+	  function DialogController($scope, $mdDialog, item, types) {
+		  
+		  $scope.item = item;
+		  $scope.types = types;
+		  
+		  $scope.users = [
+		                  { id: 1, name: 'Bob' },
+		                  { id: 2, name: 'Alice' },
+		                  { id: 3, name: 'Steve' }
+		                ];
+		                $scope.selectedUser = { id: 1, name: 'Bob' };
+		  
+		    $scope.hide = function() {
+		      $mdDialog.hide();
+		    };
+
+		    $scope.cancel = function() {
+		      $mdDialog.cancel();
+		    };
+
+		    $scope.answer = function(answer) {
+		      $mdDialog.hide(answer);
+		    };
+		  }
 
     var originalProd = {};
     var originalType = {};

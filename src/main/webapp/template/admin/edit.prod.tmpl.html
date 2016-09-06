@@ -10,13 +10,18 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
-		<md-input-container> <label>English name</label> <input
-			type="text" required > </md-input-container>
-	</div>
-	</md-dialog-content>
+		<md-input-container> <label>English name</label>
+		<input name="name_en" type="text" required ng-model="item.nen"></md-input-container>
 
-	<md-dialog-actions layout="row"> <span flex></span>
-	<md-button ng-click="answer('not useful')"> Cancel </md-button> <md-button
-		ng-click="answer('useful')"> Save </md-button> </md-dialog-actions>
+		<md-input-container> <label>Ukraine name</label>
+		<input name="name_uk" type="text" required ng-model="item.nuk"></md-input-container>
+		<br>
+		<md-select ng-model="selectedUser"> <md-option
+			ng-value="user" ng-repeat="user in users">{{ user.name }}</md-option>
+		</md-select>
+
+		<md-dialog-actions layout="row"> <span flex></span>
+		<md-button ng-click="answer('not useful')"> Cancel </md-button> <md-button
+			ng-click="answer('useful')"> Save </md-button> </md-dialog-actions>
 </form>
 </md-dialog>
