@@ -18,6 +18,17 @@ public class ProductListService {
 		return 0;
 	}
 
+	public int insertAndGetId(ProductList productList) {
+		try (ProductListDAO productDAO = new ProductListDAO()) {
+			return productDAO.insertAndGetId(productList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	public int delete(Integer index) {
 		try (ProductListDAO productDAO = new ProductListDAO()) {
 			return productDAO.delete(index);

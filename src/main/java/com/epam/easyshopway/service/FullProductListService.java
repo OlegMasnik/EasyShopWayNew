@@ -1,20 +1,13 @@
 package com.epam.easyshopway.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.epam.easyshopway.dto.FullProductListDTO;
 import com.epam.easyshopway.model.FullProductList;
-import com.epam.easyshopway.model.Map;
 
 public class FullProductListService {
-	
-	public static void main(String[] args) {
-		System.out.println(getProductListByUserId(1).size());
-	}
-	
+		
 	public static List<FullProductList> getProductListByUserId(Integer id) {
 		List<FullProductList> fullProductLists = null;
 		try (FullProductListDTO dto = new FullProductListDTO()) {
@@ -28,25 +21,5 @@ public class FullProductListService {
 		} finally {
 			return fullProductLists;
 		}
-	}
-	
-	public static HashMap<Integer, List<FullProductList>> getGroupedList (Integer id) {
-		List<FullProductList> userProducts = new ArrayList<>();
-		HashMap<Integer, List<FullProductList>> productLists = new HashMap<>();
-		
-		userProducts = getProductListByUserId(id);
-		
-		List<FullProductList> current;
-		for (FullProductList product : userProducts) {
-			if ((current = productLists.get(product.getId())) == null) {
-				current = new ArrayList<>();
-				current.add(product);
-				productLists.put(product.getId(), current);
-			} else {
-				current.add(product);
-			}
-		}
-		
-		return productLists;
 	}
 }

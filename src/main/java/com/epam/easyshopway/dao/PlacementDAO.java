@@ -14,6 +14,10 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 	private final String INSERT = "INSERT INTO placement (map_id, place, type) VALUES ( ?, ?,?);";
 	private final String UPDATE = "UPDATE placement SET map_id = ?, place = ?, type=? where id =? ";
 	private final String DELETE = "DELETE From placement where id = ?";
+	private final String GET_PLACEMENT_BY_CUPBOARD_ID = "SELECT placement.place, placement.id, "
+			+ "placement.type, placement.map_id FROM cupboard_placement "
+			+ "INNER JOIN placement ON cupboard_placement.placement_id = placement.id"
+			+ " WHERE cupboard_placement.cupboard_id = ? ORDER BY placement.place";
 
 	@Override
 	public int insert(Placement el) throws SQLException {
@@ -48,6 +52,18 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 			IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_ALL);
 		ResultSet resultSet = statement.executeQuery(SELECT_ALL);
+		List<Placement> placements = new Transformer<Placement>(Placement.class)
+				.fromRStoCollection(resultSet);
+		statement.close();
+		return placements;
+	}
+
+	public List<Placement> getcCupboardPlacement(Integer cupboard_id)
+			throws SQLException, IllegalAccessException, InstantiationException {
+		PreparedStatement statement = connection
+				.prepareStatement(GET_PLACEMENT_BY_CUPBOARD_ID);
+		statement.setInt(1, cupboard_id);
+		ResultSet resultSet = statement.executeQuery();
 		List<Placement> placements = new Transformer<Placement>(Placement.class)
 				.fromRStoCollection(resultSet);
 		statement.close();

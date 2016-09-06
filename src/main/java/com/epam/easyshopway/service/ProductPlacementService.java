@@ -7,7 +7,7 @@ import com.epam.easyshopway.dao.ProductPlacementDAO;
 import com.epam.easyshopway.model.ProductPlacement;
 
 public class ProductPlacementService {
-	public int insert(ProductPlacement productList) {
+	public static int insert(ProductPlacement productList) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
 			return productDAO.insert(productList);
 		} catch (SQLException e) {
@@ -18,7 +18,7 @@ public class ProductPlacementService {
 		return 0;
 	}
 
-	public ProductPlacement getById(Integer index) {
+	public static ProductPlacement getById(Integer index) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
 			return productDAO.getById(index);
 		} catch (SQLException e) {
@@ -29,7 +29,18 @@ public class ProductPlacementService {
 		return null;
 	}
 
-	public List<ProductPlacement> getAll() {
+	public static List<ProductPlacement> getByProductId(Integer id) {
+		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
+			return productDAO.getByName(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static List<ProductPlacement> getAll() {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
 			return productDAO.getAll();
 		} catch (SQLException e) {
@@ -40,7 +51,7 @@ public class ProductPlacementService {
 		return null;
 	}
 
-	public int update(Integer index, ProductPlacement productList) {
+	public static int update(Integer index, ProductPlacement productList) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
 			return productDAO.update(index, productList);
 		} catch (SQLException e) {

@@ -16,7 +16,7 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 	private final String UPDATE_PRODUCT_PLACEMENT_BY_INDEX = "UPDATE product_placement SET cupboard_id=?, product_id = ?, place = ? WHERE id=?";
 	private final String GET_PRODUCT_PLACEMENT_BY_INDEX = "SELECT * FROM product_placement WHERE id=?";
 	private final String GET_ALL_PRODUCT_PLACEMENTS = "SELECT * FROM product_placement WHERE active=1";
-	private final String GET_PRODUCT_PLACEMENY_BY_NAME = "select product_placement.* from product_placement join product on product.id = product_placement.product_id where product.name_en like ? and product.active = 1";
+	private final String GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID = "select product_placement.* from product_placement join product on product.id = product_placement.product_id where product.id like ? and product.active = 1";
 
 	public ProductPlacementDAO() {
 		super();
@@ -59,13 +59,13 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		}
 	}
 
-	public List<ProductPlacement> getByName(String name) throws SQLException,
+	public List<ProductPlacement> getByName(Integer id) throws SQLException,
 			InstantiationException, IllegalAccessException {
 		transformer = new Transformer<>(ProductPlacement.class);
 		List<ProductPlacement> list = new ArrayList<>();
 		PreparedStatement statement = connection
-				.prepareStatement(GET_PRODUCT_PLACEMENY_BY_NAME);
-		statement.setString(1, name);
+				.prepareStatement(GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID);
+		statement.setInt(1, id);
 		ResultSet rs = statement.executeQuery();
 		list = transformer.fromRStoCollection(rs);
 		rs.close();

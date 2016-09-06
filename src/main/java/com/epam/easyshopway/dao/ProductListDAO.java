@@ -18,6 +18,7 @@ public class ProductListDAO extends AbstractDAO<ProductList> {
 	private final String UPDATE_PRODUCT_LIST_BY_INDEX = "UPDATE product_list SET user_id=?,  date=?, time=? WHERE id=?";
 	private final String GET_PRODUCT_LIST_BY_INDEX = "SELECT * FROM product_list WHERE id=?";
 	private final String GET_ALL_PRODUCT_LISTS = "SELECT * FROM product_list";
+	private final String GET_CURRENT_PRODUCT_LISTS_ID = "SELECT id FROM product_list where user_id=?,  date=?, time=?";
 
 	public ProductListDAO() {
 		super();
@@ -33,6 +34,25 @@ public class ProductListDAO extends AbstractDAO<ProductList> {
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
+	}
+
+	public int insertAndGetId(ProductList productList) throws SQLException {
+		PreparedStatement statement = connection
+				.prepareStatement(ADD_PRODUCT_LIST);
+		statement.setInt(1, productList.getUserId());
+		statement.setDate(2, productList.getDate());
+		statement.setTime(3, productList.getTime());
+		statement.close();
+		PreparedStatement st = connection
+				.prepareStatement(GET_CURRENT_PRODUCT_LISTS_ID);
+		st.setInt(1, productList.getUserId());
+		st.setDate(2, productList.getDate());
+		st.setTime(3, productList.getTime());
+
+		ResultSet result = st.executeQuery();
+		int idList = result.getInt("id");
+		st.close();
+		return idList;
 	}
 
 	@Override
