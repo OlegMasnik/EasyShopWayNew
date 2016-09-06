@@ -1,6 +1,7 @@
 package com.epam.easyshopway.controller.user;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,8 +14,8 @@ import org.json.simple.JSONObject;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.epam.easyshopway.model.User;
-import com.epam.easyshopway.model.UserProductType;
-import com.epam.easyshopway.service.UserProductTypeService;
+import com.epam.easyshopway.model.ProductsTypeCount;
+import com.epam.easyshopway.service.ProductsTypeCountService;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
@@ -42,23 +43,34 @@ public class UserStatisticServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("asda");
 		response.setCharacterEncoding("utf-8");
 		User user = (User) request.getSession().getAttribute("user");
-		List<UserProductType> userProducts = UserProductTypeService.getUserProductTypes(user.getId());
+		Date startDate = Date.valueOf(request.getParameter("startDate"));
+		Date endDate = Date.valueOf(request.getParameter("endDate"));
+		
+		List<ProductsTypeCount> productTypes;
+		if ("user".equals(user.getRole()))
+			productTypes = ProductsTypeCountService.getUserProductTypesUser(user.getId(), startDate, endDate);
+		else 
+			productTypes = ProductsTypeCountService.getUserProductTypesAdmin(user.getId(), startDate, endDate);
+		JSONObject responseObject = drawPieChart(productTypes, startDate, endDate, "en".equals(user.getLanguage()));	
+		response.getWriter().write(responseObject.toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject drawPieChart (List<ProductsTypeCount> productsType, Date startDate, Date endDate, boolean isEnglish){
 		JSONObject responseObject = new JSONObject();
 		JSONArray series = new JSONArray();
 		JSONObject inSeries = new JSONObject();
 		JSONArray data = new JSONArray();
 		inSeries.put("colorByPoint", true);
-		boolean isEnglish = "en".equals(user.getLanguage());
-		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:"));
-		inSeries.put("name", isEnglish ? "Persentage" : "пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:");
-		for (int i=0; i<userProducts.size(); i++){
+		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "Групи продуктів, які часто шукають::"));
+		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках:");
+		for (int i=0; i<productsType.size(); i++){
 			JSONObject foodType = new JSONObject();
-			String productTypeName = isEnglish ? userProducts.get(i).getNameEnglish() : userProducts.get(i).getNameEnglish() ;
+			String productTypeName = isEnglish ? productsType.get(i).getNameEnglish() : productsType.get(i).getNameEnglish() ;
 			foodType.put("name", productTypeName);
-			double percent = 1.0 / userProducts.get(i).getCount() * 100;
+			double percent = productsType.get(i).getCount();
 			foodType.put("y", percent);
 			if (i == 0){
 				foodType.put("sliced", true);
@@ -69,7 +81,6 @@ public class UserStatisticServlet extends HttpServlet {
 		inSeries.put("data", data);
 		series.add(inSeries);
 		responseObject.put("series", series);
-		response.getWriter().write(responseObject.toString());
-		
+		return responseObject;
 	}
 }
