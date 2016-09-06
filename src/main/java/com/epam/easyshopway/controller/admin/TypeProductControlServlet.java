@@ -11,24 +11,26 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.epam.easyshopway.model.Product;
+import com.epam.easyshopway.model.ProductType;
 import com.epam.easyshopway.model.User;
-import com.epam.easyshopway.service.UserService;
+import com.epam.easyshopway.service.ProductTypeService;
 
-public class UsersControlServlet extends HttpServlet {
+public class TypeProductControlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private JSONObject o;
+	private User user;
 
-	public UsersControlServlet() {
+	public TypeProductControlServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("get all users");
 		o = new JSONObject();
-		System.out.println(UserService.getAll());
-		o.put("users", setJsonArrayUser(UserService.getAll()));
+		user = (User) request.getSession(false).getAttribute("user");
+		o.put("types", setJsonArrayType(ProductTypeService.getAll()));
 		System.out.println(o.toJSONString());
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(o.toJSONString());
@@ -36,28 +38,25 @@ public class UsersControlServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String email = request.getParameter("email");
-		boolean active = new Boolean(request.getParameter("active"));
 
-		System.out.println(email + " " + active);
-
-		UserService.setActive(email, active);
 	}
 
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int id = Integer.parseInt(req.getParameter("id"));
+		System.out.println("Delete type " + id);
+		ProductTypeService.delete(id);
 	}
 
-	private JSONArray setJsonArrayUser(Collection<User> list) {
+	private JSONArray setJsonArrayType(Collection<ProductType> list) {
 		JSONArray jsonArray = new JSONArray();
 		JSONObject object;
-		for (User u : list) {
+		for (ProductType u : list) {
 			object = new JSONObject();
-			object.put("fn", u.getFirstName());
-			object.put("ln", u.getLastName());
-			object.put("e", u.getEmail());
-			object.put("active", u.isActive());
+			object.put("id", u.getId());
+			object.put("img", u.getImageUrl());
+			object.put("nen", u.getNameEn());
+			object.put("nuk", u.getNameUk());
 			jsonArray.add(object);
 		}
 		return jsonArray;

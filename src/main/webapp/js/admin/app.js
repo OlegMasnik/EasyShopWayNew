@@ -2,240 +2,653 @@ var adminApp = angular.module('MyApp');
 
 adminApp.requires.push('md.data.table');
 
-app.config(function($routeProvider) {
-	$routeProvider.when("/", {
-		templateUrl : "template/shared/info.jsp",
-		controller : 'InfoCtrl'
-	}).when("/map", {
-		templateUrl : "template/admin/map.html"
-	}).when("/history", {
-		templateUrl : "template/admin/history.html"
-	}).when("/products", {
-		templateUrl : "template/admin/products.html"
-	}).when("/users", {
-		templateUrl : "template/admin/users.html",
-		controller : 'UsersCtrl1'
-	}).when("/statistic", {
-		templateUrl : "template/admin/statistics.html"
-	});
+app.config(function ($routeProvider) {
+    $routeProvider.when("/", {
+        templateUrl: "template/shared/info.jsp",
+        controller: 'InfoCtrl'
+    }).when("/map", {
+        templateUrl: "template/admin/map.html"
+    }).when("/history", {
+        templateUrl: "template/admin/history.html"
+    }).when("/products", {
+        templateUrl: "template/admin/products.html",
+        controller: 'ProdCtrl'
+    }).when("/users", {
+        templateUrl: "template/admin/users.html",
+        controller: 'UsersCtrl1'
+    }).when("/statistic", {
+        templateUrl: "template/admin/statistics.html"
+    });
 });
 
-adminApp.controller('AdminCtrl', function($scope, $http) {
+adminApp.controller('AdminCtrl', function ($scope, $http) {
 
 });
 
-adminApp.controller('InfoCtrl', function($scope, $http) {
-	$scope.qwer = "Hello world";
+adminApp.controller('InfoCtrl', function ($scope, $http) {
+    $scope.qwer = "Hello world";
 });
 
-adminApp
-		.controller(
-				'UsersCtrl1',				[
-						'$http',
-						'$scope', '$location',
-						function($http, $scope, $location) {
+adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($http, $scope, $location) {
 
-							var original = {};
+    var original = {};
 
-							$http({
-								method : "GET",
-								url : "/EasyShopWayNew/users"
-							}).then(function mySucces(response) {
-								$scope.data = response.data;
-								original.users = $scope.data.users;
-								original.count = $scope.data.users.length;
-								$scope.datatable = angular.copy(original);
-								console.log("Get");
-								console.log($scope.data);
-							}, function myError(response) {
-								console.log(response.statusText);
-							});
-							$scope.smart = true;
+    $http({
+        method: "GET",
+        url: "/EasyShopWayNew/users"
+    }).then(function mySucces(response) {
+        $scope.data = response.data;
+        original.users = $scope.data.users;
+        original.count = $scope.data.users.length;
+        $scope.datatable = angular.copy(original);
+        console.log("Get");
+        console.log($scope.data);
+    }, function myError(response) {
+        console.log(response.statusText);
+    });
+    $scope.smart = true;
 
-							$scope.autocolumn = [ {
-								name : "fn",
-								display : "First Name"
+    $scope.autocolumn = [{
+        name: "fn",
+        display: "First Name"
 							}, {
-								name : "ln",
-								display : "Last Name"
+        name: "ln",
+        display: "Last Name"
 							}, {
-								name : "e",
-								display : "Email"
-							} ];
-							$scope.multisearch = Array();
-							$scope.multisearch[0] = {
-								id : 0,
-								column : "",
-								ident : "",
-							};
+        name: "e",
+        display: "Email"
+							}];
+    $scope.multisearch = Array();
+    $scope.multisearch[0] = {
+        id: 0,
+        column: "",
+        ident: "",
+    };
 
-							$scope.addRow = function() {
-								$scope.multisearch.push({
-									id : $scope.multisearch.length,
-									column : "",
-									ident : ""
-								});
-							};
+    $scope.addRow = function () {
+        $scope.multisearch.push({
+            id: $scope.multisearch.length,
+            column: "",
+            ident: ""
+        });
+    };
 
-							$scope.deleteRow = function(int) {
-								$scope.multisearch.splice(int, 1);
-								for (var i = 0; i < $scope.multisearch.length; i++) {
-									$scope.multisearch[i].id = i;
-								}
-								$scope.updateDataTable();
-							};
+    $scope.deleteRow = function (int) {
+        $scope.multisearch.splice(int, 1);
+        for (var i = 0; i < $scope.multisearch.length; i++) {
+            $scope.multisearch[i].id = i;
+        }
+        $scope.updateDataTable();
+    };
 
-							// Configure Table
-							$scope.limitOptions = [ 5, 10, 15 ];
-							$scope.options = {
-								pageSelect : true
-							};
+    // Configure Table
+    $scope.limitOptions = [5, 10, 15];
+    $scope.options = {
+        pageSelect: true
+    };
 
-							$scope.query = {
-								order : 'fn',
-								limit : 5,
-								page : 1
-							};
+    $scope.query = {
+        order: 'fn',
+        limit: 10,
+        page: 1
+    };
 
-							$scope.updateDataTable = function() {
-								var rowdel = Array();
-								var filter = false; // set filter false
-								for (var j = 0; j < $scope.multisearch.length; j++) {
-									if ($scope.multisearch[j].ident
-											&& $scope.multisearch[j].column) {
-										filter = true; // if a filter exists
-									}
-								}
-								if (filter) { // if a filter is set
-									for (var j = 0; j < $scope.multisearch.length; j++) { // for
-										if ($scope.multisearch[j].ident) { // check
-											for (var i = original.users.length - 1; i >= 0; i--) { // for
-												var removeRow = true; // take
-												for ( var key in original.users[i]) { // for
-													if (original.users[i]
-															.hasOwnProperty(key)) { // check
-														if (key == $scope.multisearch[j].column) { // check
-															var op = false; // check
-															for ( var key in operators) {
-																if ($scope.multisearch[j].ident
-																		.split(" ")[0] == key) {
-																	op = true; // operator
-																	// found
-																}
-															}
-															if (op) { // if
-																var msray = $scope.multisearch[j].ident
-																		.split(" ");
-																var operator = $scope.multisearch[j].ident
-																		.split(" ")[0];
-																msray.splice(0,
-																		1); // extract
-																var comp = msray
-																		.join(" "); // and
-																if (operators[operator]
-																		(
-																				original.users[i][$scope.multisearch[j].column],
-																				comp)) {
-																	removeRow = false; // check
-																	break;
-																}
-															} else {
-																if (matchRule(
-																		original.users[i][$scope.multisearch[j].column],
-																		$scope.multisearch[j].ident,
-																		$scope.smart)) {
-																	removeRow = false; // check
-																	break;
-																}
-															}
-														}
-													}
-												}
-												if (removeRow) {
-													rowdel.push(i);
-												}
-											}
-										}
-									}
-								}
-								var dt = angular.copy(original);
-								for (var i = 0; i < rowdel.length; i++) {
-									dt.users.splice(rowdel[i], 1); // remove
-								}
-								dt.count = dt.users.length;
-								$scope.datatable = angular.copy(dt);
-							};
-							$scope.active = function(i) {
-								console.log(i.e + " " + i.active);
-								
-								var data = $.param({
-									email : i.e,
-									active : !i.active
-								});
-								var config = {
-									headers : {
-										'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
-									}
-								}
-								$http
-										.post('/EasyShopWayNew/users', data,
-												config).success(
-												function(data, status, headers,
-														config) {
-													console.log("OK+");
-												}).error(
-												function(data, status, header,
-														config) {
-												});
-								$http({
-									method : "GET",	
-									url : "/EasyShopWayNew/users"
-								}).then(function mySucces(response) {
-									$scope.data = response.data;
-									original.users = $scope.data.users;
-									original.count = $scope.data.users.length;
-									$scope.datatable = angular.copy(original);
-									console.log("Get");
-									console.log($scope.data);
-								}, function myError(response) {
-									console.log(response.statusText);
-								});
-								console.log("Finish");
+    $scope.updateDataTable = function () {
+        var rowdel = Array();
+        var filter = false; // set filter false
+        for (var j = 0; j < $scope.multisearch.length; j++) {
+            if ($scope.multisearch[j].ident && $scope.multisearch[j].column) {
+                filter = true; // if a filter exists
+            }
+        }
+        if (filter) { // if a filter is set
+            for (var j = 0; j < $scope.multisearch.length; j++) { // for
+                if ($scope.multisearch[j].ident) { // check
+                    for (var i = original.users.length - 1; i >= 0; i--) { // for
+                        var removeRow = true; // take
+                        for (var key in original.users[i]) { // for
+                            if (original.users[i]
+                                .hasOwnProperty(key)) { // check
+                                if (key == $scope.multisearch[j].column) { // check
+                                    var op = false; // check
+                                    for (var key in operators) {
+                                        if ($scope.multisearch[j].ident
+                                            .split(" ")[0] == key) {
+                                            op = true; // operator
+                                            // found
+                                        }
+                                    }
+                                    if (op) { // if
+                                        var msray = $scope.multisearch[j].ident
+                                            .split(" ");
+                                        var operator = $scope.multisearch[j].ident
+                                            .split(" ")[0];
+                                        msray.splice(0,
+                                            1); // extract
+                                        var comp = msray
+                                            .join(" "); // and
+                                        if (operators[operator]
+                                            (
+                                                original.users[i][$scope.multisearch[j].column],
+                                                comp)) {
+                                            removeRow = false; // check
+                                            break;
+                                        }
+                                    } else {
+                                        if (matchRule(
+                                                original.users[i][$scope.multisearch[j].column],
+                                                $scope.multisearch[j].ident,
+                                                $scope.smart)) {
+                                            removeRow = false; // check
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (removeRow) {
+                            rowdel.push(i);
+                        }
+                    }
+                }
+            }
+        }
+        var dt = angular.copy(original);
+        for (var i = 0; i < rowdel.length; i++) {
+            dt.users.splice(rowdel[i], 1); // remove
+        }
+        dt.count = dt.users.length;
+        $scope.datatable = angular.copy(dt);
+    };
+    $scope.active = function (i) {
+        console.log(i.e + " " + i.active);
 
-							};
-						} ]);
+        var data = $.param({
+            email: i.e,
+            active: !i.active
+        });
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+        $http
+            .post('/EasyShopWayNew/users', data,
+                config).success(
+                function (data, status, headers,
+                    config) {
+                    console.log("OK+");
+                }).error(
+                function (data, status, header,
+                    config) {});
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/users"
+        }).then(function mySucces(response) {
+            $scope.data = response.data;
+            original.users = $scope.data.users;
+            original.count = $scope.data.users.length;
+            $scope.datatable = angular.copy(original);
+            console.log("Get");
+            console.log($scope.data);
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
+        console.log("Finish");
+
+    };
+}]);
+
+adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', function ($http, $scope, $location, $mdDialog) {
+	
+	$scope.showPromptType = function(item) {
+	    // Appending dialog to document.body to cover sidenav in docs app
+	    var confirm = $mdDialog.prompt()
+	      .title('Edit product')
+	      .textContent('Name:')
+	      .placeholder('Enter name')
+	      .initialValue(item.n)
+	      .targetEvent(item)
+	      .ok('Save')
+	      .cancel('Cancel');
+
+	    $mdDialog.show(confirm).then(function(result) {
+	    	console.log("Confirm edit type");
+	    	
+	    }, function() {
+	    	console.log("Decline edit type");
+	    });
+	  };
+	  	
+
+    var originalProd = {};
+    var originalType = {};
+
+    $http({
+        method: "GET",
+        url: "/EasyShopWayNew/products"
+    }).then(function mySucces(response) {
+        $scope.data = response.data;
+        originalProd.prods = $scope.data.prods;
+        originalProd.count = $scope.data.prods.length;
+        $scope.datatable = angular.copy(originalProd);
+        console.log("Get");
+        console.log($scope.data);
+    }, function myError(response) {
+        console.log(response.statusText);
+    });
+    $scope.smartProd = true;
+
+    $scope.autocolumnProd = [
+        {
+        	name: "tnen",
+        	display: "Product Type EN" 	
+        },
+        {
+        	name: "tnuk",
+        	display: "Product Type UK" 	
+        },
+        {
+        	name: "nen",
+       		display: "Name EN"
+		}, 
+		{
+			name: "nuk",
+			display: "Name UK"
+		}];
+    $scope.multisearchProd = Array();
+    $scope.multisearchProd[0] = {
+        id: 0,
+        column: "",
+        ident: "",
+    };
+
+    $scope.addRowProd = function () {
+        $scope.multisearchProd.push({
+            id: $scope.multisearchProd.length,
+            column: "",
+            ident: ""
+        });
+    };
+
+    $scope.deleteRowProd = function (int) {
+        $scope.multisearchProd.splice(int, 1);
+        for (var i = 0; i < $scope.multisearchProd.length; i++) {
+            $scope.multisearchProd[i].id = i;
+        }
+        $scope.updateDataTableProd();
+    };
+
+    // Configure Table
+    $scope.limitOptionsProd = [5, 10, 15];
+    $scope.optionsProd = {
+        pageSelect: true
+    };
+
+    $scope.queryProd = {
+        order: 'name',
+        limit: 10,
+        page: 1
+    };
+
+    $scope.updateDataTableProd = function () {
+        var rowdel = Array();
+        var filter = false; // set filter false
+        for (var j = 0; j < $scope.multisearchProd.length; j++) {
+            if ($scope.multisearchProd[j].ident && $scope.multisearchProd[j].column) {
+                filter = true; // if a filter exists
+            }
+        }
+        if (filter) { // if a filter is set
+            for (var j = 0; j < $scope.multisearchProd.length; j++) { // for
+                if ($scope.multisearchProd[j].ident) { // check
+                    for (var i = originalProd.prods.length - 1; i >= 0; i--) { // for
+                        var removeRow = true; // take
+                        for (var key in originalProd.prods[i]) { // for
+                            if (originalProd.prods[i]
+                                .hasOwnProperty(key)) { // check
+                                if (key == $scope.multisearchProd[j].column) { // check
+                                    var op = false; // check
+                                    for (var key in operators) {
+                                        if ($scope.multisearchProd[j].ident
+                                            .split(" ")[0] == key) {
+                                            op = true; // operator
+                                            // found
+                                        }
+                                    }
+                                    if (op) { // if
+                                        var msray = $scope.multisearchProd[j].ident
+                                            .split(" ");
+                                        var operator = $scope.multisearchProd[j].ident
+                                            .split(" ")[0];
+                                        msray.splice(0,
+                                            1); // extract
+                                        var comp = msray
+                                            .join(" "); // and
+                                        if (operators[operator]
+                                            (
+                                                originalProd.prods[i][$scope.multisearchProd[j].column],
+                                                comp)) {
+                                            removeRow = false; // check
+                                            break;
+                                        }
+                                    } else {
+                                        if (matchRule(
+                                                originalProd.prods[i][$scope.multisearchProd[j].column],
+                                                $scope.multisearchProd[j].ident,
+                                                $scope.smartProd)) {
+                                            removeRow = false; // check
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (removeRow) {
+                            rowdel.push(i);
+                        }
+                    }
+                }
+            }
+        }
+        var dt = angular.copy(originalProd);
+        for (var i = 0; i < rowdel.length; i++) {
+            dt.prods.splice(rowdel[i], 1); // remove
+        }
+        dt.count = dt.prods.length;
+        $scope.datatable = angular.copy(dt);
+    };
+    
+    $scope.deleteProd = function(id){
+    	
+    	var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+    	
+    	$http.delete('/EasyShopWayNew/products?id=' + id, config)
+    	   .then(
+    	       function(response){
+    	    	   console.log("success delete prod " + id);
+    	    	   $http({
+    	    	        method: "GET",
+    	    	        url: "/EasyShopWayNew/products"
+    	    	    }).then(function mySucces(response) {
+    	    	        $scope.data = response.data;
+    	    	        originalProd.prods = $scope.data.prods;
+    	    	        originalProd.count = $scope.data.prods.length;
+    	    	        $scope.datatable = angular.copy(originalProd);
+    	    	        console.log("Get");
+    	    	        console.log($scope.data);
+    	    	    }, function myError(response) {
+    	    	        console.log(response.statusText);
+    	    	    });
+    	       }, 
+    	       function(response){
+    	    	   console.log("failed delete prod " + id);
+    	       }
+    	    );
+    };
+      
+    
+    
+ $scope.deleteType = function(id){
+    	
+    	var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+    	
+    	$http.delete('/EasyShopWayNew/type?id=' + id, config)
+    	   .then(
+    	       function(response){
+    	    	   console.log("success delete prod " + id);
+    	    	   $http({
+    	    	        method: "GET",
+    	    	        url: "/EasyShopWayNew/type"
+    	    	    }).then(function mySucces(response) {
+    	    	        $scope.data = response.data;
+    	    	        originalType.types= $scope.data.types;
+    	    	        originalType.count = $scope.data.types.length;
+    	    	        $scope.datatableType = angular.copy(originalType);
+    	    	        console.log("Get");
+    	    	        console.log($scope.data);
+    	    	    }, function myError(response) {
+    	    	        console.log(response.statusText);
+    	    	    });
+    	    	   
+    	    	   $http({
+   	    	        method: "GET",
+   	    	        url: "/EasyShopWayNew/products"
+   	    	    }).then(function mySucces(response) {
+   	    	        $scope.data = response.data;
+   	    	        originalProd.prods = $scope.data.prods;
+   	    	        originalProd.count = $scope.data.prods.length;
+   	    	        $scope.datatable = angular.copy(originalProd);
+   	    	        console.log("Get");
+   	    	        console.log($scope.data);
+   	    	    }, function myError(response) {
+   	    	        console.log(response.statusText);
+   	    	    });
+    	       }, 
+    	       function(response){
+    	    	   console.log("failed delete prod " + id);
+    	       }
+    	    );
+    };
+    
+    
+    
+    $http({
+        method: "GET",
+        url: "/EasyShopWayNew/type"
+    }).then(function mySucces(response) {
+        $scope.data = response.data;
+        originalType.types = $scope.data.types;
+        originalType.count = $scope.data.types.length;
+        $scope.datatableType = angular.copy(originalType);
+        console.log("Get");
+        console.log($scope.data);
+    }, function myError(response) {
+        console.log(response.statusText);
+    });
+    $scope.smartType = true;
+
+    $scope.autocolumnType= [
+        {
+        	name: "img",
+        	display: "Image"
+        }, 
+        {
+        	name: "nen",
+        	display: "Name EN"
+        }, 
+        {
+        	name: "nuk",
+        	display: "Name UK"
+        }];
+    $scope.multisearchType = Array();
+    $scope.multisearchType[0] = {
+        id: 0,
+        column: "",
+        ident: "",
+    };
+
+    $scope.addRowType = function () {
+        $scope.multisearchType.push({
+            id: $scope.multisearchType.length,
+            column: "",
+            ident: ""
+        });
+    };
+
+    $scope.deleteRowType= function (int) {
+        $scope.multisearchType.splice(int, 1);
+        for (var i = 0; i < $scope.multisearchType.length; i++) {
+            $scope.multisearchType[i].id = i;
+        }
+        $scope.updateDataTableType();
+    };
+
+    // Configure Table
+    $scope.limitOptionsType = [5, 10, 15];
+    $scope.optionsType = {
+        pageSelect: true
+    };
+
+    $scope.queryType = {
+        order: 'name',
+        limit: 10,
+        page: 1
+    };
+    
+    $scope.updateDataTableType = function () {
+        var rowdel = Array();
+        var filter = false; // set filter false
+        for (var j = 0; j < $scope.multisearchType.length; j++) {
+            if ($scope.multisearchType[j].ident && $scope.multisearchType[j].column) {
+                filter = true; // if a filter exists
+            }
+        }
+        if (filter) { // if a filter is set
+            for (var j = 0; j < $scope.multisearchType.length; j++) { // for
+                if ($scope.multisearchType[j].ident) { // check
+                    for (var i = originalType.types.length - 1; i >= 0; i--) { // for
+                        var removeRow = true; // take
+                        for (var key in originalType.types[i]) { // for
+                            if (originalType.types[i]
+                                .hasOwnProperty(key)) { // check
+                                if (key == $scope.multisearchType[j].column) { // check
+                                    var op = false; // check
+                                    for (var key in operators) {
+                                        if ($scope.multisearchType[j].ident
+                                            .split(" ")[0] == key) {
+                                            op = true; // operator
+                                            // found
+                                        }
+                                    }
+                                    if (op) { // if
+                                        var msray = $scope.multisearchType[j].ident
+                                            .split(" ");
+                                        var operator = $scope.multisearchType[j].ident
+                                            .split(" ")[0];
+                                        msray.splice(0,
+                                            1); // extract
+                                        var comp = msray
+                                            .join(" "); // and
+                                        if (operators[operator]
+                                            (
+                                                originalType.types[i][$scope.multisearchType[j].column],
+                                                comp)) {
+                                            removeRow = false; // check
+                                            break;
+                                        }
+                                    } else {
+                                        if (matchRule(
+                                                originalType.types[i][$scope.multisearchType[j].column],
+                                                $scope.multisearchType[j].ident,
+                                                $scope.smartType)) {
+                                            removeRow = false; // check
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (removeRow) {
+                            rowdel.push(i);
+                        }
+                    }
+                }
+            }
+        }
+        var dt = angular.copy(originalType);
+        for (var i = 0; i < rowdel.length; i++) {
+            dt.types.splice(rowdel[i], 1); // remove
+        }
+        dt.count = dt.types.length;
+        $scope.datatableType = angular.copy(dt);
+    };
+    
+    
+    
+    
+    
+    
+    
+    
+    $scope.active = function (i) {
+        console.log(i.e + " " + i.active);
+
+        var data = $.param({
+            email: i.e,
+            active: !i.active
+        });
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+        $http
+            .post('/EasyShopWayNew/users', data,
+                config).success(
+                function (data, status, headers,
+                    config) {
+                    console.log("OK+");
+                }).error(
+                function (data, status, header,
+                    config) {});
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/products"
+        }).then(function mySucces(response) {
+            $scope.data = response.data;
+            originalProd.prods = $scope.data.prods;
+            originalProd.count = $scope.data.prods.length;
+            $scope.datatable = angular.copy(originalProd);
+            console.log("Get");
+            console.log($scope.data);
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
+        console.log("Finish");
+
+    };
+}]);
 
 var operators = {
-	'<' : function(a, b) {
-		return a < b
-	},
-	'<=' : function(a, b) {
-		return a <= b
-	},
-	'!=' : function(a, b) {
-		return a != b
-	},
-	'==' : function(a, b) {
-		return a == b
-	},
-	'>=' : function(a, b) {
-		return a >= b
-	},
-	'>' : function(a, b) {
-		return a > b
-	},
-	'%' : function(a, b) {
-		return a % b
-	}
+    '<': function (a, b) {
+        return a < b
+    },
+    '<=': function (a, b) {
+        return a <= b
+    },
+    '!=': function (a, b) {
+        return a != b
+    },
+    '==': function (a, b) {
+        return a == b
+    },
+    '>=': function (a, b) {
+        return a >= b
+    },
+    '>': function (a, b) {
+        return a > b
+    },
+    '%': function (a, b) {
+        return a % b
+    }
 };
 
 
 function matchRule(str, rule, smart) {
-	str = String(str);
-	rule = String(rule);
-	if (smart) {
-		rule = "*" + rule.toLowerCase() + "*";
-		str = str.toLowerCase();
-	}
-	return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
+    str = String(str);
+    rule = String(rule);
+    if (smart) {
+        rule = "*" + rule.toLowerCase() + "*";
+        str = str.toLowerCase();
+    }
+    return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
 };

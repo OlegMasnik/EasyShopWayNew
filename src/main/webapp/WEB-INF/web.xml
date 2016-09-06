@@ -80,6 +80,20 @@
 		<servlet-name>UploadImageServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.UploadImageServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ProductsControlServlet</display-name>
+		<servlet-name>ProductsControlServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.ProductsControlServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>TypeProductControlServlet</display-name>
+		<servlet-name>TypeProductControlServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.TypeProductControlServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -148,6 +162,14 @@
 	<servlet-mapping>
 		<servlet-name>UploadImageServlet</servlet-name>
 		<url-pattern>/cabinet/image-upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ProductsControlServlet</servlet-name>
+		<url-pattern>/products</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TypeProductControlServlet</servlet-name>
+		<url-pattern>/type</url-pattern>
 	</servlet-mapping>
 
 	<filter>
