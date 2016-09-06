@@ -94,6 +94,13 @@
 		<servlet-name>TypeProductControlServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.admin.TypeProductControlServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>SendMailControlServlet</display-name>
+		<servlet-name>SendMailControlServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.SendMailControlServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -170,6 +177,10 @@
 	<servlet-mapping>
 		<servlet-name>TypeProductControlServlet</servlet-name>
 		<url-pattern>/type</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SendMailControlServlet</servlet-name>
+		<url-pattern>/sendmail</url-pattern>
 	</servlet-mapping>
 
 	<filter>
