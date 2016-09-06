@@ -6,7 +6,7 @@
 
         <head>
             <title>
-                <c:out value="${user.firstName }"></c:out>
+                EasyShopWay
             </title>
             
             
@@ -26,8 +26,8 @@
                                 <img src="images/admin.png" alt="" class="profile-img">
 
                                 <div>
-                                    <c:out value="${user.firstName }"></c:out>
-                                    <c:out value="${user.lastName }"></c:out>
+                                    <c:out value="${ user.firstName}"></c:out> 
+                                    <c:out value="${ user.lastName}"></c:out>
                                 </div>
                             </div>
                         </a>
@@ -54,6 +54,7 @@
             <script src='js/user/app.js'></script>
             <script src='js/user/user-history.js'></script>
             <script src="js/shared/statistic.js"></script>
+            <script src="js/shared/cabinet.js"></script>
         </body>
 
         </html>
