@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
+ pageEncoding="UTF-8" isELIgnored="false"%>
 
     <md-toolbar class="md-hue-2" md-whiteframe="4">
         <div class="md-toolbar-tools">
@@ -27,25 +27,25 @@
                         <input ng-model="firstName"> </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label> <span><md-icon
-					md-svg-src="images/icons/person.svg" class="name cab-icon"></md-icon></span> Last Name
+     md-svg-src="images/icons/person.svg" class="name cab-icon"></md-icon></span> Last Name
                         </label>
                         <input ng-model="lastName"> </md-input-container>
                     <!--
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label> <span><md-icon
-					md-svg-src="images/icons/birth.svg" class="name cab-icon"></md-icon></span> Birth Day
+     md-svg-src="images/icons/birth.svg" class="name cab-icon"></md-icon></span> Birth Day
                         </label>
                         <input ng-model="birthday"> </md-input-container>
 -->
                     <md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="birthday" is-open="showdp" max-date="dtmax" id="birthday" md-placeholder="Enter date" name="birthday"></md-datepicker>
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label> <span><md-icon
-					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span> Email
+     md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span> Email
                         </label>
                         <input ng-model="email" disabled> </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label> <span><md-icon
-					md-svg-src="images/icons/lang.svg" class="name cab-icon"></md-icon></span> Preferred language
+     md-svg-src="images/icons/lang.svg" class="name cab-icon"></md-icon></span> Preferred language
                         </label>
                         <md-select placeholder="User language" ng-model="language" md-on-open="loadUsers()" style="min-width: 200px;">
                             <md-option ng-value="language.sName" ng-repeat="language in languages">{{language.name}}</md-option>

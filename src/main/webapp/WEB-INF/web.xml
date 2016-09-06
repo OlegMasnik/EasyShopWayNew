@@ -83,6 +83,27 @@
 	<servlet>
 		<description>
 		</description>
+		<display-name>ProductsControlServlet</display-name>
+		<servlet-name>ProductsControlServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.ProductsControlServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>TypeProductControlServlet</display-name>
+		<servlet-name>TypeProductControlServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.TypeProductControlServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>SendMailControlServlet</display-name>
+		<servlet-name>SendMailControlServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.SendMailControlServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
 		<display-name>ChangePasswordServlet</display-name>
 		<servlet-name>ChangePasswordServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.ChangePasswordServlet</servlet-class>
@@ -155,6 +176,18 @@
 	<servlet-mapping>
 		<servlet-name>UploadImageServlet</servlet-name>
 		<url-pattern>/cabinet/image-upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ProductsControlServlet</servlet-name>
+		<url-pattern>/products</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TypeProductControlServlet</servlet-name>
+		<url-pattern>/type</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SendMailControlServlet</servlet-name>
+		<url-pattern>/sendmail</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ChangePasswordServlet</servlet-name>

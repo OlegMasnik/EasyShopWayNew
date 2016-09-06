@@ -227,11 +227,6 @@ app
                     console.log($scope.birthday.getFullYear());
                     var date = new Date($scope.birthday);
                     
-                    //						        var birthday = new Date(
-                    //						  		      date.getFullYear(),
-                    //						  		      date.getMonth(),
-                    //						  		      date.getDate());
-
                     var birthday = '' + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
 
                     console.log(birthday);
