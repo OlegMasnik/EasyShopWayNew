@@ -26,39 +26,48 @@ public class RegistrationServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ")
-				.append(request.getContextPath());
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			String firstName = request.getParameter("firstName");
 			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
 			String birthday = request.getParameter("birthday");
-			String password = MD5Util.md5Custom(request
-					.getParameter("password"));
-			User user = new User(firstName, lastName, email, password, true,
-					"user", "en", "");
+			String password = MD5Util.md5Custom(request.getParameter("password"));
+			User user = new User(firstName, lastName, email, password, true, "user", "en", "");
 			user.setDateOfBirth(birthday);
 
 			System.out.println(firstName.equals(""));
 			object = new JSONObject();
-			if (firstName == "" || lastName == "" || email == ""
-					|| birthday == "" || password == "") {
+			if (firstName == "" || lastName == "" || email == "" || birthday == "" || password == "") {
 				object.put("emailErrMsg", "Please enter all value.");
 				System.out.println("SDFGHJKL:SDFGHJKL:DFGHJKL");
 			}
-			System.out
-					.println("WHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHAT");
+			System.out.println("WHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHAT");
 			if (UserService.hasEmail(email)) {
 				object.put("emailErrMsg", "This email has already exists.");
 			} else {
-				new Thread(new ThreadMail(request, user)).start();
+				// new Thread(new ThreadMail(request, user)).start();
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							MailUtil.sendEmailRegistrationLink(user.getEmail(),
+									user.getFirstName() + " " + user.getLastName(),
+									MD5Util.md5Custom(request.getParameter("password")));
+						} catch (MessagingException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}).start();
 				request.getSession().setAttribute("pre_user", user);
 			}
 			response.setCharacterEncoding("UTF-8");
@@ -66,28 +75,5 @@ public class RegistrationServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	class ThreadMail implements Runnable {
-		private HttpServletRequest request;
-		private User user;
-
-		public ThreadMail(HttpServletRequest httpServletRequest, User user) {
-			super();
-			this.request = httpServletRequest;
-		}
-
-		@Override
-		public void run() {
-			try {
-				MailUtil.sendEmailRegistrationLink(user.getEmail(),
-						user.getFirstName() + " " + user.getLastName(),
-						MD5Util.md5Custom(request.getParameter("password")));
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
-
-		}
-
 	}
 }

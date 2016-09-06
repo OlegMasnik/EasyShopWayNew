@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.easyshopway.utils.MailUtil;
 
-/**
- * Servlet implementation class SendMailControlServlet
- */
 public class SendMailControlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String emails;
@@ -42,5 +39,4 @@ public class SendMailControlServlet extends HttpServlet {
 		response.getWriter().write("ok");
 
 	}
-
 }

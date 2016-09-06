@@ -186,7 +186,7 @@ app
                     console.log($('#lName1').val());
 
                     console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
-                    if ($('#emailR').valid() && $('#passwordR').valid() && $('#fName1').valid() && $('#lName1').valid()) {
+                    if ($('#emailR').valid() && $('#passwordR').valid()) {
 
                         $http
                             .post(

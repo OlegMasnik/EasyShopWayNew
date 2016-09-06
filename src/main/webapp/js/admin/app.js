@@ -264,6 +264,19 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		    };
 
 		    $scope.cancel = function() {
+		    	 $http({
+		    	        method: "GET",
+		    	        url: "/EasyShopWayNew/products"
+		    	    }).then(function mySucces(response) {
+		    	        $scope.data = response.data;
+		    	        originalProd.prods = $scope.data.prods;
+		    	        originalProd.count = $scope.data.prods.length;
+		    	        $scope.datatable = angular.copy(originalProd);
+		    	        console.log("Get");
+		    	        console.log($scope.data);
+		    	    }, function myError(response) {
+		    	        console.log(response.statusText);
+		    	    });
 		      $mdDialog.cancel();
 		    };
 
@@ -294,7 +307,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 	  
 	  $scope.showPromptType = function(item) {
 		  
-		  console.log($scope.item);
+		  console.log(" Type " + item);
 		  
 		  $mdDialog.show({
 		      controller: DialogTypeController,
@@ -315,7 +328,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		            $scope.data = response.data;
 		            originalType.types = $scope.data.types;
 		            originalType.count = $scope.data.types.length;
-		            $scope.datatableType = angular.copy(originalYupe);
+		            $scope.datatableType = angular.copy(originalType);
 		            console.log("Get");
 		            console.log($scope.data);
 		        }, function myError(response) {
@@ -327,28 +340,40 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 	  };
 	  
 	  function DialogTypeController($scope, $mdDialog, item) {
-		  
-		  $scope.item = item;
+
+          if(item == undefined){
+              $scope.item = {
+                  id: 0,
+                  nen: "",
+                  nuk: "",
+                  img: ""
+              };
+          } else {
+              $scope.item = item;
+          }
+          console.log(item);
 		  
 		    $scope.hide = function() {
 		      $mdDialog.hide();
 		    };
 
 		    $scope.cancel = function() {
+		    	console.log("cancel");
 		      $mdDialog.cancel();
 		    };
 
-		    $scope.answer = function(item, tid) {
-		    	item.ptid = tid.id
+		    $scope.answer = function(item, file_path) {
+		    	
+		    	console.log('file path ' + file_path);
 		    	
 		    	var data = $.param({
 	                id: item.id,
-	                nameUk: item.nuk,
-	                nameEn: item.nen,
-	                ptid: item.ptid
+	                nuk: item.nuk,
+	                nen: item.nen,
+	                img: item.img
 	            });
 		    	
-		    	$http.put('/EasyShopWayNew/products?'+ data)
+		    	$http.put('/EasyShopWayNew/type?'+ data)
 	            .success(function (data, status, headers) {
 	            	console.log('update');
 	            	
@@ -437,7 +462,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
                                         if ($scope.multisearchProd[j].ident
                                             .split(" ")[0] == key) {
                                             op = true; // operator
-                                            // found
                                         }
                                     }
                                     if (op) { // if

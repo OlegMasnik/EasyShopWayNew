@@ -7,19 +7,16 @@
 	</md-toolbar>
 	<!--Toolbar-->
 	<md-card> <md-content flex="" layout-padding="">
-	<md-whiteframe layout="row"
-		ng-repeat="single in multisearchType"> <md-input-container>
-	<label>Column</label> <md-select ng-model="single.column"
-		ng-change="updateDataTableType()"> <md-optgroup
-		label="Column"> <md-option ng-value="column.name"
-		ng-repeat="column in autocolumnType">{{column.display}}</md-option> </md-optgroup> </md-select>
-	</md-input-container> <md-input-container class="md-block" flex=""> <label>Search</label>
+	<md-whiteframe layout="row" ng-repeat="single in multisearchType">
+	<md-input-container> <label>Column</label> <md-select
+		ng-model="single.column" ng-change="updateDataTableType()">
+	<md-optgroup label="Column"> <md-option
+		ng-value="column.name" ng-repeat="column in autocolumnType">{{column.display}}</md-option>
+	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>Search</label>
 	<input ng-change="updateDataTableType()" ng-model="single.ident">
-	</md-input-container>
-		 </md-whiteframe> </md-content> </md-card>
+	</md-input-container> </md-whiteframe> </md-content> </md-card>
 	<md-card> <md-content layout="column" flex> <md-table-container>
-	<md-button
-		class="md-fab md-raised" ng-click=""> + </md-button>
+	<md-button class="md-fab md-raised" ng-click=""> + </md-button>
 	<table md-table>
 		<thead md-head md-order="queryType.order">
 			<tr md-row>
@@ -34,13 +31,13 @@
 			<tr md-row
 				ng-repeat="row in datatableType.types | orderBy: queryType.order | limitTo: queryType.limit : (queryType.page -1) * queryType.limit">
 				<td md-cell><img
-					style="width: 128px; height: 128px; !important"
-					src="images/prod/alcohol.gif"></td>
+					style="width: 128px; height: 128px; !important" src="{{row.img}}"></td>
 				<td md-cell>{{row.nen}}</td>
 				<td md-cell>{{row.nuk}}</td>
-				<td><md-button ng-click="showPromptType(row)" class="md-fab md-mini md-primary">
-					<i class="material-icons">edit</i></md-button> <md-button ng-click="deleteType(row.id)"
-						class="md-fab md-mini red-btn">
+				<td><md-button ng-click="showPromptType(row)"
+						class="md-fab md-mini md-primary"> <i
+						class="material-icons">edit</i></md-button> <md-button
+						ng-click="deleteType(row.id)" class="md-fab md-mini red-btn">
 					<i class="material-icons">delete_forever</i> </md-button></td>
 			</tr>
 		</tbody>
@@ -59,20 +56,17 @@
 	</md-toolbar>
 	<!--Toolbar-->
 	<md-card> <md-content flex="" layout-padding="">
-<md-whiteframe layout="row" 
-		ng-repeat="single in multisearchProd"> <md-input-container>
-	<label>Column</label> <md-select ng-model="single.column"
-		ng-change="updateDataTableProd()"> <md-optgroup
-		label="Column"> <md-option ng-value="column.name"
-		ng-repeat="column in autocolumnProd">{{column.display}}</md-option> </md-optgroup> </md-select>
-	</md-input-container> <md-input-container class="md-block" flex=""> <label>Search</label>
+	<md-whiteframe layout="row" ng-repeat="single in multisearchProd">
+	<md-input-container> <label>Column</label> <md-select
+		ng-model="single.column" ng-change="updateDataTableProd()">
+	<md-optgroup label="Column"> <md-option
+		ng-value="column.name" ng-repeat="column in autocolumnProd">{{column.display}}</md-option>
+	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>Search</label>
 	<input ng-change="updateDataTableProd()" ng-model="single.ident">
-	</md-input-container> 
-</md-whiteframe> </md-content> </md-card>
-	<md-card> <md-content layout="column" flex>
-	<md-button
-		class="md-fab md-raised" ng-click="showPromptProd(datatableType.types)"> + </md-button>
-	 <md-table-container>
+	</md-input-container> </md-whiteframe> </md-content> </md-card>
+	<md-card> <md-content layout="column" flex> <md-button
+		class="md-fab md-raised"
+		ng-click="showPromptProd(datatableType.types)"> + </md-button> <md-table-container>
 	<table md-table>
 		<thead md-head md-order="queryProd.order">
 			<tr md-row>
@@ -89,9 +83,11 @@
 				<td md-cell>{{row.tnuk}}</td>
 				<td md-cell>{{row.nen}}</td>
 				<td md-cell>{{row.nuk}}</td>
-				<td><md-button ng-click="showPromptProd(datatableType.types, row)" class="md-fab md-mini md-primary">
-					<i class="material-icons">edit</i></md-button>
-					<md-button ng-click="deleteProd(row.id)" class="md-fab md-mini red-btn" >
+				<td><md-button
+						ng-click="showPromptProd(datatableType.types, row)"
+						class="md-fab md-mini md-primary"> <i
+						class="material-icons">edit</i></md-button> <md-button
+						ng-click="deleteProd(row.id)" class="md-fab md-mini red-btn">
 					<i class="material-icons">delete_forever</i> </md-button>
 			</tr>
 		</tbody>
