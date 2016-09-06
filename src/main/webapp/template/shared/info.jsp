@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
-    <h3 class="cab-title">Profile</h3>
+    <md-toolbar class="md-hue-2" md-whiteframe="4">
+        <div class="md-toolbar-tools">
+            <h2>
+          <span>Profile</span>
+        </h2>
+        </div>
+    </md-toolbar>
 
     <div layout="row" flex="none">
 
@@ -63,7 +69,7 @@
                     </md-card-title>
 
                     <input type="file" name="file" id="file" />
-<md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
+                    <md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
                     <md-card-actions layout="row" layout-align="end center">
                         <md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
                         <md-button>Cancel</md-button>
