@@ -32,7 +32,6 @@
 	<md-button href="#products">Products</md-button>
 	<md-button href="#users">Users</md-button> 
 	<md-button href="#statistic">Statistic</md-button>
-	<md-button href="#history">History</md-button> 
 	</md-content> 
 	</md-slidenav>
 

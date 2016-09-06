@@ -2,14 +2,12 @@ var adminApp = angular.module('MyApp');
 
 adminApp.requires.push('md.data.table');
 
-app.config(function ($routeProvider) {
+adminApp.config(function ($routeProvider) {
     $routeProvider.when("/", {
         templateUrl: "template/shared/info.jsp",
         controller: 'InfoCtrl'
     }).when("/map", {
         templateUrl: "template/admin/map.html"
-    }).when("/history", {
-        templateUrl: "template/admin/history.html"
     }).when("/products", {
         templateUrl: "template/admin/products.html",
         controller: 'ProdCtrl'
@@ -17,7 +15,8 @@ app.config(function ($routeProvider) {
         templateUrl: "template/admin/users.html",
         controller: 'UsersCtrl1'
     }).when("/statistic", {
-        templateUrl: "template/admin/statistics.html"
+    	templateUrl : "template/shared/statistic.jsp",
+		controller : "ChartCtrl", 
     });
 });
 
