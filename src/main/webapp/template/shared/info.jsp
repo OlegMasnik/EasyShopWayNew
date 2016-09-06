@@ -32,13 +32,11 @@
                         <input ng-model="birthday"> </md-input-container>
 -->
                     <md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="birthday" is-open="showdp" max-date="dtmax" id="birthday" md-placeholder="Enter date" name="birthday"></md-datepicker>
-                    <div class="cab-category">Contact information</div>
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label> <span><md-icon
 					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span> Email
                         </label>
-                        <input ng-model="email"> </md-input-container>
-                    <div class="cab-category">Localization</div>
+                        <input ng-model="email" disabled> </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label> <span><md-icon
 					md-svg-src="images/icons/lang.svg" class="name cab-icon"></md-icon></span> Preferred language
@@ -57,21 +55,20 @@
 
         <div flex layout="column">
             <md-card flex>
-                <md-card-title>
-                    <md-card-title-text>
-                        <div class="cab-category">Update your photo</div>
-                    </md-card-title-text>
-                </md-card-title>
                 <form method="POST" action="cabinet/image-upload" enctype="multipart/form-data">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <div class="cab-category">Update your photo</div>
+                        </md-card-title-text>
+                    </md-card-title>
+
                     <input type="file" name="file" id="file" />
-                    <br/>
-                    </br>
-                    <md-button type="submit" ng-click='sendLoginData()'>Submit</md-button>
+<md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
+                        <md-button>Cancel</md-button>
+                    </md-card-actions>
                 </form>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Save</md-button>
-                    <md-button>Cancel</md-button>
-                </md-card-actions>
             </md-card>
 
             <md-card flex>
