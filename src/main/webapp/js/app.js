@@ -69,7 +69,7 @@ app
                     if ($('#emailL').valid() && $('#passwordL').valid()) {
                         $http
                             .post(
-                                'http://localhost:8080/EasyShopWayNew/login',
+                                '/EasyShopWayNew/login',
                                 data, config)
                             .success(
                                 function (data, status,
@@ -196,7 +196,7 @@ app
 
                     $http
                         .get(
-                            'http://localhost:8080/EasyShopWayNew/info',
+                            '/EasyShopWayNew/info',
                             config)
                         .success(
                             function (data, status, headers,
@@ -252,7 +252,7 @@ app
 
                     // End validate
 
-                    $http.post('http://localhost:8080/EasyShopWayNew/info', data,
+                    $http.post('/EasyShopWayNew/info', data,
                         config).success(function (data, status,
                         headers, config) {
 

@@ -41,7 +41,7 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 		            }
 		        }
 		 
-		 $http.post('http://localhost:8080/EasyShopWayNew/userStat', data, config)
+		 $http.post('/EasyShopWayNew/userStat', data, config)
 		 		.success(function (data, status, headers, config) {
 		 			   response = data;
 		        	   console.log(response);

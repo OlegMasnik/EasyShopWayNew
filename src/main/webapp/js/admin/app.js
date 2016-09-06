@@ -327,7 +327,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		    });
 	  };
 	  
-function DialogTypeController($scope, $mdDialog, item) {
+	  function DialogTypeController($scope, $mdDialog, item) {
 		  
 		  $scope.item = item;
 		  
@@ -679,13 +679,6 @@ function DialogTypeController($scope, $mdDialog, item) {
         dt.count = dt.types.length;
         $scope.datatableType = angular.copy(dt);
     };
-    
-    
-    
-    
-    
-    
-    
     
     $scope.active = function (i) {
         console.log(i.e + " " + i.active);
