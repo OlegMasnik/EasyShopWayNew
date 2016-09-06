@@ -46,8 +46,9 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setBoolean(6, user.isActive());
 		statement.setString(7, user.getRole());
 		statement.setString(8, user.getLanguage());
-		statement.setString(9, user.getImage());
-
+		if (user.getImage() != null) {
+			statement.setString(9, user.getImage());
+		}
 		statement.executeUpdate();
 		statement.close();
 		return getByEmail(user.getEmail());
