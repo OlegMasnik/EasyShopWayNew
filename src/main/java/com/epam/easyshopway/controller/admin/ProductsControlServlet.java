@@ -55,17 +55,31 @@ public class ProductsControlServlet extends HttpServlet {
 		String nameUk = req.getParameter("nameUk");
 		int ptid = Integer.parseInt(req.getParameter("ptid"));
 		System.out.println("Do Put " + id + " " + nameEn + " " + nameUk + " " + ptid);
-		prod = ProductService.getById(id);
-		prod.setNameEn(nameEn);
-		prod.setNameUk(nameUk);
-		prod.setProductTypeId(ptid);
-		String mes;
-		if(ProductService.update(id, prod) > 0){
-			System.out.println("OK put");
-		}else{
-			System.out.println("Bad put");
+		if (id != 0) {
+			prod = ProductService.getById(id);
+			prod.setNameEn(nameEn);
+			prod.setNameUk(nameUk);
+			prod.setProductTypeId(ptid);
+			String mes;
+			if (ProductService.update(id, prod) > 0) {
+				System.out.println("OK put");
+			} else {
+				System.out.println("Bad put");
+			}
+		} else {
+			prod = new Product();
+			prod.setNameEn(nameEn);
+			prod.setNameUk(nameUk);
+			prod.setProductTypeId(ptid);
+			prod.setActive(true);
+			ProductService.insert(prod);
+			String mes;
+			if (ProductService.insert(prod) > 0) {
+				System.out.println("OK insert");
+			} else {
+				System.out.println("Bad insert");
+			}
 		}
-		
 	}
 
 	private JSONArray setJsonArrayProducts(Collection<Product> list) {

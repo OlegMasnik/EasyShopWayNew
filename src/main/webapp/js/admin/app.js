@@ -201,7 +201,7 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($ht
 
 adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', function ($http, $scope, $location, $mdDialog) {
 	
-	  $scope.showPromptProd = function(item, types) {
+	  $scope.showPromptProd = function(types, item) {
 		  
 		  console.log($scope.item);
 		  
@@ -210,8 +210,8 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		      templateUrl: 'template/admin/edit.prod.tmpl.html',
 		      parent: angular.element(document.body),
 		      resolve: {
-		          item: function () { return item; },
-          types: function () { return types; }
+		    	  types: function () { return types; },
+		          item: function () { return item; }
 		      },
 		      clickOutsideToClose:true,
 		      fullscreen: $scope.customFullscreen // Only for -xs, -sm
@@ -236,17 +236,28 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		    });
 	  };
 	  
-	  function DialogController($scope, $mdDialog, item, types) {
+	  function DialogController($scope, $mdDialog, types, item) {
 		  
-		  $scope.item = item;
-		  $scope.types = types;
-		  
+		  console.log("item " + item)
+		  if(item == undefined){
+			  $scope.item = {
+					  id: 0,
+					  nen: "",
+					  nuk: "",
+					  ptid: 0
+			  };
+			  $scope.types = types;
+			  
+		  } else {
+			  $scope.item = item;
+			  $scope.types = types;
 		  $scope.selectedType = types[getIdDatatype(item.ptid)];
 		  
 		  function getIdDatatype(pid){
 			  for(var i = 0; i < types.length; i++)
 				  if(types[i].id == pid)
 					  return i;
+		  }
 		  }
 		  
 		    $scope.hide = function() {
@@ -266,7 +277,8 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 	                nameEn: item.nen,
 	                ptid: item.ptid
 	            });
-		    	
+		    		console.log("New ITEM");
+		    		console.log(item);
 		    	$http.put('/EasyShopWayNew/products?'+ data)
 	            .success(function (data, status, headers) {
 	            	console.log('update');
@@ -277,7 +289,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 	            });
 		    	$mdDialog.hide();
 		    };
-		  }
+	  }
 	  
 	  
 	  
@@ -365,6 +377,8 @@ function DialogTypeController($scope, $mdDialog, item) {
     }, function myError(response) {
         console.log(response.statusText);
     });
+    
+    
     $scope.smartProd = true;
 
     $scope.autocolumnProd = [
@@ -391,23 +405,6 @@ function DialogTypeController($scope, $mdDialog, item) {
         ident: "",
     };
 
-    $scope.addRowProd = function () {
-        $scope.multisearchProd.push({
-            id: $scope.multisearchProd.length,
-            column: "",
-            ident: ""
-        });
-    };
-
-    $scope.deleteRowProd = function (int) {
-        $scope.multisearchProd.splice(int, 1);
-        for (var i = 0; i < $scope.multisearchProd.length; i++) {
-            $scope.multisearchProd[i].id = i;
-        }
-        $scope.updateDataTableProd();
-    };
-
-    // Configure Table
     $scope.limitOptionsProd = [5, 10, 15];
     $scope.optionsProd = {
         pageSelect: true
@@ -604,23 +601,6 @@ function DialogTypeController($scope, $mdDialog, item) {
         ident: "",
     };
 
-    $scope.addRowType = function () {
-        $scope.multisearchType.push({
-            id: $scope.multisearchType.length,
-            column: "",
-            ident: ""
-        });
-    };
-
-    $scope.deleteRowType= function (int) {
-        $scope.multisearchType.splice(int, 1);
-        for (var i = 0; i < $scope.multisearchType.length; i++) {
-            $scope.multisearchType[i].id = i;
-        }
-        $scope.updateDataTableType();
-    };
-
-    // Configure Table
     $scope.limitOptionsType = [5, 10, 15];
     $scope.optionsType = {
         pageSelect: true
