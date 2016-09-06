@@ -14,7 +14,7 @@ userApp.config(function($routeProvider) {
 
 userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.date = new Date();
-	
+	console/log("asd");
 	$scope.startDate = new Date(
 		      $scope.date.getFullYear(),
 		      $scope.date.getMonth() - 1,
