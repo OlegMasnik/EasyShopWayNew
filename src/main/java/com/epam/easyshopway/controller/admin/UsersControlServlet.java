@@ -28,7 +28,7 @@ public class UsersControlServlet extends HttpServlet {
 		System.out.println("get all users");
 		o = new JSONObject();
 		System.out.println(UserService.getAll());
-		o.put("users", setJsonArray(UserService.getAll()));
+		o.put("users", setJsonArrayUser(UserService.getAll()));
 		System.out.println(o.toJSONString());
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(o.toJSONString());
@@ -49,7 +49,7 @@ public class UsersControlServlet extends HttpServlet {
 
 	}
 
-	private JSONArray setJsonArray(Collection<User> list) {
+	private JSONArray setJsonArrayUser(Collection<User> list) {
 		JSONArray jsonArray = new JSONArray();
 		JSONObject object;
 		for (User u : list) {

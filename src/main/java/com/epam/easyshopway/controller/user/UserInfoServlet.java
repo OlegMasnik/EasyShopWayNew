@@ -29,7 +29,9 @@ public class UserInfoServlet extends HttpServlet {
 		object.put("lastName", user.getLastName());
 		object.put("language", user.getLanguage());
 		object.put("email", user.getEmail());
-		object.put("birthday", user.getDateOfBirth().getTime());
+		if (user.getDateOfBirth() != null) {
+			object.put("birthday", user.getDateOfBirth().getTime());
+		}
 
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(object.toString());

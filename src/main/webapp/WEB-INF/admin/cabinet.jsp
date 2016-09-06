@@ -27,9 +27,14 @@
 			<c:out value="${user.firstName } ${user.lastName}"></c:out>
 		</div>
 	</div>
-	</md-button> <md-button href="#map">Map</md-button> <md-button href="#products">Products</md-button>
-	<md-button href="#users">Users</md-button> <md-button href="#statistic">Statistic</md-button>
-	<md-button href="#history">History</md-button> </md-content> </md-slidenav>
+	</md-button> 
+	<md-button href="#map">Map</md-button> 
+	<md-button href="#products">Products</md-button>
+	<md-button href="#users">Users</md-button> 
+	<md-button href="#statistic">Statistic</md-button>
+	<md-button href="#history">History</md-button> 
+	</md-content> 
+	</md-slidenav>
 
 	<div flex="" class="content">
 

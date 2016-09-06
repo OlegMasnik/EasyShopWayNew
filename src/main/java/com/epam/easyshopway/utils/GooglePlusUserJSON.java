@@ -9,6 +9,15 @@ public class GooglePlusUserJSON {
 	private String link;
 	private String name;
 	private String verified_email;
+	private String picture;
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 
 	public GooglePlusUserJSON(String email, String family_name, String gende, String given_name, String id, String link,
 			String name, String verified_email) {

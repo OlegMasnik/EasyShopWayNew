@@ -39,7 +39,6 @@
                 <div flex class="content" layout="column">
 
                     <div ng-view onload="getFoodData()"></div>
-
                 </div>
             </md-content>
             <script src="js/jquery-3.1.0.min.js"></script>

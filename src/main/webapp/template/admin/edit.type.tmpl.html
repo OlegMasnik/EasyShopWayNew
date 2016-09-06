@@ -1,0 +1,22 @@
+<md-dialog>
+<form ng-cloak>
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+		<h2>Edit Product</h2>
+		<span flex></span>
+		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+	</div>
+	</md-toolbar>
+
+	<md-dialog-content>
+	<div class="md-dialog-content">
+		<md-input-container> <label>English name</label>
+		<input name="name_en" type="text" required ng-model="item.nen"></md-input-container>
+
+		<md-input-container> <label>Ukraine name</label>
+		<input name="name_uk" type="text" required ng-model="item.nuk"></md-input-container>
+		<md-dialog-actions layout="row"> <span flex></span>
+		<md-button ng-click="answer('not useful')"> Cancel </md-button> <md-button
+			ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions>
+</form>
+</md-dialog>
