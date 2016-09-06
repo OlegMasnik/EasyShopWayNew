@@ -1,6 +1,7 @@
 package com.epam.easyshopway.controller.user;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,8 +14,8 @@ import org.json.simple.JSONObject;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.epam.easyshopway.model.User;
-import com.epam.easyshopway.model.UserProductType;
-import com.epam.easyshopway.service.UserProductTypeService;
+import com.epam.easyshopway.model.ProductsTypeCount;
+import com.epam.easyshopway.service.ProductsTypeCountService;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
@@ -42,10 +43,11 @@ public class UserStatisticServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("asda");
 		response.setCharacterEncoding("utf-8");
 		User user = (User) request.getSession().getAttribute("user");
-		List<UserProductType> userProducts = UserProductTypeService.getUserProductTypes(user.getId());
+		Date startDate = Date.valueOf(request.getParameter("startDate"));
+		Date endDate = Date.valueOf(request.getParameter("endDate"));
+		List<ProductsTypeCount> userProducts = ProductsTypeCountService.getUserProductTypes(user.getId(), startDate, endDate);
 		JSONObject responseObject = new JSONObject();
 		JSONArray series = new JSONArray();
 		JSONObject inSeries = new JSONObject();
@@ -70,6 +72,6 @@ public class UserStatisticServlet extends HttpServlet {
 		series.add(inSeries);
 		responseObject.put("series", series);
 		response.getWriter().write(responseObject.toString());
-		
 	}
+	
 }
