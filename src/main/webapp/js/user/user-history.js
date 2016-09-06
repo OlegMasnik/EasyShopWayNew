@@ -9,89 +9,89 @@ userHistoryApp.controller("UserHistoryCtrl", [ '$scope', '$http',
 			$scope.history = [ {
 				date : "11/22/3333",
 				list : [ {
-					img : '1.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'vine'
 				}, {
-					img : '2.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'martini'
 				} ]
 			}, {
 				date : "22/22/3333",
 				list : [ {
-					img : '3.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'martini'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				} ]
 			}, {
 				date : "22/22/3333",
 				list : [ {
-					img : '3.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'martini'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				} ]
 			}, {
 				date : "22/22/3333",
 				list : [ {
-					img : '3.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'martini'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				} ]
 			}, {
 				date : "22/22/3333",
 				list : [ {
-					img : '3.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'martini'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				} ]
 			}, {
 				date : "22/22/3333",
 				list : [ {
-					img : '3.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'martini'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				} ]
 			}, {
 				date : "22/22/3333",
 				list : [ {
-					img : '3.jpeg',
+					img : 'images/admin.png',
 					type : 'alcohol',
 					name : 'martini'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				}, {
-					img : '4.jpeg',
+					img : 'images/admin.png',
 					type : 'meat',
 					name : 'chicken'
 				} ]
