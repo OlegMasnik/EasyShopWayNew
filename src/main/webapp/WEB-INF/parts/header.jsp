@@ -4,11 +4,14 @@
 <script src='js/moment.js'></script>
 
 <md-toolbar class="md-hue-2">
-<div class="md-toolbar-tools" ng-controller="AppCtrl" md-whiteframe="4">
+<div class="md-toolbar-tools" layout="column" ng-controller="AppCtrl"
+	md-whiteframe="4">
 
-	<md-button href="/EasyShopWayNew/home"> EasyShopWay </md-button>
-
-	<span flex=""></span>
+	<div layout="row">
+		<a flex class="logo" href="/EasyShopWayNew/home"><img alt="EasyShopWay"
+			src="images/logo/logo.gif"></a>
+	</div>
+	<span flex></span>
 
 	<c:choose>
 		<c:when test="${user == null}">
@@ -20,7 +23,7 @@
 		</c:when>
 		<c:otherwise>
 			<md-button class="md-raised" href="/EasyShopWayNew/cabinet">
-			 <c:out value="${user.firstName } ${user.lastName }"></c:out></md-button>
+			<c:out value="${user.firstName } ${user.lastName }"></c:out></md-button>
 			<md-button class="md-raised" href="/EasyShopWayNew/logout">
 			LogOut </md-button>
 		</c:otherwise>

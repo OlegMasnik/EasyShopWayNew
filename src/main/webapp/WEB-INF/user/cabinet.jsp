@@ -18,7 +18,7 @@
         <body ng-app="MyApp" layout="column">
             <jsp:include page="../parts/header.jsp"></jsp:include>
             <md-content layout="row" class="main-page" flex>
-                <md-slidenav md-is-locked-open="true" layout="column" flex md-whiteframe="4">
+                <md-slidenav class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex md-whiteframe="4">
                     <md-content layout="column" flex>
                         <a href="#/">
                             <div class="cab-user-logo" layot="row" layout-padding>
