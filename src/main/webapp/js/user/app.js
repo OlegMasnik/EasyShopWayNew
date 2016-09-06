@@ -13,18 +13,21 @@ userApp.config(function($routeProvider) {
 });
 
 userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
+	
 	$scope.date = new Date();
 	
 	$scope.startDate = new Date(
 		      $scope.date.getFullYear(),
 		      $scope.date.getMonth() - 1,
 		      $scope.date.getDate());
-
 	$scope.endDate = new Date();
-		  
+	  
 	//alert($scope.startDate);
 	$scope.getFoodData = function () {
 		var responsik = undefined;
+		
+		
+		
 		var startDate = moment($scope.startDate).format('YYYY-MM-DD');
 		var endDate = moment($scope.endDate).format('YYYY-MM-DD');
 		 var data = $.param({

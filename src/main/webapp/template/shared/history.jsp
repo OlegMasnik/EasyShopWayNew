@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-    <h3 class="cab-title">History</h3>
+    <md-toolbar class="md-hue-2" md-whiteframe="4">
+            <div class="md-toolbar-tools">
+
+                <h2>
+          <span>History</span>
+        </h2>
+
+
+            </div>
+        </md-toolbar>
 
 
 
