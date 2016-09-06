@@ -48,7 +48,7 @@
         </div>
         
         
-    <script src="/EasyShopWayNew/js/jquery-1.4.4.min.js"></script>
+    <script src="/EasyShopWayNew/js/jquery-3.1.0.min.js"></script>
 	<script src='/EasyShopWayNew/js/angular.min.js'></script>
 	<script src='/EasyShopWayNew/js/angular-aria.js'></script>
 	<script src='/EasyShopWayNew/js/angular-animate.js'></script>
