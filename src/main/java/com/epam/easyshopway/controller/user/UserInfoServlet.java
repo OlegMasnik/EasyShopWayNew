@@ -45,18 +45,20 @@ public class UserInfoServlet extends HttpServlet {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String birthday = request.getParameter("birthday");
-		String email = request.getParameter("email");
+//		String email = request.getParameter("email");
 		String language = request.getParameter("language");
 
-		System.out.println(firstName + " " + lastName + " " + birthday + " " + email + "");
+//		System.out.println(firstName + " " + lastName + " " + birthday + " " + email + "");
 
 		user.setLanguage(language);
-		user.setEmail(email);
+//		user.setEmail(email);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setDateOfBirth(birthday);
 
 		UserService.update(user.getId(), user);
+		
+		request.getSession().setAttribute("user", user);
 	}
 
 }
