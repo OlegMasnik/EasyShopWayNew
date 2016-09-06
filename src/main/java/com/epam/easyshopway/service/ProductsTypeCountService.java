@@ -11,10 +11,10 @@ import com.epam.easyshopway.model.ProductsTypeCount;
 
 public class ProductsTypeCountService {
 	@SuppressWarnings("finally")
-	public static List<ProductsTypeCount> getUserProductTypes(Integer userId, Date startDate, Date endDate) {
+	public static List<ProductsTypeCount> getUserProductTypesUser(Integer userId, Date startDate, Date endDate) {
 		List<ProductsTypeCount> userProducts = new ArrayList<>();
 		try (ProductsTypeCountDTO dto = new ProductsTypeCountDTO()) {
-			userProducts = dto.getUserProductTypes(userId, startDate, endDate);
+			userProducts = dto.getUserProductTypesUser(userId, startDate, endDate);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {
@@ -24,6 +24,21 @@ public class ProductsTypeCountService {
 		}finally{
 			return userProducts;
 		}
-		
+	}
+	
+	@SuppressWarnings("finally")
+	public static List<ProductsTypeCount> getUserProductTypesAdmin(Integer userId, Date startDate, Date endDate) {
+		List<ProductsTypeCount> userProducts = new ArrayList<>();
+		try (ProductsTypeCountDTO dto = new ProductsTypeCountDTO()) {
+			userProducts = dto.getUserProductTypesAdmin(userId, startDate, endDate);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return userProducts;
+		}
 	}
 }

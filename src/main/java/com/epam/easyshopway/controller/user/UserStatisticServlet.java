@@ -47,20 +47,30 @@ public class UserStatisticServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		Date startDate = Date.valueOf(request.getParameter("startDate"));
 		Date endDate = Date.valueOf(request.getParameter("endDate"));
-		List<ProductsTypeCount> userProducts = ProductsTypeCountService.getUserProductTypes(user.getId(), startDate, endDate);
+		
+		List<ProductsTypeCount> productTypes;
+		if ("user".equals(user.getRole()))
+			productTypes = ProductsTypeCountService.getUserProductTypesUser(user.getId(), startDate, endDate);
+		else 
+			productTypes = ProductsTypeCountService.getUserProductTypesAdmin(user.getId(), startDate, endDate);
+		JSONObject responseObject = drawPieChart(productTypes, startDate, endDate, "en".equals(user.getLanguage()));	
+		response.getWriter().write(responseObject.toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject drawPieChart (List<ProductsTypeCount> productsType, Date startDate, Date endDate, boolean isEnglish){
 		JSONObject responseObject = new JSONObject();
 		JSONArray series = new JSONArray();
 		JSONObject inSeries = new JSONObject();
 		JSONArray data = new JSONArray();
 		inSeries.put("colorByPoint", true);
-		boolean isEnglish = "en".equals(user.getLanguage());
-		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:"));
-		inSeries.put("name", isEnglish ? "Persentage" : "пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:");
-		for (int i=0; i<userProducts.size(); i++){
+		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "Групи продуктів, які часто шукають::"));
+		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках:");
+		for (int i=0; i<productsType.size(); i++){
 			JSONObject foodType = new JSONObject();
-			String productTypeName = isEnglish ? userProducts.get(i).getNameEnglish() : userProducts.get(i).getNameEnglish() ;
+			String productTypeName = isEnglish ? productsType.get(i).getNameEnglish() : productsType.get(i).getNameEnglish() ;
 			foodType.put("name", productTypeName);
-			double percent = 1.0 / userProducts.get(i).getCount() * 100;
+			double percent = productsType.get(i).getCount();
 			foodType.put("y", percent);
 			if (i == 0){
 				foodType.put("sliced", true);
@@ -71,7 +81,6 @@ public class UserStatisticServlet extends HttpServlet {
 		inSeries.put("data", data);
 		series.add(inSeries);
 		responseObject.put("series", series);
-		response.getWriter().write(responseObject.toString());
+		return responseObject;
 	}
-	
 }
