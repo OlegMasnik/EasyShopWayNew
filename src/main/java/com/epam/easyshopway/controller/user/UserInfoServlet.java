@@ -9,33 +9,54 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 
 import com.epam.easyshopway.model.User;
-
+import com.epam.easyshopway.service.UserService;
 
 public class UserInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
-    public UserInfoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public UserInfoServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		User user = (User) request.getSession().getAttribute("user");
+
 		JSONObject object = new JSONObject();
 		object.put("firstName", user.getFirstName());
 		object.put("lastName", user.getLastName());
 		object.put("language", user.getLanguage());
 		object.put("email", user.getEmail());
-		object.put("birthday", user.getDateOfBirth().toString());
+		if (user.getDateOfBirth() != null) {
+			object.put("birthday", user.getDateOfBirth().getTime());
+		}
+
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(object.toString());
+
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-				response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+		
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String birthday = request.getParameter("birthday");
+		String email = request.getParameter("email");
+		String language = request.getParameter("language");
+
+		System.out.println(firstName + " " + lastName + " " + birthday + " " + email + "");
+
+		user.setLanguage(language);
+		user.setEmail(email);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setDateOfBirth(birthday);
+
+		UserService.update(user.getId(), user);
 	}
 
 }

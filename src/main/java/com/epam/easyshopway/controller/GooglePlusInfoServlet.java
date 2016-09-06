@@ -54,10 +54,11 @@ public class GooglePlusInfoServlet extends HttpServlet {
 		Response oResp = oReq.send();
 		String json = oResp.getBody();
 		GooglePlusUserJSON googlePlusUser = JSON.parseObject(json, GooglePlusUserJSON.class);
+		System.out.println(oResp.getBody());
 		User user = new User(googlePlusUser.getGiven_name(), googlePlusUser.getFamily_name(), googlePlusUser.getEmail(),
 				null, // password
 				true, // active user
-				"user", "en", ""); // native language
+				"user", "en", googlePlusUser.getPicture()); // native language
 		User invokedUser = UserService.getByEmail(user.getEmail());
 		if (invokedUser == null) {
 			UserService.insert(user);
