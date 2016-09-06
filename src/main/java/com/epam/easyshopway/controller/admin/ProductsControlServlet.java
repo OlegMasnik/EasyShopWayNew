@@ -72,7 +72,6 @@ public class ProductsControlServlet extends HttpServlet {
 			prod.setNameUk(nameUk);
 			prod.setProductTypeId(ptid);
 			prod.setActive(true);
-			ProductService.insert(prod);
 			String mes;
 			if (ProductService.insert(prod) > 0) {
 				System.out.println("OK insert");
