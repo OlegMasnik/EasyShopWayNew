@@ -201,25 +201,6 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($ht
 
 adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', function ($http, $scope, $location, $mdDialog) {
 	
-	$scope.showPromptType = function(item) {
-	    // Appending dialog to document.body to cover sidenav in docs app
-	    var confirm = $mdDialog.prompt()
-	      .title('Edit product')
-	      .textContent('Name:')
-	      .placeholder('Enter name')
-	      .initialValue(item.n)
-	      .targetEvent(item)
-	      .ok('Save')
-	      .cancel('Cancel');
-
-	    $mdDialog.show(confirm).then(function(result) {
-	    	console.log("Confirm edit type");
-	    	
-	    }, function() {
-	    	console.log("Decline edit type");
-	    });
-	  };
-	  
 	  $scope.showPromptProd = function(item, types) {
 		  
 		  console.log($scope.item);
@@ -234,10 +215,22 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		      },
 		      clickOutsideToClose:true,
 		      fullscreen: $scope.customFullscreen // Only for -xs, -sm
-													// breakpoints.
+											// breakpoints.
 		    })
 		    .then(function(answer) {
-		      $scope.status = 'You said the information was "' + answer + '".';
+		    	$http({
+		            method: "GET",
+		            url: "/EasyShopWayNew/products"
+		        }).then(function mySucces(response) {
+		            $scope.data = response.data;
+		            originalProd.prods = $scope.data.prods;
+		            originalProd.count = $scope.data.prods.length;
+		            $scope.datatable = angular.copy(originalProd);
+		            console.log("Get");
+		            console.log($scope.data);
+		        }, function myError(response) {
+		            console.log(response.statusText);
+		        });
 		    }, function() {
 		      $scope.status = 'You cancelled the dialog.';
 		    });
@@ -248,12 +241,13 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		  $scope.item = item;
 		  $scope.types = types;
 		  
-		  $scope.users = [
-		                  { id: 1, name: 'Bob' },
-		                  { id: 2, name: 'Alice' },
-		                  { id: 3, name: 'Steve' }
-		                ];
-		                $scope.selectedUser = { id: 1, name: 'Bob' };
+		  $scope.selectedType = types[getIdDatatype(item.ptid)];
+		  
+		  function getIdDatatype(pid){
+			  for(var i = 0; i < types.length; i++)
+				  if(types[i].id == pid)
+					  return i;
+		  }
 		  
 		    $scope.hide = function() {
 		      $mdDialog.hide();
@@ -263,8 +257,95 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		      $mdDialog.cancel();
 		    };
 
-		    $scope.answer = function(answer) {
-		      $mdDialog.hide(answer);
+		    $scope.answer = function(item, tid) {
+		    	item.ptid = tid.id
+		    	
+		    	var data = $.param({
+	                id: item.id,
+	                nameUk: item.nuk,
+	                nameEn: item.nen,
+	                ptid: item.ptid
+	            });
+		    	
+		    	$http.put('/EasyShopWayNew/products?'+ data)
+	            .success(function (data, status, headers) {
+	            	console.log('update');
+	            	
+	            })
+	            .error(function (data, status, header, config) {
+	            	console.log('failed');
+	            });
+		    	$mdDialog.hide();
+		    };
+		  }
+	  
+	  
+	  
+	  $scope.showPromptType = function(item) {
+		  
+		  console.log($scope.item);
+		  
+		  $mdDialog.show({
+		      controller: DialogTypeController,
+		      templateUrl: 'template/admin/edit.type.tmpl.html',
+		      parent: angular.element(document.body),
+		      resolve: {
+		          item: function () { return item; }
+		      },
+		      clickOutsideToClose:true,
+		      fullscreen: $scope.customFullscreen // Only for -xs, -sm
+											// breakpoints.
+		    })
+		    .then(function(answer) {
+		    	$http({
+		            method: "GET",
+		            url: "/EasyShopWayNew/type"
+		        }).then(function mySucces(response) {
+		            $scope.data = response.data;
+		            originalType.types = $scope.data.types;
+		            originalType.count = $scope.data.types.length;
+		            $scope.datatableType = angular.copy(originalYupe);
+		            console.log("Get");
+		            console.log($scope.data);
+		        }, function myError(response) {
+		            console.log(response.statusText);
+		        });
+		    }, function() {
+		      $scope.status = 'You cancelled the dialog.';
+		    });
+	  };
+	  
+function DialogTypeController($scope, $mdDialog, item) {
+		  
+		  $scope.item = item;
+		  
+		    $scope.hide = function() {
+		      $mdDialog.hide();
+		    };
+
+		    $scope.cancel = function() {
+		      $mdDialog.cancel();
+		    };
+
+		    $scope.answer = function(item, tid) {
+		    	item.ptid = tid.id
+		    	
+		    	var data = $.param({
+	                id: item.id,
+	                nameUk: item.nuk,
+	                nameEn: item.nen,
+	                ptid: item.ptid
+	            });
+		    	
+		    	$http.put('/EasyShopWayNew/products?'+ data)
+	            .success(function (data, status, headers) {
+	            	console.log('update');
+	            	
+	            })
+	            .error(function (data, status, header, config) {
+	            	console.log('failed');
+	            });
+		    	$mdDialog.hide();
 		    };
 		  }
 

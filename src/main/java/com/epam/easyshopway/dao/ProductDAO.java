@@ -78,7 +78,8 @@ public class ProductDAO extends AbstractDAO<Product> {
 		statement.setInt(1, product.getProductTypeId());
 		statement.setString(2, product.getNameUk());
 		statement.setString(3, product.getNameEn());
-		statement.setInt(4, id);
+		statement.setInt(4, 1);
+		statement.setInt(5, id);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;

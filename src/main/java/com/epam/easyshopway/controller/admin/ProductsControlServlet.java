@@ -20,7 +20,7 @@ public class ProductsControlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private JSONObject o;
-	private User user;
+	private Product prod;
 
 	public ProductsControlServlet() {
 		super();
@@ -30,7 +30,6 @@ public class ProductsControlServlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("Products get");
 		o = new JSONObject();
-		user = (User) request.getSession(false).getAttribute("user");
 		o.put("prods", setJsonArrayProducts(ProductService.getAll()));
 		System.out.println(o.toJSONString());
 		response.setCharacterEncoding("UTF-8");
@@ -47,6 +46,26 @@ public class ProductsControlServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Products post");
+	}
+
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int id = Integer.parseInt(req.getParameter("id"));
+		String nameEn = req.getParameter("nameEn");
+		String nameUk = req.getParameter("nameUk");
+		int ptid = Integer.parseInt(req.getParameter("ptid"));
+		System.out.println("Do Put " + id + " " + nameEn + " " + nameUk + " " + ptid);
+		prod = ProductService.getById(id);
+		prod.setNameEn(nameEn);
+		prod.setNameUk(nameUk);
+		prod.setProductTypeId(ptid);
+		String mes;
+		if(ProductService.update(id, prod) > 0){
+			System.out.println("OK put");
+		}else{
+			System.out.println("Bad put");
+		}
+		
 	}
 
 	private JSONArray setJsonArrayProducts(Collection<Product> list) {
