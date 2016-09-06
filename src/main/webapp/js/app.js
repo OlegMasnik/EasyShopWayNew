@@ -69,7 +69,7 @@ app
                     if ($('#emailL').valid() && $('#passwordL').valid()) {
                         $http
                             .post(
-                                'http://localhost:8080/EasyShopWayNew/login',
+                                '/EasyShopWayNew/login',
                                 data, config)
                             .success(
                                 function (data, status,
@@ -125,7 +125,7 @@ app
 
                         $http
                             .post(
-                                'http://localhost:8080/EasyShopWayNew/reg',
+                                '/EasyShopWayNew/reg',
                                 data, config)
                             .success(
                                 function (data, status,
@@ -196,7 +196,7 @@ app
 
                     $http
                         .get(
-                            'http://localhost:8080/EasyShopWayNew/info',
+                            '/EasyShopWayNew/info',
                             config)
                         .success(
                             function (data, status, headers,
@@ -299,6 +299,38 @@ app
                 .primaryPalette('yellow').dark();
 
         });
+
+app.controller('ChangePassCtrl',  ['$scope', '$http', function ($scope, $http) {
+	$scope.changePass = function(){
+		 var data = $.param({
+             oldPass: $scope.oldPass,
+             newPass: $scope.newPass
+         });
+		 
+		 var config = {
+		            headers: {
+		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+		            }
+		        }
+		 
+		 $http.post('/EasyShopWayNew/pass', data, config)
+	 		.success(function (data, status, headers, config) {
+	 			  if (data.errMsg != undefined){
+	 				  $scope.error = data.errMsg;
+	 			  }else{
+	 				  
+	 			  }
+	 			  
+	 			  
+	 			   
+	        	   
+
+      }).error(
+          function (data, status, header, config) {
+              console.log('fail');
+          });
+	}
+}]);
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function () {

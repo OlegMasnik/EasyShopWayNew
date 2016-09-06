@@ -80,6 +80,13 @@
 		<servlet-name>UploadImageServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.UploadImageServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ChangePasswordServlet</display-name>
+		<servlet-name>ChangePasswordServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.ChangePasswordServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -135,7 +142,7 @@
 
 	<servlet-mapping>
 		<servlet-name>UserStatisticServlet</servlet-name>
-		<url-pattern>/userStat</url-pattern>
+		<url-pattern>/stat</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>VKInfoServlet</servlet-name>
@@ -148,6 +155,10 @@
 	<servlet-mapping>
 		<servlet-name>UploadImageServlet</servlet-name>
 		<url-pattern>/cabinet/image-upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ChangePasswordServlet</servlet-name>
+		<url-pattern>/ChangePasswordServlet</url-pattern>
 	</servlet-mapping>
 
 	<filter>

@@ -84,13 +84,26 @@
                     </md-card-title-text>
 
                     <div style="heigth: 400px;"></div>
-
-
                 </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Save</md-button>
-                    <md-button>Cancel</md-button>
-                </md-card-actions>
+                
+                 <md-card-content>
+                 	<form id="regForm" ng-model="regForm" name="regForm" action="/reg">
+	                    <md-input-container class="md-block" flex-gt-sm="">
+	                        <label> Old password </label>
+	                        <input id="pass" required type="password" name="oldPass" ng-model="oldPass"  minlength="6" maxlength="25" >
+	                    </md-input-container>
+	                    <md-input-container class="md-block" flex-gt-sm="">
+	                        <label> New password </label>
+	                        <input id="pass" required type="password" name="oldPass" ng-model="newPass"  minlength="6" maxlength="25" >
+	                    </md-input-container>
+	                    <br>
+                    	<span style="color : red" ng-bind="error"></span>
+	                     <md-card-actions layout="row" layout-align="end center">
+		                    <md-button ng-click = "changePassword()" >Save</md-button>
+		                    <md-button>Cancel</md-button>
+	                	</md-card-actions>
+                    </form>
+                </md-card-content>
             </md-card>
         </div>
     </div>
