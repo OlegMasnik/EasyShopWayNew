@@ -1,51 +1,49 @@
 var dateBirthday;
 var app = angular.module('MyApp', ['ngMaterial', 'ngRoute']);
 
-app.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
-	$scope.status = '  ';
-	$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
-	$scope.showLogInForm = function(ev) {
-		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))
-				&& $scope.customFullscreen;
-		$mdDialog.show({
-			controller : DialogController,
-			templateUrl : 'login.tmpl.html',
-			parent : angular.element(document.body),
-			targetEvent : ev,
-			clickOutsideToClose : true,
-			fullscreen : useFullScreen
-		}).then(function(answer) {
-			$scope.status = 'You said the information was "' + answer + '".';
-		}, function() {
-			$scope.status = 'You cancelled the dialog.';
-		});
-		$scope.$watch(function() {
-			return $mdMedia('xs') || $mdMedia('sm');
-		}, function(wantsFullScreen) {
-			$scope.customFullscreen = (wantsFullScreen === true);
-		});
-	};
-	$scope.showRegistrationInFrom = function(ev) {
-		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))
-				&& $scope.customFullscreen;
-		$mdDialog.show({
-			controller : DialogController,
-			templateUrl : 'signup.tmpl.html',
-			parent : angular.element(document.body),
-			targetEvent : ev,
-			clickOutsideToClose : true,
-			fullscreen : useFullScreen
-		}).then(function(answer) {
-			$scope.status = 'You said the information was "' + answer + '".';
-		}, function() {
-			$scope.status = 'You cancelled the dialog.';
-		});
-		$scope.$watch(function() {
-			return $mdMedia('xs') || $mdMedia('sm');
-		}, function(wantsFullScreen) {
-			$scope.customFullscreen = (wantsFullScreen === true);
-		});
-	};
+app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
+    $scope.status = '  ';
+    $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+    $scope.showLogInForm = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'login.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        }).then(function (answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+        }, function () {
+            $scope.status = 'You cancelled the dialog.';
+        });
+        $scope.$watch(function () {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function (wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    };
+    $scope.showRegistrationInFrom = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'signup.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        }).then(function (answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+        }, function () {
+            $scope.status = 'You cancelled the dialog.';
+        });
+        $scope.$watch(function () {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function (wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    };
 });
 
 app
@@ -158,17 +156,17 @@ app
 
 app.controller('DatePickerCtrl', function ($scope) {
 
-	$scope.today = function() {
-		$scope.dt = new Date();
-	};
-	$scope.dateformat = "MM/dd/yyyy";
-	$scope.today();
-	$scope.showcalendar = function($event) {
-		$scope.showdp = true;
-	};
-	$scope.showdp = false;
-	$scope.dtmax = new Date();
-	dateBirthday = moment($scope.dt).format('YYYY-MM-DD');
+    $scope.today = function () {
+        $scope.dt = new Date();
+    };
+    $scope.dateformat = "MM/dd/yyyy";
+    $scope.today();
+    $scope.showcalendar = function ($event) {
+        $scope.showdp = true;
+    };
+    $scope.showdp = false;
+    $scope.dtmax = new Date();
+    dateBirthday = moment($scope.dt).format('YYYY-MM-DD');
 });
 
 app
@@ -229,11 +227,6 @@ app
                     console.log($scope.birthday.getFullYear());
                     var date = new Date($scope.birthday);
                     
-                    //						        var birthday = new Date(
-                    //						  		      date.getFullYear(),
-                    //						  		      date.getMonth(),
-                    //						  		      date.getDate());
-
                     var birthday = '' + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
 
                     console.log(birthday);
@@ -275,41 +268,14 @@ app
                 }
 						}]);
 
-app
-    .controller(
-        'DemoCtrl',
-        function ($scope) {
-            $scope.user = {
-                title: 'Developer',
-                email: 'ipsum@lorem.com',
-                firstName: '',
-                lastName: '',
-                company: 'Google',
-                address: '1600 Amphitheatre Pkwy',
-                city: 'Mountain View',
-                state: 'CA',
-                biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
-                postalCode: '94043'
-            };
-
-        }).config(
-        function ($mdThemingProvider) {
-
-            // Configure a dark theme with primary foreground yellow
-
-            $mdThemingProvider.theme('docs-dark', 'default')
-                .primaryPalette('yellow').dark();
-
-        });
-
 function DialogController($scope, $mdDialog) {
-	$scope.hide = function() {
-		$mdDialog.hide();
-	};
-	$scope.cancel = function() {
-		$mdDialog.cancel();
-	};
-	$scope.answer = function(answer) {
-		$mdDialog.hide(answer);
-	};
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+    $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+    };
 }

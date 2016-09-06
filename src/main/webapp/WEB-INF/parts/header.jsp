@@ -19,6 +19,8 @@
 			SignUp </md-button>
 		</c:when>
 		<c:otherwise>
+			<md-button class="md-raised" href="/EasyShopWayNew/cabinet">
+			 <c:out value="${user.firstName } ${user.lastName }"></c:out></md-button>
 			<md-button class="md-raised" href="/EasyShopWayNew/logout">
 			LogOut </md-button>
 		</c:otherwise>

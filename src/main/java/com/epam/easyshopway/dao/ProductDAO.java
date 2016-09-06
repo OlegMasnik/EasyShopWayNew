@@ -13,7 +13,7 @@ import com.epam.easyshopway.model.Product;
 public class ProductDAO extends AbstractDAO<Product> {
 	private Transformer<Product> transformer;
 	private final String ADD_PRODUCT = "INSERT INTO product(product_type_id, name_uk, name_en, active) VALUES (?, ?, ?, ?)";
-	private final String DELETE_PRODUCT_BY_INDEX = "DELETE FROM product WHERE id=?";
+	private final String DELETE_PRODUCT_BY_INDEX = "UPDATE product set active=0 WHERE id=?";
 	private final String UPDATE_PRODUCT_BY_INDEX = "UPDATE product SET product_type_id=?, name_uk=?, name_en=?, active=? WHERE id=?";
 	private final String GET_PRODUCT_BY_INDEX = "SELECT * FROM product WHERE id=?";
 	private final String GET_ALL_PRODUCTS = "SELECT * FROM product WHERE active=1";
@@ -78,7 +78,8 @@ public class ProductDAO extends AbstractDAO<Product> {
 		statement.setInt(1, product.getProductTypeId());
 		statement.setString(2, product.getNameUk());
 		statement.setString(3, product.getNameEn());
-		statement.setInt(4, id);
+		statement.setInt(4, 1);
+		statement.setInt(5, id);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
