@@ -46,102 +46,113 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     };
 });
 
-app.controller('LoginCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
-    $scope.sendLoginData = function () {
-        console.log('hello' + $scope.email)
-        var data = $.param({
-            email: $scope.email,
-            password: $scope.password
-        });
-        console.log('Read ' + data);
-
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-        if ($('#emailL').valid() && $('#passwordL').valid()) {
-            $http
-                .post(
-                    'http://localhost:8080/EasyShopWayNew/login',
-                    data, config)
-                .success(
-                    function (data, status,
-                        headers, config) {
-                        if (data.emailErrMsg == undefined) {
-                            $window.location.href = 'cabinet';
-                        } else {
-                            $scope.error = data.emailErrMsg;
-                        }
-                        console
-                            .log(data.emailErrMsg);
-                    }).error(
-                    function (data, status,
-                        header, config) {
-                        console.log('fail');
+app
+    .controller(
+        'LoginCtrl', [
+						'$scope',
+						'$http',
+						'$window',
+						function ($scope, $http, $window) {
+                $scope.sendLoginData = function () {
+                    console.log('hello' + $scope.email)
+                    var data = $.param({
+                        email: $scope.email,
+                        password: $scope.password
                     });
-        } else {
-            cosole.log("sory");
-        }
-    };
+                    console.log('Read ' + data);
+
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                        }
+                    }
+                    if ($('#emailL').valid() && $('#passwordL').valid()) {
+                        $http
+                            .post(
+                                'http://localhost:8080/EasyShopWayNew/login',
+                                data, config)
+                            .success(
+                                function (data, status,
+                                    headers, config) {
+                                    if (data.emailErrMsg == undefined) {
+                                        $window.location.href = 'cabinet';
+                                    } else {
+                                        $scope.error = data.emailErrMsg;
+                                    }
+                                    console
+                                        .log(data.emailErrMsg);
+                                }).error(
+                                function (data, status,
+                                    header, config) {
+                                    console.log('fail');
+                                });
+                    } else {
+                        cosole.log("sory");
+                    }
+                };
 						}]);
 
-app.controller('SignUpCtrl', ['$scope', '$http', function ($scope, $http) {
+app
+    .controller(
+        'SignUpCtrl', [
+						'$scope',
+						'$http',
+						function ($scope, $http) {
 
-    $scope.sendRegData = function () {
-        console.log('hello ' + $scope.email)
-        console.log("date " + dateBirthday)
-        var data = $.param({
-            email: $scope.email,
-            password: $scope.password,
-            firstName: $scope.firstName,
-            lastName: $scope.lastName,
-            birthday: dateBirthday
-        });
-        console.log('Read ' + data);
-
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-
-        console.log($('#fName1').val());
-        console.log($('#lName1').val());
-
-        console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
-        if ($('#emailR').valid() && $('#passwordR').valid() && $('#fName1').valid() && $('#lName1').valid()) {
-
-            $http
-                .post(
-                    'http://localhost:8080/EasyShopWayNew/reg',
-                    data, config)
-                .success(
-                    function (data, status,
-                        headers, config) {
-                        console
-                            .log("QWEER" + data.emailErrMsg);
-                        $scope.error = data.emailErrMsg;
-                        if (data.emailErrMsg == undefined) {
-                            $scope.success = "Check your email";
-                        }
-                        // var esc = $
-                        // .Event(
-                        // "keydown", {
-                        // keyCode: 27
-                        // });
-                        // $("body").trigger(esc);
-
-                    }).error(
-                    function (data, status,
-                        header, config) {
-                        console.log('fail');
+                $scope.sendRegData = function () {
+                    console.log('hello ' + $scope.email)
+                    console.log("date " + dateBirthday)
+                    var data = $.param({
+                        email: $scope.email,
+                        password: $scope.password,
+                        firstName: $scope.firstName,
+                        lastName: $scope.lastName,
+                        birthday: dateBirthday
                     });
-        } else {
-            console.log("oq");
-        }
-    };
-}]);
+                    console.log('Read ' + data);
+
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                        }
+                    }
+
+                    console.log($('#fName1').val());
+                    console.log($('#lName1').val());
+
+                    console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
+                    if ($('#emailR').valid() && $('#passwordR').valid() && $('#fName1').valid() && $('#lName1').valid()) {
+
+                        $http
+                            .post(
+                                'http://localhost:8080/EasyShopWayNew/reg',
+                                data, config)
+                            .success(
+                                function (data, status,
+                                    headers, config) {
+                                    console
+                                        .log("QWEER" + data.emailErrMsg);
+                                    $scope.error = data.emailErrMsg;
+                                    if (data.emailErrMsg == undefined) {
+                                        $scope.success = "Check your email";
+                                    }
+                                    // var esc = $
+                                    // .Event(
+                                    // "keydown", {
+                                    // keyCode: 27
+                                    // });
+                                    // $("body").trigger(esc);
+
+                                }).error(
+                                function (data, status,
+                                    header, config) {
+                                    console.log('fail');
+                                });
+                    } else {
+                        console.log("oq");
+                    }
+                };
+						}]);
 
 app.controller('DatePickerCtrl', function ($scope) {
 
@@ -158,54 +169,104 @@ app.controller('DatePickerCtrl', function ($scope) {
     dateBirthday = moment($scope.dt).format('YYYY-MM-DD');
 });
 
-app.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.showInfo = function () {
+app
+    .controller(
+        'formCtrl', [
+						'$scope',
+						'$http',
+						function ($scope, $http) {
+                $scope.showInfo = function () {
 
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
 
-        $http.get('http://localhost:8080/EasyShopWayNew/info', config)
-            .success(function (data, status, headers,
-                config) {
-                console.log(data);
-                $scope.firstName = data.firstName;
-                $scope.lastName = data.lastName;
-                $scope.birthday = data.birthday;
-                $scope.email = data.email;
-                $scope.language = data.language;
-            }).error(function (data, status, header,
-                config) {
-                console.log('fail');
-            });
-    }
-}]);
+                    dateBirthday = moment($scope.birthday).format('YYYY-MM-DD');
 
-app.controller('DemoCtrl', function ($scope) {
-    $scope.user = {
-        title: 'Developer',
-        email: 'ipsum@lorem.com',
-        firstName: '',
-        lastName: '',
-        company: 'Google',
-        address: '1600 Amphitheatre Pkwy',
-        city: 'Mountain View',
-        state: 'CA',
-        biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
-        postalCode: '94043'
-    };
+                    $scope.languages = [{
+                        sName: 'uk',
+                        name: "Українська"
+                    }, {
+                        sName: 'en',
+                        name: "English"
+                    }];
 
-}).config(
-    function ($mdThemingProvider) {
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                        }
+                    }
 
-        // Configure a dark theme with primary foreground yellow
+                    $http
+                        .get(
+                            'http://localhost:8080/EasyShopWayNew/info',
+                            config)
+                        .success(
+                            function (data, status, headers,
+                                config) {
 
-        $mdThemingProvider.theme('docs-dark', 'default')
-            .primaryPalette('yellow').dark();
+                                var date = new Date(data.birthday);
+                                var birthday = new Date(
+                                    date.getFullYear(),
+                                    date.getMonth(),
+                                    date.getDate());
 
-    });
+                                console.log(data);
+                                $scope.firstName = data.firstName;
+                                $scope.lastName = data.lastName;
+                                $scope.birthday = birthday;
+                                $scope.email = data.email;
+                                $scope.language = data.language;
+                            }).error(
+                            function (data, status, header,
+                                config) {
+                                console.log('fail');
+                            });
+                };
+
+                $scope.saveInfo = function () {
+
+                    console.log($scope.birthday);
+                    console.log($scope.birthday.getFullYear());
+                    var date = new Date($scope.birthday);
+                    
+                    var birthday = '' + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+
+                    console.log(birthday);
+
+                    var data = $.param({
+                        firstName: $scope.firstName,
+                        lastName: $scope.lastName,
+                        birthday: birthday,
+                        email: $scope.email,
+                        language: $scope.language,
+                        changes: true
+                    });
+
+                    console.log(data);
+
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                        }
+                    }
+
+                    // Validate data
+
+                    // End validate
+
+                    $http.post('http://localhost:8080/EasyShopWayNew/info', data,
+                        config).success(function (data, status,
+                        headers, config) {
+
+                        console.log(data);
+
+                    }).error(function (data, status,
+                        headers, config) {
+
+                        alert("error");
+
+                    });
+
+                }
+						}]);
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function () {
