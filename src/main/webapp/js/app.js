@@ -87,7 +87,7 @@ app
                                     console.log('fail');
                                 });
                     } else {
-                        cosole.log("sory");
+                        console.log("sory");
                     }
                 };
 						}]);
@@ -121,7 +121,7 @@ app
                     console.log($('#lName1').val());
 
                     console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
-                    if ($('#emailR').valid() && $('#passwordR').valid() && $('#fName1').valid() && $('#lName1').valid()) {
+                    if ($('#emailR').valid() && $('#passwordR').valid()) {
 
                         $http
                             .post(
@@ -176,7 +176,6 @@ app
 						'$http',
 						function ($scope, $http) {
                 $scope.showInfo = function () {
-
 
                     dateBirthday = moment($scope.birthday).format('YYYY-MM-DD');
 
@@ -252,7 +251,7 @@ app
 
                     // End validate
 
-                    $http.post('http://localhost:8080/EasyShopWayNew/info', data,
+                    $http.post('/EasyShopWayNew/info', data,
                         config).success(function (data, status,
                         headers, config) {
 
@@ -295,36 +294,45 @@ app
 
         });
 
-app.controller('ChangePassCtrl',  ['$scope', '$http', function ($scope, $http) {
+app.controller('changePassCtrl',  ['$scope', '$http', function ($scope, $http) {
 	$scope.changePass = function(){
-		 var data = $.param({
-             oldPass: $scope.oldPass,
-             newPass: $scope.newPass
-         });
-		 
-		 var config = {
-		            headers: {
-		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-		            }
-		        }
-		 
-		 $http.post('/EasyShopWayNew/pass', data, config)
-	 		.success(function (data, status, headers, config) {
-	 			  if (data.errMsg != undefined){
-	 				  $scope.error = data.errMsg;
-	 			  }else{
-	 				  
-	 			  }
-	 			  
-	 			  
-	 			   
-	        	   
 
-      }).error(
-          function (data, status, header, config) {
-              console.log('fail');
-          });
+		if ($('#newPass').valid() && $('#oldPass').valid()){
+			 var data = $.param({
+	             oldPass: $scope.user.oldPass,
+	             newPass: $scope.user.newPass
+	         });
+			 
+			 var config = {
+			            headers: {
+			                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+			            }
+			        }
+
+			 
+			 $http.post('/EasyShopWayNew/pass', data, config)
+		 		.success(function (data, status, headers, config) {
+		 			$scope.message = data.msg;
+		 		}).error(
+	          function (data, status, header, config) {
+	        	  $scope.message = 'Changing failed';
+	          });
+		}	
 	}
+	
+	$scope.cancel = function() {
+	    $scope.user = {};
+	    
+	    var defaultForm = {
+		    	   oldPass: "",
+		    	   newPass: ""
+		    	}
+	    $scope.changePassForm.$setPristine();
+		$scope.user = angular.copy(defaultForm);
+	    $scope.changePassForm.oldPass.$touched = false;
+	    $scope.changePassForm.newPass.$touched = false;
+	    $scope.message = undefined;
+	  };
 }]);
 
 function DialogController($scope, $mdDialog) {

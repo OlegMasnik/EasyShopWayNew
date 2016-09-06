@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
@@ -43,15 +44,23 @@ public class ChangePasswordServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		String oldPass = MD5Util.md5Custom(request.getParameter("oldPass"));
 		String newPass = MD5Util.md5Custom(request.getParameter("newPass"));
-		String oldPassInDB = user.getPassword();
-		
-		if (oldPassInDB.equals(oldPass)){
-			user.setPassword(MD5Util.md5Custom(newPass));
-			UserService.update(user.getId(), user);
+		String curPass = user.getPassword();
+		System.out.println(request.getParameter("oldPass"));
+		System.out.println("old: " + oldPass);
+		System.out.println("olddb: " + curPass);
+
+		if (curPass.equals(oldPass)){
+			System.out.println("1");
+			user.setPassword(newPass);
+			int r = UserService.update(user.getId(), user);
+			System.out.println(r);
+			HttpSession session = request.getSession(false);
+			session.setAttribute("user", user);
+			object.put("msg", "Password is changed successfully");
 		}else {
-			object.put("errMsg", "Incorrect old password");
+			System.out.println("2");
+			object.put("msg", "Incorrect old password");
 		}
 		response.getWriter().write(object.toString());
 	}
-
 }

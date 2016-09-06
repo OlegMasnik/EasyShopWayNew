@@ -191,7 +191,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ChangePasswordServlet</servlet-name>
-		<url-pattern>/ChangePasswordServlet</url-pattern>
+		<url-pattern>/pass</url-pattern>
 	</servlet-mapping>
 
 	<filter>
