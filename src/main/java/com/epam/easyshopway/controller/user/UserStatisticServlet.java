@@ -14,8 +14,8 @@ import org.json.simple.JSONObject;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.epam.easyshopway.model.User;
-import com.epam.easyshopway.model.UserProductType;
-import com.epam.easyshopway.service.UserProductTypeService;
+import com.epam.easyshopway.model.ProductsTypeCount;
+import com.epam.easyshopway.service.ProductsTypeCountService;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
@@ -47,7 +47,7 @@ public class UserStatisticServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		Date startDate = Date.valueOf(request.getParameter("startDate"));
 		Date endDate = Date.valueOf(request.getParameter("endDate"));
-		List<UserProductType> userProducts = UserProductTypeService.getUserProductTypes(user.getId(), startDate, endDate);
+		List<ProductsTypeCount> userProducts = ProductsTypeCountService.getUserProductTypes(user.getId(), startDate, endDate);
 		JSONObject responseObject = new JSONObject();
 		JSONArray series = new JSONArray();
 		JSONObject inSeries = new JSONObject();

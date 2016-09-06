@@ -2,7 +2,7 @@ package com.epam.easyshopway.model;
 
 import com.epam.easyshopway.dao.transformer.annotation.Column;
 
-public class UserProductType {
+public class ProductsTypeCount {
 
 	@Column("name_en")
 	private String nameEnglish;
