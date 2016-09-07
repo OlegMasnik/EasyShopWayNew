@@ -25,6 +25,7 @@ public class UserInfoServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 
 		JSONObject object = new JSONObject();
+		object.put("id", user.getId());
 		object.put("firstName", user.getFirstName());
 		object.put("lastName", user.getLastName());
 		object.put("language", user.getLanguage());

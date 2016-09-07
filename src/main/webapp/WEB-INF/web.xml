@@ -122,6 +122,13 @@
 		<servlet-name>SearchServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.SearchServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>AdminMapServlet</display-name>
+		<servlet-name>AdminMapServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.AdminMapServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -215,6 +222,10 @@
 	<servlet-mapping>
 		<servlet-name>ChangePasswordServlet</servlet-name>
 		<url-pattern>/pass</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AdminMapServlet</servlet-name>
+		<url-pattern>/edit_map</url-pattern>
 	</servlet-mapping>
 
 	<filter>

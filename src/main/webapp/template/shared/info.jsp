@@ -67,13 +67,8 @@
                             <div class="cab-category">Update your photo</div>
                         </md-card-title-text>
                     </md-card-title>
-
                     <input type="file" name="file" id="file" />
-                    <md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
-                        <md-button>Cancel</md-button>
-                    </md-card-actions>
+                    <md-button type="submit">Save</md-button>
                 </form>
             </md-card>
 

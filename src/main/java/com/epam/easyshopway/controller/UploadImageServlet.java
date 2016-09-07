@@ -19,15 +19,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
 
-/**
- * Servlet implementation class UploadImageServlet
- */
 public class UploadImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 5;
 	private static final int MAX_REQUEST_SIZE = 1024 * 1024;
-
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
@@ -39,59 +35,51 @@ public class UploadImageServlet extends HttpServlet {
 		}
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
-		// Create a factory for disk-based file items
 		DiskFileItemFactory factory = new DiskFileItemFactory();
-
-		// Sets the size threshold beyond which files are written directly to
-		// disk.
 		factory.setSizeThreshold(MAX_MEMORY_SIZE);
 
-		// Sets the directory used to temporarily store files that are larger
-		// than the configured size threshold. We use temporary directory for
-		// java
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-		// constructs the folder where uploaded file will be stored
-		String uploadFolder = "C:\\Users\\Admin\\git\\EasyShopWayNew\\data";
-
-		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload(factory);
 
-		// Set overall request size constraint
 		upload.setSizeMax(MAX_REQUEST_SIZE);
 		try {
-			// Parse the request
 			List items = upload.parseRequest(request);
 			Iterator iter = items.iterator();
-			while (iter.hasNext()) {
-				FileItem item = (FileItem) iter.next();
+			FileItem item = (FileItem) iter.next();
 
-				if (!item.isFormField()) {
-					String type = "" + item.getName().substring(item.getName().lastIndexOf('.') + 1);
-					String fileName = user.getId().toString();
-					StringBuilder sBuilder = new StringBuilder();
-					sBuilder.append(uploadFolder);
-					sBuilder.append(File.separator);
-					sBuilder.append(fileName);
-					sBuilder.append(".");
-					sBuilder.append(type);
-					File uploadedFile = new File(sBuilder.toString());
-					UserService.updatePicture(user.getId(), sBuilder.toString());
-					System.out.println(sBuilder.toString());
-					item.write(uploadedFile);
-					
-				}
+			System.out.println("Field " + item.getString());
+			if (!item.isFormField()) {
+				String type = "" + item.getName().substring(item.getName().lastIndexOf('.') + 1);
+				String fName = "images/user/" + user.getId() + "." + type;
+				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
+				File uploadedFile = new File(absoluteDiskPath);
+
+				File deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
+				if (deleteFile.exists())
+					deleteFile.delete();
+				
+				System.out.println(absoluteDiskPath);
+				item.write(uploadedFile);
+
+				UserService.updatePicture(user.getId(), fName);
+				user = UserService.getById(user.getId());
+				session.invalidate();
+				request.getSession(true).setAttribute("user", user);
 			}
-
-			// displays done.jsp page after upload finished
-			// getServletContext().getRequestDispatcher("/done.jsp").forward(
-			// request, response);
 
 		} catch (FileUploadException ex) {
 			throw new ServletException(ex);
 		} catch (Exception ex) {
 			throw new ServletException(ex);
 		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Before redirect");
+		response.sendRedirect("/EasyShopWayNew/cabinet#/");
+
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

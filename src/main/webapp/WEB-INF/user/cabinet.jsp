@@ -10,9 +10,9 @@
             </title>
             
             
-            <link rel="stylesheet" href="css/angular-material.min.css">
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
+            <link rel="stylesheet" href="css/angular-material.min.css">
         </head>
 
         <body ng-app="MyApp" layout="column">
@@ -23,7 +23,7 @@
                         <a href="#/">
                             <div class="cab-user-logo" layot="row" layout-padding>
 
-                                <img src="images/admin.png" alt="" class="profile-img">
+                                <img src="${user.image }" alt="" class="profile-img">
 
                                 <div>
                                     <c:out value="${ user.firstName}"></c:out> 

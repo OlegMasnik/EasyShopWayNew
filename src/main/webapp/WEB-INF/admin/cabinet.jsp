@@ -22,28 +22,21 @@
 	<md-content layout="column" flex layout-padding sticky-box>
 	<md-button href="#/" layot="row">
 	<div>
-		<img src="images/admin.png" alt="" class="profile-img">
+		<img src="${user.image }" alt="" class="profile-img">
 		<div flex>
 			<c:out value="${user.firstName } ${user.lastName}"></c:out>
 		</div>
 	</div>
-	</md-button> 
-	<md-button href="#map">Map</md-button> 
-	<md-button href="#products">Products</md-button>
-	<md-button href="#users">Users</md-button> 
-	<md-button href="#statistic">Statistic</md-button>
-	<md-button href="#history">History</md-button> 
-	</md-content> 
-	</md-slidenav>
+	</md-button> <md-button href="#edit_map">Map</md-button> <md-button href="#products">Products</md-button>
+	<md-button href="#users">Users</md-button> <md-button href="#statistic">Statistic</md-button>
+	</md-content> </md-slidenav>
 
-	<div flex="" class="content">
+	<div flex class="content" layout="column">
 
-		<div ng-view></div>
-
-
+		<div ng-view onload="getFoodData()"></div>
 	</div>
 	</md-content>
-	
+
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src='js/angular.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
@@ -51,7 +44,10 @@
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src="js/datatable/md-data-table.js"></script>
-	
+	<script src="js/shared/highcharts.js"></script>
+	<script src="js/shared/exporting.js"></script>
+	<script src="js/shared/statistic.js"></script>
+
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
 
