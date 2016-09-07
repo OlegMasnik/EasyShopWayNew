@@ -9,7 +9,7 @@ cabinetApp.controller("UserInfo", [
 		"$scope",
 		function($scope, $http) {
 
-			$http.get('http://localhost:8080/EasyShopWayNew/info', config)
+			$http.get('/EasyShopWayNew/info', config)
 					.success(function(data, status, headers, config) {
 
 						console.log(data.firstName + " " + data.lastName);

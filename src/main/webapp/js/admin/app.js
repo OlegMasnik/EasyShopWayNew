@@ -91,6 +91,8 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
             fn();
             game.draw();
         }
+        
+        var targetsCopy;
         this.getCellColor = function (cell) {
             switch (cell) {
             case this.player.cell:
@@ -106,33 +108,44 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
             if (this.targets.map[cell]) return '#522';
             return '#eee';
         };
+        
+
         this.draw = function () {
             game.ctx.fillStyle = '#bbb';
             game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
             var cell = 0;
             for (var y = 0; y < game.height; y++) {
                 for (var x = 0; x < game.width; x++) {
-                    game.ctx.fillStyle = game.getCellColor(cell);
-                    if (game.ctx.fillStyle == waycolor) {
-                        if (game.ctx.fillStyle !== this.targetColor) {
-                            game.ctx.fillStyle = '#eee';
-                            game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
-                                game.cellSize, game.cellSize);
+                	 game.ctx.fillStyle = game.getCellColor(cell);
+                     if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]){
+                    	
+                    	game.ctx.fillStyle = '#eee';
+                    	game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
+      	                        game.cellSize, game.cellSize);
+                    	
+                     	game.ctx.beginPath();
+                     	game.ctx.arc(x * game.cellSpace + game.borderWidth+game.cellSize/2,
+                     			y * game.cellSpace + game.borderWidth +game.cellSize/2, game.cellSize/4,0,2*Math.PI);
+                     	game.ctx.fillStyle = waycolor;
+                    	game.ctx.strokeStyle = waycolor;
+                    	game.ctx.fill();
+                     	game.ctx.stroke();
+                     }else {
+                    	if (targetsCopy != undefined && targetsCopy[cell]){
+                    		var tmp1 = this.targets.map[cell];
+                    		var tmp2 = this.way.map[cell];
+                    		this.targets.map[cell] = true;
+                    		this.way.map[cell] = false;
+                    		game.ctx.fillStyle = game.getCellColor(cell);
+                    		this.targets.map[cell] = tmp1;
+                    		this.way.map[cell] = tmp2;
+                    	}
 
-                            game.ctx.beginPath();
-                            game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
-                                y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
-                            game.ctx.fillStyle = waycolor;
-                            game.ctx.strokeStyle = waycolor;
-                            game.ctx.fill();
-                            game.ctx.stroke();
-                        }
-                    } else {
-                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-                            y * game.cellSpace + game.borderWidth,
-                            game.cellSize, game.cellSize);
-                    }
-                    cell++;
+ 	                    game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+ 	                        y * game.cellSpace + game.borderWidth,
+ 	                        game.cellSize, game.cellSize);
+                     }
+                     cell++;
                 }
             }
         };
@@ -253,6 +266,7 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
                         }
                         game.draw();
                         console.log("Цілі " + arrayTarget);
+                        targetsCopy = game.targets.map;
                     } else {
                         console.log("хуйня якась")
                     }
@@ -361,8 +375,15 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
                 curTarget = undefined;
                 this.target = undefined;
             }
-        };
-    };
+            buffPath.tracePath();
+            arrayTarget.removeUndefined(curTarget);
+            buffPath = undefined;
+            this.cell = curTarget;
+            this.moveTo();
+        } else {
+            console.log("this.cell = " + this.cell);
+            console.log("this.target = " + this.target);
+            console.log("curTarget = " + curTarget);
 
     var Map = function (length) {
         this.map = new Array(length);
