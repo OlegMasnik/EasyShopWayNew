@@ -25,7 +25,8 @@ adminApp.controller('AdminCtrl', function ($scope, $http) {
 });
 
 
-// ************************************************* MapCtrl *************************************************//
+// ************************************************* MapCtrl
+// *************************************************//
 
 adminApp.controller('MapCtrl', function ($scope, $http) {
 
@@ -192,10 +193,10 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
                         game.paint.value = true;
                         if (startCupBoard == undefined) {
                             startCupBoard = cell;
-                            //                                game.cupBoard.map[cell] = game.paint.value;
+                            // game.cupBoard.map[cell] = game.paint.value;
                         } else {
                             endCupBoard = cell;
-                            //                                game.cupBoard.map[cell] = game.paint.value;
+                            // game.cupBoard.map[cell] = game.paint.value;
                             if (Math.abs(startCupBoard - endCupBoard) < $scope.config.width - 1) {
                                 console.log("in horizont: start=" + startCupBoard + " end=" + endCupBoard);
                                 if (checkRange(startCupBoard, endCupBoard, 1)) {
@@ -207,8 +208,8 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
                                     console.log(arr)
                                     arrayCupBoard.push(arr);
                                 } else {
-                                    //                                        game.cupBoard.map[startCupBoard] = false;
-                                    //                                        game.cupBoard.map[endCupBoard] = false;
+                                    // game.cupBoard.map[startCupBoard] = false;
+                                    // game.cupBoard.map[endCupBoard] = false;
                                 }
                             } else if ((endCupBoard % $scope.config.width) == (startCupBoard % $scope.config.width)) {
                                 console.log("in vertical: start=" + startCupBoard + " end=" + endCupBoard);
@@ -380,10 +381,8 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
             buffPath = undefined;
             this.cell = curTarget;
             this.moveTo();
-        } else {
-            console.log("this.cell = " + this.cell);
-            console.log("this.target = " + this.target);
-            console.log("curTarget = " + curTarget);
+        } 
+    }
 
     var Map = function (length) {
         this.map = new Array(length);
@@ -658,13 +657,15 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
 
 
 
-// ************************************************* InfoCtrl *************************************************//
+// ************************************************* InfoCtrl
+// *************************************************//
 
 adminApp.controller('InfoCtrl', function ($scope, $http) {
     $scope.qwer = "Hello world";
 });
 
-// ************************************************* UserCtrl *************************************************//
+// ************************************************* UserCtrl
+// *************************************************//
 
 adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($http, $scope, $location) {
 
@@ -836,7 +837,8 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($ht
     };
 }]);
 
-// ************************************************* ProdCtrl *************************************************//
+// ************************************************* ProdCtrl
+// *************************************************//
 
 adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', function ($http, $scope, $location, $mdDialog) {
 
