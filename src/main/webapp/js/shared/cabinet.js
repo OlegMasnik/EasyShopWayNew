@@ -2,7 +2,7 @@
  * 
  */
 
-var cabinetApp = angular.material("MyApp");
+var cabinetApp = angular.module("MyApp");
 
 cabinetApp.controller("UserInfo", [
 		"$scope",
