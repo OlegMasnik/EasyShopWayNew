@@ -24,6 +24,9 @@ adminApp.controller('AdminCtrl', function ($scope, $http) {
 
 });
 
+
+// ************************************************* MapCtrl *************************************************//
+
 adminApp.controller('MapCtrl', function ($scope, $http) {
 
     var game;
@@ -180,7 +183,7 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
                         } else {
                             endCupBoard = cell;
                             //                                game.cupBoard.map[cell] = game.paint.value;
-                            if (Math.abs(startCupBoard - endCupBoard) < $scope.config.width) {
+                            if (Math.abs(startCupBoard - endCupBoard) < $scope.config.width - 1) {
                                 console.log("in horizont: start=" + startCupBoard + " end=" + endCupBoard);
                                 if (checkRange(startCupBoard, endCupBoard, 1)) {
                                     console.log("dsdsds")
@@ -216,8 +219,10 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
                         }
                         break;
                     case 'wall':
-                        game.paint.value = !game.walls.map[cell];
-                        game.walls.map[cell] = game.paint.value;
+                        if (!(game.cupBoard.map[cell]) && !(game.payDesk.map[cell]) && !(game.enter == cell)) {
+                            game.paint.value = !game.walls.map[cell];
+                            game.walls.map[cell] = game.paint.value;
+                        }
                         break;
                     case 'edit':
                         console.log("QWERT " + cell)
@@ -266,7 +271,8 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
                             // game.cupBoard.map[cell] = game.paint.value;
                             // break;
                         case 'wall':
-                            game.walls.map[cell] = game.paint.value;
+                            if (!(game.cupBoard.map[cell]) && !(game.payDesk.map[cell]) && !(game.enter == cell))
+                                game.walls.map[cell] = game.paint.value;
                             break;
                         case 'payDesk':
                             console.log("in mouse move")
@@ -522,11 +528,122 @@ adminApp.controller('MapCtrl', function ($scope, $http) {
     }
 
 
+    $scope.openCupBoard = function (cupBoard) {
+        $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'template/admin/edit.prod.tmpl.html',
+                parent: angular.element(document.body),
+                resolve: {
+                    types: function () {
+                        return types;
+                    },
+                    item: function () {
+                        return item;
+                    }
+                },
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm
+                    // breakpoints.
+            })
+            .then(function (answer) {
+                $http({
+                    method: "GET",
+                    url: "/EasyShopWayNew/products"
+                }).then(function mySucces(response) {
+                    $scope.data = response.data;
+                    originalProd.prods = $scope.data.prods;
+                    originalProd.count = $scope.data.prods.length;
+                    $scope.datatable = angular.copy(originalProd);
+                    console.log("Get");
+                    console.log($scope.data);
+                }, function myError(response) {
+                    console.log(response.statusText);
+                });
+            }, function () {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
+
+    function DialogController($scope, $mdDialog, types, item) {
+
+        console.log("item " + item)
+        if (item == undefined) {
+            $scope.item = {
+                id: 0,
+                nen: "",
+                nuk: "",
+                ptid: 0
+            };
+            $scope.types = types;
+
+        } else {
+            $scope.item = item;
+            $scope.types = types;
+            $scope.selectedType = types[getIdDatatype(item.ptid)];
+
+            function getIdDatatype(pid) {
+                for (var i = 0; i < types.length; i++)
+                    if (types[i].id == pid)
+                        return i;
+            }
+        }
+
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function () {
+            $http({
+                method: "GET",
+                url: "/EasyShopWayNew/products"
+            }).then(function mySucces(response) {
+                $scope.data = response.data;
+                originalProd.prods = $scope.data.prods;
+                originalProd.count = $scope.data.prods.length;
+                $scope.datatable = angular.copy(originalProd);
+                console.log("Get");
+                console.log($scope.data);
+            }, function myError(response) {
+                console.log(response.statusText);
+            });
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function (item, tid) {
+            item.ptid = tid.id
+
+            var data = $.param({
+                id: item.id,
+                nameUk: item.nuk,
+                nameEn: item.nen,
+                ptid: item.ptid
+            });
+            console.log("New ITEM");
+            console.log(item);
+            $http.put('/EasyShopWayNew/products?' + data)
+                .success(function (data, status, headers) {
+                    console.log('update');
+
+                })
+                .error(function (data, status, header, config) {
+                    console.log('failed');
+                });
+            $mdDialog.hide();
+        };
+    }
+
+
 });
+
+
+
+// ************************************************* InfoCtrl *************************************************//
 
 adminApp.controller('InfoCtrl', function ($scope, $http) {
     $scope.qwer = "Hello world";
 });
+
+// ************************************************* UserCtrl *************************************************//
 
 adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($http, $scope, $location) {
 
@@ -697,6 +814,8 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($ht
 
     };
 }]);
+
+// ************************************************* ProdCtrl *************************************************//
 
 adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', function ($http, $scope, $location, $mdDialog) {
 
