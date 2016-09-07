@@ -22,12 +22,12 @@
 	<md-content layout="column" flex layout-padding sticky-box>
 	<md-button href="#/" layot="row">
 	<div>
-		<img src="images/admin.png" alt="" class="profile-img">
+		<img src="${user.image }" alt="" class="profile-img">
 		<div flex>
 			<c:out value="${user.firstName } ${user.lastName}"></c:out>
 		</div>
 	</div>
-	</md-button> <md-button href="#map">Map</md-button> <md-button href="#products">Products</md-button>
+	</md-button> <md-button href="#edit_map">Map</md-button> <md-button href="#products">Products</md-button>
 	<md-button href="#users">Users</md-button> <md-button href="#statistic">Statistic</md-button>
 	</md-content> </md-slidenav>
 

@@ -6,7 +6,7 @@ adminApp.config(function ($routeProvider) {
     $routeProvider.when("/", {
         templateUrl: "template/shared/info.jsp",
         controller: 'InfoCtrl'
-    }).when("/map", {
+    }).when("/edit_map", {
         templateUrl: "template/admin/map.html"
     }).when("/products", {
         templateUrl: "template/admin/products.html",

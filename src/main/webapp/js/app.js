@@ -279,6 +279,8 @@ app
                                 $scope.birthday = birthday;
                                 $scope.email = data.email;
                                 $scope.language = data.language;
+                                $scope.img = data.img;
+                                $scope.id = data.id;
                             }).error(
                             function (data, status, header,
                                 config) {
