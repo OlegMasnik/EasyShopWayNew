@@ -85,7 +85,7 @@ public class TypeProductControlServlet extends HttpServlet {
 		factory.setSizeThreshold(MAX_MEMORY_SIZE);
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		String fName = null;
+		String fName = "images/prod/def.gif";
 		try {
 			List items = upload.parseRequest(req);
 			int id = Integer.parseInt(((FileItem) items.get(0)).getString());
@@ -99,8 +99,6 @@ public class TypeProductControlServlet extends HttpServlet {
 				type = "" + fileItem.getName().substring(fileItem.getName().lastIndexOf('.') + 1);
 			} catch (NullPointerException e) {
 			}
-
-			System.out.println(id + " " + name_en + " " + name_uk + " " + fileItem.getString());
 			if (!"".equals(type)) {
 				fName = "images/prod/" + id + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);

@@ -200,6 +200,7 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($ht
 
 adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', function ($http, $scope, $location, $mdDialog) {
 	
+	$scope.empty = undefined;
 	  $scope.showPromptProd = function(types, item) {
 		  
 		  console.log($scope.item);
@@ -433,8 +434,8 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
     };
 
     $scope.queryProd = {
-        order: 'name',
-        limit: 10,
+        order: 'nen',
+        limit: 5,
         page: 1
     };
 
@@ -604,10 +605,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 
     $scope.autocolumnType= [
         {
-        	name: "img",
-        	display: "Image"
-        }, 
-        {
         	name: "nen",
         	display: "Name EN"
         }, 
@@ -628,8 +625,8 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
     };
 
     $scope.queryType = {
-        order: 'name',
-        limit: 10,
+        order: 'nen',
+        limit: 5,
         page: 1
     };
     

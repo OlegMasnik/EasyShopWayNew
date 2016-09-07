@@ -10,9 +10,9 @@
             </title>
             
             
-            <link rel="stylesheet" href="css/angular-material.min.css">
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
+            <link rel="stylesheet" href="css/angular-material.min.css">
         </head>
 
         <body ng-app="MyApp" layout="column">
