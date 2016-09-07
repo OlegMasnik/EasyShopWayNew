@@ -69,7 +69,7 @@ app
                     if ($('#emailL').valid() && $('#passwordL').valid()) {
                         $http
                             .post(
-                                'http://localhost:8080/EasyShopWayNew/login',
+                                '/EasyShopWayNew/login',
                                 data, config)
                             .success(
                                 function (data, status,
@@ -87,7 +87,7 @@ app
                                     console.log('fail');
                                 });
                     } else {
-                        cosole.log("sory");
+                        console.log("sory");
                     }
                 };
 						}]);
@@ -121,11 +121,11 @@ app
                     console.log($('#lName1').val());
 
                     console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
-                    if ($('#emailR').valid() && $('#passwordR').valid() && $('#fName1').valid() && $('#lName1').valid()) {
+                    if ($('#emailR').valid() && $('#passwordR').valid()) {
 
                         $http
                             .post(
-                                'http://localhost:8080/EasyShopWayNew/reg',
+                                '/EasyShopWayNew/reg',
                                 data, config)
                             .success(
                                 function (data, status,
@@ -177,7 +177,6 @@ app
 						function ($scope, $http) {
                 $scope.showInfo = function () {
 
-
                     dateBirthday = moment($scope.birthday).format('YYYY-MM-DD');
 
                     $scope.languages = [{
@@ -196,7 +195,7 @@ app
 
                     $http
                         .get(
-                            'http://localhost:8080/EasyShopWayNew/info',
+                            '/EasyShopWayNew/info',
                             config)
                         .success(
                             function (data, status, headers,
@@ -252,7 +251,7 @@ app
 
                     // End validate
 
-                    $http.post('http://localhost:8080/EasyShopWayNew/info', data,
+                    $http.post('/EasyShopWayNew/info', data,
                         config).success(function (data, status,
                         headers, config) {
 
@@ -267,6 +266,74 @@ app
 
                 }
 						}]);
+
+app
+    .controller(
+        'DemoCtrl',
+        function ($scope) {
+            $scope.user = {
+                title: 'Developer',
+                email: 'ipsum@lorem.com',
+                firstName: '',
+                lastName: '',
+                company: 'Google',
+                address: '1600 Amphitheatre Pkwy',
+                city: 'Mountain View',
+                state: 'CA',
+                biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
+                postalCode: '94043'
+            };
+
+        }).config(
+        function ($mdThemingProvider) {
+
+            // Configure a dark theme with primary foreground yellow
+
+            $mdThemingProvider.theme('docs-dark', 'default')
+                .primaryPalette('yellow').dark();
+
+        });
+
+app.controller('changePassCtrl',  ['$scope', '$http', function ($scope, $http) {
+	$scope.changePass = function(){
+
+		if ($('#newPass').valid() && $('#oldPass').valid()){
+			 var data = $.param({
+	             oldPass: $scope.user.oldPass,
+	             newPass: $scope.user.newPass
+	         });
+			 
+			 var config = {
+			            headers: {
+			                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+			            }
+			        }
+
+			 
+			 $http.post('/EasyShopWayNew/pass', data, config)
+		 		.success(function (data, status, headers, config) {
+		 			$scope.message = data.msg;
+		 		}).error(
+	          function (data, status, header, config) {
+	        	  $scope.message = 'Changing failed';
+	          });
+		}	
+	}
+	
+	$scope.cancel = function() {
+	    $scope.user = {};
+	    
+	    var defaultForm = {
+		    	   oldPass: "",
+		    	   newPass: ""
+		    	}
+	    $scope.changePassForm.$setPristine();
+		$scope.user = angular.copy(defaultForm);
+	    $scope.changePassForm.oldPass.$touched = false;
+	    $scope.changePassForm.newPass.$touched = false;
+	    $scope.message = undefined;
+	  };
+}]);
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function () {

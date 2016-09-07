@@ -24,9 +24,6 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 	  
 	//alert($scope.startDate);
 	$scope.getFoodData = function () {
-		var responsik = undefined;
-		
-		
 		
 		var startDate = moment($scope.startDate).format('YYYY-MM-DD');
 		var endDate = moment($scope.endDate).format('YYYY-MM-DD');
@@ -41,7 +38,7 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 		            }
 		        }
 		 
-		 $http.post('http://localhost:8080/EasyShopWayNew/userStat', data, config)
+		 $http.post('http://localhost:8080/EasyShopWayNew/stat', data, config)
 		 		.success(function (data, status, headers, config) {
 		 			   response = data;
 		        	   console.log(response);
@@ -74,41 +71,6 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 	             function (data, status, header, config) {
 	                 console.log('fail');
 	             });
-
-		
-//		//Build the chart
-//        $http({
-//        	  method: 'POST',
-//        	  url: '/EasyShopWayNew/userStat'
-//        	}).then(function successCallback(response) {
-//        	   responsik = response.data;
-//        	   console.log(responsik);
-//        	   $('#container').highcharts({
-//        		      chart: {
-//        		          plotBackgroundColor: null,
-//        		          plotBorderWidth: null,
-//        		          plotShadow: false,
-//        		          type: 'pie'
-//        		      },
-//        		      title: responsik.title,
-//        		      tooltip: {
-//        		          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-//        		      },
-//        		      plotOptions: {
-//        		          pie: {
-//        		              allowPointSelect: true,
-//        		              cursor: 'pointer',
-//        		              dataLabels: {
-//        		                  enabled: false
-//        		                  
-//        		              },
-//        		              showInLegend: true
-//        		          }
-//        		      },
-//        		      series: responsik.series
-//        	      });
-//        	  }, function errorCallback(response) {
-//        	    console.log("fail");
-//        	  });
     };
 }]);
+
