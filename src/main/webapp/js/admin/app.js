@@ -303,8 +303,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		    };
 	  }
 	  
-	  
-	  
 	  $scope.showPromptType = function(item) {
 		  
 		  console.log(" Type " + item);
@@ -314,7 +312,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
 		      templateUrl: 'template/admin/edit.type.tmpl.html',
 		      parent: angular.element(document.body),
 		      resolve: {
-		          item: function () { return item; }
+		  item: function () { return item; }
 		      },
 		      clickOutsideToClose:true,
 		      fullscreen: $scope.customFullscreen // Only for -xs, -sm

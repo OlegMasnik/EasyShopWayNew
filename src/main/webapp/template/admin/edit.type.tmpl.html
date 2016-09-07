@@ -1,5 +1,5 @@
 <md-dialog>
-<form ng-cloak>
+<form ng-cloak method="POST" action="/EasyShopWayNew/type" enctype="multipart/form-data">
 	<md-toolbar>
 	<div class="md-toolbar-tools">
 		<h2>Edit Product</h2>
@@ -10,6 +10,7 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
+	<input type="text" name="id" hidden ng-model="item.id">
 		<md-input-container> <label>English name</label>
 		<input name="name_en" type="text" required ng-model="item.nen"></md-input-container>
 
@@ -19,6 +20,7 @@
 			ng-model="item.img" name="file" id="file" /> </md-input-container>
 		<md-dialog-actions layout="row"> <span flex></span>
 
-		<md-button ng-click="answer(item, item.img)"> Save </md-button> </md-dialog-actions>
+<!-- 		<md-button ng-click="answer(item, item.img)"> Save </md-button> </md-dialog-actions> -->
+		<button type="submit">Send</button>
 </form>
 </md-dialog>

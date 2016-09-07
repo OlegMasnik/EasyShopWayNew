@@ -67,7 +67,7 @@
                             <div class="cab-category">Update your photo</div>
                         </md-card-title-text>
                     </md-card-title>
-
+					<input type="text" value="qwerty" name="other">
                     <input type="file" name="file" id="file" />
                     <md-button type="submit" ng-click='sendLoginData()'>Save</md-button>
                     <md-card-actions layout="row" layout-align="end center">
