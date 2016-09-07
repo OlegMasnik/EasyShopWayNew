@@ -6,9 +6,9 @@
 
 <head>
 <title><c:out value="${user.firstName }"></c:out></title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
+<link rel="stylesheet" href="css/cabinet-style.css">
+<link rel="stylesheet" href="css/style.css">
 <link href="css/icon.css" rel="stylesheet">
 
 <link rel="stylesheet" href="css/datatable/md-data-table.css">
@@ -18,18 +18,21 @@
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
 	<jsp:include page="../parts/header.jsp"></jsp:include>
 	<md-content layout="row" class="main-page" flex> <md-slidenav
-		md-is-locked-open="true" layout="row" flex md-whiteframe="4">
-	<md-content layout="column" flex layout-padding sticky-box>
-	<md-button href="#/" layot="row">
-	<div>
-		<img src="${user.image }" alt="" class="profile-img">
-		<div flex>
-			<c:out value="${user.firstName } ${user.lastName}"></c:out>
+		class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex
+		md-whiteframe="4"> <md-content layout="column" flex>
+	<a href="#/">
+		<div class="cab-user-logo" layot="row" layout-padding>
+
+			<img src="images/admin.png" alt="" class="profile-img">
+
+			<div>
+				<c:out value="${ user.firstName}"></c:out>
+				<c:out value="${ user.lastName}"></c:out>
+			</div>
 		</div>
-	</div>
-	</md-button> <md-button href="#edit_map">Map</md-button> <md-button href="#products">Products</md-button>
-	<md-button href="#users">Users</md-button> <md-button href="#statistic">Statistic</md-button>
-	</md-content> </md-slidenav>
+	</a> <md-button href="#edit_map">Map</md-button> <md-button
+		href="#products">Products</md-button> <md-button href="#users">Users</md-button>
+	<md-button href="#statistic">Statistic</md-button> </md-content> </md-slidenav>
 
 	<div flex class="content" layout="column">
 
@@ -46,12 +49,13 @@
 	<script src="js/datatable/md-data-table.js"></script>
 	<script src="js/shared/highcharts.js"></script>
 	<script src="js/shared/exporting.js"></script>
-	<script src="js/shared/statistic.js"></script>
 
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
-
-
+	<script src='js/user/app.js'></script>
+	<script src="js/shared/statistic.js"></script>
+	<script src="js/shared/cabinet.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
 
 </body>
 

@@ -10,9 +10,9 @@
             </title>
             
             
+            <link rel="stylesheet" href="css/angular-material.min.css">
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
-            <link rel="stylesheet" href="css/angular-material.min.css">
         </head>
 
         <body ng-app="MyApp" layout="column">
@@ -23,7 +23,7 @@
                         <a href="#/">
                             <div class="cab-user-logo" layot="row" layout-padding>
 
-                                <img src="${user.image }" alt="" class="profile-img">
+                                <img src="images/admin.png" alt="" class="profile-img">
 
                                 <div>
                                     <c:out value="${ user.firstName}"></c:out> 
@@ -42,7 +42,6 @@
                 </div>
             </md-content>
             <script src="js/jquery-3.1.0.min.js"></script>
-            <script src="js/jquery.validate.min.js"></script>
             <script src='js/angular.min.js'></script>
             <script src='js/angular-route.min.js'></script>
             <script src='js/angular-aria.js'></script>
@@ -55,6 +54,7 @@
             <script src='js/user/user-history.js'></script>
             <script src="js/shared/statistic.js"></script>
             <script src="js/shared/cabinet.js"></script>
+            <script src="js/jquery.validate.min.js"></script>
         </body>
 
         </html>

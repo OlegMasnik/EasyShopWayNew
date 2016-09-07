@@ -38,7 +38,7 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 		            }
 		        }
 		 
-		 $http.post('http://localhost:8080/EasyShopWayNew/stat', data, config)
+		 $http.post('/EasyShopWayNew/stat', data, config)
 		 		.success(function (data, status, headers, config) {
 		 			   response = data;
 		        	   console.log(response);
@@ -73,4 +73,3 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 	             });
     };
 }]);
-

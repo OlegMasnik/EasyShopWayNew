@@ -93,7 +93,7 @@
 	                    </md-input-container>
                     	<span style="color : red" ng-bind="message"></span>
 	                     <md-card-actions layout="row" layout-align="end center">
-		                    <md-button ng-click = "changePass()" >Save</md-button>
+		                    <md-button ng-click="changePass()" >Save</md-button>
 		                    <md-button ng-click="cancel()">Cancel</md-button>
 	                	</md-card-actions>
                     </form>

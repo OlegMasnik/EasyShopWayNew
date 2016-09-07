@@ -1,71 +1,6 @@
 var dateBirthday;
 var app = angular.module('MyApp', ['ngMaterial', 'ngRoute']);
 
-app.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
-	
-	$scope.date = new Date();
-	
-	$scope.startDate = new Date(
-		      $scope.date.getFullYear(),
-		      $scope.date.getMonth() - 1,
-		      $scope.date.getDate());
-	$scope.endDate = new Date();
-	  
-	//alert($scope.startDate);
-	$scope.getFoodData = function () {
-		var responsik = undefined;
-		
-		
-		
-		var startDate = moment($scope.startDate).format('YYYY-MM-DD');
-		var endDate = moment($scope.endDate).format('YYYY-MM-DD');
-		 var data = $.param({
-	            startDate: startDate,
-	            endDate: endDate  
-	     });
-		 
-		 var config = {
-		            headers: {
-		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-		            }
-		        }
-		 
-		 $http.post('/EasyShopWayNew/userStat', data, config)
-		 		.success(function (data, status, headers, config) {
-		 			   response = data;
-		        	   console.log(response);
-		        	   $('#container').highcharts({
-		        		      chart: {
-		        		          plotBackgroundColor: null,
-		        		          plotBorderWidth: null,
-		        		          plotShadow: false,
-		        		          type: 'pie'
-		        		      },
-		        		      title: response.title,
-		        		      tooltip: {
-		        		          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-		        		      },
-		        		      plotOptions: {
-		        		          pie: {
-		        		              allowPointSelect: true,
-		        		              cursor: 'pointer',
-		        		              dataLabels: {
-		        		                  enabled: false
-		        		                  
-		        		              },
-		        		              showInLegend: true
-		        		          }
-		        		      },
-		        		      series: response.series
-		        	      });
-	
-	         }).error(
-	             function (data, status, header, config) {
-	                 console.log('fail');
-	             });
-    };
-}]);
-
 app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     $scope.status = '  ';
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
@@ -333,33 +268,6 @@ app
 
                 }
 						}]);
-
-app
-    .controller(
-        'DemoCtrl',
-        function ($scope) {
-            $scope.user = {
-                title: 'Developer',
-                email: 'ipsum@lorem.com',
-                firstName: '',
-                lastName: '',
-                company: 'Google',
-                address: '1600 Amphitheatre Pkwy',
-                city: 'Mountain View',
-                state: 'CA',
-                biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
-                postalCode: '94043'
-            };
-
-        }).config(
-        function ($mdThemingProvider) {
-
-            // Configure a dark theme with primary foreground yellow
-
-            $mdThemingProvider.theme('docs-dark', 'default')
-                .primaryPalette('yellow').dark();
-
-        });
 
 app.controller('changePassCtrl',  ['$scope', '$http', function ($scope, $http) {
 	$scope.changePass = function(){
