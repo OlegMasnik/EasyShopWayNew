@@ -1,5 +1,4 @@
-<script src="js/index.js"></script>
-<script src="js/admin/edit.map.js"></script>
+<!-- <script src="js/index.js"></script> -->
 <style>
 canvas {
 	margin: 20px;
@@ -7,20 +6,33 @@ canvas {
 	cursor: pointer;
 }
 </style>
-<div ng-controller="MapEdit">
-<div>
-	<canvas></canvas>
-</div>
-<div>
-	<label><input type="radio" value="payDesk" name="type"
-		onclick="radioOnClick()">Pay Desaasask</label> <label><input
-		type="radio" value="cupBoard" name="type" onclick="radioOnClick()">Cup
-		Board</label> <label><input type="radio" value="enter" name="type"
-		onclick="radioOnClick()">Enter</label> <label><input
-		type="radio" value="wall" name="type" onclick="radioOnClick()">Wall</label>
-	<label><input type="radio" value="edit" name="type"
-		onclick="radioOnClick()">Edit</label>
-	<button onclick="onClick()">Go</button>
-	<h1>Hello</h1>
-</div>
+<div ng-controller="MapCtrl">
+	Width<input ng-model="width" type="number">
+	Height<input ng-model="height" type="number">
+	<md-button ng-click="createNewMap()">Create new map</md-button>
+	<div>
+		<canvas></canvas>
+	</div>
+	<div>
+		<md-radio-group ng-model="typeValue"> <!--       <md-radio-button value="Apple">Apple</md-radio-button> -->
+		<!--       <md-radio-button value="Banana"> Banana </md-radio-button> -->
+		<!--       <md-radio-button value="Mango">Mango</md-radio-button> -->
+
+		<md-radio-button value="payDesk" name="type" ng-click="radioOnClick()" class="md-primary">Pay
+		Desk</md-radio-button> <md-radio-button type="radio" ng-click="radioOnClick()" value="cupBoard" name="type"  class="md-primary">Cup
+		Board </md-radio-button> <md-radio-button value="enter" ng-click="radioOnClick()" name="type"  class="md-primary">Enter</md-radio-button>
+		<md-radio-button value="wall" name="type" ng-click="radioOnClick()" class="md-primary">Wall</md-radio-button> <md-radio-button
+			value="edit" name="type" ng-click="radioOnClick()" class="md-primary">Edit</md-radio-button> </md-radio-group>
+		<md-button ng-click="onClick()">Go</md-button>
+
+		<!-- 		<md-radio-button value="payDesk" name="type" onclick="radioOnClick()">Pay -->
+		<!-- 		Desaasask</md-radio-button> -->
+		<!-- 		<md-radio-button type="radio" value="cupBoard" name="type" -->
+		<!-- 			onclick="radioOnClick()">Cup Board </md-radio-button> -->
+		<!-- 		<md-radio-button value="enter" name="type" onclick="radioOnClick()">Enter</md-radio-button> -->
+		<!-- 		<md-radio-button value="wall" name="type" onclick="radioOnClick()">Wall</md-radio-button> -->
+		<!-- 		<md-radio-button value="edit" name="type" onclick="radioOnClick()">Edit</md-radio-button> -->
+		<!-- 		<md-button ng-click="onClick()">Go</md-button> -->
+		<!-- 		<h1>{{hello}}</h1> -->
+	</div>
 </div>

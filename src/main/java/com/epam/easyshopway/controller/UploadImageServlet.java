@@ -54,8 +54,13 @@ public class UploadImageServlet extends HttpServlet {
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
 
+				File deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
+				if (deleteFile.exists())
+					deleteFile.delete();
+				
 				System.out.println(absoluteDiskPath);
 				item.write(uploadedFile);
+
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
 				session.invalidate();
@@ -66,6 +71,11 @@ public class UploadImageServlet extends HttpServlet {
 			throw new ServletException(ex);
 		} catch (Exception ex) {
 			throw new ServletException(ex);
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
 		response.sendRedirect("/EasyShopWayNew/cabinet#/");
