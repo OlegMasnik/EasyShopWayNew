@@ -78,7 +78,7 @@ public class PlacementService {
 		}
 		return null;
 	}
-	public static List<Placement> getcPlacementByMaoId(Integer id) {
+	public static List<Placement> getcPlacementByMapId(Integer id) {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
 			return placementDAO.getcPlacementByMaoId(id);
 		} catch (SQLException e) {

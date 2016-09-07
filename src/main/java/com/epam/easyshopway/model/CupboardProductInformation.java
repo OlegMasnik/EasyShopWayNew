@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.epam.easyshopway.dao.transformer.annotation.Column;
 
-public class ProductInformation {
+public class CupboardProductInformation {
+
+	@Column("product_placement.cupboard_id")
+	private Integer cupboardId;
 
 	@Column("product.id")
 	private Integer id;
@@ -18,20 +21,30 @@ public class ProductInformation {
 	@Column("product_type.img")
 	private String image;
 
-	private List<Integer> coordinatesOnMap;
+	private List<Integer> coordinatesOnCupboard;
 
-	public ProductInformation() {
+	public CupboardProductInformation(Integer cupboardId, String productNameUk,
+			String productNameEn, String image) {
 		super();
-	}
-
-	public ProductInformation(String productNameUk, String productNameEn,
-			String image) {
-		super();
+		this.cupboardId = cupboardId;
 		this.productNameUk = productNameUk;
 		this.productNameEn = productNameEn;
 		this.image = image;
-		setCoordinates();
+		this.coordinatesOnCupboard = ProductCoordinate
+				.getProductCoordinatesOnCupboard(id, cupboardId);
+	}
 
+	public CupboardProductInformation() {
+		super();
+	}
+
+	public Integer getCupboardId() {
+		return cupboardId;
+	}
+
+	public void setCupboardId(Integer cupboardId) {
+		this.cupboardId = cupboardId;
+		setCoordinatesOnCupboard();
 	}
 
 	public Integer getId() {
@@ -40,7 +53,7 @@ public class ProductInformation {
 
 	public void setId(Integer id) {
 		this.id = id;
-		setCoordinates();
+		setCoordinatesOnCupboard();
 	}
 
 	public String getProductNameUk() {
@@ -67,14 +80,14 @@ public class ProductInformation {
 		this.image = image;
 	}
 
-	public List<Integer> getCoordinates() {
-		return coordinatesOnMap;
+	public List<Integer> getCoordinatesOnCupboard() {
+		return coordinatesOnCupboard;
 	}
 
-	public void setCoordinates() {
-		if (id != null) {
-			this.coordinatesOnMap = ProductCoordinate
-					.getProductCoordinatesOnMap(id);
+	public void setCoordinatesOnCupboard() {
+		if ((id != null) & (cupboardId != null)) {
+			this.coordinatesOnCupboard = ProductCoordinate
+					.getProductCoordinatesOnCupboard(id, cupboardId);
 		}
 	}
 

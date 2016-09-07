@@ -31,7 +31,18 @@ public class ProductPlacementService {
 
 	public static List<ProductPlacement> getByProductId(Integer id) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
-			return productDAO.getByName(id);
+			return productDAO.getByProductId(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static List<ProductPlacement> getByProductIdAndCupboardId(Integer productId, Integer cupboarId) {
+		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
+			return productDAO.getByProductIdAndCupboardId(productId, cupboarId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

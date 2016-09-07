@@ -1,12 +1,20 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.epam.easyshopway.model.FullProductList;
+import com.epam.easyshopway.model.ProductInformation;
+import com.epam.easyshopway.service.ProductInformationService;
 
 /**
  * Servlet implementation class SearchServlet
@@ -19,7 +27,6 @@ public class SearchServlet extends HttpServlet {
      */
     public SearchServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,17 +40,17 @@ public class SearchServlet extends HttpServlet {
 		if (uri.endsWith("search")) {
 			request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
 		} else {
+			
+			List<ProductInformation> products = ProductInformationService.getAllProductOnSupermarket();
+			
 			JSONObject object = new JSONObject();
-			object.put("firstName", "first");
-			object.put("lastName", "first");
-			object.put("language", "first");
-			object.put("email", "first");
+			object.put("products", setJsonArrayType(products));
+			
+			System.out.println(products.size());
 
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());
 		}
-		
-		
 	}
 
 	/**
@@ -54,4 +61,17 @@ public class SearchServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	private JSONArray setJsonArrayType(Collection<ProductInformation> list) {
+		JSONArray jsonArray = new JSONArray();
+		JSONObject object;
+		for (ProductInformation p : list) {
+			object = new JSONObject();
+			object.put("img", p.getImage());
+			object.put("name_uk", p.getProductNameUk());
+			object.put("name_en", p.getProductNameEn());
+			object.put("id", p.getId());
+			jsonArray.add(object);
+		}
+		return jsonArray;
+	}
 }

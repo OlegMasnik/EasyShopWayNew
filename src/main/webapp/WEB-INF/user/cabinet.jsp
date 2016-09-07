@@ -17,8 +17,9 @@
 
         <body ng-app="MyApp" layout="column">
             <jsp:include page="../parts/header.jsp"></jsp:include>
-            <md-content layout="row" class="main-page" flex>
-                <md-slidenav class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex md-whiteframe="4">
+            <md-content layout="row" flex>
+            <span style="width: 250px;"></span>
+            <md-slidenav class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex md-whiteframe="4">
                     <md-content layout="column" flex>
                         <a href="#/">
                             <div class="cab-user-logo" layot="row" layout-padding>
@@ -35,11 +36,15 @@
                         <md-button href="#history">History</md-button>
                     </md-content>
                 </md-slidenav>
+            <md-content layout="row" class="main-page" flex>
+                
+                
+                
 
                 <div flex class="content" layout="column">
-
                     <div ng-view onload="getFoodData()"></div>
                 </div>
+            </md-content>
             </md-content>
             <script src="js/jquery-3.1.0.min.js"></script>
             <script src='js/angular.min.js'></script>
