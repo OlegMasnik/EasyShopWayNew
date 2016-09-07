@@ -66,9 +66,21 @@ public class PlacementService {
 		return null;
 	}
 
-	public static List<Placement> getcCupboardPlacement(Integer id) {
+	public static List<Placement> getCupboardPlacement(Integer id) {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
 			return placementDAO.getcCupboardPlacement(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public static List<Placement> getcPlacementByMaoId(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getcPlacementByMaoId(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {

@@ -3,7 +3,7 @@
 .search-sidenav {
 	position: fixed;
 	top: 63px;
- 	height: calc(100% - 64px);
+	height: calc(100% - 64px);
 	width: 350px;
 }
 

@@ -203,6 +203,7 @@
 	<servlet-mapping>
 		<servlet-name>SearchServlet</servlet-name>
 		<url-pattern>/search</url-pattern>
+		<url-pattern>/searchProducts</url-pattern>
 	</servlet-mapping>
 
 	<filter>

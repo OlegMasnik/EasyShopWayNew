@@ -52,6 +52,18 @@ public class MapService {
 		}
 		return null;
 	}
+	public static Map getCurrentMap (){
+		try (MapDAO mapDAO = new MapDAO()){
+			return mapDAO.getCurrentMap();
+		}catch (SQLException e){
+			e.printStackTrace();
+		}catch (IllegalAccessException | InstantiationException e){
+			e.printStackTrace();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public static List<Map> getAll (){
 		try(MapDAO mapDAO = new MapDAO()){

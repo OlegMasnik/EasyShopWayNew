@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 /**
  * Servlet implementation class SearchServlet
  */
@@ -25,7 +27,23 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
+		
+		String uri = request.getRequestURI();
+		
+		if (uri.endsWith("search")) {
+			request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
+		} else {
+			JSONObject object = new JSONObject();
+			object.put("firstName", "first");
+			object.put("lastName", "first");
+			object.put("language", "first");
+			object.put("email", "first");
+
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(object.toString());
+		}
+		
+		
 	}
 
 	/**

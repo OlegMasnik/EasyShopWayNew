@@ -12,6 +12,7 @@ public class MapDAO extends AbstractDAO<Map> {
 	private final String INSERT_MAP = "INSERT INTO map (weight, height) VALUES (?, ?);";
 	private final String DELETE_MAP_BY_ID = "Delete * FROM map WHERE id = ?";
 	private final String SELECT_MAP_BY_ID = "SELECT * FROM map WHERE id = ?;";
+	private final String SELECT_CURRENT_MAP = "SELECT * FROM map GROUP BY id LIMIT 1 ";
 	private final String SELECT_ALL_MAPS = "SELECT * FROM map ";
 	private final String UPDATE_MAP_BY_ID = "UPDATE map SET weight = ?, height = ? WHERE id = ?";
 
@@ -79,5 +80,20 @@ public class MapDAO extends AbstractDAO<Map> {
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
+	}
+
+	public Map getCurrentMap() throws SQLException, InstantiationException,
+			IllegalAccessException {
+		PreparedStatement statement = connection
+				.prepareStatement(SELECT_CURRENT_MAP);
+		ResultSet resultSet = statement.executeQuery();
+		List<Map> maps = new Transformer<Map>(Map.class)
+				.fromRStoCollection(resultSet);
+		statement.close();
+		if (maps.size() > 0) {
+			return maps.iterator().next();
+		} else {
+			return null;
+		}
 	}
 }

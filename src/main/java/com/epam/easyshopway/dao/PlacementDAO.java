@@ -11,6 +11,7 @@ import com.epam.easyshopway.model.Placement;
 public class PlacementDAO extends AbstractDAO<Placement> {
 	private final String SELECT_ALL = "SELECT * FROM placement;";
 	private final String SELECT_BY_ID = "SELECT * FROM placement WHERE id = ?";
+	private final String SELECT_BY_MAP_ID = "SELECT * FROM placement WHERE map_id = ?";
 	private final String INSERT = "INSERT INTO placement (map_id, place, type) VALUES ( ?, ?,?);";
 	private final String UPDATE = "UPDATE placement SET map_id = ?, place = ?, type=? where id =? ";
 	private final String DELETE = "DELETE From placement where id = ?";
@@ -83,5 +84,17 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 			return placements.iterator().next();
 		else
 			return null;
+	}
+
+	public List<Placement> getcPlacementByMaoId(Integer id)
+			throws SQLException, InstantiationException, IllegalAccessException {
+		PreparedStatement statement = connection
+				.prepareStatement(SELECT_BY_MAP_ID);
+		statement.setInt(1, id);
+		ResultSet resultSet = statement.executeQuery();
+		List<Placement> placements = new Transformer<Placement>(Placement.class)
+				.fromRStoCollection(resultSet);
+		statement.close();
+		return placements;
 	}
 }

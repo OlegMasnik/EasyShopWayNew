@@ -15,7 +15,7 @@ public class ProductCoordinate {
 		if (!productPlacements.isEmpty()) {
 			for (ProductPlacement productPlacement : productPlacements) {
 				List<Placement> cupboardPlacements = PlacementService
-						.getcCupboardPlacement(productPlacement.getCupboardId());
+						.getCupboardPlacement(productPlacement.getCupboardId());
 				if (!cupboardPlacements.isEmpty()) {
 					Integer coordinateIndex = productPlacement.getPlace()
 							% cupboardPlacements.size();
