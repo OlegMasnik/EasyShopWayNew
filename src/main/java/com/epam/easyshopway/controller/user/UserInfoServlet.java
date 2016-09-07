@@ -33,6 +33,7 @@ public class UserInfoServlet extends HttpServlet {
 		if (user.getDateOfBirth() != null) {
 			object.put("birthday", user.getDateOfBirth().getTime());
 		}
+		object.put("img", user.getImage());
 
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(object.toString());

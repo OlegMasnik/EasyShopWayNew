@@ -3,7 +3,7 @@ package com.epam.easyshopway.connection;
 public class ConnectionManager {
 	private String url = "jdbc:mysql://localhost:3306/easy_shop_way?useUnicode=true&characterEncoding=UTF-8";
 	private String user = "root";
-	private String password = "";
+	private String password = "markmarkmark123";
 	private ConnectionPool connectionPool;
 
 	private static ConnectionManager instanse = new ConnectionManager();

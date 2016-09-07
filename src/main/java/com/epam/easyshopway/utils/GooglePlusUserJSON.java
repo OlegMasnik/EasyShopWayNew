@@ -20,7 +20,7 @@ public class GooglePlusUserJSON {
 	}
 
 	public GooglePlusUserJSON(String email, String family_name, String gende, String given_name, String id, String link,
-			String name, String verified_email) {
+			String name, String verified_email, String picture) {
 		super();
 		this.email = email;
 		this.family_name = family_name;
@@ -30,6 +30,7 @@ public class GooglePlusUserJSON {
 		this.link = link;
 		this.name = name;
 		this.verified_email = verified_email;
+		this.picture = picture;
 	}
 
 	public GooglePlusUserJSON() {
@@ -100,4 +101,11 @@ public class GooglePlusUserJSON {
 		this.verified_email = verified_email;
 	}
 
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 }
