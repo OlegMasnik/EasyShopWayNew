@@ -7,8 +7,10 @@ canvas {
 }
 </style>
 <div ng-controller="MapCtrl">
-	Width<input ng-model="width" type="number">
-	Height<input ng-model="height" type="number">
+	<md-input-container> <label>Width</label> <input
+		type="number" ng-model="width"> </md-input-container>
+	<md-input-container> <label>Heigth</label> <input
+		type="number" ng-model="height"> </md-input-container>
 	<md-button ng-click="createNewMap()">Create new map</md-button>
 	<div>
 		<canvas></canvas>
@@ -18,11 +20,15 @@ canvas {
 		<!--       <md-radio-button value="Banana"> Banana </md-radio-button> -->
 		<!--       <md-radio-button value="Mango">Mango</md-radio-button> -->
 
-		<md-radio-button value="payDesk" name="type" ng-click="radioOnClick()" class="md-primary">Pay
-		Desk</md-radio-button> <md-radio-button type="radio" ng-click="radioOnClick()" value="cupBoard" name="type"  class="md-primary">Cup
-		Board </md-radio-button> <md-radio-button value="enter" ng-click="radioOnClick()" name="type"  class="md-primary">Enter</md-radio-button>
-		<md-radio-button value="wall" name="type" ng-click="radioOnClick()" class="md-primary">Wall</md-radio-button> <md-radio-button
-			value="edit" name="type" ng-click="radioOnClick()" class="md-primary">Edit</md-radio-button> </md-radio-group>
+		<md-radio-button value="payDesk" name="type" ng-click="radioOnClick()"
+			class="md-primary">Pay Desk</md-radio-button> <md-radio-button
+			type="radio" ng-click="radioOnClick()" value="cupBoard" name="type"
+			class="md-primary">Cup Board </md-radio-button> <md-radio-button
+			value="enter" ng-click="radioOnClick()" name="type"
+			class="md-primary">Enter</md-radio-button> <md-radio-button
+			value="wall" name="type" ng-click="radioOnClick()" class="md-primary">Wall</md-radio-button>
+		<md-radio-button value="edit" name="type" ng-click="radioOnClick()"
+			class="md-primary">Edit</md-radio-button> </md-radio-group>
 		<md-button ng-click="onClick()">Go</md-button>
 
 		<!-- 		<md-radio-button value="payDesk" name="type" onclick="radioOnClick()">Pay -->

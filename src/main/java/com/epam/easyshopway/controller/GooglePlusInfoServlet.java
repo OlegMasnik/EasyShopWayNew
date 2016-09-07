@@ -71,10 +71,11 @@ public class GooglePlusInfoServlet extends HttpServlet {
 			String fName = "images/user/" + UserService.getByEmail(user.getEmail()).getId() + "." + type;
 			String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 			File uploadedFile = new File(absoluteDiskPath);
+			
 			FileUtils.copyURLToFile(new URL(googlePlusUser.getPicture()), uploadedFile);
 			System.out.println(UserService.updatePicture(UserService.getByEmail(user.getEmail()).getId(), fName));
 			
-			sess.setAttribute("user", user);
+			sess.setAttribute("user", UserService.getByEmail(user.getEmail()));
 		} else {
 			sess.setAttribute("user", invokedUser);
 		}
