@@ -38,6 +38,21 @@ public class ProductInformationService {
 		}
 	}
 
+	private static List<ProductInformation> getAllProductbyCupdoardId(Integer id) {
+		List<ProductInformation> productInformations = null;
+		try (ProductInformationDTO dto = new ProductInformationDTO()) {
+			productInformations = dto.getAllProductbyCupdoardId(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return productInformations;
+		}
+	}
+
 	// мій маленький костиль для знаходження всіх продуктів, що РОЗСТАВЛЕНІ вже
 	// в магазині
 	public static List<ProductInformation> getAllProductOnSupermarket() {
@@ -65,15 +80,4 @@ public class ProductInformationService {
 		return currentInformations;
 	}
 
-	/*public static void main(String[] args) {
-		List<ProductInformation> informations = getCurrentAllProductbyProductListId(6);
-		for (ProductInformation information : informations) {
-			information.setCoordinates();
-			System.out.println(information.getProductNameUk());
-			for (Integer integer : information.getCoordinates()) {
-				System.out.println(integer);
-			}
-
-		}
-	}*/
 }

@@ -17,6 +17,9 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 	private final String GET_PRODUCT_PLACEMENT_BY_INDEX = "SELECT * FROM product_placement WHERE id=?";
 	private final String GET_ALL_PRODUCT_PLACEMENTS = "SELECT * FROM product_placement WHERE active=1";
 	private final String GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID = "select product_placement.* from product_placement join product on product.id = product_placement.product_id where product.id like ? and product.active = 1";
+	private final String GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID_AND_CUPBOARD_ID = "select product_placement.* "
+			+ "from product_placement join product on product.id = product_placement.product_id "
+			+ "where product.id like ? and product_placement.cupboard_id = ? and product.active = 1";
 
 	public ProductPlacementDAO() {
 		super();
@@ -59,8 +62,8 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		}
 	}
 
-	public List<ProductPlacement> getByName(Integer id) throws SQLException,
-			InstantiationException, IllegalAccessException {
+	public List<ProductPlacement> getByProductId(Integer id)
+			throws SQLException, InstantiationException, IllegalAccessException {
 		transformer = new Transformer<>(ProductPlacement.class);
 		List<ProductPlacement> list = new ArrayList<>();
 		PreparedStatement statement = connection
@@ -99,5 +102,20 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
+	}
+
+	public List<ProductPlacement> getByProductIdAndCupboardId(Integer productId, Integer cupboardId)
+			throws SQLException, InstantiationException, IllegalAccessException {
+		transformer = new Transformer<>(ProductPlacement.class);
+		List<ProductPlacement> list = new ArrayList<>();
+		PreparedStatement statement = connection
+				.prepareStatement(GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID_AND_CUPBOARD_ID);
+		statement.setInt(1, productId);
+		statement.setInt(2, cupboardId);
+		ResultSet rs = statement.executeQuery();
+		list = transformer.fromRStoCollection(rs);
+		rs.close();
+		statement.close();
+		return list;
 	}
 }

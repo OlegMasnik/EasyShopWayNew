@@ -100,12 +100,4 @@ public class GooglePlusUserJSON {
 	public void setVerified_email(String verified_email) {
 		this.verified_email = verified_email;
 	}
-
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
 }

@@ -29,4 +29,17 @@ public class ProductCoordinate {
 		return coordinates;
 
 	}
+
+	public static List<Integer> getProductCoordinatesOnCupboard(int productId, int cupboarId) {
+		List<Integer> coordinates = new ArrayList<Integer>();
+		List<ProductPlacement> productPlacements = ProductPlacementService
+				.getByProductIdAndCupboardId(productId, cupboarId);
+		if (!productPlacements.isEmpty()) {
+			for (ProductPlacement productPlacement : productPlacements) {
+				coordinates.add(productPlacement.getPlace());
+			}
+		}
+		return coordinates;
+
+	}
 }
