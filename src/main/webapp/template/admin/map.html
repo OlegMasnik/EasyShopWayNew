@@ -1,41 +1,41 @@
 <!-- <script src="js/index.js"></script> -->
 <style>
-canvas {
-	margin: 20px;
-	display: block;
-	cursor: pointer;
-}
+    canvas {
+        margin: 20px;
+        display: block;
+        cursor: pointer;
+    }
 </style>
 <div ng-controller="MapCtrl">
-	<md-input-container> <label>Width</label> <input
-		type="number" ng-model="width"> </md-input-container>
-	<md-input-container> <label>Heigth</label> <input
-		type="number" ng-model="height"> </md-input-container>
-	<md-button ng-click="createNewMap()">Create new map</md-button>
-	<div>
-		<canvas></canvas>
-	</div>
-	<div>
-		<md-radio-group ng-model="typeValue"> <!--       <md-radio-button value="Apple">Apple</md-radio-button> -->
-		<!--       <md-radio-button value="Banana"> Banana </md-radio-button> -->
-		<!--       <md-radio-button value="Mango">Mango</md-radio-button> -->
+    <md-input-container>
+        <md-select ng-model="someModel" placeholder="Select a map">
+            <md-option ng-value="opt" ng-repeat="opt in neighborhoods2">{{ opt }}</md-option>
+            <md-option>Add new
+            </md-option>
+        </md-select>
+    </md-input-container>
 
-		<md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">Pay Desk</md-radio-button> 
-		<md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">Cup	Board </md-radio-button> 
-		<md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">Enter</md-radio-button> 
-		<md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">Wall</md-radio-button>
-		<md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">Edit</md-radio-button> 
-		</md-radio-group>
-		<md-button ng-click="onClick()">Go</md-button>
-
-		<!-- 		<md-radio-button value="payDesk" name="type" onclick="radioOnClick()">Pay -->
-		<!-- 		Desaasask</md-radio-button> -->
-		<!-- 		<md-radio-button type="radio" value="cupBoard" name="type" -->
-		<!-- 			onclick="radioOnClick()">Cup Board </md-radio-button> -->
-		<!-- 		<md-radio-button value="enter" name="type" onclick="radioOnClick()">Enter</md-radio-button> -->
-		<!-- 		<md-radio-button value="wall" name="type" onclick="radioOnClick()">Wall</md-radio-button> -->
-		<!-- 		<md-radio-button value="edit" name="type" onclick="radioOnClick()">Edit</md-radio-button> -->
-		<!-- 		<md-button ng-click="onClick()">Go</md-button> -->
-		<!-- 		<h1>{{hello}}</h1> -->
-	</div>
+    <form>
+        <md-input-container>
+            <label>Width</label>
+            <input type="number" ng-model="config.width" min=2 max=1000> </md-input-container>
+        <md-input-container>
+            <label>Heigth</label>
+            <input type="number" ng-model="config.height" min=2 max=1000> </md-input-container>
+        <md-button ng-click="createNewMap()">Create new map</md-button>
+    </form>
+    <md-radio-group name="type" layout="row">
+        <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">Pay Desk
+        </md-radio-button>
+        <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">Cup Board </md-radio-button>
+        <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">Enter</md-radio-button>
+        <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">Wall</md-radio-button>
+        <md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">Edit</md-radio-button>
+    </md-radio-group>
+    <md-button ng-click="onClick()">Go</md-button>
+    <div>
+        <canvas></canvas>
+    </div>
+    <md-button class="md-primary" ng-click="clearWay()">Clear</md-button>
+    <div></div>
 </div>
