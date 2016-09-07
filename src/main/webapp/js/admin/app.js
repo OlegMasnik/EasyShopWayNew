@@ -444,17 +444,9 @@ $scope.onClick = function() {
     if (!game.walls.map[tCell])game.player.moveTo();
 }
 
-$scope.radioOnClick = function() {
-//    var radios = document.getElementsByName('type');
-//    for (var i = 0, length = radios.length; i < length; i++) {
-//        if (radios[i].checked) {
-//            type = radios[i].value;
-//            break;
-//        }
-//    }
-	type = $scope.typeValue;
+$scope.radioOnClick = function(value) {
+	type = value;
     console.log(type);
-    console.log($scope.typeValue);
 }
 
 var game = new Game(document.querySelector('canvas'), config);

@@ -20,15 +20,12 @@ canvas {
 		<!--       <md-radio-button value="Banana"> Banana </md-radio-button> -->
 		<!--       <md-radio-button value="Mango">Mango</md-radio-button> -->
 
-		<md-radio-button value="payDesk" name="type" ng-click="radioOnClick()"
-			class="md-primary">Pay Desk</md-radio-button> <md-radio-button
-			type="radio" ng-click="radioOnClick()" value="cupBoard" name="type"
-			class="md-primary">Cup Board </md-radio-button> <md-radio-button
-			value="enter" ng-click="radioOnClick()" name="type"
-			class="md-primary">Enter</md-radio-button> <md-radio-button
-			value="wall" name="type" ng-click="radioOnClick()" class="md-primary">Wall</md-radio-button>
-		<md-radio-button value="edit" name="type" ng-click="radioOnClick()"
-			class="md-primary">Edit</md-radio-button> </md-radio-group>
+		<md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">Pay Desk</md-radio-button> 
+		<md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">Cup	Board </md-radio-button> 
+		<md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">Enter</md-radio-button> 
+		<md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">Wall</md-radio-button>
+		<md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">Edit</md-radio-button> 
+		</md-radio-group>
 		<md-button ng-click="onClick()">Go</md-button>
 
 		<!-- 		<md-radio-button value="payDesk" name="type" onclick="radioOnClick()">Pay -->
