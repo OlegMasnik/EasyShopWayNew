@@ -1,60 +1,69 @@
-// ************************************************* MapCtrl
-// *************************************************//
+// ************************************************* MapCtrl ************************************************* 
 
 angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
-	
-	$scope.map = undefined;
-	$scope.config = {
-	        width: 0,
-	        height: 0,
-	        cellSize: 20,
-	        borderWidth: 1,
-	        cellColor: '#eee',
-	        borderColor: '#bbb',
-	        wallColor: '#555',
-	        playerColor: '#252',
-	        targetColor: '#522',
-	        searchColor: '#ccc',
-	        pathColor: '#999'
-	};
-	
-    (function(){
-    	$http({
-    		method: "GET",
-    		url: "/EasyShopWayNew/edit_map?type=mapsName"
-    }).then(function mySucces(response) {
-        $scope.mapsName = response.data;
-        console.log("Get mapsName");
-        console.log($scope.mapsName);
-    }, function myError(response) {
-        console.log(response.statusText);
-    });
-    }
-    )();
+
+    $scope.map = undefined;
+    $scope.enter = undefined;
+    $scope.paydesks = [1, 5, 45, 25, 65];
+    $scope.walls = [2, 45, 10, 4, 8];
     
+    $scope.cupboards = undefined;
+
+    $scope.config = {
+        width: 0,
+        height: 0,
+        cellSize: 20,
+        borderWidth: 1,
+        cellColor: '#eee',
+        borderColor: '#bbb',
+        wallColor: '#555',
+        playerColor: '#252',
+        targetColor: '#522',
+        searchColor: '#ccc',
+        pathColor: '#999'
+    };
+
+    (function () {
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_map?type=mapsName"
+        }).then(function mySucces(response) {
+            $scope.mapsName = response.data;
+            console.log("Get mapsName");
+            console.log($scope.mapsName);
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
+    })();
+
     $scope.getMapByid = function (m) {
-//    	$scope.map = m;
-    	console.log("get map by id " + m.id);
-    	$http({
-    		method: "GET",
-    		url: "/EasyShopWayNew/edit_map?type=map&id=" + m.id
-    }).then(function mySucces(response) {
-        $scope.map = response.data;
-        console.log("Get map");
-        console.log($scope.map);
-        
-        $scope.config.width = $scope.map.weight;
-        $scope.config.height = $scope.map.height;
-        console.log("size = " + $scope.config.width + $scope.config.height);
-    }, function myError(response) {
-        console.log(response.statusText);
-    });
+        //    	$scope.map = m;
+        console.log("get map by id " + m.id);
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_map?type=map&id=" + m.id
+        }).then(function mySucces(response) {
+            $scope.map = response.data.map;
+            console.log($scope.map);
+            
+            $scope.config.enter = response.data.cells[0].place;
+//            $scope.walls = data.wall;
+//            $scope.paydesks = data.paydesk;
+//            $scope.cupboards = data.cupboard;
+            
+            $scope.config.width = $scope.map.weight;
+            $scope.config.height = $scope.map.height;
+            console.log("size = " + $scope.config.width + $scope.config.height);
+            console.log("size = " + $scope.config.enter);
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
     }
-    
+
     var game;
     var tCell;
     var arrayTarget = new Array();
-    var arrayPayDesk = new Array();
+//    var arrayPayDesk = new Array();
     var arrayCupBoard = new Array();
     var buffPath;
     var curTarget;
@@ -66,7 +75,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 
     var Game = function (canvas, conf) {
         game = this;
-        this.enter = $scope.config.width + 1;
+        this.enter = $scope.config.enter;
         this.canvas = canvas;
         this.width = conf.width;
         this.height = conf.height;
@@ -84,9 +93,9 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         this.canvas.width = this.width * this.cellSpace + this.borderWidth;
         this.canvas.height = this.height * this.cellSpace + this.borderWidth;
         this.player = new Player(this);
-        this.walls = new Map(this.width * this.height);
+//        this.walls = new Map(this.width * this.height);
         this.way = new Map(this.width * this.height);
-        this.payDesk = new Map(this.width * this.height);
+//        this.payDesk = new Map(this.width * this.height);
         this.cupBoard = new Map(this.width * this.height);
         this.targets = new Map(this.width * this.height);
 
@@ -109,8 +118,13 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
             case this.enter:
                 return '#252';
             }
-            if (this.payDesk.map[cell]) return '#ff870d';
-            if (this.walls.map[cell]) return '#555';
+//            if (this.payDesk.map) return '#ff870d';
+//            if (this.way.map[cell]) return waycolor;
+//            if (this.cupBoard.map[cell]) return '#038ef0';
+//            if (this.targets.map[cell]) return '#522';
+            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
+//            if (this.walls.map[cell]) return '#555';
+            if ($scope.walls.indexOf(cell) != -1) return '#555';
             if (this.way.map[cell]) return waycolor;
             if (this.cupBoard.map[cell]) return '#038ef0';
             if (this.targets.map[cell]) return '#522';
@@ -185,14 +199,15 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                         game.draw();
                         break;
                     case 'payDesk':
-                        game.paint.value = !game.payDesk.map[cell];
-                        game.payDesk.map[cell] = game.paint.value;
-                        if (game.payDesk.map[cell]) {
-                            arrayPayDesk.add(cell);
+                        game.paint.value = !($scope.paydesks.indexOf(cell) != -1);
+//                        game.payDesk.map[cell] = game.paint.value;
+                        if ($scope.paydesks.indexOf(cell) == -1) {
+//                            arrayPayDesk.add(cell);
+                        	$scope.paydesks.add(cell);
                         } else {
-                            arrayPayDesk.removeUndefined(cell);
+                        	$scope.paydesks.removeUndefined(cell);
                         }
-                        console.log("Каси " + arrayPayDesk);
+                        console.log("Каси " + $scope.paydesks);
                         game.draw();
                         break;
                     case 'cupBoard':
@@ -240,10 +255,14 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                         }
                         break;
                     case 'wall':
-                        if (!(game.cupBoard.map[cell]) && !(game.payDesk.map[cell]) && !(game.enter == cell)) {
-                            game.paint.value = !game.walls.map[cell];
-                            game.walls.map[cell] = game.paint.value;
-                        }
+                    	game.paint.value = !($scope.walls.indexOf(cell) != -1);
+//                      game.payDesk.map[cell] = game.paint.value;
+                      if ($scope.walls.indexOf(cell) == -1) {
+                      	$scope.walls.add(cell);
+                      } else {
+                      	$scope.walls.removeUndefined(cell);
+                      }
+                      console.log("Каси " + $scope.paydesks);
                         break;
                     case 'edit':
                         console.log("QWERT " + cell)
@@ -293,13 +312,19 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                             // game.cupBoard.map[cell] = game.paint.value;
                             // break;
                         case 'wall':
-                            if (!(game.cupBoard.map[cell]) && !(game.payDesk.map[cell]) && !(game.enter == cell))
-                                game.walls.map[cell] = game.paint.value;
+                            if (!(game.cupBoard.map[cell]) && !($scope.paydesks.indexOf(cell) != -1) && !(game.enter == cell))
+                            	if(game.paint.value)
+                            		$scope.walls.add(cell);
+                            	else 
+                            		$scope.walls.removeUndefined(cell);
                             break;
                         case 'payDesk':
                             console.log("in mouse move")
-                            game.payDesk.map[cell] = game.paint.value;
-                            arrayPayDesk.add(cell);
+                            if (!(game.cupBoard.map[cell]) && !($scope.walls.indexOf(cell) != -1) && !(game.enter == cell))
+                            	if(game.paint.value)
+                            		$scope.paydesks.add(cell);
+                            	else 
+                            		$scope.paydesks.removeUndefined(cell);
                             break;
                         default:
                             break;
@@ -332,8 +357,8 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         this.target = this.cell;
 
         this.findStart = function () {
-            for (var i = 0; i < arrayPayDesk.length; i++) {
-                this.cell = arrayPayDesk[i];
+            for (var i = 0; i < $scope.paydesks.length; i++) {
+                this.cell = $scope.paydesks[i];
                 for (var j = 0; j < arrayTarget.length; j++) {
                     this.target = arrayTarget[j];
                     this.path = new Path(game, this.cell, this.target, this.followPath);
@@ -397,17 +422,17 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
             this.map[cell] = false;
         }
     };
-
+    
     var Path = function (game, start, target, callback) {
         var path = this;
         this.cells = [];
-        this.pathCells = new Map(game.walls.map.length);
+        this.pathCells = new Map($scope.config.width * $scope.config.height);
         this.found = false;
-        this.closed = new Map(game.walls.map.length);
-        this.open = new Map(game.walls.map.length);
-        this.h = new Uint16Array(game.walls.map.length);
-        this.g = new Uint16Array(game.walls.map.length);
-        this.parents = new Uint16Array(game.walls.map.length);
+        this.closed = new Map($scope.config.width * $scope.config.height);
+        this.open = new Map($scope.config.width * $scope.config.height);
+        this.h = new Uint16Array($scope.config.width * $scope.config.height);
+        this.g = new Uint16Array($scope.config.width * $scope.config.height);
+        this.parents = new Uint16Array($scope.config.width * $scope.config.height);
         this.fmin = undefined;
         for (var i = 0; i < this.g.length; i++) {
             this.g[i]--;
@@ -433,15 +458,15 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                 distance = [14, 10, 14, 10, 10, 14, 10, 14],
                 row = Math.floor(pos / game.width);
             if (pos - game.width < 0) blocked[0] = blocked[1] = blocked[2] = true;
-            if (pos + game.width > game.walls.map.length) blocked[5] = blocked[6] = blocked[7] = true;
+            if (pos + game.width > $scope.walls.length) blocked[5] = blocked[6] = blocked[7] = true;
             if (Math.floor((pos - 1) / game.width) < row) blocked[0] = blocked[3] = blocked[5] = true;
             if (Math.floor((pos + 1) / game.width) > row) blocked[2] = blocked[4] = blocked[7] = true;
-            if (game.walls.map[pos - 1] && game.walls.map[pos - game.width]) blocked[0] = true;
-            if (game.walls.map[pos - 1] && game.walls.map[pos + game.width]) blocked[5] = true;
-            if (game.walls.map[pos + 1] && game.walls.map[pos - game.width]) blocked[2] = true;
-            if (game.walls.map[pos + 1] && game.walls.map[pos + game.width]) blocked[7] = true;
+            if (($scope.walls.indexOf(pos -1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[0] = true;
+            if (($scope.walls.indexOf(pos -1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[5] = true;
+            if (($scope.walls.indexOf(pos +1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[2] = true;
+            if (($scope.walls.indexOf(pos +1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[7] = true;
             for (var i = 0; i < adjacent.length; i++) {
-                if (path.closed.map[adjacent[i]] || game.walls.map[adjacent[i]] || game.cupBoard.map[adjacent[i]] || blocked[i]) continue;
+                if (path.closed.map[adjacent[i]] || ($scope.walls.indexOf(adjacent[i]) != -1) || game.cupBoard.map[adjacent[i]] || blocked[i]) continue;
                 path.open.map[adjacent[i]] = true;
                 var g = path.g[pos] + distance[i];
                 if (g < path.g[adjacent[i]]) {
@@ -484,7 +509,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         game.draw();
         game.player.cell = game.player.findStart();
         console.log("On click start " + game.player.cell);
-        if (!game.walls.map[tCell]) game.player.moveTo();
+        if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
     }
 
     $scope.radioOnClick = function (value) {
@@ -493,7 +518,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
     }
 
     $scope.openMap = function () {
-    	console.log("size " + $scope.config.width + $scope.config.height);
+        console.log("size " + $scope.config.width + $scope.config.height);
         game = new Game(document.querySelector('canvas'), $scope.config);
     }
 
@@ -533,7 +558,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         var arr = range(s, e, d);
         for (var k = 1; k < arr.length - 1; k++) {
             var i = arr[k];
-            if (game.walls.map[i] == true || game.payDesk.map[i] == true || game.cupBoard.map[i] == true || game.enter == i) {
+            if ($scope.walls.indexOf(i) != -1 || $scope.paydesks.indexOf(i) != -1 || game.cupBoard.map[i] == true || game.enter == i) {
                 return false;
             }
         }
@@ -552,7 +577,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 
 
     function checkCell(i) {
-        return game.walls.map[i] || game.cupBoard.map[i] || game.enter == i;
+        return $scope.paydesks.indexOf(i) != -1 || game.cupBoard.map[i] || game.enter == i;
     }
 
 
