@@ -4,6 +4,19 @@
 angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 	
 	$scope.map = undefined;
+	$scope.config = {
+	        width: 0,
+	        height: 0,
+	        cellSize: 20,
+	        borderWidth: 1,
+	        cellColor: '#eee',
+	        borderColor: '#bbb',
+	        wallColor: '#555',
+	        playerColor: '#252',
+	        targetColor: '#522',
+	        searchColor: '#ccc',
+	        pathColor: '#999'
+	};
 	
     (function(){
     	$http({
@@ -20,21 +33,24 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
     )();
     
     $scope.getMapByid = function (m) {
-    	map = map;
-    	console.log("get map by id " + map.id);
+//    	$scope.map = m;
+    	console.log("get map by id " + m.id);
     	$http({
     		method: "GET",
-    		url: "/EasyShopWayNew/edit_map?type=map&id=" + map.id
+    		url: "/EasyShopWayNew/edit_map?type=map&id=" + m.id
     }).then(function mySucces(response) {
         $scope.map = response.data;
         console.log("Get map");
         console.log($scope.map);
+        
+        $scope.config.width = $scope.map.weight;
+        $scope.config.height = $scope.map.height;
+        console.log("size = " + $scope.config.width + $scope.config.height);
     }, function myError(response) {
         console.log(response.statusText);
     });
     }
-
-
+    
     var game;
     var tCell;
     var arrayTarget = new Array();
@@ -47,20 +63,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
     var type;
     var waycolor = '#d80000';
     $scope.typeValue = undefined;
-
-    $scope.config = {
-        width: 50,
-        height: 25,
-        cellSize: 20,
-        borderWidth: 1,
-        cellColor: '#eee',
-        borderColor: '#bbb',
-        wallColor: '#555',
-        playerColor: '#252',
-        targetColor: '#522',
-        searchColor: '#ccc',
-        pathColor: '#999'
-    }
 
     var Game = function (canvas, conf) {
         game = this;
@@ -490,7 +492,8 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         console.log(type);
     }
 
-    $scope.createNewMap = function () {
+    $scope.openMap = function () {
+    	console.log("size " + $scope.config.width + $scope.config.height);
         game = new Game(document.querySelector('canvas'), $scope.config);
     }
 

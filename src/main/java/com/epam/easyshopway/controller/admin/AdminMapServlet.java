@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.epam.easyshopway.model.Map;
 import com.epam.easyshopway.service.MapService;
@@ -49,15 +48,15 @@ public class AdminMapServlet extends HttpServlet {
 		case "map":
 			Integer mapId = Integer.valueOf(request.getParameter("id"));
 			Map map = MapService.getById(mapId);
+			JSONObject m = new JSONObject();
 			if (map != null){
-				JSONObject m = new JSONObject();
 				m.put("id", map.getId());
 				m.put("weight", map.getWeight());
 				m.put("height", map.getHeight());
 				m.put("nameEn", map.getNameEn());
 				m.put("nameUk", map.getNameUk());
-				response.getWriter().write(m.toString());
 			}
+			response.getWriter().write(m.toString());
 			break;
 		}
 		
