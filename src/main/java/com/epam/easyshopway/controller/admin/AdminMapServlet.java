@@ -51,8 +51,12 @@ public class AdminMapServlet extends HttpServlet {
 			Map map = MapService.getById(mapId);
 			if (map != null){
 				JSONObject m = new JSONObject();
-				m.put("map", map);
-				response.getWriter().write(map.toString());
+				m.put("id", map.getId());
+				m.put("weight", map.getWeight());
+				m.put("height", map.getHeight());
+				m.put("nameEn", map.getNameEn());
+				m.put("nameUk", map.getNameUk());
+				response.getWriter().write(m.toString());
 			}
 			break;
 		}
