@@ -72,20 +72,32 @@
                 </form>
             </md-card>
 
-            <md-card flex>
+            <md-card flex ng-controller="changePassCtrl">
                 <md-card-title>
                     <md-card-title-text>
                         <div class="cab-category">Change password</div>
                     </md-card-title-text>
 
                     <div style="heigth: 400px;"></div>
-
-
                 </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Save</md-button>
-                    <md-button>Cancel</md-button>
-                </md-card-actions>
+                
+                 <md-card-content  >
+                 	<form id="changePassForm" ng-model="changePassForm" name="changePassForm" action="">
+	                    <md-input-container class="md-block" flex-gt-sm="" >
+	                        <label> Old password </label>
+	                        <input id="oldPass" required type="password"  name="oldPass" ng-model="user.oldPass"  minlength="6" maxlength="25" ng-model="oldPass">
+	                    </md-input-container>
+	                    <md-input-container class="md-block" flex-gt-sm="">
+	                        <label> New password </label>
+	                        <input id="newPass" required type="password"  name="newPass" ng-model="user.newPass"  minlength="6" maxlength="25" ng-model="newPass">
+	                    </md-input-container>
+                    	<span style="color : red" ng-bind="message"></span>
+	                     <md-card-actions layout="row" layout-align="end center">
+		                    <md-button ng-click="changePass()" >Save</md-button>
+		                    <md-button ng-click="cancel()">Cancel</md-button>
+	                	</md-card-actions>
+                    </form>
+                </md-card-content>
             </md-card>
         </div>
     </div>

@@ -64,8 +64,10 @@ public class UserStatisticServlet extends HttpServlet {
 		JSONObject inSeries = new JSONObject();
 		JSONArray data = new JSONArray();
 		inSeries.put("colorByPoint", true);
-		responseObject.put("title", new JSONObject().put("text", isEnglish ? "Often searched groups of food:" : "Групи продуктів, які часто шукають::"));
-		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках:");
+		JSONObject title = new JSONObject();
+		title.put("text", isEnglish ? "Often searched groups of food" : "Групи продуктів, які часто шукають");
+		responseObject.put("title", title);
+		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках");
 		for (int i=0; i<productsType.size(); i++){
 			JSONObject foodType = new JSONObject();
 			String productTypeName = isEnglish ? productsType.get(i).getNameEnglish() : productsType.get(i).getNameEnglish() ;

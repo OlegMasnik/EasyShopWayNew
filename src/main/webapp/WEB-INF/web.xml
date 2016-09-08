@@ -104,6 +104,27 @@
 	<servlet>
 		<description>
 		</description>
+		<display-name>ChangePasswordServlet</display-name>
+		<servlet-name>ChangePasswordServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.ChangePasswordServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>UserHistoryServlet</display-name>
+		<servlet-name>UserHistoryServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.user.UserHistoryServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>SearchServlet</display-name>
+		<servlet-name>SearchServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.SearchServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
 		<display-name>AdminMapServlet</display-name>
 		<servlet-name>AdminMapServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.admin.AdminMapServlet</servlet-class>
@@ -163,7 +184,7 @@
 
 	<servlet-mapping>
 		<servlet-name>UserStatisticServlet</servlet-name>
-		<url-pattern>/userStat</url-pattern>
+		<url-pattern>/stat</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>VKInfoServlet</servlet-name>
@@ -188,6 +209,19 @@
 	<servlet-mapping>
 		<servlet-name>SendMailControlServlet</servlet-name>
 		<url-pattern>/sendmail</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserHistoryServlet</servlet-name>
+		<url-pattern>/history</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SearchServlet</servlet-name>
+		<url-pattern>/search</url-pattern>
+		<url-pattern>/searchProducts</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ChangePasswordServlet</servlet-name>
+		<url-pattern>/pass</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AdminMapServlet</servlet-name>

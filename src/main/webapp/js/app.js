@@ -1,71 +1,6 @@
 var dateBirthday;
 var app = angular.module('MyApp', ['ngMaterial', 'ngRoute']);
 
-app.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
-	
-	$scope.date = new Date();
-	
-	$scope.startDate = new Date(
-		      $scope.date.getFullYear(),
-		      $scope.date.getMonth() - 1,
-		      $scope.date.getDate());
-	$scope.endDate = new Date();
-	  
-	//alert($scope.startDate);
-	$scope.getFoodData = function () {
-		var responsik = undefined;
-		
-		
-		
-		var startDate = moment($scope.startDate).format('YYYY-MM-DD');
-		var endDate = moment($scope.endDate).format('YYYY-MM-DD');
-		 var data = $.param({
-	            startDate: startDate,
-	            endDate: endDate  
-	     });
-		 
-		 var config = {
-		            headers: {
-		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-		            }
-		        }
-		 
-		 $http.post('/EasyShopWayNew/userStat', data, config)
-		 		.success(function (data, status, headers, config) {
-		 			   response = data;
-		        	   console.log(response);
-		        	   $('#container').highcharts({
-		        		      chart: {
-		        		          plotBackgroundColor: null,
-		        		          plotBorderWidth: null,
-		        		          plotShadow: false,
-		        		          type: 'pie'
-		        		      },
-		        		      title: response.title,
-		        		      tooltip: {
-		        		          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-		        		      },
-		        		      plotOptions: {
-		        		          pie: {
-		        		              allowPointSelect: true,
-		        		              cursor: 'pointer',
-		        		              dataLabels: {
-		        		                  enabled: false
-		        		                  
-		        		              },
-		        		              showInLegend: true
-		        		          }
-		        		      },
-		        		      series: response.series
-		        	      });
-	
-	         }).error(
-	             function (data, status, header, config) {
-	                 console.log('fail');
-	             });
-    };
-}]);
-
 app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     $scope.status = '  ';
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
@@ -152,7 +87,7 @@ app
                                     console.log('fail');
                                 });
                     } else {
-                        cosole.log("sory");
+                        console.log("sory");
                     }
                 };
 						}]);
@@ -190,7 +125,7 @@ app
 
                         $http
                             .post(
-                                'http://localhost:8080/EasyShopWayNew/reg',
+                                '/EasyShopWayNew/reg',
                                 data, config)
                             .success(
                                 function (data, status,
@@ -241,7 +176,6 @@ app
 						'$http',
 						function ($scope, $http) {
                 $scope.showInfo = function () {
-
 
                     dateBirthday = moment($scope.birthday).format('YYYY-MM-DD');
 
@@ -334,6 +268,47 @@ app
 
                 }
 						}]);
+
+app.controller('changePassCtrl',  ['$scope', '$http', function ($scope, $http) {
+	$scope.changePass = function(){
+
+		if ($('#newPass').valid() && $('#oldPass').valid()){
+			 var data = $.param({
+	             oldPass: $scope.user.oldPass,
+	             newPass: $scope.user.newPass
+	         });
+			 
+			 var config = {
+			            headers: {
+			                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+			            }
+			        }
+
+			 
+			 $http.post('/EasyShopWayNew/pass', data, config)
+		 		.success(function (data, status, headers, config) {
+		 			$scope.message = data.msg;
+		 		}).error(
+	          function (data, status, header, config) {
+	        	  $scope.message = 'Changing failed';
+	          });
+		}	
+	}
+	
+	$scope.cancel = function() {
+	    $scope.user = {};
+	    
+	    var defaultForm = {
+		    	   oldPass: "",
+		    	   newPass: ""
+		    	}
+	    $scope.changePassForm.$setPristine();
+		$scope.user = angular.copy(defaultForm);
+	    $scope.changePassForm.oldPass.$touched = false;
+	    $scope.changePassForm.newPass.$touched = false;
+	    $scope.message = undefined;
+	  };
+}]);
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function () {

@@ -7,7 +7,7 @@ import com.epam.easyshopway.dao.ProductsAndListDAO;
 import com.epam.easyshopway.model.ProductsAndList;
 
 public class ProductsAndListService {
-	public int insert(ProductsAndList productList) {
+	public static int insert(ProductsAndList productList) {
 		try (ProductsAndListDAO productsAndLisDAO = new ProductsAndListDAO()) {
 			return productsAndLisDAO.insert(productList);
 		} catch (SQLException e) {
@@ -18,7 +18,7 @@ public class ProductsAndListService {
 		return 0;
 	}
 
-	public int delete(Integer index) {
+	public static int delete(Integer index) {
 		try (ProductsAndListDAO productsAndLisDAO = new ProductsAndListDAO()) {
 			return productsAndLisDAO.delete(index);
 		} catch (SQLException e) {
@@ -29,7 +29,7 @@ public class ProductsAndListService {
 		return 0;
 	}
 
-	public ProductsAndList getById(Integer index) {
+	public static ProductsAndList getById(Integer index) {
 		try (ProductsAndListDAO productsAndLisDAO = new ProductsAndListDAO()) {
 			return productsAndLisDAO.getById(index);
 		} catch (SQLException e) {
@@ -40,7 +40,7 @@ public class ProductsAndListService {
 		return null;
 	}
 
-	public List<ProductsAndList> getAll() {
+	public static List<ProductsAndList> getAll() {
 		try (ProductsAndListDAO productsAndLisDAO = new ProductsAndListDAO()) {
 			return productsAndLisDAO.getAll();
 		} catch (SQLException e) {
@@ -51,7 +51,7 @@ public class ProductsAndListService {
 		return null;
 	}
 
-	public int update(Integer index, ProductsAndList productList) {
+	public static int update(Integer index, ProductsAndList productList) {
 		try (ProductsAndListDAO productsAndLisDAO = new ProductsAndListDAO()) {
 			return productsAndLisDAO.update(index, productList);
 		} catch (SQLException e) {

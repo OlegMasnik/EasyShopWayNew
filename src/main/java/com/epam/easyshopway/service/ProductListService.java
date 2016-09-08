@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.epam.easyshopway.dao.ProductListDAO;
 import com.epam.easyshopway.model.ProductList;
+import com.epam.easyshopway.model.ProductsAndList;
 
 public class ProductListService {
 	public int insert(ProductList productList) {
@@ -16,6 +17,25 @@ public class ProductListService {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public int insertAndGetId(ProductList productList) {
+		try (ProductListDAO productDAO = new ProductListDAO()) {
+			return productDAO.insertAndGetId(productList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public void insertListAndProduct(ProductList productList, List<Integer> productIds) {
+		Integer id = insertAndGetId(productList);
+		ProductsAndList productsAndList;
+		for(Integer idproduct: productIds){
+			productsAndList = new ProductsAndList(id, idproduct);
+			ProductsAndListService.insert(productsAndList);
+		}
 	}
 
 	public int delete(Integer index) {

@@ -6,19 +6,19 @@
 
         <head>
             <title>
-                <c:out value="${user.firstName }"></c:out>
+                EasyShopWay
             </title>
             
             
+            <link rel="stylesheet" href="css/angular-material.min.css">
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
-            <link rel="stylesheet" href="css/angular-material.min.css">
         </head>
 
         <body ng-app="MyApp" layout="column">
             <jsp:include page="../parts/header.jsp"></jsp:include>
             <md-content layout="row" class="main-page" flex>
-                <md-slidenav md-is-locked-open="true" layout="column" flex md-whiteframe="4">
+                <md-slidenav class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex md-whiteframe="4">
                     <md-content layout="column" flex>
                         <a href="#/">
                             <div class="cab-user-logo" layot="row" layout-padding>
@@ -26,8 +26,8 @@
                                 <img src="${user.image }" alt="" class="profile-img">
 
                                 <div>
-                                    <c:out value="${user.firstName }"></c:out>
-                                    <c:out value="${user.lastName }"></c:out>
+                                    <c:out value="${ user.firstName}"></c:out> 
+                                    <c:out value="${ user.lastName}"></c:out>
                                 </div>
                             </div>
                         </a>
@@ -53,7 +53,8 @@
             <script src='js/user/app.js'></script>
             <script src='js/user/user-history.js'></script>
             <script src="js/shared/statistic.js"></script>
-            
+            <script src="js/shared/cabinet.js"></script>
+            <script src="js/jquery.validate.min.js"></script>
         </body>
 
         </html>

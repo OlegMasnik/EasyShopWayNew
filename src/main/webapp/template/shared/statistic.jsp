@@ -4,19 +4,11 @@
     <!--     <h3 class="cab-title">Statistic</h3> -->
 
 
-<md-toolbar class="md-hue-2" md-whiteframe="4">
+<md-toolbar class="md-hue-2" md-whiteframe="4" >
             <div class="md-toolbar-tools">
-
-                <h2>
-          <span>Statistic</span>
-        </h2>
-
-
+               <h2><span>Statistic</span></h2>
             </div>
         </md-toolbar>
-
-
-
     <md-card ng-controller="ChartCtrl">
         
         <md-card-content layout="row">

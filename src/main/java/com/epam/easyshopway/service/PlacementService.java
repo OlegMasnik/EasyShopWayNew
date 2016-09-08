@@ -6,7 +6,7 @@ import java.util.List;
 import com.epam.easyshopway.dao.PlacementDAO;
 import com.epam.easyshopway.model.Placement;
 
-public class PlacementServise {
+public class PlacementService {
 	public static int update(Integer placementId, Placement placement) {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
 			return placementDAO.update(placementId, placement);
@@ -56,6 +56,31 @@ public class PlacementServise {
 	public static List<Placement> getAll() {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
 			return placementDAO.getAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static List<Placement> getCupboardPlacement(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getcCupboardPlacement(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public static List<Placement> getcPlacementByMapId(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getcPlacementByMaoId(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {
