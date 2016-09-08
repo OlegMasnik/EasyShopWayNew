@@ -9,12 +9,12 @@ import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.Map;
 
 public class MapDAO extends AbstractDAO<Map> {
-	private final String INSERT_MAP = "INSERT INTO map (weight, height) VALUES (?, ?);";
+	private final String INSERT_MAP = "INSERT INTO map (weight, height, name_en, name_uk) VALUES (?, ?, ?, ?);";
 	private final String DELETE_MAP_BY_ID = "Delete * FROM map WHERE id = ?";
 	private final String SELECT_MAP_BY_ID = "SELECT * FROM map WHERE id = ?;";
 	private final String SELECT_CURRENT_MAP = "SELECT * FROM map GROUP BY id LIMIT 1 ";
 	private final String SELECT_ALL_MAPS = "SELECT * FROM map ";
-	private final String UPDATE_MAP_BY_ID = "UPDATE map SET weight = ?, height = ? WHERE id = ?";
+	private final String UPDATE_MAP_BY_ID = "UPDATE map SET weight = ?, height = ?, name_en=?, name_uk=? WHERE id = ?";
 
 	public MapDAO() {
 		super();
@@ -25,6 +25,8 @@ public class MapDAO extends AbstractDAO<Map> {
 		PreparedStatement statement = connection.prepareStatement(INSERT_MAP);
 		statement.setInt(1, map.getWeight());
 		statement.setInt(2, map.getHeight());
+		statement.setString(3, map.getNameEn());
+		statement.setString(4, map.getNameUk());
 		int result = statement.executeUpdate();
 		return result;
 	}
@@ -76,7 +78,9 @@ public class MapDAO extends AbstractDAO<Map> {
 				.prepareStatement(UPDATE_MAP_BY_ID);
 		statement.setInt(1, map.getWeight());
 		statement.setInt(2, map.getHeight());
-		statement.setInt(3, mapId);
+		statement.setString(3, map.getNameEn());
+		statement.setString(4, map.getNameUk());
+		statement.setInt(5, mapId);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
