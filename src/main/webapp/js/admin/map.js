@@ -4,8 +4,10 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 
     $scope.map = undefined;
     $scope.enter = undefined;
-    $scope.paydesks = [1, 5, 45, 25, 65];
-    $scope.walls = [2, 45, 10, 4, 8];
+//    $scope.paydesks = [1, 5, 45, 25, 65];
+//    $scope.walls = [2, 45, 10, 4, 8];
+    $scope.paydesks = undefined;
+    $scope.walls = undefined;
     
     $scope.cupboards = undefined;
 
@@ -47,10 +49,12 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
             console.log($scope.map);
             console.log(response.data);
             
-//            $scope.config.enter = response.data.cells[0].place;
-//            $scope.walls = data.wall;
-//            $scope.paydesks = data.paydesk;
+            $scope.config.enter = response.data.enters[0];
+            $scope.walls = response.data.walls;
+            $scope.paydesks = response.data.paydesks;
 //            $scope.cupboards = data.cupboard;
+            
+            console.log($scope.paydesks)
             
             $scope.config.width = $scope.map.weight;
             $scope.config.height = $scope.map.height;
@@ -123,8 +127,8 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 //            if (this.way.map[cell]) return waycolor;
 //            if (this.cupBoard.map[cell]) return '#038ef0';
 //            if (this.targets.map[cell]) return '#522';
-            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
 //            if (this.walls.map[cell]) return '#555';
+            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
             if (this.way.map[cell]) return waycolor;
             if (this.cupBoard.map[cell]) return '#038ef0';
@@ -201,9 +205,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                         break;
                     case 'payDesk':
                         game.paint.value = !($scope.paydesks.indexOf(cell) != -1);
-//                        game.payDesk.map[cell] = game.paint.value;
                         if ($scope.paydesks.indexOf(cell) == -1) {
-//                            arrayPayDesk.add(cell);
                         	$scope.paydesks.add(cell);
                         } else {
                         	$scope.paydesks.removeUndefined(cell);
@@ -216,10 +218,8 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                         game.paint.value = true;
                         if (startCupBoard == undefined) {
                             startCupBoard = cell;
-                            // game.cupBoard.map[cell] = game.paint.value;
                         } else {
                             endCupBoard = cell;
-                            // game.cupBoard.map[cell] = game.paint.value;
                             if (Math.abs(startCupBoard - endCupBoard) < $scope.config.width - 1) {
                                 console.log("in horizont: start=" + startCupBoard + " end=" + endCupBoard);
                                 if (checkRange(startCupBoard, endCupBoard, 1)) {
@@ -257,7 +257,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                         break;
                     case 'wall':
                     	game.paint.value = !($scope.walls.indexOf(cell) != -1);
-//                      game.payDesk.map[cell] = game.paint.value;
                       if ($scope.walls.indexOf(cell) == -1) {
                       	$scope.walls.add(cell);
                       } else {
@@ -308,10 +307,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                 if (cell !== false) {
                     if (e.button === 0) {
                         switch (type) {
-                            // case 'cupBoard':
-                            // console.log("in mouse move")
-                            // game.cupBoard.map[cell] = game.paint.value;
-                            // break;
                         case 'wall':
                             if (!(game.cupBoard.map[cell]) && !($scope.paydesks.indexOf(cell) != -1) && !(game.enter == cell))
                             	if(game.paint.value)
@@ -358,16 +353,14 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         this.target = this.cell;
 
         this.findStart = function () {
-        	var a = true;
-            for (var i = 0; i < $scope.paydesks.length; i++) {
+        	for (var i = 0; i < $scope.paydesks.length; i++) {
                 this.cell = $scope.paydesks[i];
                 for (var j = 0; j < arrayTarget.length; j++) {
                     this.target = arrayTarget[j];
                     this.path = new Path(game, this.cell, this.target, this.followPath);
-                    if (a || (buffPath.fmin > this.path.fmin)) {
+                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
                         buffPath = this.path;
                         curTarget = this.cell;
-                        a = false;
                     }
                 }
             }
@@ -382,21 +375,18 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
             };
         }
         this.moveTo = function () {
-        	var a = true;
             if (arrayTarget.length > 0) {
                 for (var f = 0; f < arrayTarget.length; f++) {
                     this.target = arrayTarget[f];
                     this.path = new Path(game, this.cell, this.target, this.followPath);
-                    if (a || (buffPath.fmin > this.path.fmin)) {
+                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
                         buffPath = this.path;
                         curTarget = this.target;
-                        a = false;
                     }
                 }
                 buffPath.tracePath();
                 arrayTarget.removeUndefined(curTarget);
-                a = true;
-//                buffPath = undefined;
+                buffPath = undefined;
                 this.cell = curTarget;
                 console.log("Targets: " + arrayTarget);
                 this.moveTo();
@@ -466,7 +456,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                 distance = [14, 10, 14, 10, 10, 14, 10, 14],
                 row = Math.floor(pos / game.width);
             if (pos - game.width < 0) blocked[0] = blocked[1] = blocked[2] = true;
-            if (pos + game.width > $scope.walls.length) blocked[5] = blocked[6] = blocked[7] = true;
+            if (pos + game.width > this.closed.map.length) blocked[5] = blocked[6] = blocked[7] = true;
             if (Math.floor((pos - 1) / game.width) < row) blocked[0] = blocked[3] = blocked[5] = true;
             if (Math.floor((pos + 1) / game.width) > row) blocked[2] = blocked[4] = blocked[7] = true;
             if (($scope.walls.indexOf(pos -1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[0] = true;
