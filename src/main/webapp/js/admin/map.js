@@ -45,8 +45,9 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         }).then(function mySucces(response) {
             $scope.map = response.data.map;
             console.log($scope.map);
+            console.log(response.data);
             
-            $scope.config.enter = response.data.cells[0].place;
+//            $scope.config.enter = response.data.cells[0].place;
 //            $scope.walls = data.wall;
 //            $scope.paydesks = data.paydesk;
 //            $scope.cupboards = data.cupboard;
@@ -357,14 +358,16 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         this.target = this.cell;
 
         this.findStart = function () {
+        	var a = true;
             for (var i = 0; i < $scope.paydesks.length; i++) {
                 this.cell = $scope.paydesks[i];
                 for (var j = 0; j < arrayTarget.length; j++) {
                     this.target = arrayTarget[j];
                     this.path = new Path(game, this.cell, this.target, this.followPath);
-                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+                    if (a || (buffPath.fmin > this.path.fmin)) {
                         buffPath = this.path;
                         curTarget = this.cell;
+                        a = false;
                     }
                 }
             }
@@ -379,18 +382,21 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
             };
         }
         this.moveTo = function () {
+        	var a = true;
             if (arrayTarget.length > 0) {
                 for (var f = 0; f < arrayTarget.length; f++) {
                     this.target = arrayTarget[f];
                     this.path = new Path(game, this.cell, this.target, this.followPath);
-                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+                    if (a || (buffPath.fmin > this.path.fmin)) {
                         buffPath = this.path;
                         curTarget = this.target;
+                        a = false;
                     }
                 }
                 buffPath.tracePath();
                 arrayTarget.removeUndefined(curTarget);
-                buffPath = undefined;
+                a = true;
+//                buffPath = undefined;
                 this.cell = curTarget;
                 console.log("Targets: " + arrayTarget);
                 this.moveTo();
@@ -408,11 +414,13 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                 curTarget = undefined;
                 this.target = undefined;
             }
+            if(typeof(buffPath) != 'undefined'){
             buffPath.tracePath();
             arrayTarget.removeUndefined(curTarget);
             buffPath = undefined;
             this.cell = curTarget;
             this.moveTo();
+            }
         }
     }
 
