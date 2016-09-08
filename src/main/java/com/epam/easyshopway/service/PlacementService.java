@@ -80,7 +80,7 @@ public class PlacementService {
 	}
 	public static List<Placement> getcPlacementByMapId(Integer id) {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
-			return placementDAO.getcPlacementByMaoId(id);
+			return placementDAO.getcPlacementByMapId(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {
