@@ -10,7 +10,7 @@
     <md-input-container>
         <md-select ng-model="someModel" placeholder="Select a map">
             <md-option ng-model="map" value="m"  ng-click="getMapByid(m)" ng-repeat="m in mapsName">{{ m.id }} {{m.nameEn}}</md-option>
-            <md-option>Add new</md-option>
+            <md-option ng-click="createMap()">Add new</md-option>
         </md-select>
     </md-input-container>
 
@@ -30,8 +30,12 @@
         <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">Enter</md-radio-button>
         <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">Wall</md-radio-button>
         <md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">Edit</md-radio-button>
-    </md-radio-group>
     <md-button ng-click="onClick()">Go</md-button>
+    </md-radio-group>
+	<md-input-container layout="row">
+		<md-button ng-click="saveMap(map)">Save</md-button>
+		<md-button ng-click="deleteMap(map)">Delete</md-button>
+	</md-input-container>
     <div>
         <canvas></canvas>
     </div>

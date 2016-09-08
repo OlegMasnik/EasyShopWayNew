@@ -1,0 +1,39 @@
+<md-dialog>
+<form ng-cloak>
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+		<h2>Create new map</h2>
+		<span flex></span>
+		<md-button class="md-icon-button" ng-click="cancel(values)">
+		x </md-button>
+	</div>
+	</md-toolbar>
+
+	<md-dialog-content>
+	<div class="md-dialog-content">
+		<form>
+			<div lanyout="row">
+				<md-input-container> <label>Please
+					enter map name (in english):</label> <input name="name_en" type="text"
+					ng-model="newMap.name_en" required></md-input-container>
+				<md-input-container> <label>Please
+					enter map name (in ukraine):</label>
+				<input name="name_uk" type="text" ng-model="newMap.name_uk" required>
+				</md-input-container>
+			</div>
+			<div lanyout="row">
+				<md-input-container>
+				<label>Please enter map width:</label> <input name="width"
+					type="number" ng-model="newMap.width" required></md-input-container>
+				<md-input-container>
+				<label>Please map height:</label> <input name="height" type="number"
+					ng-model="newMap.height" required></md-input-container>
+			</div>
+			</md-input-container>
+
+			<md-dialog-actions layout="row"> <span flex></span>
+			<md-button ng-click="cancel()"> Cancel </md-button> <md-button
+				type="submit" > Save </md-button></md-dialog-actions>
+		</form>
+</form>
+</md-dialog>

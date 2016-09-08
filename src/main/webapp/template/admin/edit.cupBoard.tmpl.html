@@ -2,7 +2,7 @@
 <form ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Edit Product</h2>
+		<h2>Edit cupboard {{item.id}}</h2>
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
 	</div>
@@ -10,20 +10,22 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
-	<h1>EDIT CUPBOARD {{item.id}}</h1>
-	<p ng-model="i" ng-repeat="i in item.values">{{i}}</p>
-	<p>hello world</p>
-<!-- 		<md-input-container> <label>English name</label> -->
-<!-- 		<input name="name_en" type="text" required ng-model="item.nen"></md-input-container> -->
-
-<!-- 		<md-input-container> <label>Ukraine name</label> -->
-<!-- 		<input name="name_uk" type="text" required ng-model="item.nuk"></md-input-container> -->
-<!-- 		<br> -->
-<!-- 		<md-select ng-model="selectedType"> <md-option -->
-<!-- 			ng-value="type" ng-repeat="type in types">{{ type.nen }} - {{type.nuk}}</md-option> -->
-<!-- 		</md-select> -->
-
-<!-- 		<md-dialog-actions layout="row"> <span flex></span><md-button -->
-<!-- 			ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions> -->
+		<p ng-model="i" ng-repeat="i in item.values">{{i}}</p>
+		<p>hello world</p>
+		<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
+</canvas>
+		<md-dialog-actions layout="row"> <span flex></span>
+		<md-button ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions>
 </form>
 </md-dialog>
+<script>
+	var borderWidth = 1;
+	var cellSize = 10;
+	var cellSpace = cellSize + borderWidth;
+	var width = 5;
+	var height = 5;
+	var canvas = document.querySelector('#fillCupboard');
+	var ctx1 = canvas.canvas.getContext('2d');
+	canvas.width = width * cellSpace + borderWidth;
+	canvas.height = height * cellSpace + borderWidth;
+</script>

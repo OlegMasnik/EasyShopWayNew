@@ -4,10 +4,12 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 
     $scope.map = undefined;
     $scope.enter = undefined;
-//    $scope.paydesks = [1, 5, 45, 25, 65];
-//    $scope.walls = [2, 45, 10, 4, 8];
+// $scope.paydesks = [1, 5, 45, 25, 65];
+// $scope.walls = [2, 45, 10, 4, 8];
     $scope.paydesks = undefined;
     $scope.walls = undefined;
+    
+    $scope.newMap = {};
     
     $scope.cupboards = undefined;
 
@@ -39,7 +41,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     })();
 
     $scope.getMapByid = function (m) {
-        //    	$scope.map = m;
+        // $scope.map = m;
         console.log("get map by id " + m.id);
         $http({
             method: "GET",
@@ -68,7 +70,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     var game;
     var tCell;
     var arrayTarget = new Array();
-//    var arrayPayDesk = new Array();
+// var arrayPayDesk = new Array();
     var arrayCupBoard = new Array();
     var buffPath;
     var curTarget;
@@ -98,9 +100,9 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         this.canvas.width = this.width * this.cellSpace + this.borderWidth;
         this.canvas.height = this.height * this.cellSpace + this.borderWidth;
         this.player = new Player(this);
-//        this.walls = new Map(this.width * this.height);
+// this.walls = new Map(this.width * this.height);
         this.way = new Map(this.width * this.height);
-//        this.payDesk = new Map(this.width * this.height);
+// this.payDesk = new Map(this.width * this.height);
         this.cupBoard = new Map(this.width * this.height);
         this.targets = new Map(this.width * this.height);
         initCupBoard();
@@ -124,11 +126,11 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             case this.enter:
                 return '#252';
             }
-//            if (this.payDesk.map) return '#ff870d';
-//            if (this.way.map[cell]) return waycolor;
-//            if (this.cupBoard.map[cell]) return '#038ef0';
-//            if (this.targets.map[cell]) return '#522';
-//            if (this.walls.map[cell]) return '#555';
+// if (this.payDesk.map) return '#ff870d';
+// if (this.way.map[cell]) return waycolor;
+// if (this.cupBoard.map[cell]) return '#038ef0';
+// if (this.targets.map[cell]) return '#522';
+// if (this.walls.map[cell]) return '#555';
             if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
             if (this.way.map[cell]) return waycolor;
@@ -267,13 +269,13 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                     case 'edit':
                         console.log("CELL #" + cell)
 
-//                        for (var q = 0; q < arrayCupBoard.length; q++) {
-//                            for (var w = 0; w < arrayCupBoard[q].length; w++) {
-//                                if (cell == arrayCupBoard[q][w]) {
-//                                    console.log("You click on: " + arrayCupBoard[q]);
-//                                }
-//                            }
-//                        }
+// for (var q = 0; q < arrayCupBoard.length; q++) {
+// for (var w = 0; w < arrayCupBoard[q].length; w++) {
+// if (cell == arrayCupBoard[q][w]) {
+// console.log("You click on: " + arrayCupBoard[q]);
+// }
+// }
+// }
                         for (var q = 0; q < $scope.cupboards.length; q++) {
                             for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
                                 if (cell == $scope.cupboards[q].values[w]) {
@@ -702,6 +704,39 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                     console.log('failed');
                 });
     		}
+    		$mdDialog.hide();
+    	};
+    }
+    
+    $scope.createMap = function () {
+    	
+    	console.log('before create');
+    	$mdDialog.show({
+    		controller: CreateMapDialogController,
+    		templateUrl: 'template/admin/create.map.tmpl.html',
+    		parent: angular.element(document.body),
+    		fullscreen: $scope.customFullscreen // Only for -xs, -sm
+    	})
+    	.then(function (answer) {
+    		console.log(answer);
+    		
+    	}, function () {
+    		console.log("cancel");
+    	});
+    };
+    
+    function CreateMapDialogController($scope, $mdDialog) {
+    	
+    	$scope.hide = function () {
+    		$mdDialog.hide();
+    	};
+    	
+    	$scope.cancel = function (values) {
+    		console.log("Cancel");
+    		$mdDialog.cancel();
+    	};
+    	
+    	$scope.answer = function (values, b_count) {
     		$mdDialog.hide();
     	};
     }
