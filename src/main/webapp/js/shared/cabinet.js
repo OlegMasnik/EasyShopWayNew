@@ -2,14 +2,14 @@
  * 
  */
 
-var cabinetApp = angular.material("MyApp");
+var cabinetApp = angular.module("MyApp");
 
 cabinetApp.controller("UserInfo", [
 		"$scope",
 		"$scope",
 		function($scope, $http) {
 
-			$http.get('http://localhost:8080/EasyShopWayNew/info', config)
+			$http.get('/EasyShopWayNew/info', config)
 					.success(function(data, status, headers, config) {
 
 						console.log(data.firstName + " " + data.lastName);

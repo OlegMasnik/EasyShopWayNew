@@ -1,4 +1,4 @@
-package com.epam.easyshopway.controller.user;
+	package com.epam.easyshopway.controller.user;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -46,7 +46,7 @@ public class UserHistoryServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 
 		if (user != null) {
-			HashMap<Integer, List<FullProductList>> productLists = FullProductListService.getGroupedList(user.getId());
+			HashMap<Integer, List<FullProductList>> productLists = (HashMap<Integer, List<FullProductList>>) FullProductListService.getProductListByUserId(user.getId());
 			
 			JSONObject object = createJSON(productLists);
 			

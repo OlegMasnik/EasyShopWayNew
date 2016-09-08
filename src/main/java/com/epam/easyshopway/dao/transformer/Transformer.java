@@ -41,7 +41,7 @@ public class Transformer<T> {
 											.newInstance(rs.getString(f.getAnnotation(Column.class).value())));
 						}
 					} catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-//						e.printStackTrace();
+						e.printStackTrace();
 					}
 				}
 			}

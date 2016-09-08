@@ -1,12 +1,16 @@
 package com.epam.easyshopway.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.epam.easyshopway.model.User;
@@ -54,15 +58,24 @@ public class GooglePlusInfoServlet extends HttpServlet {
 		Response oResp = oReq.send();
 		String json = oResp.getBody();
 		GooglePlusUserJSON googlePlusUser = JSON.parseObject(json, GooglePlusUserJSON.class);
-		System.out.println(oResp.getBody());
+		System.out.println(json);
 		User user = new User(googlePlusUser.getGiven_name(), googlePlusUser.getFamily_name(), googlePlusUser.getEmail(),
 				null, // password
 				true, // active user
-				"user", "en", googlePlusUser.getPicture()); // native language
+				"user", "en", null); // native language
 		User invokedUser = UserService.getByEmail(user.getEmail());
 		if (invokedUser == null) {
 			UserService.insert(user);
-			sess.setAttribute("user", user);
+			user = UserService.getByEmail(googlePlusUser.getEmail());
+			String type = "" + googlePlusUser.getPicture().substring(googlePlusUser.getPicture().lastIndexOf('.') + 1);
+			String fName = "images/user/" + UserService.getByEmail(user.getEmail()).getId() + "." + type;
+			String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
+			File uploadedFile = new File(absoluteDiskPath);
+			
+			FileUtils.copyURLToFile(new URL(googlePlusUser.getPicture()), uploadedFile);
+			System.out.println(UserService.updatePicture(UserService.getByEmail(user.getEmail()).getId(), fName));
+			
+			sess.setAttribute("user", UserService.getByEmail(user.getEmail()));
 		} else {
 			sess.setAttribute("user", invokedUser);
 		}
