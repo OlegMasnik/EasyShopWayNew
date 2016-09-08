@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 
 import com.epam.easyshopway.model.FullProductList;
 import com.epam.easyshopway.model.ProductInformation;
+import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.ProductInformationService;
 
 /**
@@ -38,7 +39,7 @@ public class SearchServlet extends HttpServlet {
 		String uri = request.getRequestURI();
 		
 		if (uri.endsWith("search")) {
-			request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/temp.jsp").forward(request, response);
 		} else {
 			
 			List<ProductInformation> products = ProductInformationService.getAllProductOnSupermarket();
@@ -57,8 +58,11 @@ public class SearchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		User user = (User) request.getAttribute("user");
+		
+		if (user != null) {
+			
+		}
 	}
 
 	private JSONArray setJsonArrayType(Collection<ProductInformation> list) {
@@ -70,6 +74,14 @@ public class SearchServlet extends HttpServlet {
 			object.put("name_uk", p.getProductNameUk());
 			object.put("name_en", p.getProductNameEn());
 			object.put("id", p.getId());
+			
+			JSONArray cordArr = new JSONArray();
+			
+			for (Integer cord : p.getCoordinates()) {
+				cordArr.add(cord);
+			}
+			
+			object.put("coordinates", cordArr);
 			jsonArray.add(object);
 		}
 		return jsonArray;

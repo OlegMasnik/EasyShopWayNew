@@ -29,7 +29,8 @@
                     md-require-match="true" 
                     md-highlight-flags="i" 
                     filter-selected="ctrl.filterSelected" 
-                    placeholder="Enter product name">
+                    placeholder="Enter product name"
+                    ng-click="ctrl.getSelectedChip($event)">
                     </md-contact-chips>
                 </md-content>
                 <md-button ng-click="ctrl.sendOnMap()">Show</md-button>

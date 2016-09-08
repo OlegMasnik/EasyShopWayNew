@@ -83,14 +83,6 @@
 
         }
 
-        function wait(ms) {
-            var d = new Date();
-            var d2 = null;
-            do {
-                d2 = new Date();
-            } while (d2 - d < ms);
-        }
-
         function loadProducts(data) {
             var products = data;
 
@@ -119,11 +111,12 @@
                 img : " ",
                 name_en : "mobster",
                 name_uk : "лобстер"
-            }]
+            }];
 
             var pr = tmp.map(function (p, index) {
                 var product = {
-                    name: p.name_en,
+//                	$$hashKey : p.id,
+                	name: p.name_en,
                     id: p.id,
                     image: p.img,
                     name_uk: p.name_uk
