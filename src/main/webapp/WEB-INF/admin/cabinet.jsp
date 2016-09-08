@@ -51,6 +51,7 @@
 	<script src="js/shared/exporting.js"></script>
 
 	<script src='js/app.js'></script>
+	<script src='js/admin/map.js'></script>
 	<script src='js/admin/app.js'></script>
 	<script src='js/user/app.js'></script>
 	<script src="js/shared/statistic.js"></script>
