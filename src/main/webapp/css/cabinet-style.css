@@ -8,6 +8,10 @@ md-toolbar {
 	
 }
 
+.main-page {
+/* 	width: calc(100% - 250px); */
+}
+
 .cabinet-sidenav {
 	position: fixed;
 	top: 63px;
@@ -17,7 +21,7 @@ md-toolbar {
 
 .content {
 	background-color: transparent;
-	margin-left: 250px;
+/* 	margin-left: 250px; */
 	padding: 30px;
 }
 

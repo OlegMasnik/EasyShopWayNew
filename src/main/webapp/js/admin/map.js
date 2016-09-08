@@ -231,10 +231,8 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                                     });
                                     console.log(arr)
                                     arrayCupBoard.push(arr);
-                                } else {
-                                    // game.cupBoard.map[startCupBoard] = false;
-                                    // game.cupBoard.map[endCupBoard] = false;
-                                }
+                                    $scope.createCupBoard(arr, undefined);
+                                } 
                             } else if ((endCupBoard % $scope.config.width) == (startCupBoard % $scope.config.width)) {
                                 console.log("in vertical: start=" + startCupBoard + " end=" + endCupBoard);
                                 if (checkRange(startCupBoard, endCupBoard, $scope.config.width)) {
@@ -244,6 +242,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                                     });
                                     console.log(arr)
                                     arrayCupBoard.push(arr);
+                                    $scope.createCupBoard(arr, undefined);
                                 } else {
                                     game.cupBoard.map[startCupBoard] = false;
                                     game.cupBoard.map[endCupBoard] = false;
@@ -608,28 +607,12 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                         return cupBoard;
                     }
                 },
-                clickOutsideToClose: true,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm
-                    // breakpoints.
             })
             .then(function (answer) {
             	console.log(answer);
-//                $http({
-//                    method: "GET",
-//                    url: "/EasyShopWayNew/products"
-//                }).then(function mySucces(response) {
-//                    $scope.data = response.data;
-//                    originalProd.prods = $scope.data.prods;
-//                    originalProd.count = $scope.data.prods.length;
-//                    $scope.datatable = angular.copy(originalProd);
-//                    console.log("Get");
-//                    console.log($scope.data);
-//                }, function myError(response) {
-//                    console.log(response.statusText);
-//                });
             	
             }, function () {
-//                $scope.status = 'You cancelled the dialog.';
                 console.log("cancel");
             });
     };
@@ -651,6 +634,76 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         $scope.answer = function () {
             $mdDialog.hide();
         };
+    }
+    
+    $scope.createCupBoard = function (values, b_count) {
+    	
+    	console.log('before create');
+    	$mdDialog.show({
+    		controller: CreateDialogController,
+    		templateUrl: 'template/admin/create.cupBoard.tmpl.html',
+    		parent: angular.element(document.body),
+    		resolve: {
+    			values: function () {
+    				return values;
+    			},
+    	b_count: function () {
+    		return b_count;
+    	}
+    		},
+    		fullscreen: $scope.customFullscreen // Only for -xs, -sm
+    	})
+    	.then(function (answer) {
+    		console.log(answer);
+    		
+    	}, function () {
+    		console.log("cancel");
+    	});
+    };
+    
+    function CreateDialogController($scope, $mdDialog, values, b_count) {
+    	
+    	console.log("values");
+    	console.log(values);
+    	$scope.values = values;
+    	
+    	$scope.hide = function () {
+    		$mdDialog.hide();
+    	};
+    	
+    	$scope.cancel = function (values) {
+    		console.log("Cancel");
+    		values.map(function(e, i) {
+				game.cupBoard.map[e] = false;
+			});
+    		game.draw();
+    		console.log(values);
+    		$mdDialog.cancel();
+    	};
+    	
+    	$scope.answer = function (values, b_count) {
+    		console.log("Send");
+    		console.log(values);
+    		console.log(b_count);
+    		if(typeof(b_count) == 'undefined'){
+    			values.map(function(e, i) {
+    				game.cupBoard.map[e] = false;
+    			});
+    			game.draw();
+    		}else{
+    			$http.put('/EasyShopWayNew/edit_map?values=' + JSON.stringify(values) + '&b_count=' + b_count)
+                .success(function (data, status, headers) {
+                    console.log('update');
+                    $scope.cupboards = data.cupboards;
+                    initCupBoard();
+                    game.draw();
+                })
+                .error(function (data, status, header, config) {
+                    console.log('failed');
+                });
+    		}
+    		$mdDialog.hide();
+    	};
     }
 
 

@@ -16,11 +16,35 @@
 </head>
 
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
+	<%-- 	<jsp:include page="../parts/header.jsp"></jsp:include> --%>
+	<!-- 	<md-content layout="row" class="main-page" flex> <md-slidenav -->
+	<!-- 		class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex -->
+	<!-- 		md-whiteframe="4"> <md-content layout="column" flex> -->
+	<!-- 	<a href="#/"> -->
+	<!-- 		<div class="cab-user-logo" layot="row" layout-padding> -->
+
+	<!-- 			<img src="images/admin.png" alt="" class="profile-img"> -->
+
+	<!-- 			<div> -->
+	<%-- 				<c:out value="${ user.firstName}"></c:out> --%>
+	<%-- 				<c:out value="${ user.lastName}"></c:out> --%>
+	<!-- 			</div> -->
+	<!-- 		</div> -->
+	<!-- 	</a> <md-button href="#edit_map">Map</md-button> <md-button -->
+	<!-- 		href="#products">Products</md-button> <md-button href="#users">Users</md-button> -->
+	<!-- 	<md-button href="#statistic">Statistic</md-button> </md-content> </md-slidenav> -->
+
+	<!-- 	<div flex class="content" layout="column"> -->
+
+	<!-- 		<div ng-view onload="getFoodData()"></div> -->
+	<!-- 	</div> -->
+	<!-- 	</md-content> -->
+
 	<jsp:include page="../parts/header.jsp"></jsp:include>
-	<md-content layout="row" class="main-page" flex> <md-slidenav
-		class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex
-		md-whiteframe="4"> <md-content layout="column" flex>
-	<a href="#/">
+	<md-content layout="row" flex> <span style="width: 250px;"></span>
+	<md-slidenav class="cabinet-sidenav" md-is-locked-open="true"
+		layout="column" flex md-whiteframe="4"> <md-content
+		layout="column" flex> <a href="#/">
 		<div class="cab-user-logo" layot="row" layout-padding>
 
 			<img src="${user.image }" alt="" class="profile-img">
@@ -32,13 +56,17 @@
 		</div>
 	</a> <md-button href="#edit_map">Map</md-button> <md-button
 		href="#products">Products</md-button> <md-button href="#users">Users</md-button>
-	<md-button href="#statistic">Statistic</md-button> </md-content> </md-slidenav>
+	<md-button href="#statistic">Statistic</md-button> </md-content> </md-slidenav> <md-content
+		layout="row" class="main-page" flex>
+
+
+
 
 	<div flex class="content" layout="column">
-
 		<div ng-view onload="getFoodData()"></div>
 	</div>
-	</md-content>
+	</md-content> </md-content>
+
 
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src='js/angular.min.js'></script>

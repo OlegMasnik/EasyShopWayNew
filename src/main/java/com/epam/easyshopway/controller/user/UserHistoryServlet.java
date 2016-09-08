@@ -43,10 +43,11 @@ public class UserHistoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+
 		User user = (User) request.getSession().getAttribute("user");
 
 		if (user != null) {
-			HashMap<Integer, List<FullProductList>> productLists = (HashMap<Integer, List<FullProductList>>) FullProductListService.getProductListByUserId(user.getId());
+			HashMap<Integer, List<FullProductList>> productLists = FullProductListService.getGroupedList(user.getId());
 			
 			JSONObject object = createJSON(productLists);
 			
