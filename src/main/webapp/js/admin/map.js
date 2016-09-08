@@ -1,7 +1,7 @@
 // ************************************************* MapCtrl
 // *************************************************//
 
-agular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
+angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 	
     (function(){
     	$http({
@@ -14,12 +14,21 @@ agular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
     }, function myError(response) {
         console.log(response.statusText);
     });
-
-    $scope.getMapByid = function (id) {
-    	console.log("Failed");
-    }
     }
     )();
+    
+    $scope.getMapByid = function (id) {
+    	$http({
+    		method: "GET",
+    		url: "/EasyShopWayNew/edit_map?type=map&id=" + id
+    }).then(function mySucces(response) {
+        $scope.map = response.data;
+        console.log("Get mapsName");
+        console.log($scope.mapsName);
+    }, function myError(response) {
+        console.log(response.statusText);
+    });
+    }
 
 
     var game;
