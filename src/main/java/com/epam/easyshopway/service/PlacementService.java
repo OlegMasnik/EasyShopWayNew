@@ -119,7 +119,7 @@ public class PlacementService {
 	
 	public static List<Placement> getPayDesksByMapId(Integer id) {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
-			return placementDAO.getWallsByMapId(id);
+			return placementDAO.getPayDesksByMapId(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {

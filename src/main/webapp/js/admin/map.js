@@ -1,6 +1,6 @@
 // ************************************************* MapCtrl ************************************************* 
 
-angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
+angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog) {
 
     $scope.map = undefined;
     $scope.enter = undefined;
@@ -52,9 +52,9 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
             $scope.config.enter = response.data.enters[0];
             $scope.walls = response.data.walls;
             $scope.paydesks = response.data.paydesks;
-//            $scope.cupboards = data.cupboard;
+            $scope.cupboards = response.data.cupboards;
             
-            console.log($scope.paydesks)
+            console.log($scope.cupboards)
             
             $scope.config.width = $scope.map.weight;
             $scope.config.height = $scope.map.height;
@@ -103,6 +103,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 //        this.payDesk = new Map(this.width * this.height);
         this.cupBoard = new Map(this.width * this.height);
         this.targets = new Map(this.width * this.height);
+        initCupBoard();
 
         this.paint = {
             value: false,
@@ -265,12 +266,21 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                       console.log("Каси " + $scope.paydesks);
                         break;
                     case 'edit':
-                        console.log("QWERT " + cell)
+                        console.log("CELL #" + cell)
 
-                        for (var q = 0; q < arrayCupBoard.length; q++) {
-                            for (var w = 0; w < arrayCupBoard[q].length; w++) {
-                                if (cell == arrayCupBoard[q][w]) {
-                                    console.log("You click on: " + arrayCupBoard[q]);
+//                        for (var q = 0; q < arrayCupBoard.length; q++) {
+//                            for (var w = 0; w < arrayCupBoard[q].length; w++) {
+//                                if (cell == arrayCupBoard[q][w]) {
+//                                    console.log("You click on: " + arrayCupBoard[q]);
+//                                }
+//                            }
+//                        }
+                        for (var q = 0; q < $scope.cupboards.length; q++) {
+                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
+                                if (cell == $scope.cupboards[q].values[w]) {
+                                    console.log("You click on: ");
+                                    console.log($scope.cupboards[q]);
+                                    $scope.openCupBoard($scope.cupboards[q]);
                                 }
                             }
                         }
@@ -538,6 +548,14 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
         game.way = new Map($scope.config.width * $scope.config.height);
         game.targets = new Map($scope.config.width * $scope.config.height);
     }
+    
+    function initCupBoard(){
+    	for(var i = 0; i<$scope.cupboards.length; i++){
+    		$scope.cupboards[i].values.map(function(e, i){
+    			game.cupBoard.map[e] = true;
+    		});
+    	}
+    }
 
     Array.prototype.removeUndefined = function (value) {
         this[this.indexOf(value)] = undefined;
@@ -580,16 +598,14 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 
 
     $scope.openCupBoard = function (cupBoard) {
+    	console.log('before open');
         $mdDialog.show({
                 controller: DialogController,
-                templateUrl: 'template/admin/edit.prod.tmpl.html',
+                templateUrl: 'template/admin/edit.cupBoard.tmpl.html',
                 parent: angular.element(document.body),
                 resolve: {
-                    types: function () {
-                        return types;
-                    },
                     item: function () {
-                        return item;
+                        return cupBoard;
                     }
                 },
                 clickOutsideToClose: true,
@@ -597,88 +613,42 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
                     // breakpoints.
             })
             .then(function (answer) {
-                $http({
-                    method: "GET",
-                    url: "/EasyShopWayNew/products"
-                }).then(function mySucces(response) {
-                    $scope.data = response.data;
-                    originalProd.prods = $scope.data.prods;
-                    originalProd.count = $scope.data.prods.length;
-                    $scope.datatable = angular.copy(originalProd);
-                    console.log("Get");
-                    console.log($scope.data);
-                }, function myError(response) {
-                    console.log(response.statusText);
-                });
+            	console.log(answer);
+//                $http({
+//                    method: "GET",
+//                    url: "/EasyShopWayNew/products"
+//                }).then(function mySucces(response) {
+//                    $scope.data = response.data;
+//                    originalProd.prods = $scope.data.prods;
+//                    originalProd.count = $scope.data.prods.length;
+//                    $scope.datatable = angular.copy(originalProd);
+//                    console.log("Get");
+//                    console.log($scope.data);
+//                }, function myError(response) {
+//                    console.log(response.statusText);
+//                });
+            	
             }, function () {
-                $scope.status = 'You cancelled the dialog.';
+//                $scope.status = 'You cancelled the dialog.';
+                console.log("cancel");
             });
     };
 
-    function DialogController($scope, $mdDialog, types, item) {
+    function DialogController($scope, $mdDialog, item) {
 
-        console.log("item " + item)
-        if (item == undefined) {
-            $scope.item = {
-                id: 0,
-                nen: "",
-                nuk: "",
-                ptid: 0
-            };
-            $scope.types = types;
-
-        } else {
-            $scope.item = item;
-            $scope.types = types;
-            $scope.selectedType = types[getIdDatatype(item.ptid)];
-
-            function getIdDatatype(pid) {
-                for (var i = 0; i < types.length; i++)
-                    if (types[i].id == pid)
-                        return i;
-            }
-        }
+        console.log("item ");
+        console.log(item);
+        $scope.item = item;
 
         $scope.hide = function () {
             $mdDialog.hide();
         };
 
         $scope.cancel = function () {
-            $http({
-                method: "GET",
-                url: "/EasyShopWayNew/products"
-            }).then(function mySucces(response) {
-                $scope.data = response.data;
-                originalProd.prods = $scope.data.prods;
-                originalProd.count = $scope.data.prods.length;
-                $scope.datatable = angular.copy(originalProd);
-                console.log("Get");
-                console.log($scope.data);
-            }, function myError(response) {
-                console.log(response.statusText);
-            });
             $mdDialog.cancel();
         };
 
-        $scope.answer = function (item, tid) {
-            item.ptid = tid.id
-
-            var data = $.param({
-                id: item.id,
-                nameUk: item.nuk,
-                nameEn: item.nen,
-                ptid: item.ptid
-            });
-            console.log("New ITEM");
-            console.log(item);
-            $http.put('/EasyShopWayNew/products?' + data)
-                .success(function (data, status, headers) {
-                    console.log('update');
-
-                })
-                .error(function (data, status, header, config) {
-                    console.log('failed');
-                });
+        $scope.answer = function () {
             $mdDialog.hide();
         };
     }
