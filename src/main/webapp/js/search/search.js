@@ -11,7 +11,30 @@
         var pendingSearch, cancelSearch = angular.noop;
         var cachedQuery, lastSearch;
 
-        self.allProducts = loadProducts();
+        //        self.allProducts = loadProducts();
+
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+
+        $http
+            .get(
+                '/EasyShopWayNew/searchProducts',
+                config)
+            .success(
+                function (data, status, headers,
+                    config) {
+                    console.log(data);
+                    self.allProducts = loadProducts(data.products);
+                    console.log(self.allProducts);
+                }).error(
+                function (data, status, header, config) {
+                    console.log(data);
+                    console.log('no products');
+                });
+
         self.products = [];
 
         self.filterSelected = true;
@@ -60,49 +83,49 @@
 
         }
 
-        function loadProducts() {
-            var products = [
-        'Marina Augustine',
-        'Oddr Sarno',
-        'Nick Giannopoulos',
-        'Narayana Garner',
-        'Anita Gros',
-        'Megan Smith',
-        'Tsvetko Metzger',
-        'Hector Simek',
-        'Some-guy withalongalastaname'
-      ];
+        function loadProducts(data) {
+            var products = data;
 
-            var config = {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                }
-            }
+            var tmp = [{
+                id: 1,
+                img : " ",
+                name_en : "lobster",
+                name_uk : "лобстер"
+            }, {
+                id: 2,
+                img : " ",
+                name_en : "vobster",
+                name_uk : "лобстер"
+            }, {
+                id: 3,
+                img : " ",
+                name_en : "bobster",
+                name_uk : "лобстер"
+            }, {
+                id: 4,
+                img : " ",
+                name_en : "nobster",
+                name_uk : "лобстер"
+            }, {
+                id: 5,
+                img : " ",
+                name_en : "mobster",
+                name_uk : "лобстер"
+            }];
 
-            $http
-                .get(
-                    '/EasyShopWayNew/searchProducts',
-                    config)
-                .success(
-                    function (data, status, headers,
-                        config) {
-                        console.log(data);
-                        products = data;
-                    }).error(
-                    function (data, status, header, config) {
-                        console.log('no products');
-                    });
-
-            return products.map(function (p, index) {
-                var cParts = p.split(' ');
+            var pr = tmp.map(function (p, index) {
                 var product = {
-                    name: p,
-                    email: cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com',
-                    image: 'images/admin.png'
+//                	$$hashKey : p.id,
+                	name: p.name_en,
+                    id: p.id,
+                    image: p.img,
+                    name_uk: p.name_uk
                 };
                 product._lowername = product.name.toLowerCase();
                 return product;
             });
+            console.log(pr);
+            return pr;
         }
     }
 

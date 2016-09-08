@@ -20,7 +20,17 @@
             <md-slidenav class="search-sidenav" md-is-locked-open="true" layout="column" flex md-whiteframe="4">
 
                 <md-content class="md-padding autocomplete" layout="column">
-                    <md-contact-chips ng-model="ctrl.products" md-contacts="ctrl.querySearch($query)" md-contact-name="name" md-contact-image="image" md-contact-email="email" md-require-match="true" md-highlight-flags="i" filter-selected="ctrl.filterSelected" placeholder="To">
+                    <md-contact-chips 
+                    ng-model="ctrl.products" 
+                    md-contacts="ctrl.querySearch($query)" 
+                    md-contact-name="name" 
+                    md-contact-image="image" 
+                    md-contact-email="id" 
+                    md-require-match="true" 
+                    md-highlight-flags="i" 
+                    filter-selected="ctrl.filterSelected" 
+                    placeholder="Enter product name"
+                    ng-click="ctrl.getSelectedChip($event)">
                     </md-contact-chips>
                 </md-content>
                 <md-button ng-click="ctrl.sendOnMap()">Show</md-button>
