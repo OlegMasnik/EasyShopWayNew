@@ -3,6 +3,8 @@
 
 angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
 	
+	$scope.map = undefined;
+	
     (function(){
     	$http({
     		method: "GET",
@@ -17,14 +19,16 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http) {
     }
     )();
     
-    $scope.getMapByid = function (id) {
+    $scope.getMapByid = function (m) {
+    	map = map;
+    	console.log("get map by id " + map.id);
     	$http({
     		method: "GET",
-    		url: "/EasyShopWayNew/edit_map?type=map&id=" + id
+    		url: "/EasyShopWayNew/edit_map?type=map&id=" + map.id
     }).then(function mySucces(response) {
         $scope.map = response.data;
-        console.log("Get mapsName");
-        console.log($scope.mapsName);
+        console.log("Get map");
+        console.log($scope.map);
     }, function myError(response) {
         console.log(response.statusText);
     });
