@@ -8,6 +8,7 @@ import java.util.List;
 import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.dao.transformer.UserTransformer;
 import com.epam.easyshopway.model.User;
+import com.epam.easyshopway.service.UserService;
 
 public class UserDAO extends AbstractDAO<User> {
 	private final String INSERT = "INSERT INTO user (first_name, last_name, email, password, date_of_birth, active, role, language, image) "
@@ -50,6 +51,9 @@ public class UserDAO extends AbstractDAO<User> {
 
 		statement.executeUpdate();
 		statement.close();
+
+		LOGGER.info("Create new user for email: " + user.getEmail() + "("
+				+ user.getFirstName() + " " + user.getLastName() + ")");
 		return getByEmail(user.getEmail());
 	}
 
@@ -71,13 +75,15 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setInt(1, id);
 		ResultSet resultSet = statement.executeQuery();
 		User user = new UserTransformer().getUser(resultSet);
-//		List<User> users = new Transformer<User>(User.class)
-//				.fromRStoCollection(resultSet);
-//		statement.close();
-//		if (users.size() > 0)
-			return user;
-//		else
-//			return null;
+		LOGGER.info("Get user by id: " + user.getId() + "("
+				+ user.getFirstName() + " " + user.getLastName() + ")");
+		// List<User> users = new Transformer<User>(User.class)
+		// .fromRStoCollection(resultSet);
+		// statement.close();
+		// if (users.size() > 0)
+		return user;
+		// else
+		// return null;
 	}
 
 	public User getByEmail(String email) throws SQLException,
@@ -87,6 +93,10 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setString(1, email);
 		ResultSet resultSet = statement.executeQuery();
 		User user = new UserTransformer().getUser(resultSet);
+
+		LOGGER.info("Get user for email: " + user.getEmail() + "("
+				+ user.getFirstName() + " " + user.getLastName() + ")");
+
 		return user;
 	}
 
@@ -105,11 +115,15 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setInt(10, userId);
 		int result = statement.executeUpdate();
 		statement.close();
+		LOGGER.info("Update user for email: " + user.getEmail() + "("
+				+ user.getFirstName() + " " + user.getLastName() + ")");
 		return result;
 	}
-	
-	public int updatePicture(Integer userId, String imageAddress) throws SQLException {
-		PreparedStatement statement = connection.prepareStatement(UPDATE_PICTURE);
+
+	public int updatePicture(Integer userId, String imageAddress)
+			throws SQLException {
+		PreparedStatement statement = connection
+				.prepareStatement(UPDATE_PICTURE);
 		statement.setString(1, imageAddress);
 		statement.setInt(2, userId);
 		int result = statement.executeUpdate();
@@ -123,6 +137,9 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setInt(1, id);
 		int result = statement.executeUpdate();
 		statement.close();
+		User user = UserService.getById(id);
+		LOGGER.info("Delete user for email: " + user.getEmail() + "("
+				+ user.getFirstName() + " " + user.getLastName() + ")");
 		return result;
 	}
 
@@ -136,11 +153,16 @@ public class UserDAO extends AbstractDAO<User> {
 		List<User> users = new Transformer<User>(User.class)
 				.fromRStoCollection(rs);
 		preparedStatement.close();
-		return users.size() != 0;
+		boolean validate = users.size() != 0;
+		LOGGER.info("User for email: " + email + "and password" + password
+				+ " is valid:" + validate + ".");
+
+		return validate;
 	}
-	
-	public int setActive(String email, boolean active) throws SQLException{
-		PreparedStatement statement = connection.prepareStatement(UPDATE_ACTIVE);
+
+	public int setActive(String email, boolean active) throws SQLException {
+		PreparedStatement statement = connection
+				.prepareStatement(UPDATE_ACTIVE);
 		statement.setBoolean(1, active);
 		statement.setString(2, email);
 		int result = statement.executeUpdate();
