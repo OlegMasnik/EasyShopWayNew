@@ -86,7 +86,7 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 			return null;
 	}
 
-	public List<Placement> getcPlacementByMaoId(Integer id)
+	public List<Placement> getcPlacementByMapId(Integer id)
 			throws SQLException, InstantiationException, IllegalAccessException {
 		PreparedStatement statement = connection
 				.prepareStatement(SELECT_BY_MAP_ID);
