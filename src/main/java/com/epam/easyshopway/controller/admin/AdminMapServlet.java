@@ -88,7 +88,6 @@ public class AdminMapServlet extends HttpServlet {
 				
 				
 			}
-			response.getWriter().write(m.toString());
 			break;
 			
 		case "open":
