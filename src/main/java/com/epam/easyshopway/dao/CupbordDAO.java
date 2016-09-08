@@ -17,6 +17,7 @@ public class CupbordDAO extends AbstractDAO<Cupboard> {
 	private final String UPDATE_CUPBOARD_BY_ID = "UPDATE cupboard SET board_amount=?, description_en=?, description_uk=?, active=? WHERE id=?";
 	private final String GET_CUPBOARD_BY_ID = "SELECT * FROM cupboard WHERE id=?";
 	private final String GET_ALL_CUPBOARD = "SELECT * FROM cupboard WHERE active=1";
+	private final String GET_LAST_INSERTED = "SELECT * FROM cupboard c WHERE c.id IN (SELECT MAX(id) FROM cupboard c1);";
 
 	public CupbordDAO() {
 		super();
@@ -83,6 +84,14 @@ public class CupbordDAO extends AbstractDAO<Cupboard> {
 		} else {
 			return null;
 		}
+	}
+	
+	public Cupboard getLastInserted() throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(GET_LAST_INSERTED);
+		ResultSet resultSet = statement.executeQuery();
+		List<Cupboard> cupboards = new Transformer<Cupboard>(Cupboard.class).fromRStoCollection(resultSet);
+		statement.close();
+		return cupboards == null ? null : cupboards.iterator().next();
 	}
 
 }

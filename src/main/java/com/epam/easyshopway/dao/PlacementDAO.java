@@ -22,6 +22,7 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 	private final String GET_ENTERS_BY_MAP_ID = "SELECT * FROM placement p WHERE p.map_id = ? AND type LIKE ?;";
 	private final String GET_WALLS_BY_MAP_ID = "SELECT * FROM placement p WHERE p.map_id = ? AND type LIKE ?;";
 	private final String GET_PAYDESKS_BY_MAP_ID = "SELECT * FROM placement p WHERE p.map_id = ? AND type LIKE ?;";
+	private final String GET_LAST_INSERTED = "SELECT *FROM placement p WHERE p.id IN (SELECT MAX(id) FROM placement p1);";
 
 	@Override
 	public int insert(Placement el) throws SQLException {
@@ -129,5 +130,13 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 		List<Placement> paydesks = new Transformer<Placement>(Placement.class).fromRStoCollection(resultSet);
 		statement.close();
 		return paydesks;
+	}
+	
+	public Placement getLastInserted() throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(GET_LAST_INSERTED);
+		ResultSet resultSet = statement.executeQuery();
+		List<Placement> placements = new Transformer<Placement>(Placement.class).fromRStoCollection(resultSet);
+		statement.close();
+		return placements == null ? null : placements.iterator().next();
 	}
 }
