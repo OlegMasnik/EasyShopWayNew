@@ -5,7 +5,7 @@ import com.epam.easyshopway.dao.transformer.annotation.Column;
 public class Map {
 	@Column("id")
 	private Integer id;
-
+	
 	@Column("weight")
 	private Integer weight;
 
