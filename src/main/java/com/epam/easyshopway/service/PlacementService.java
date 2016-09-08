@@ -80,7 +80,46 @@ public class PlacementService {
 	}
 	public static List<Placement> getcPlacementByMapId(Integer id) {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
-			return placementDAO.getcPlacementByMaoId(id);
+			return placementDAO.getcPlacementByMapId(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static List<Placement> getEntersByMapId(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getEntersByMapId(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static List<Placement> getWallsByMapId(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getWallsByMapId(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static List<Placement> getPayDesksByMapId(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getPayDesksByMapId(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {

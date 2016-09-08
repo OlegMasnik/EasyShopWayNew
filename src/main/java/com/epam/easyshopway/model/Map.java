@@ -11,6 +11,12 @@ public class Map {
 
 	@Column("height")
 	private Integer height;
+	
+	@Column("name_en")
+	private String nameEn;
+	
+	@Column("name_uk")
+	private String nameUk;
 
 	public Map() {
 		super();
@@ -46,4 +52,19 @@ public class Map {
 		this.height = height;
 	}
 
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
+	}
+
+	public String getNameUk() {
+		return nameUk;
+	}
+
+	public void setNameUk(String nameUk) {
+		this.nameUk = nameUk;
+	}
 }
