@@ -1,0 +1,22 @@
+<md-dialog>
+<form ng-cloak>
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+		<h2>Create new cupboard</h2>
+		<span flex></span>
+		<md-button class="md-icon-button" ng-click="cancel(values)"> x </md-button>
+	</div>
+	</md-toolbar>
+
+	<md-dialog-content>
+	<div class="md-dialog-content">
+	<p>hello world</p>
+		<md-input-container> <label>Please enter board count:</label>
+		<h1>{{values}}</h1>
+		<input name="b_count" type="number" ng-model="b_count" required min=1 max=4></md-input-container>
+
+		<md-dialog-actions layout="row"> <span flex></span><md-button
+			ng-click="cancel(values)"> Cancel </md-button> <md-button
+			ng-click="answer(values, b_count)"> Save </md-button></md-dialog-actions>
+</form>
+</md-dialog>
