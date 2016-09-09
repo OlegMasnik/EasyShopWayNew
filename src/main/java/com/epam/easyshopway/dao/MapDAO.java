@@ -13,7 +13,7 @@ public class MapDAO extends AbstractDAO<Map> {
 	private final String DELETE_MAP_BY_ID = "DELETE FROM `easy_shop_way`.`map` WHERE `id`=?;";
 	private final String SELECT_MAP_BY_ID = "SELECT * FROM map WHERE id = ?;";
 	private final String SELECT_CURRENT_MAP = "SELECT * FROM map GROUP BY id LIMIT 1 ";
-	private final String SELECT_ALL_MAPS = "SELECT * FROM map WHERE active = 1";
+	private final String SELECT_ALL_MAPS = "SELECT * FROM map";
 	private final String UPDATE_MAP_BY_ID = "UPDATE map SET weight = ?, height = ?, name_en=?, name_uk=? WHERE id = ?";
 
 	public MapDAO() {

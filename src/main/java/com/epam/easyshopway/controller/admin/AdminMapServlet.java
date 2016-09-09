@@ -23,7 +23,6 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
-import com.sun.org.apache.xerces.internal.parsers.IntegratedParserConfiguration;
 
 public class AdminMapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,15 +40,15 @@ public class AdminMapServlet extends HttpServlet {
 
 		switch (type) {
 			case "mapsName": {
-				JSONArray responseJSON = doForMapsName();
+				JSONArray responseJSON = getMapsName();
 				response.getWriter().write(responseJSON.toString());
 			}
 				break;
 	
 			case "map": {
 				Integer mapId = Integer.valueOf(request.getParameter("id"));
-				JSONObject responseJSON = doForMap(mapId);
-				responseJSON = doForMap(mapId);
+				JSONObject responseJSON = getMap(mapId);
+				responseJSON = getMap(mapId);
 				response.getWriter().write(responseJSON.toString());
 			}
 				break;
@@ -66,13 +65,13 @@ public class AdminMapServlet extends HttpServlet {
 		switch (type) {
 			case "cupboard": {
 				String data = request.getParameter("data");
-				int mapId = doForCupboard(data);
+				int mapId = setCupboard(data);
 				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
 				response.getWriter().write(cupboards.toString());
 			}
 				break;
 				
-			case "map":{
+			case "createMap":{
 				String height = request.getParameter("height");
 				String weight = request.getParameter("weight");
 				String nameEn = request.getParameter("name_en");
@@ -85,6 +84,13 @@ public class AdminMapServlet extends HttpServlet {
 				MapService.insert(map);
 			}
 				break;
+			case "saveMap":{
+				String data = request.getParameter("data");
+				int mapId = saveMap(data);
+//				JSONArray map = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
+//				response.getWriter().write(cupboards.toString());
+			}
+			break;
 		}
 	}
 	
@@ -119,7 +125,7 @@ public class AdminMapServlet extends HttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
-	private JSONArray doForMapsName() {
+	private JSONArray getMapsName() {
 		JSONArray mapNameArray = new JSONArray();
 		List<Map> maps = MapService.getAll();
 		if (maps != null) {
@@ -135,7 +141,7 @@ public class AdminMapServlet extends HttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
-	private JSONObject doForMap(Integer mapId) {
+	private JSONObject getMap(Integer mapId) {
 		JSONObject response = new JSONObject();
 
 		Map map = MapService.getById(mapId);
@@ -193,7 +199,7 @@ public class AdminMapServlet extends HttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
-	private int doForCupboard(String jsonData) {
+	private int setCupboard(String jsonData) {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject) parser.parse(jsonData);
@@ -218,7 +224,7 @@ public class AdminMapServlet extends HttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
-	private int doForSaveMap(String jsonData) {
+	private int saveMap(String jsonData) {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject) parser.parse(jsonData);
@@ -239,6 +245,9 @@ public class AdminMapServlet extends HttpServlet {
 	private void insertPlacements(Long mapId, List<Long> values, String type) {
 		if (values != null) {
 			for (Long value : values) {
+				System.out.println(mapId.intValue());
+				System.out.println(value.intValue());
+				System.out.println(type);
 				Placement placement = new Placement(mapId.intValue(), value.intValue(), type);
 				PlacementService.insert(placement);
 			}
