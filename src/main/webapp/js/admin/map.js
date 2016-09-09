@@ -718,6 +718,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     		fullscreen: $scope.customFullscreen // Only for -xs, -sm
     	})
     	.then(function (answer) {
+    		
     		console.log(answer);
     		
     	}, function () {
@@ -736,9 +737,95 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     		$mdDialog.cancel();
     	};
     	
-    	$scope.answer = function (values, b_count) {
+    	$scope.answer = function () {
+    		console.log('created ....');
+    		
+    		var data = $.param({
+    			type: 'create',
+    			name_en: $scope.newMap.name_en,
+    			name_uk: $scope.newMap.name_uk,
+    			width: $scope.newMap.width,
+    			height: $scope.newMap.height
+    		});
+    		
+    		console.log(data);
+    		
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+    		
+    		$http.post('/EasyShopWayNew/edit_map')
+            .success(function (data, status, headers) {
+                console.log('create new');
+            })
+            .error(function (data, status, header, config) {
+                console.log('failed');
+            });
     		$mdDialog.hide();
     	};
+    }
+    
+    $scope.saveMap = function(map){
+    	console.log(map);
+    	console.log($scope.walls);
+    	console.log($scope.paydesks);
+    	console.log($scope.config.enter);
+    	
+    	var data = $.param({
+    		type: 'save',
+    		map_id: map.id,
+    		walls: $scope.walls,
+    		paydesks: $scope.paydesks,
+    		enter: $scope.config.enter
+    	});
+    	
+		console.log(data);
+		
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+		
+		$http.post('/EasyShopWayNew/edit_map')
+        .success(function (data, status, headers) {
+            console.log('create new');
+        })
+        .error(function (data, status, header, config) {
+            console.log('failed');
+        });
+    }
+    
+    $scope.clearMap = function(map){
+    	var data = $.param({
+    		type: 'clear',
+    		map_id: map.id,
+    	});
+    	
+		console.log(data);
+		
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+		
+		$http.post('/EasyShopWayNew/edit_map')
+        .success(function (data, status, headers) {
+            console.log('clear map');
+        })
+        .error(function (data, status, header, config) {
+            console.log('failed clear');
+        });
+        $scope.walls = [];
+		$scope.paydesks = [];
+		$scope.config.enter = [];
+		game.enter = undefined;
+		$scope.config.enter= undefined;
+		game.cupBoard = new Map(game.width * game.height);
+		game.draw();
     }
 
 
