@@ -61,4 +61,15 @@ public class CupboardService {
 		}
 		return 0;
 	}
+	
+	public static Cupboard getLastInserted() {
+		try (CupbordDAO cupboardDAO = new CupbordDAO()) {
+			return cupboardDAO.getLastInserted();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
