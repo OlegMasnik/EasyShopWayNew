@@ -33,25 +33,15 @@
     <md-button ng-click="onClick()">Go</md-button>
     </md-radio-group>
 	<md-input-container layout="row">
-		<md-button ng-click="saveMap(map)">Save</md-button>
+		<md-button class="md-primary md-raised" ng-click="saveMap(map)">Save</md-button>
 		<md-button class="md-primary md-raised" ng-click="showConfirmDelete($event, map)">
-      Confirm Dialog
+      Delete
     </md-button>
-		<md-button class="md-primary" ng-click="clearMap(map)">Clear</md-button>
+		<md-button class="md-primary md-raised" ng-click="clearMap(map)">Clear</md-button>
 	</md-input-container>
     <div>
         <canvas></canvas>
     </div>
     <div></div>
 </div>
-
-<script type="text/ng-template" id="toast-template.html"><md-toast>
-  <span class="md-toast-text" flex>Custom toast!</span>
-  <md-button class="md-highlight" ng-click="openMoreInfo($event)">
-    More info
-  </md-button>
-  <md-button ng-click="closeToast()">
-    Close
-  </md-button>
-</md-toast>
-</script></div>
+</div>

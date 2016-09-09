@@ -849,7 +849,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 		game.cupBoard = new Map(game.width * game.height);
 		game.draw();
     }
-    $scope.deleteMap = function(m){
+    function deleteMap(m){
     	var data = $.param({
     		type: 'map',
     		mapId: m.id
@@ -869,18 +869,22 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     }
     $scope.showConfirmDelete = function(ev, map) {
         // Appending dialog to document.body to cover sidenav in docs app
+    	
+    	if(typeof(map) == 'undefined'){
+    		
+    	}else{
         var confirm = $mdDialog.confirm()
-              .title('Would you like to delete your debt?')
+              .title('Would you like to delete this map?')
               .textContent('All of the banks have agreed to forgive you your debts.')
               .ariaLabel('Lucky day')
               .targetEvent(ev)
-              .ok('Please do it!')
-              .cancel('Sounds like a scam');
-
+              .ok('Yes')
+              .cancel('No');
+    	}
         $mdDialog.show(confirm).then(function() {
-          $scope.status = 'You decided to get rid of your debt.';
+        	deleteMap(map);
         }, function() {
-          $scope.status = 'You decided to keep your debt.';
+        	console.log('You decided to keep your debt.');
         });
       };
 
