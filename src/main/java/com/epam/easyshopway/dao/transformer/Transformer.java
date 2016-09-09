@@ -36,6 +36,7 @@ public class Transformer<T> {
 							cls.getMethod("set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1), String.class)
 									.invoke(t, rs.getString(f.getAnnotation(Column.class).value()));
 						} else {
+							System.out.println(f);
 							cls.getMethod("set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1), f.getType())
 									.invoke(t, f.getType().getConstructor(String.class)
 											.newInstance(rs.getString(f.getAnnotation(Column.class).value())));

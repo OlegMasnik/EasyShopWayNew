@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
+import org.json.simple.parser.ParseException;
 
 import com.alibaba.fastjson.JSONArray;
 import com.epam.easyshopway.model.Cupboard;
@@ -90,8 +90,7 @@ public class AdminMapServlet extends HttpServlet {
 				break;
 		}
 	}
-	
-	
+		
 	
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -230,6 +229,19 @@ public class AdminMapServlet extends HttpServlet {
 				PlacementService.insert(placement);
 			}
 		}
+	}
+	
+	
+	public static void main (String[] args) throws ParseException{
+		JSONObject object = new JSONObject();
+		JSONArray array = new JSONArray();
+		array.add(1);
+		array.add(2);
+		array.add(3);
+		object.put("values", array);
+		JSONParser parser = new JSONParser();
+		JSONObject ob = (JSONObject)parser.parse(object.toString());
+		System.out.println((List<Long>)ob.get("values"));
 	}
 	
 }
