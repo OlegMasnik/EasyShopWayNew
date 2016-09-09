@@ -1,4 +1,4 @@
-<md-dialog>
+<md-dialog id="cupboardEdit">
 <form ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
@@ -17,6 +17,9 @@
 		</div>
 		</script>
 		<md-dialog-actions layout="row"> <span flex></span>
+		<div layout="row">
+		<md-button ng-click="deleteCupboard(item)"> Delete </md-button> </md-dialog-actions>
 		<md-button ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions>
+		</div>
 </form>
 </md-dialog>

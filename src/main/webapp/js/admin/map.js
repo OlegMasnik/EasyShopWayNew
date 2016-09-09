@@ -637,10 +637,28 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         $scope.cancel = function () {
             $mdDialog.cancel();
         };
-
         $scope.answer = function () {
             $mdDialog.hide();
         };
+        
+        $scope.deleteCupboard = function(item){
+        	console.log('delete cupboard');
+        	var config = {
+		            headers: {
+		            	'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+		        }
+		     }
+        	
+        	$http.delete('EasyShopWayNew/edit_map?type=cupboard&id=' + item.id, config)
+        	   .then(
+        	       function(response){
+        	    	   console.log('delete success')
+        	       }, 
+        	       function(response){
+        	    	   console.log('delete failed')
+        	       }
+        	    );
+        }
     }
     
     $scope.createCupBoard = function (values, b_count) {
