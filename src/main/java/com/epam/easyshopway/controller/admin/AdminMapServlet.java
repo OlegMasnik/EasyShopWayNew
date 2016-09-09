@@ -23,7 +23,6 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
-import com.sun.org.apache.xerces.internal.parsers.IntegratedParserConfiguration;
 
 public class AdminMapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -58,7 +57,6 @@ public class AdminMapServlet extends HttpServlet {
 
 	}
 
-
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
@@ -82,6 +80,14 @@ public class AdminMapServlet extends HttpServlet {
 				map.setWeight(Integer.valueOf(weight));
 				map.setNameEn(nameEn);
 				map.setNameUk(nameUk);
+				MapService.insert(map);
+			}
+				break;
+				
+			case "clearMap":{
+				String mapId = request.getParameter("mapId");
+				Map map = MapService.getById(Integer.valueOf(mapId));
+				MapService.delete(map.getId());
 				MapService.insert(map);
 			}
 				break;
@@ -245,16 +251,16 @@ public class AdminMapServlet extends HttpServlet {
 		}
 	}
 
-	public static void main(String[] args) throws ParseException {
-		JSONObject object = new JSONObject();
-		JSONArray array = new JSONArray();
-		array.add(1);
-		array.add(2);
-		array.add(3);
-		object.put("values", "[1,2,3]");
-		JSONParser parser = new JSONParser();
-		JSONObject ob = (JSONObject) parser.parse(object.toString());
-		System.out.println(ob.get("values"));
-	}
+//	public static void main(String[] args) throws ParseException {
+//		JSONObject object = new JSONObject();
+//		JSONArray array = new JSONArray();
+//		array.add(1);
+//		array.add(2);
+//		array.add(3);
+//		object.put("values", "[1,2,3]");
+//		JSONParser parser = new JSONParser();
+//		JSONObject ob = (JSONObject) parser.parse(object.toString());
+//		System.out.println(ob.get("values"));
+//	}
 
 }
