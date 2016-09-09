@@ -693,7 +693,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     			});
     			game.draw();
     		}else{
-    			$http.put('/EasyShopWayNew/edit_map?values=' + JSON.stringify(values) + '&b_count=' + b_count)
+    			$http.put('/EasyShopWayNew/edit_map?type=cupboard&values=' + JSON.stringify(values) + '&b_count=' + b_count)
                 .success(function (data, status, headers) {
                     console.log('update');
                     $scope.cupboards = data.cupboards;
@@ -744,7 +744,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     			type: 'create',
     			name_en: $scope.newMap.name_en,
     			name_uk: $scope.newMap.name_uk,
-    			width: $scope.newMap.width,
+    			weight: $scope.newMap.width,
     			height: $scope.newMap.height
     		});
     		
@@ -812,7 +812,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             }
         }
 		
-		$http.post('/EasyShopWayNew/edit_map')
+		$http.put('/EasyShopWayNew/edit_map?type=clear&map_id' + map.id, config)
         .success(function (data, status, headers) {
             console.log('clear map');
         })

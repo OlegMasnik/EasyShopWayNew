@@ -1,4 +1,4 @@
-	package com.epam.easyshopway.controller.admin;
+package com.epam.easyshopway.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +23,7 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
+import com.sun.xml.internal.ws.wsdl.writer.document.Service;
 
 public class AdminMapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -52,13 +53,6 @@ public class AdminMapServlet extends HttpServlet {
 			}	
 				break;
 				
-			case "cupboard":{
-				String data = request.getParameter("data");
-				int status = doForCupboard(data);
-				response.getWriter().write(status);
-			}
-				break;
-			
 			case "saveMap":{
 				String data = request.getParameter("data");
 				int status = doForSaveMap(data);
@@ -73,6 +67,27 @@ public class AdminMapServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
+	
+	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String type = req.getParameter("type");
+		
+		switch (type) {
+		case "cupboard": {
+			String data = req.getParameter("values");
+			int bCount = Integer.parseInt(req.getParameter("b_count"));
+			int status = doForCupboard(data, bCount);
+		}
+			break;
+
+		default:
+			break;
+		}
+		
+		
+	}
+
 	@SuppressWarnings("unchecked")
 	private JSONArray doForMapsName(){
 		JSONArray mapNameArray = new JSONArray();
@@ -148,13 +163,13 @@ public class AdminMapServlet extends HttpServlet {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	private int doForCupboard(String jsonData){
+	private int doForCupboard(String jsonData, int bCount){
 		try{
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject)parser.parse(jsonData);
 			Long id = (Long) obj.get("mapId");
 			List<Long> values = (List<Long>)obj.get("values");
-			Cupboard cupboard = new Cupboard(1, "", "", true);
+			Cupboard cupboard = new Cupboard(bCount, "", "", true);
 			CupboardService.insert(cupboard);
 			int cupboardId = CupboardService.getLastInserted().getId();
 			for (Long value : values){
