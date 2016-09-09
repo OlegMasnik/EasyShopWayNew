@@ -18,6 +18,7 @@ public class CupbordDAO extends AbstractDAO<Cupboard> {
 	private final String GET_CUPBOARD_BY_ID = "SELECT * FROM cupboard WHERE id=?";
 	private final String GET_ALL_CUPBOARD = "SELECT * FROM cupboard WHERE active=1";
 	private final String GET_LAST_INSERTED = "SELECT * FROM cupboard c WHERE c.id IN (SELECT MAX(id) FROM cupboard c1);";
+	private final String GET_CUPBOARD_BY_MAP_ID = "SELECT c.id, c.description_en, c.description_uk, c.board_amount FROM cupboard c JOIN cupboard_placement cp ON c.id = cp.cupboard_id JOIN placement p ON cp.placement_id = p.id WHERE p.map_id = ? GROUP BY c.id;";
 
 	public CupbordDAO() {
 		super();
@@ -92,6 +93,15 @@ public class CupbordDAO extends AbstractDAO<Cupboard> {
 		List<Cupboard> cupboards = new Transformer<Cupboard>(Cupboard.class).fromRStoCollection(resultSet);
 		statement.close();
 		return cupboards == null ? null : cupboards.iterator().next();
+	}
+	
+	public List<Cupboard> getByMapId(Integer mapId) throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(GET_CUPBOARD_BY_MAP_ID);
+		statement.setInt(1, mapId);
+		ResultSet resultSet = statement.executeQuery();
+		List<Cupboard> cupboards = new Transformer<Cupboard>(Cupboard.class).fromRStoCollection(resultSet);
+		statement.close();
+		return cupboards;
 	}
 
 }
