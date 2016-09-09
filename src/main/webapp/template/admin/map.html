@@ -13,7 +13,6 @@
             <md-option ng-click="createMap()">Add new</md-option>
         </md-select>
     </md-input-container>
-
     <form>
         <md-input-container>
             <label>Width</label>
@@ -33,12 +32,15 @@
     <md-button ng-click="onClick()">Go</md-button>
     </md-radio-group>
 	<md-input-container layout="row">
-		<md-button ng-click="saveMap(map)">Save</md-button>
-		<md-button ng-click="deleteMap(map)">Delete</md-button>
-		<md-button class="md-primary" ng-click="clearMap(map)">Clear</md-button>
+		<md-button class="md-primary md-raised" ng-click="saveMap(map)">Save</md-button>
+		<md-button class="md-primary md-raised" ng-click="showConfirmDelete($event, map)">
+      Delete
+    </md-button>
+		<md-button class="md-primary md-raised" ng-click="clearMap(map)">Clear</md-button>
 	</md-input-container>
     <div>
         <canvas></canvas>
     </div>
     <div></div>
+</div>
 </div>

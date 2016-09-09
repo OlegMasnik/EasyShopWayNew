@@ -54,12 +54,6 @@ public class AdminMapServlet extends HttpServlet {
 			}
 				break;
 	
-			case "saveMap": {
-				String data = request.getParameter("data");
-				int status = doForSaveMap(data);
-				response.getWriter().write(status);
-			}
-				break;
 		}
 
 	}
@@ -103,18 +97,21 @@ public class AdminMapServlet extends HttpServlet {
 		switch(type){
 			case "map":{
 				Integer id = Integer.valueOf(req.getParameter("id"));
+				System.out.println(id);
 				MapService.delete(id);
 			}
 			break;
 			
 			case "cupboard":{
 				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer mapId = Integer.valueOf(req.getParameter("mapId"));
+				System.out.println(id + " ");
 				List<Placement> placements = PlacementService.getCupboardPlacement(id);
 				CupboardService.delete(id);
 				for (Placement placement : placements){
 					PlacementService.delete(placement.getId());
 				}
-				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(id));
+				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
 				resp.getWriter().write(cupboards.toString());
 			}
 			break;
@@ -200,20 +197,20 @@ public class AdminMapServlet extends HttpServlet {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject) parser.parse(jsonData);
-			Integer id = (Integer) obj.get("mapId");
-			Integer bCount = (Integer) obj.get("bCount");
-			List<Integer> values = (List<Integer>) obj.get("values");
+			Long id = (Long) obj.get("mapId");
+			Long bCount = (Long) obj.get("bCount");
+			List<Long> values = (List<Long>) obj.get("values");
 			Cupboard cupboard = new Cupboard(bCount.intValue(), "", "", true);
 			CupboardService.insert(cupboard);
 			int cupboardId = CupboardService.getLastInserted().getId();
-			for (Integer value : values) {
-				Placement placement = new Placement(id, value, "cupboard");
+			for (Long value : values) {
+				Placement placement = new Placement(id.intValue(), value.intValue(), "cupboard");
 				PlacementService.insert(placement);
 				CupboardPlacement cupboardPlacement = new CupboardPlacement(cupboardId,
 						PlacementService.getLastInserted().getId());
 				CupboardPlacementService.insert(cupboardPlacement);
 			}
-			return id;
+			return id.intValue();
 		} catch (org.json.simple.parser.ParseException e) {
 			e.printStackTrace();
 		}
@@ -225,10 +222,10 @@ public class AdminMapServlet extends HttpServlet {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject) parser.parse(jsonData);
-			Integer id = (Integer) obj.get("mapId");
-			List<Integer> walls = (List<Integer>) obj.get("walls");
-			List<Integer> enters = (List<Integer>) obj.get("enters");
-			List<Integer> paydesks = (List<Integer>) obj.get("paydesks");
+			Long id = (Long) obj.get("mapId");
+			List<Long> walls = (List<Long>) obj.get("walls");
+			List<Long> enters = (List<Long>) obj.get("enters");
+			List<Long> paydesks = (List<Long>) obj.get("paydesks");
 			insertPlacements(id, walls, "wall");
 			insertPlacements(id, enters, "enter");
 			insertPlacements(id, paydesks, "paydesk");
@@ -239,10 +236,10 @@ public class AdminMapServlet extends HttpServlet {
 		return 0;
 	}
 
-	private void insertPlacements(Integer mapId, List<Integer> values, String type) {
+	private void insertPlacements(Long mapId, List<Long> values, String type) {
 		if (values != null) {
-			for (Integer value : values) {
-				Placement placement = new Placement(mapId, value, type);
+			for (Long value : values) {
+				Placement placement = new Placement(mapId.intValue(), value.intValue(), type);
 				PlacementService.insert(placement);
 			}
 		}
