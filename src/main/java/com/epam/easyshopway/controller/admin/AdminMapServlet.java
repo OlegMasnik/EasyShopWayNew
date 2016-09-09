@@ -23,7 +23,6 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
-import com.google.gson.Gson;
 import com.sun.xml.internal.ws.wsdl.writer.document.Service;
 
 public class AdminMapServlet extends HttpServlet {

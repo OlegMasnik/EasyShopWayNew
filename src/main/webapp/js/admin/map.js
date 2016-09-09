@@ -108,7 +108,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 // this.payDesk = new Map(this.width * this.height);
         this.cupBoard = new Map(this.width * this.height);
         this.targets = new Map(this.width * this.height);
-        initCupBoard();
+        initCupBoard($scope.cupboards);
 
         this.paint = {
             value: false,
@@ -553,9 +553,11 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         game.targets = new Map($scope.config.width * $scope.config.height);
     }
     
-    function initCupBoard(){
-    	for(var i = 0; i<$scope.cupboards.length; i++){
-    		$scope.cupboards[i].values.map(function(e, i){
+    function initCupBoard(obj){
+    	$scope.cupboards = obj;
+    	for(var i = 0; i<obj.length; i++){
+    		console.log(obj[i]);
+    		obj[i].values.map(function(e, i){
     			game.cupBoard.map[e] = true;
     		});
     	}
@@ -715,9 +717,9 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     			$http.post('/EasyShopWayNew/edit_map', sendData, config)
                 .success(function (data, status, headers) {
                     console.log('update');
-                    $scope.cupboards = data.cupboards;
+                    $scope.cupboards = data;
                     console.log($scope.cupboards);
-                    initCupBoard();
+                    initCupBoard($scope.cupboards);
                     game.draw();
                 })
                 .error(function (data, status, header, config) {
@@ -848,18 +850,39 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 		game.draw();
     }
     $scope.deleteMap = function(m){
+    	var data = $.param({
+    		type: 'map',
+    		mapId: m.id
+    	});
+    	
     	 var config = {
     	            headers: {
     	                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
     	            }
     	        }
-    	 $http.delete('/EasyShopWayNew/edit_map?map_id=' + m.id, config).success(function (data, status, headers) {
+    	 $http.delete('/EasyShopWayNew/edit_map', data, config).success(function (data, status, headers) {
              console.log('clear map');
          })
          .error(function (data, status, header, config) {
              console.log('failed clear');
          });
     }
+    $scope.showConfirmDelete = function(ev, map) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+              .title('Would you like to delete your debt?')
+              .textContent('All of the banks have agreed to forgive you your debts.')
+              .ariaLabel('Lucky day')
+              .targetEvent(ev)
+              .ok('Please do it!')
+              .cancel('Sounds like a scam');
+
+        $mdDialog.show(confirm).then(function() {
+          $scope.status = 'You decided to get rid of your debt.';
+        }, function() {
+          $scope.status = 'You decided to keep your debt.';
+        });
+      };
 
 
 }).filter('range', function(){
@@ -870,4 +893,4 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         }
         return res;
       };
-    });
+      });
