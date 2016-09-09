@@ -697,24 +697,26 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     			game.draw();
     		}else{
     			
-    			var data = $.param({
-                    type: 'cupboard',
-                    values: JSON.stringify(values),
-                    bCount: b_count,
-                    mapId: mapId
+    			var sendData = $.param({
+                   type: 'cupboard',
+                   data: {
+                	   values: JSON.stringify(values),
+                       bCount: b_count,
+                       mapId: mapId
+                   }
                 });
     			console.log('SEND CUPBOARD');
-    			console.log(data);
+    			console.log(sendData);
     			var config = {
     		            headers: {
-    		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-    		            }
+    		                'Content-Type': 'application/json'
     		        }
-    			
-    			$http.post('/EasyShopWayNew/edit_map', data, config)
+    		     }
+    			$http.post('/EasyShopWayNew/edit_map', sendData, config)
                 .success(function (data, status, headers) {
                     console.log('update');
                     $scope.cupboards = data.cupboards;
+                    console.log($scope.cupboards);
                     initCupBoard();
                     game.draw();
                 })
