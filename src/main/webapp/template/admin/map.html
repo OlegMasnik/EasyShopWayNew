@@ -9,7 +9,7 @@
 <div ng-controller="MapCtrl">
     <md-input-container>
         <md-select ng-model="someModel" placeholder="Select a map">
-            <md-option ng-model="map" value="m"  ng-click="getMapByid(m)" ng-repeat="m in mapsName">{{ m.id }} {{m.nameEn}}</md-option>
+            <md-option ng-model="map" value="{{m}}"  ng-click="getMapByid(m)" ng-repeat="m in mapsName">{{ m.id }} {{m.nameEn}}</md-option>
             <md-option ng-click="createMap()">Add new</md-option>
         </md-select>
     </md-input-container>

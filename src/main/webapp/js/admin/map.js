@@ -1,6 +1,6 @@
 // ************************************************* MapCtrl ************************************************* 
 
-angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog) {
+angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $mdDialog) {
 	
 	var mapId;
 
@@ -767,12 +767,12 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     		console.log("Cancel");
     		$mdDialog.cancel();
     	};
-    	
+    	ea
     	$scope.answer = function () {
     		console.log('created ....');
     		
     		var data = $.param({
-    			type: 'create',
+    			type: 'createMap',
     			name_en: $scope.newMap.name_en,
     			name_uk: $scope.newMap.name_uk,
     			weight: $scope.newMap.width,
@@ -787,9 +787,10 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                 }
             }
     		
-    		$http.post('/EasyShopWayNew/edit_map')
+    		$http.post('/EasyShopWayNew/edit_map', data, config)
             .success(function (data, status, headers) {
                 console.log('create new');
+                $route.reload();
                 
             })
             .error(function (data, status, header, config) {
@@ -805,15 +806,27 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     	console.log($scope.paydesks);
     	console.log($scope.config.enter);
     	
-    	var data = $.param({
+    	var sendData = $.param({
     		type: 'saveMap',
-    		map_id: map.id,
-    		walls: $scope.walls,
-    		paydesks: $scope.paydesks,
-    		enter: $scope.config.enter
+    		data: JSON.stringify({
+    			mapId: map.id,
+    			walls: $scope.walls,
+    			paydesks: $scope.paydesks,
+    			enter: [$scope.config.enter]
+    		})
+//    		map_id: map.id,
+//    		walls: JSON.stringify({
+//    			values: $scope.walls
+//    		}),
+//    		paydesks: JSON.stringify({
+//    			values: $scope.paydesks
+//    		}),
+//    		enter: JSON.stringify({
+//    			values: [$scope.config.enter]
+//    		})
     	});
     	
-		console.log(data);
+		console.log(sendData);
 		
         var config = {
             headers: {
@@ -821,19 +834,20 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             }
         }
 		
-		$http.post('/EasyShopWayNew/edit_map')
+		$http.post('/EasyShopWayNew/edit_map', sendData, config)
         .success(function (data, status, headers) {
-            console.log('create new');
+            console.log('success save map');
         })
         .error(function (data, status, header, config) {
-            console.log('failed');
+            console.log('failed save map');
         });
     }
     
     $scope.clearMap = function(map){
+    	
     	var data = $.param({
-    		type: 'clear',
-    		map_id: map.id,
+    		type: 'clearMap',
+    		mapId: map.id,
     	});
     	
 		console.log(data);
@@ -844,9 +858,10 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             }
         }
 		
-		$http.put('/EasyShopWayNew/edit_map?type=clear&map_id' + map.id, config)
+		$http.post('/EasyShopWayNew/edit_map', config)
         .success(function (data, status, headers) {
-            console.log('clear map');
+//            console.log('clear map');
+        	 $route.reload();
         })
         .error(function (data, status, header, config) {
             console.log('failed clear');
@@ -902,4 +917,4 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         }
         return res;
       };
-      });
+});
