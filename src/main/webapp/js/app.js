@@ -98,60 +98,51 @@ app
 						'$scope',
 						'$http',
 						function ($scope, $http) {
+							$scope.sendRegData = function() {
+								console.log('hello ' + $scope.email)
+								console.log("date " + dateBirthday)
+								var data = $.param({
+									email : $scope.email,
+									password : $scope.password,
+									firstName : $scope.firstName,
+									lastName : $scope.lastName,
+									birthday : dateBirthday
+								});
+								console.log('Read ' + data);
 
-                $scope.sendRegData = function () {
-                    console.log('hello ' + $scope.email)
-                    console.log("date " + dateBirthday)
-                    var data = $.param({
-                        email: $scope.email,
-                        password: $scope.password,
-                        firstName: $scope.firstName,
-                        lastName: $scope.lastName,
-                        birthday: dateBirthday
-                    });
-                    console.log('Read ' + data);
+								var config = {
+									headers : {
+										'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+									}
+								}
+								var firstNameDefined = $('#fName1').val();
+								var lastNameDefined = $('#lName1').val();
+								if ($('#emailR').valid() && $('#passwordR').valid()
+										&& firstNameDefined != "" && lastNameDefined != "") {
 
-                    var config = {
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                        }
-                    }
-
-                    console.log($('#fName1').val());
-                    console.log($('#lName1').val());
-
-                    console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
-                    if ($('#emailR').valid() && $('#passwordR').valid()) {
-
-                        $http
-                            .post(
-                                '/EasyShopWayNew/reg',
-                                data, config)
-                            .success(
-                                function (data, status,
-                                    headers, config) {
-                                    console
-                                        .log("QWEER" + data.emailErrMsg);
-                                    $scope.error = data.emailErrMsg;
-                                    if (data.emailErrMsg == undefined) {
-                                        $scope.success = "Check your email";
-                                    }
-                                    // var esc = $
-                                    // .Event(
-                                    // "keydown", {
-                                    // keyCode: 27
-                                    // });
-                                    // $("body").trigger(esc);
-
-                                }).error(
-                                function (data, status,
-                                    header, config) {
-                                    console.log('fail');
-                                });
-                    } else {
-                        console.log("oq");
-                    }
-                };
+									$http
+											.post('/EasyShopWayNew/reg', data,
+													config)
+											.success(
+													function(data, status,
+															headers, config) {
+														console
+																.log("QWEER"
+																		+ data.emailErrMsg);
+														$scope.error = data.emailErrMsg;
+														if (data.emailErrMsg == undefined) {
+															$scope.success = "Check your email";
+														}
+													}).error(
+													function(data, status,
+															header, config) {
+														console.log('fail');
+													});
+								} else {
+									console.log("oq");
+									$scope.error = "Please fill all required fields.";
+								}
+							};
 						}]);
 
 app.controller('DatePickerCtrl', function ($scope) {
