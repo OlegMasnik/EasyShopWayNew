@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.alibaba.fastjson.JSONArray;
 import com.epam.easyshopway.model.Cupboard;
@@ -89,6 +88,7 @@ public class AdminMapServlet extends HttpServlet {
 				Map map = MapService.getById(Integer.valueOf(mapId));
 				MapService.delete(map.getId());
 				MapService.insert(map);
+				response.getWriter().write(map.getId());
 			}
 				break;
 			case "saveMap":{
@@ -216,6 +216,7 @@ public class AdminMapServlet extends HttpServlet {
 			Cupboard cupboard = new Cupboard(bCount.intValue(), "", "", true);
 			CupboardService.insert(cupboard);
 			int cupboardId = CupboardService.getLastInserted().getId();
+			System.out.println(values);
 			for (Long value : values) {
 				Placement placement = new Placement(id.intValue(), value.intValue(), "cupboard");
 				PlacementService.insert(placement);
@@ -223,6 +224,7 @@ public class AdminMapServlet extends HttpServlet {
 						PlacementService.getLastInserted().getId());
 				CupboardPlacementService.insert(cupboardPlacement);
 			}
+			System.out.println(values);
 			return id.intValue();
 		} catch (org.json.simple.parser.ParseException e) {
 			e.printStackTrace();

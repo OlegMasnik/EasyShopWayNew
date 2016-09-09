@@ -6,8 +6,6 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
 
     $scope.map = undefined;
     $scope.enter = undefined;
-// $scope.paydesks = [1, 5, 45, 25, 65];
-// $scope.walls = [2, 45, 10, 4, 8];
     $scope.paydesks = undefined;
     $scope.walls = undefined;
     
@@ -43,7 +41,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     })();
 
     $scope.getMapByid = function (m) {
-        // $scope.map = m;
+         $scope.map = m;
         console.log("get map by id " + m.id);
         mapId = m.id;
         $http({
@@ -72,7 +70,6 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     var game;
     var tCell;
     var arrayTarget = new Array();
-// var arrayPayDesk = new Array();
     var arrayCupBoard = new Array();
     var buffPath;
     var curTarget;
@@ -81,6 +78,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     var type;
     var waycolor = '#d80000';
     $scope.typeValue = undefined;
+    var targetsCopy;
 
     var Game = function (canvas, conf) {
         game = this;
@@ -102,9 +100,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
         this.canvas.width = this.width * this.cellSpace + this.borderWidth;
         this.canvas.height = this.height * this.cellSpace + this.borderWidth;
         this.player = new Player(this);
-// this.walls = new Map(this.width * this.height);
         this.way = new Map(this.width * this.height);
-// this.payDesk = new Map(this.width * this.height);
         this.cupBoard = new Map(this.width * this.height);
         this.targets = new Map(this.width * this.height);
         initCupBoard($scope.cupboards);
@@ -119,7 +115,6 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
             game.draw();
         }
 
-        var targetsCopy;
         this.getCellColor = function (cell) {
             switch (cell) {
             case this.player.cell:
@@ -518,7 +513,14 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
 
     $scope.openMap = function () {
         console.log("size " + $scope.config.width + $scope.config.height);
-        game = new Game(document.querySelector('canvas'), $scope.config);
+        if($scope.map.weight != $scope.config.width || $scope.map.height != $scope.config.height){
+        	console.log('create new map');
+        	$scope.map.weight = $scope.config.width;
+        	$scope.map.height = $scope.config.height;
+        	createNewMap($scope.map);
+        }else{
+        	game = new Game(document.querySelector('canvas'), $scope.config);
+        }
     }
 
     $scope.clearWay = function () {
@@ -538,6 +540,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     function clear() {
         game.way = new Map($scope.config.width * $scope.config.height);
         game.targets = new Map($scope.config.width * $scope.config.height);
+        targetsCopy = game.targets.map;
     }
     
     function initCupBoard(obj){
@@ -697,10 +700,12 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     		$mdDialog.cancel();
     	};
     	
-    	$scope.answer = function (values, b_count) {
+    	$scope.answer = function (values) {
     		console.log("Send");
     		console.log(values);
-    		console.log(b_count);
+    		console.log($scope.b_count);
+    		console.log($scope.name_en);
+    		console.log($scope.name_uk);
     		if(typeof(b_count) == 'undefined'){
     			values.map(function(e, i) {
     				game.cupBoard.map[e] = false;
@@ -713,6 +718,8 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
                    data: JSON.stringify({
                 	   values: values,
                        bCount: b_count,
+                       name_en: name_en,
+                       name_uk: name_uk,
                        mapId: mapId
                    })
                 });
@@ -746,7 +753,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     		controller: CreateMapDialogController,
     		templateUrl: 'template/admin/create.map.tmpl.html',
     		parent: angular.element(document.body),
-    		fullscreen: $scope.customFullscreen // Only for -xs, -sm
+    		fullscreen: $scope.customFullscreen 
     	})
     	.then(function (answer) {
     		
@@ -767,37 +774,41 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     		console.log("Cancel");
     		$mdDialog.cancel();
     	};
-    	ea
     	$scope.answer = function () {
     		console.log('created ....');
-    		
-    		var data = $.param({
-    			type: 'createMap',
-    			name_en: $scope.newMap.name_en,
-    			name_uk: $scope.newMap.name_uk,
-    			weight: $scope.newMap.width,
-    			height: $scope.newMap.height
-    		});
-    		
-    		console.log(data);
-    		
-            var config = {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                }
-            }
-    		
-    		$http.post('/EasyShopWayNew/edit_map', data, config)
-            .success(function (data, status, headers) {
-                console.log('create new');
-                $route.reload();
-                
-            })
-            .error(function (data, status, header, config) {
-                console.log('failed');
-            });
+    		createNewMap($scope.newMap);
     		$mdDialog.hide();
     	};
+    }
+    
+    function createNewMap(m){
+    	console.log("create new map");
+    	console.log(m);
+    	var data = $.param({
+			type: 'createMap',
+			name_en: m.nameEn,
+			name_uk: m.nameUk,
+			weight: m.weight,
+			height: m.height
+		});
+		
+		console.log(data);
+		
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+		
+		$http.post('/EasyShopWayNew/edit_map', data, config)
+        .success(function (data, status, headers) {
+            console.log('create new');
+            $route.reload();
+            
+        })
+        .error(function (data, status, header, config) {
+            console.log('failed');
+        });
     }
     
     $scope.saveMap = function(map){
@@ -814,16 +825,6 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     			paydesks: $scope.paydesks,
     			enter: [$scope.config.enter]
     		})
-//    		map_id: map.id,
-//    		walls: JSON.stringify({
-//    			values: $scope.walls
-//    		}),
-//    		paydesks: JSON.stringify({
-//    			values: $scope.paydesks
-//    		}),
-//    		enter: JSON.stringify({
-//    			values: [$scope.config.enter]
-//    		})
     	});
     	
 		console.log(sendData);
@@ -844,12 +845,10 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     }
     
     $scope.clearMap = function(map){
-    	
     	var data = $.param({
     		type: 'clearMap',
     		mapId: map.id,
     	});
-    	
 		console.log(data);
 		
         var config = {
@@ -857,11 +856,11 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
         }
-		
-		$http.post('/EasyShopWayNew/edit_map', config)
+		$http.post('/EasyShopWayNew/edit_map', data, config)
         .success(function (data, status, headers) {
-//            console.log('clear map');
         	 $route.reload();
+        	 console.log(data);
+        	 mapId = data;
         })
         .error(function (data, status, header, config) {
             console.log('failed clear');
@@ -874,6 +873,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
 		game.cupBoard = new Map(game.width * game.height);
 		game.draw();
     }
+    
     function deleteMap(m){
     	 var config = {
     	            headers: {
@@ -888,8 +888,6 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
          });
     }
     $scope.showConfirmDelete = function(ev, map) {
-        // Appending dialog to document.body to cover sidenav in docs app
-    	
     	if(typeof(map) == 'undefined'){
     		
     	}else{
@@ -909,6 +907,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
       };
 
 
+      
 }).filter('range', function(){
     return function(n) {
         var res = [];
