@@ -59,53 +59,27 @@ public class AdminMapServlet extends HttpServlet {
 				response.getWriter().write(status);
 			}
 				break;
-			case "cupboard": {
-				String data = request.getParameter("values");
-				System.out.println(data);
-				int mapId = Integer.parseInt(request.getParameter("mapId"));
-				int bCount = Integer.parseInt(request.getParameter("bCount"));
-				int status = doForCupboard(data, bCount);
-				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
-				response.getWriter().write(cupboards.toString());
-			}
-				break;
 		}
 			
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}		
+	
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String type = request.getParameter("type");
 		
-		type = request.getParameter("type");
 		
 		switch (type) {
 			case "cupboard": {
-				String data = request.getParameter("values");
-				System.out.println(data);
-				int mapId = Integer.parseInt(request.getParameter("mapId"));
-				int bCount = Integer.parseInt(request.getParameter("bCount"));
-				int status = doForCupboard(data, bCount);
+				String data = request.getParameter("data");
+				int mapId = doForCupboard(data);
 				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
 				response.getWriter().write(cupboards.toString());
 			}
 				break;
-		}
+		}	
 	}
-		
+
 	
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String type = req.getParameter("type");
-		
-		switch (type) {
-		
-
-		default:
-			break;
-		}
-		
-		
-	}
-
 	@SuppressWarnings("unchecked")
 	private JSONArray doForMapsName(){
 		JSONArray mapNameArray = new JSONArray();
@@ -181,13 +155,14 @@ public class AdminMapServlet extends HttpServlet {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	private int doForCupboard(String jsonData, int bCount){
+	private int doForCupboard(String jsonData){
 		try{
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject)parser.parse(jsonData);
 			Long id = (Long) obj.get("mapId");
+			Long bCount  = (Long) obj.get("bCount");
 			List<Long> values = (List<Long>)obj.get("values");
-			Cupboard cupboard = new Cupboard(bCount, "", "", true);
+			Cupboard cupboard = new Cupboard(bCount.intValue(), "", "", true);
 			CupboardService.insert(cupboard);
 			int cupboardId = CupboardService.getLastInserted().getId();
 			for (Long value : values){
@@ -196,7 +171,7 @@ public class AdminMapServlet extends HttpServlet {
 				CupboardPlacement cupboardPlacement = new CupboardPlacement(cupboardId, PlacementService.getLastInserted().getId());
 				CupboardPlacementService.insert(cupboardPlacement);
 			}
-			return 1;
+			return id.intValue();
 		}catch(org.json.simple.parser.ParseException e){
 			e.printStackTrace();
 		}
@@ -238,10 +213,10 @@ public class AdminMapServlet extends HttpServlet {
 		array.add(1);
 		array.add(2);
 		array.add(3);
-		object.put("values", array);
+		object.put("values", "[1,2,3]");
 		JSONParser parser = new JSONParser();
 		JSONObject ob = (JSONObject)parser.parse(object.toString());
-		System.out.println((List<Long>)ob.get("values"));
+		System.out.println(ob.get("values"));
 	}
 	
 }
