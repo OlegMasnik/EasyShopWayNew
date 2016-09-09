@@ -10,22 +10,13 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
-		<p ng-model="i" ng-repeat="i in item.values">{{i}}</p>
-		<p>hello world</p>
-		<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
-</canvas>
+		<div layout="row" ng-repeat="k in item.board_count | range">
+			<md-input-container ng-repeat="i in item.values" flex>
+			<label>{{k}}{{$index}}</label>
+			<input type="text"></md-input-container>
+		</div>
+		</script>
 		<md-dialog-actions layout="row"> <span flex></span>
 		<md-button ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions>
 </form>
 </md-dialog>
-<script>
-	var borderWidth = 1;
-	var cellSize = 10;
-	var cellSpace = cellSize + borderWidth;
-	var width = 5;
-	var height = 5;
-	var canvas = document.querySelector('#fillCupboard');
-	var ctx1 = canvas.canvas.getContext('2d');
-	canvas.width = width * cellSpace + borderWidth;
-	canvas.height = height * cellSpace + borderWidth;
-</script>

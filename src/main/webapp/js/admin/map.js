@@ -827,6 +827,27 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 		game.cupBoard = new Map(game.width * game.height);
 		game.draw();
     }
+    $scope.deleteMap = function(m){
+    	 var config = {
+    	            headers: {
+    	                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+    	            }
+    	        }
+    	 $http.delete('/EasyShopWayNew/edit_map?map_id=' + m.id, config).success(function (data, status, headers) {
+             console.log('clear map');
+         })
+         .error(function (data, status, header, config) {
+             console.log('failed clear');
+         });
+    }
 
 
-});
+}).filter('range', function(){
+    return function(n) {
+        var res = [];
+        for (var i = 0; i < n; i++) {
+          res.push(i);
+        }
+        return res;
+      };
+    });

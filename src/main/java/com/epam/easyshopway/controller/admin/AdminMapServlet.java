@@ -1,4 +1,4 @@
-package com.epam.easyshopway.controller.admin;
+	package com.epam.easyshopway.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
@@ -72,8 +72,6 @@ public class AdminMapServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-	
-	
 	
 	@SuppressWarnings("unchecked")
 	private JSONArray doForMapsName(){
