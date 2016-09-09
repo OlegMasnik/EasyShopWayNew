@@ -58,7 +58,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             $scope.walls = response.data.walls;
             $scope.paydesks = response.data.paydesks;
             $scope.cupboards = response.data.cupboards;
-            
             console.log($scope.cupboards)
             
             $scope.config.width = $scope.map.weight;
@@ -129,11 +128,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             case this.enter:
                 return '#252';
             }
-// if (this.payDesk.map) return '#ff870d';
-// if (this.way.map[cell]) return waycolor;
-// if (this.cupBoard.map[cell]) return '#038ef0';
-// if (this.targets.map[cell]) return '#522';
-// if (this.walls.map[cell]) return '#555';
             if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
             if (this.way.map[cell]) return waycolor;
@@ -272,13 +266,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                     case 'edit':
                         console.log("CELL #" + cell)
 
-// for (var q = 0; q < arrayCupBoard.length; q++) {
-// for (var w = 0; w < arrayCupBoard[q].length; w++) {
-// if (cell == arrayCupBoard[q][w]) {
-// console.log("You click on: " + arrayCupBoard[q]);
-// }
-// }
-// }
                         for (var q = 0; q < $scope.cupboards.length; q++) {
                             for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
                                 if (cell == $scope.cupboards[q].values[w]) {
@@ -554,6 +541,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     }
     
     function initCupBoard(obj){
+    	game.cupBoard = new Map(game.width * game.height);
     	$scope.cupboards = obj;
     	for(var i = 0; i<obj.length; i++){
     		console.log(obj[i]);
@@ -649,15 +637,18 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 		        }
 		     }
         	
-        	$http.delete('EasyShopWayNew/edit_map?type=cupboard&id=' + item.id, config)
+        	$http.delete('/EasyShopWayNew/edit_map?type=cupboard&id=' + item.id + '&mapId=' + mapId, config)
         	   .then(
         	       function(response){
-        	    	   console.log('delete success')
+                       initCupBoard(response.data);
+                       console.log($scope.cupboards);
+                       game.draw();
         	       }, 
         	       function(response){
         	    	   console.log('delete failed')
         	       }
         	    );
+        	 $mdDialog.hide();
         }
     }
     
@@ -799,6 +790,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     		$http.post('/EasyShopWayNew/edit_map')
             .success(function (data, status, headers) {
                 console.log('create new');
+                
             })
             .error(function (data, status, header, config) {
                 console.log('failed');
@@ -814,7 +806,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     	console.log($scope.config.enter);
     	
     	var data = $.param({
-    		type: 'save',
+    		type: 'saveMap',
     		map_id: map.id,
     		walls: $scope.walls,
     		paydesks: $scope.paydesks,
@@ -868,21 +860,16 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 		game.draw();
     }
     function deleteMap(m){
-    	var data = $.param({
-    		type: 'map',
-    		mapId: m.id
-    	});
-    	
     	 var config = {
     	            headers: {
     	                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
     	            }
     	        }
-    	 $http.delete('/EasyShopWayNew/edit_map', data, config).success(function (data, status, headers) {
-             console.log('clear map');
+    	 $http.delete('/EasyShopWayNew/edit_map?type=map&id=' + m.id, config).success(function (data, status, headers) {
+             console.log('delete map');
          })
          .error(function (data, status, header, config) {
-             console.log('failed clear');
+             console.log('failed delete');
          });
     }
     $scope.showConfirmDelete = function(ev, map) {
