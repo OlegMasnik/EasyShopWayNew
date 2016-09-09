@@ -84,20 +84,41 @@ public class AdminMapServlet extends HttpServlet {
 				break;
 				
 			case "clearMap":{
-				String mapId = request.getParameter("mapId");
-				Map map = MapService.getById(Integer.valueOf(mapId));
-				MapService.delete(map.getId());
+				Integer mapId = Integer.valueOf(request.getParameter("mapId"));
+				List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
+				for (Cupboard cupboard : cupboards){
+					CupboardService.delete(cupboard.getId());
+				}
+				Map map = MapService.getById(mapId);
+				MapService.delete(mapId);
 				MapService.insert(map);
 				response.getWriter().write(map.getId());
 			}
 				break;
+				
 			case "saveMap":{
 				String data = request.getParameter("data");
 				int mapId = saveMap(data);
 //				JSONArray map = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
 //				response.getWriter().write(cupboards.toString());
 			}
-			break;
+				break;
+				
+			case "changeSize":{
+				Integer mapId = Integer.valueOf(request.getParameter("mapId"));
+				List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
+				for (Cupboard cupboard : cupboards){
+					CupboardService.delete(cupboard.getId());
+				}
+				MapService.delete(mapId);
+				Map map = new Map();
+				map.setHeight(Integer.valueOf(request.getParameter("heidht")));
+				map.setWeight(Integer.valueOf(request.getParameter("weight")));
+				map.setNameEn(request.getParameter("name_en"));
+				map.setNameUk(request.getParameter("name_uk"));
+				MapService.insert(map);
+			}
+				break;
 		}
 	}
 	
@@ -109,9 +130,12 @@ public class AdminMapServlet extends HttpServlet {
 		
 		switch(type){
 			case "map":{
-				Integer id = Integer.valueOf(req.getParameter("id"));
-				System.out.println(id);
-				MapService.delete(id);
+				Integer mapId = Integer.valueOf(req.getParameter("id"));
+				List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
+				for (Cupboard cupboard : cupboards){
+					CupboardService.delete(cupboard.getId());
+				}
+				MapService.delete(mapId);	
 			}
 			break;
 			
@@ -213,7 +237,9 @@ public class AdminMapServlet extends HttpServlet {
 			Long id = (Long) obj.get("mapId");
 			Long bCount = (Long) obj.get("bCount");
 			List<Long> values = (List<Long>) obj.get("values");
-			Cupboard cupboard = new Cupboard(bCount.intValue(), "", "", true);
+			String nameEn = (String)obj.get("name_en");
+			String nameUk = (String)obj.get("name_uk");
+			Cupboard cupboard = new Cupboard(bCount.intValue(), nameEn, nameUk, true);
 			CupboardService.insert(cupboard);
 			int cupboardId = CupboardService.getLastInserted().getId();
 			System.out.println(values);

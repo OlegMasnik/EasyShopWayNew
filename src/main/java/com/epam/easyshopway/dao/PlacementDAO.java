@@ -139,4 +139,5 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 		statement.close();
 		return placements == null ? null : placements.iterator().next();
 	}
+	
 }

@@ -72,4 +72,15 @@ public class CupboardService {
 		}
 		return null;
 	}
+	
+	public static List<Cupboard> getByMapId(Integer mapId) {
+		try (CupbordDAO cupboardDAO = new CupbordDAO()) {
+			return cupboardDAO.getByMapId(mapId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
