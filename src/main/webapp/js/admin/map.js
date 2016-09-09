@@ -514,10 +514,35 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     $scope.openMap = function () {
         console.log("size " + $scope.config.width + $scope.config.height);
         if($scope.map.weight != $scope.config.width || $scope.map.height != $scope.config.height){
-        	console.log('create new map');
+        	console.log('change map size');
         	$scope.map.weight = $scope.config.width;
         	$scope.map.height = $scope.config.height;
-        	createNewMap($scope.map);
+        	var data = $.param({
+    			type: 'changeSize',
+    			mapId: $scope.map.id,
+    			name_en: $scope.map.name_en,
+    			name_uk: $scope.map.name_uk,
+    			weight: $scope.config.width,
+    			height: $scope.config.height
+    		});
+    		
+    		console.log(data);
+    		
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+    		
+    		$http.post('/EasyShopWayNew/edit_map', data, config)
+            .success(function (data, status, headers) {
+                console.log('create new');
+                $route.reload();
+                
+            })
+            .error(function (data, status, header, config) {
+                console.log('failed');
+            });
         }else{
         	game = new Game(document.querySelector('canvas'), $scope.config);
         }
@@ -706,7 +731,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     		console.log($scope.b_count);
     		console.log($scope.name_en);
     		console.log($scope.name_uk);
-    		if(typeof(b_count) == 'undefined'){
+    		if(typeof($scope.b_count) == 'undefined'){
     			values.map(function(e, i) {
     				game.cupBoard.map[e] = false;
     			});
@@ -717,9 +742,9 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
                    type: 'cupboard',
                    data: JSON.stringify({
                 	   values: values,
-                       bCount: b_count,
-                       name_en: name_en,
-                       name_uk: name_uk,
+                       bCount: $scope.b_count,
+                       name_en: $scope.name_en,
+                       name_uk: $scope.name_uk,
                        mapId: mapId
                    })
                 });
@@ -882,6 +907,7 @@ angular.module('MyApp').controller('MapCtrl', function ($route, $scope, $http, $
     	        }
     	 $http.delete('/EasyShopWayNew/edit_map?type=map&id=' + m.id, config).success(function (data, status, headers) {
              console.log('delete map');
+             $route.reload();
          })
          .error(function (data, status, header, config) {
              console.log('failed delete');

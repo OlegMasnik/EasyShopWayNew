@@ -112,7 +112,7 @@ public class AdminMapServlet extends HttpServlet {
 				}
 				MapService.delete(mapId);
 				Map map = new Map();
-				map.setHeight(Integer.valueOf(request.getParameter("heidht")));
+				map.setHeight(Integer.valueOf(request.getParameter("height")));
 				map.setWeight(Integer.valueOf(request.getParameter("weight")));
 				map.setNameEn(request.getParameter("name_en"));
 				map.setNameUk(request.getParameter("name_uk"));
@@ -132,6 +132,8 @@ public class AdminMapServlet extends HttpServlet {
 			case "map":{
 				Integer mapId = Integer.valueOf(req.getParameter("id"));
 				List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
+				System.out.println(mapId);
+				System.out.println(cupboards);
 				for (Cupboard cupboard : cupboards){
 					CupboardService.delete(cupboard.getId());
 				}
@@ -163,8 +165,8 @@ public class AdminMapServlet extends HttpServlet {
 			for (Map i : maps) {
 				JSONObject map = new JSONObject();
 				map.put("id", i.getId());
-				map.put("nameEn", i.getNameEn());
-				map.put("nameUk", i.getNameUk());
+				map.put("name_en", i.getNameEn());
+				map.put("name_uk", i.getNameUk());
 				mapNameArray.add(map);
 			}
 		}
@@ -181,8 +183,8 @@ public class AdminMapServlet extends HttpServlet {
 			m.put("id", map.getId());
 			m.put("weight", map.getWeight());
 			m.put("height", map.getHeight());
-			m.put("nameEn", map.getNameEn());
-			m.put("nameUk", map.getNameUk());
+			m.put("name_en", map.getNameEn());
+			m.put("name_uk", map.getNameUk());
 			response.put("map", m);
 
 			JSONArray enters = getPlaces(PlacementService.getEntersByMapId(mapId));

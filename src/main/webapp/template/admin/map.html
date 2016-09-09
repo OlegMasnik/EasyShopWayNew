@@ -9,11 +9,11 @@
 <div ng-controller="MapCtrl">
     <md-input-container>
         <md-select ng-model="someModel" placeholder="Select a map">
-            <md-option ng-model="map" value="{{m}}"  ng-click="getMapByid(m)" ng-repeat="m in mapsName">{{ m.id }} {{m.nameEn}}</md-option>
+            <md-option ng-model="map" value="{{m}}"  ng-click="getMapByid(m)" ng-repeat="m in mapsName">{{ m.id }} {{m.name_en}}</md-option>
             <md-option ng-click="createMap()">Add new</md-option>
         </md-select>
     </md-input-container>
-    <h1>{{mapId}}</h1>
+    
     <form>
         <md-input-container>
             <label>Width</label>
@@ -21,7 +21,7 @@
         <md-input-container>
             <label>Heigth</label>
             <input type="number" ng-model="config.height" min=2 max=400> </md-input-container>
-        <md-button ng-click="openMap(map)">Open map</md-button>
+        <md-button ng-click="openMap()">Open map</md-button>
     </form>
     <md-radio-group name="type" layout="row">
         <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">Pay Desk

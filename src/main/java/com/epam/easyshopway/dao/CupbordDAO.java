@@ -12,11 +12,11 @@ import com.epam.easyshopway.model.Cupboard;
 public class CupbordDAO extends AbstractDAO<Cupboard> {
 	private Transformer<Cupboard> transformer;
 
-	private final String ADD_CUPBOARD = "INSERT INTO cupboard(board_amount, description_en, description_uk, active) VALUES (?, ?, ?, ?)";
+	private final String ADD_CUPBOARD = "INSERT INTO cupboard(board_amount, description_en, description_uk) VALUES (?, ?, ?)";
 	private final String DELETE_CUPBOARD_BY_ID = "DELETE FROM cupboard WHERE id = ?";
-	private final String UPDATE_CUPBOARD_BY_ID = "UPDATE cupboard SET board_amount=?, description_en=?, description_uk=?, active=? WHERE id=?";
+	private final String UPDATE_CUPBOARD_BY_ID = "UPDATE cupboard SET board_amount=?, description_en=?, description_uk=? WHERE id=?";
 	private final String GET_CUPBOARD_BY_ID = "SELECT * FROM cupboard WHERE id=?";
-	private final String GET_ALL_CUPBOARD = "SELECT * FROM cupboard WHERE active=1";
+	private final String GET_ALL_CUPBOARD = "SELECT * FROM cupboard;";
 	private final String GET_LAST_INSERTED = "SELECT * FROM cupboard c WHERE c.id IN (SELECT MAX(id) FROM cupboard c1);";
 	private final String GET_CUPBOARD_BY_MAP_ID = "SELECT c.id, c.description_en, c.description_uk, c.board_amount FROM cupboard c JOIN cupboard_placement cp ON c.id = cp.cupboard_id JOIN placement p ON cp.placement_id = p.id WHERE p.map_id = ? GROUP BY c.id;";
 
@@ -30,7 +30,6 @@ public class CupbordDAO extends AbstractDAO<Cupboard> {
 		statement.setInt(1, cupboard.getBoardAmount());
 		statement.setString(2, cupboard.getDescriptionEn());
 		statement.setString(3, cupboard.getDescriptionUk());
-		statement.setInt(4, 1);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
@@ -42,8 +41,7 @@ public class CupbordDAO extends AbstractDAO<Cupboard> {
 		statement.setInt(1, cupboard.getBoardAmount());
 		statement.setString(2, cupboard.getDescriptionEn());
 		statement.setString(3, cupboard.getDescriptionUk());
-		statement.setInt(4, 1);
-		statement.setInt(5, id);
+		statement.setInt(4, id);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
