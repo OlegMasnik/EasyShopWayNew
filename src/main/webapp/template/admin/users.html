@@ -31,14 +31,14 @@
 				<th>Option</th>
 			</tr>
 		</thead>
-		<tbody md-body>
+		<tbody md-body ng-controller="MailCtrl as mail">
 			<tr md-row
 				ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
 				<td md-cell>{{row.fn}}</td>
 				<td md-cell>{{row.ln}}</td>
 				<td md-cell>{{row.e}}</td>
-				<td><md-button ng-click="" class="md-fab md-mini md-primary"
-						aria-label="Use Android"><i class="material-icons">mail</i>
+				<td><md-button ng-click="mail.showMailDialog(row)" class="md-fab md-mini md-primary"
+						aria-label="Modal1111"><i class="material-icons">mail</i>
 					</md-button>
 					<md-button ng-show="{{!row.active}}" ng-model="row.e" ng-click="active(row, $index)" class="md-fab md-mini red-btn"
 						><i class="material-icons">not_interested</i>

@@ -14,7 +14,7 @@ public class FullProductListDTO extends SuperDTO {
 			+ " JOIN list_and_product  ON product_list.id = list_and_product.product_list_id JOIN product"
 			+ " ON list_and_product.product_id = product.id   JOIN product_type  "
 			+ "ON product.product_type_id = product_type.id WHERE product_list.user_id LIKE ? "
-			+ "ORDER BY product_list.date, product_list.time";
+			+ "ORDER BY product_list.id DESC";
 
 	public List<FullProductList> getProductListByUserId(Integer id)
 			throws SQLException, InstantiationException, IllegalAccessException {

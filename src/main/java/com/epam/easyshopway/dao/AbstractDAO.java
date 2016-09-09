@@ -16,6 +16,7 @@ public abstract class AbstractDAO<E> implements AutoCloseable {
 	public AbstractDAO() {
 		super();
 		connection = ConnectionManager.getInstance().getConnectionPool().getConnection();
+		System.out.println("Get connection by " + this.getClass().getName() + "\n\t" + connection);
 	}
 
 	public abstract int insert(E el) throws SQLException;
@@ -31,6 +32,7 @@ public abstract class AbstractDAO<E> implements AutoCloseable {
 	@Override
 	public void close() throws Exception {
 		ConnectionManager.getInstance().getConnectionPool().putConnection(connection);
+		System.out.println("---Close connection by " + this.getClass().getName() + "\n\t" + connection);
 	}
 
 	public Connection getConnection() {

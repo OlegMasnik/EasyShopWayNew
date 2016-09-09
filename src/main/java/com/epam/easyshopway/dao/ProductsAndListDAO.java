@@ -12,7 +12,6 @@ import com.epam.easyshopway.model.ProductList;
 import com.epam.easyshopway.model.ProductsAndList;
 
 public class ProductsAndListDAO extends AbstractDAO<ProductsAndList> {
-	private Connection connection;
 	private Transformer<ProductsAndList> transformer;
 	private final String ADD_PRODUCT_TO_LIST = "INSERT INTO list_and_product (product_id, product_list_id) VALUES (?, ?)";
 	private final String DELETE_list_and_product_BY_INDEX = "DELETE FROM list_and_product WHERE id=?";
