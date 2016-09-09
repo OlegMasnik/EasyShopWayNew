@@ -699,17 +699,17 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     			
     			var sendData = $.param({
                    type: 'cupboard',
-                   data: {
-                	   values: JSON.stringify(values),
+                   data: JSON.stringify({
+                	   values: values,
                        bCount: b_count,
                        mapId: mapId
-                   }
+                   })
                 });
     			console.log('SEND CUPBOARD');
     			console.log(sendData);
     			var config = {
     		            headers: {
-    		                'Content-Type': 'application/json'
+    		            	'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
     		        }
     		     }
     			$http.post('/EasyShopWayNew/edit_map', sendData, config)

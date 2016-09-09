@@ -23,69 +23,76 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
+import com.google.gson.Gson;
 import com.sun.xml.internal.ws.wsdl.writer.document.Service;
 
 public class AdminMapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private String type;
-       
-    public AdminMapServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("utf-8");
-		type = request.getParameter("type");
-		
-		switch (type) {
-			case "mapsName":{
-				JSONArray responseJSON = doForMapsName();
-				response.getWriter().write(responseJSON.toString());
-			}
-				break;
-	
-			case "map":{
-				Integer mapId = Integer.valueOf(request.getParameter("id"));
-				JSONObject responseJSON = doForMap(mapId);
-				responseJSON = doForMap(mapId);
-				response.getWriter().write(responseJSON.toString());
-			}	
-				break;
-				
-			case "saveMap":{
-				String data = request.getParameter("data");
-				int status = doForSaveMap(data);
-				response.getWriter().write(status);
-			}
-				break;
-		}
-			
-	}		
-	
-	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String type = request.getParameter("type");
-		
-		
-		switch (type) {
-			case "cupboard": {
-				String data = request.getParameter("data");
-				int mapId = doForCupboard(data);
-				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
-				response.getWriter().write(cupboards.toString());
-			}
-				break;
-		}	
+	private String type;
+
+	public AdminMapServlet() {
+		super();
 	}
 
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
+		type = request.getParameter("type");
+
+		switch (type) {
+		case "mapsName": {
+			JSONArray responseJSON = doForMapsName();
+			response.getWriter().write(responseJSON.toString());
+		}
+			break;
+
+		case "map": {
+			Integer mapId = Integer.valueOf(request.getParameter("id"));
+			JSONObject responseJSON = doForMap(mapId);
+			responseJSON = doForMap(mapId);
+			response.getWriter().write(responseJSON.toString());
+		}
+			break;
+
+		case "saveMap": {
+			String data = request.getParameter("data");
+			int status = doForSaveMap(data);
+			response.getWriter().write(status);
+		}
+			break;
+		}
+
+	}
+
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String type = request.getParameter("type");
+		
+		switch (type) {
+		case "cupboard": {
+			String data = request.getParameter("data");
+			System.out.println("DAta " + data);
+			int mapId = doForCupboard(data);
+			JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
+			response.getWriter().write(cupboards.toString());
+		}
+			break;
+		}
+	}
+
 	@SuppressWarnings("unchecked")
-	private JSONArray doForMapsName(){
+	private JSONArray doForMapsName() {
 		JSONArray mapNameArray = new JSONArray();
 		List<Map> maps = MapService.getAll();
-		if (maps != null){
-			for (Map i : maps){
+		if (maps != null) {
+			for (Map i : maps) {
 				JSONObject map = new JSONObject();
 				map.put("id", i.getId());
 				map.put("nameEn", i.getNameEn());
@@ -97,11 +104,11 @@ public class AdminMapServlet extends HttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
-	private JSONObject doForMap (Integer mapId){
+	private JSONObject doForMap(Integer mapId) {
 		JSONObject response = new JSONObject();
-	
+
 		Map map = MapService.getById(mapId);
-		if (map != null){
+		if (map != null) {
 			JSONObject m = new JSONObject();
 			m.put("id", map.getId());
 			m.put("weight", map.getWeight());
@@ -109,7 +116,7 @@ public class AdminMapServlet extends HttpServlet {
 			m.put("nameEn", map.getNameEn());
 			m.put("nameUk", map.getNameUk());
 			response.put("map", m);
-		
+
 			JSONArray enters = getPlaces(PlacementService.getEntersByMapId(mapId));
 			JSONArray paydesks = getPlaces(PlacementService.getPayDesksByMapId(mapId));
 			JSONArray walls = getPlaces(PlacementService.getWallsByMapId(mapId));
@@ -122,29 +129,29 @@ public class AdminMapServlet extends HttpServlet {
 		}
 		return response;
 	}
-			
-	private JSONArray getPlaces(List<Placement> placements){
+
+	private JSONArray getPlaces(List<Placement> placements) {
 		JSONArray places = new JSONArray();
-		if (placements != null){
+		if (placements != null) {
 			for (Placement placement : placements)
 				places.add(placement.getPlace());
 		}
 		return places;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private JSONArray cupboardsToJSON (List<CupboardInformation> cupboards){
+	private JSONArray cupboardsToJSON(List<CupboardInformation> cupboards) {
 		JSONArray result = new JSONArray();
-		if (cupboards != null){
+		if (cupboards != null) {
 			int size = cupboards.size();
-			for (int i=0; i<size; i++){
+			for (int i = 0; i < size; i++) {
 				JSONObject cupboard = new JSONObject();
 				JSONArray values = new JSONArray();
 				Integer id = cupboards.get(i).getCupboardId();
 				cupboard.put("id", id);
-				do{
+				do {
 					values.add(cupboards.get(i++).getPlace());
-				}while (i<size && id.equals(cupboards.get(i).getCupboardId()));
+				} while (i < size && id.equals(cupboards.get(i).getCupboardId()));
 				i--;
 				cupboard.put("values", values);
 				cupboard.put("board_count", cupboards.get(i).getBoardAmount());
@@ -152,62 +159,62 @@ public class AdminMapServlet extends HttpServlet {
 			}
 		}
 		return result;
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
-	private int doForCupboard(String jsonData){
-		try{
+	private int doForCupboard(String jsonData) {
+		try {
 			JSONParser parser = new JSONParser();
-			JSONObject obj = (JSONObject)parser.parse(jsonData);
+			JSONObject obj = (JSONObject) parser.parse(jsonData);
 			Long id = (Long) obj.get("mapId");
-			Long bCount  = (Long) obj.get("bCount");
-			List<Long> values = (List<Long>)obj.get("values");
+			Long bCount = (Long) obj.get("bCount");
+			List<Long> values = (List<Long>) obj.get("values");
 			Cupboard cupboard = new Cupboard(bCount.intValue(), "", "", true);
 			CupboardService.insert(cupboard);
 			int cupboardId = CupboardService.getLastInserted().getId();
-			for (Long value : values){
+			for (Long value : values) {
 				Placement placement = new Placement(id.intValue(), value.intValue(), "cupboard");
 				PlacementService.insert(placement);
-				CupboardPlacement cupboardPlacement = new CupboardPlacement(cupboardId, PlacementService.getLastInserted().getId());
+				CupboardPlacement cupboardPlacement = new CupboardPlacement(cupboardId,
+						PlacementService.getLastInserted().getId());
 				CupboardPlacementService.insert(cupboardPlacement);
 			}
 			return id.intValue();
-		}catch(org.json.simple.parser.ParseException e){
+		} catch (org.json.simple.parser.ParseException e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private int doForSaveMap (String jsonData){
-		try{
+	private int doForSaveMap(String jsonData) {
+		try {
 			JSONParser parser = new JSONParser();
-			JSONObject obj = (JSONObject)parser.parse(jsonData);
+			JSONObject obj = (JSONObject) parser.parse(jsonData);
 			Long id = (Long) obj.get("mapId");
-			List<Long> walls = (List<Long>)obj.get("walls");
-			List<Long> enters = (List<Long>)obj.get("enters");
-			List<Long> paydesks = (List<Long>)obj.get("paydesks");
+			List<Long> walls = (List<Long>) obj.get("walls");
+			List<Long> enters = (List<Long>) obj.get("enters");
+			List<Long> paydesks = (List<Long>) obj.get("paydesks");
 			insertPlacements(id, walls, "wall");
 			insertPlacements(id, enters, "enter");
 			insertPlacements(id, paydesks, "paydesk");
 			return 1;
-		}catch(org.json.simple.parser.ParseException e){
+		} catch (org.json.simple.parser.ParseException e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
-	
-	private void insertPlacements(Long mapId, List<Long> values, String type){
-		if(values !=null){
-			for (Long value : values){
+
+	private void insertPlacements(Long mapId, List<Long> values, String type) {
+		if (values != null) {
+			for (Long value : values) {
 				Placement placement = new Placement(mapId.intValue(), value.intValue(), type);
 				PlacementService.insert(placement);
 			}
 		}
 	}
-	
-	
-	public static void main (String[] args) throws ParseException{
+
+	public static void main(String[] args) throws ParseException {
 		JSONObject object = new JSONObject();
 		JSONArray array = new JSONArray();
 		array.add(1);
@@ -215,10 +222,8 @@ public class AdminMapServlet extends HttpServlet {
 		array.add(3);
 		object.put("values", "[1,2,3]");
 		JSONParser parser = new JSONParser();
-		JSONObject ob = (JSONObject)parser.parse(object.toString());
+		JSONObject ob = (JSONObject) parser.parse(object.toString());
 		System.out.println(ob.get("values"));
 	}
-	
+
 }
-
-
