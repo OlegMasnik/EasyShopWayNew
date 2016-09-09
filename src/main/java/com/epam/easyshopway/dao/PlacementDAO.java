@@ -23,6 +23,7 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 	private final String GET_WALLS_BY_MAP_ID = "SELECT * FROM placement p WHERE p.map_id = ? AND type LIKE ?;";
 	private final String GET_PAYDESKS_BY_MAP_ID = "SELECT * FROM placement p WHERE p.map_id = ? AND type LIKE ?;";
 	private final String GET_LAST_INSERTED = "SELECT *FROM placement p WHERE p.id IN (SELECT MAX(id) FROM placement p1);";
+	private final String DELETE_OLD_VALUE_BY_MAP_ID = "delete from placement where map_id = ?;";
 
 	@Override
 	public int insert(Placement el) throws SQLException {
@@ -48,6 +49,12 @@ public class PlacementDAO extends AbstractDAO<Placement> {
 	@Override
 	public int delete(Integer id) throws SQLException {
 		PreparedStatement statement = connection.prepareStatement(DELETE);
+		statement.setInt(1, id);
+		return statement.executeUpdate();
+	}
+	
+	public int deleteOldValueByMapId(Integer id) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(DELETE_OLD_VALUE_BY_MAP_ID);
 		statement.setInt(1, id);
 		return statement.executeUpdate();
 	}

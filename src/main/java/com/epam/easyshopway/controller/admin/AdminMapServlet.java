@@ -38,121 +38,124 @@ public class AdminMapServlet extends HttpServlet {
 		type = request.getParameter("type");
 
 		switch (type) {
-			case "mapsName": {
-				JSONArray responseJSON = getMapsName();
-				response.getWriter().write(responseJSON.toString());
-			}
-				break;
-	
-			case "map": {
-				Integer mapId = Integer.valueOf(request.getParameter("id"));
-				JSONObject responseJSON = getMap(mapId);
-				responseJSON = getMap(mapId);
-				response.getWriter().write(responseJSON.toString());
-			}
-				break;
-	
+		case "mapsName": {
+			JSONArray responseJSON = getMapsName();
+			response.getWriter().write(responseJSON.toString());
+		}
+			break;
+
+		case "map": {
+			Integer mapId = Integer.valueOf(request.getParameter("id"));
+			JSONObject responseJSON = getMap(mapId);
+			responseJSON = getMap(mapId);
+			response.getWriter().write(responseJSON.toString());
+		}
+			break;
+		case "newId": {
+			int newMapId = MapService.getCurrentMap().getId();
+			System.out.println(newMapId);
+			response.getWriter().write(newMapId);
+		}
+
 		}
 
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String type = request.getParameter("type");
-		
+
 		switch (type) {
-			case "cupboard": {
-				String data = request.getParameter("data");
-				int mapId = setCupboard(data);
-				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
-				response.getWriter().write(cupboards.toString());
+		case "cupboard": {
+			String data = request.getParameter("data");
+			int mapId = setCupboard(data);
+			JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
+			response.getWriter().write(cupboards.toString());
+		}
+			break;
+
+		case "createMap": {
+			String height = request.getParameter("height");
+			String weight = request.getParameter("weight");
+			String nameEn = request.getParameter("name_en");
+			String nameUk = request.getParameter("name_uk");
+			Map map = new Map();
+			map.setHeight(Integer.valueOf(height));
+			map.setWeight(Integer.valueOf(weight));
+			map.setNameEn(nameEn);
+			map.setNameUk(nameUk);
+			MapService.insert(map);
+		}
+			break;
+
+		case "clearMap": {
+			Integer mapId = Integer.valueOf(request.getParameter("mapId"));
+			List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
+			for (Cupboard cupboard : cupboards) {
+				CupboardService.delete(cupboard.getId());
 			}
-				break;
-				
-			case "createMap":{
-				String height = request.getParameter("height");
-				String weight = request.getParameter("weight");
-				String nameEn = request.getParameter("name_en");
-				String nameUk = request.getParameter("name_uk");
-				Map map = new Map();
-				map.setHeight(Integer.valueOf(height));
-				map.setWeight(Integer.valueOf(weight));
-				map.setNameEn(nameEn);
-				map.setNameUk(nameUk);
-				MapService.insert(map);
+			Map map = MapService.getById(mapId);
+			MapService.delete(mapId);
+			MapService.insert(map);
+			response.getWriter().write(map.getId());
+		}
+			break;
+
+		case "saveMap": {
+			String data = request.getParameter("data");
+			int mapId = saveMap(data);
+			response.getWriter().write("Ok");
+		}
+			break;
+
+		case "changeSize": {
+			Integer mapId = Integer.valueOf(request.getParameter("mapId"));
+			List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
+			for (Cupboard cupboard : cupboards) {
+				CupboardService.delete(cupboard.getId());
 			}
-				break;
-				
-			case "clearMap":{
-				Integer mapId = Integer.valueOf(request.getParameter("mapId"));
-				List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
-				for (Cupboard cupboard : cupboards){
-					CupboardService.delete(cupboard.getId());
-				}
-				Map map = MapService.getById(mapId);
-				MapService.delete(mapId);
-				MapService.insert(map);
-				response.getWriter().write(map.getId());
-			}
-				break;
-				
-			case "saveMap":{
-				String data = request.getParameter("data");
-				int mapId = saveMap(data);
-//				JSONArray map = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
-//				response.getWriter().write(cupboards.toString());
-			}
-				break;
-				
-			case "changeSize":{
-				Integer mapId = Integer.valueOf(request.getParameter("mapId"));
-				List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
-				for (Cupboard cupboard : cupboards){
-					CupboardService.delete(cupboard.getId());
-				}
-				MapService.delete(mapId);
-				Map map = new Map();
-				map.setHeight(Integer.valueOf(request.getParameter("height")));
-				map.setWeight(Integer.valueOf(request.getParameter("weight")));
-				map.setNameEn(request.getParameter("name_en"));
-				map.setNameUk(request.getParameter("name_uk"));
-				MapService.insert(map);
-			}
-				break;
+			MapService.delete(mapId);
+			Map map = new Map();
+			map.setHeight(Integer.valueOf(request.getParameter("height")));
+			map.setWeight(Integer.valueOf(request.getParameter("weight")));
+			map.setNameEn(request.getParameter("name_en"));
+			map.setNameUk(request.getParameter("name_uk"));
+			MapService.insert(map);
+		}
+			break;
 		}
 	}
-	
-	
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String type = req.getParameter("type");
-		
-		switch(type){
-			case "map":{
-				Integer mapId = Integer.valueOf(req.getParameter("id"));
-				List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
-				System.out.println(mapId);
-				System.out.println(cupboards);
-				for (Cupboard cupboard : cupboards){
-					CupboardService.delete(cupboard.getId());
-				}
-				MapService.delete(mapId);	
+
+		switch (type) {
+		case "map": {
+			Integer mapId = Integer.valueOf(req.getParameter("id"));
+			List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
+			System.out.println(mapId);
+			System.out.println(cupboards);
+			for (Cupboard cupboard : cupboards) {
+				CupboardService.delete(cupboard.getId());
 			}
+			MapService.delete(mapId);
+		}
 			break;
-			
-			case "cupboard":{
-				Integer id = Integer.valueOf(req.getParameter("id"));
-				Integer mapId = Integer.valueOf(req.getParameter("mapId"));
-				System.out.println(id + " ");
-				List<Placement> placements = PlacementService.getCupboardPlacement(id);
-				CupboardService.delete(id);
-				for (Placement placement : placements){
-					PlacementService.delete(placement.getId());
-				}
-				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
-				resp.getWriter().write(cupboards.toString());
+
+		case "cupboard": {
+			Integer id = Integer.valueOf(req.getParameter("id"));
+			Integer mapId = Integer.valueOf(req.getParameter("mapId"));
+			System.out.println(id + " ");
+			List<Placement> placements = PlacementService.getCupboardPlacement(id);
+			CupboardService.delete(id);
+			for (Placement placement : placements) {
+				PlacementService.delete(placement.getId());
 			}
+			JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
+			resp.getWriter().write(cupboards.toString());
+		}
 			break;
 		}
 	}
@@ -239,8 +242,8 @@ public class AdminMapServlet extends HttpServlet {
 			Long id = (Long) obj.get("mapId");
 			Long bCount = (Long) obj.get("bCount");
 			List<Long> values = (List<Long>) obj.get("values");
-			String nameEn = (String)obj.get("name_en");
-			String nameUk = (String)obj.get("name_uk");
+			String nameEn = (String) obj.get("name_en");
+			String nameUk = (String) obj.get("name_uk");
 			Cupboard cupboard = new Cupboard(bCount.intValue(), nameEn, nameUk, true);
 			CupboardService.insert(cupboard);
 			int cupboardId = CupboardService.getLastInserted().getId();
@@ -269,9 +272,17 @@ public class AdminMapServlet extends HttpServlet {
 			List<Long> walls = (List<Long>) obj.get("walls");
 			List<Long> enters = (List<Long>) obj.get("enters");
 			List<Long> paydesks = (List<Long>) obj.get("paydesks");
+			PlacementService.deleteOldValueByMapId(id.intValue());
+			System.out.println(walls);
+			System.out.println(enters);
+			System.out.println(paydesks);
+
 			insertPlacements(id, walls, "wall");
+			System.out.println("Finish wall");
 			insertPlacements(id, enters, "enter");
+			System.out.println("Finish enter");
 			insertPlacements(id, paydesks, "paydesk");
+			System.out.println("Finish paydesk");
 			return 1;
 		} catch (org.json.simple.parser.ParseException e) {
 			e.printStackTrace();
@@ -282,25 +293,22 @@ public class AdminMapServlet extends HttpServlet {
 	private void insertPlacements(Long mapId, List<Long> values, String type) {
 		if (values != null) {
 			for (Long value : values) {
-				System.out.println(mapId.intValue());
-				System.out.println(value.intValue());
-				System.out.println(type);
 				Placement placement = new Placement(mapId.intValue(), value.intValue(), type);
 				PlacementService.insert(placement);
 			}
 		}
 	}
 
-//	public static void main(String[] args) throws ParseException {
-//		JSONObject object = new JSONObject();
-//		JSONArray array = new JSONArray();
-//		array.add(1);
-//		array.add(2);
-//		array.add(3);
-//		object.put("values", "[1,2,3]");
-//		JSONParser parser = new JSONParser();
-//		JSONObject ob = (JSONObject) parser.parse(object.toString());
-//		System.out.println(ob.get("values"));
-//	}
+	// public static void main(String[] args) throws ParseException {
+	// JSONObject object = new JSONObject();
+	// JSONArray array = new JSONArray();
+	// array.add(1);
+	// array.add(2);
+	// array.add(3);
+	// object.put("values", "[1,2,3]");
+	// JSONParser parser = new JSONParser();
+	// JSONObject ob = (JSONObject) parser.parse(object.toString());
+	// System.out.println(ob.get("values"));
+	// }
 
 }

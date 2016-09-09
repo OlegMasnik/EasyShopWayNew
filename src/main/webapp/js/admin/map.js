@@ -26,8 +26,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         searchColor: '#ccc',
         pathColor: '#999'
     };
+    
+    start();
 
-    (function () {
+    function start() {
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_map?type=mapsName"
@@ -35,15 +37,19 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $scope.mapsName = response.data;
             console.log("Get mapsName");
             console.log($scope.mapsName);
+            if(typeof(mapId) != 'undefined'){
+            	$scope.getMapByid(mapId);
+            	$scope.openMap();
+            }
         }, function myError(response) {
             console.log(response.statusText);
         });
-    })();
+    };
 
     $scope.getMapByid = function (m) {
-        $scope.map = m;
+        $scope.map = $scope.map || m;
         console.log("get map by id " + $scope.map.id);
-        mapId = m.id;
+        mapId = mapId || m.id;
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_map?type=map&id=" + $scope.map.id
@@ -257,7 +263,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         } else {
                             $scope.walls.removeUndefined(cell);
                         }
-                        console.log("Каси " + $scope.paydesks);
                         break;
                     case 'edit':
                         console.log("CELL #" + cell)
@@ -526,7 +531,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     name_uk: $scope.map.name_uk,
                     weight: $scope.config.width,
                     height: $scope.config.height
-                });
+                });	
 
                 console.log(data);
 
@@ -537,16 +542,24 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 }
 
                 $http.post('/EasyShopWayNew/edit_map', data, config)
-                    .success(function (data, status, headers) {
+                    .success(function (response, status, headers) {
                         console.log('create new');
-                        $route.reload();
-
+                        $http({
+                            method: "GET",
+                            url: "/EasyShopWayNew/edit_map?type=newId"
+                        }).then(function mySucces(response) {
+                        	mapId = response;
+                        	console.log(responce);
+                        	start();
+                        }, function myError(response) {
+                            console.log(response.statusText);
+                        });
                     })
                     .error(function (data, status, header, config) {
                         console.log('failed');
                     });
             } else {
-                //                game = new Game(document.querySelector('canvas'), $scope.config);
+                                game = new Game(document.querySelector('canvas'), $scope.config);
             }
         }
     }
@@ -843,8 +856,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     mapId: $scope.map.id,
                     walls: $scope.walls,
                     paydesks: $scope.paydesks,
-                    enter: [game.enter]
-                })
+                    enters: [game.enter]
+                })	
             });
 
             console.log(sendData);
@@ -888,8 +901,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 .error(function (data, status, header, config) {
                     console.log('failed clear');
                 });
-            $scope.walls = [];
-            $scope.paydesks = [];
+            $scope.walls = undefined;
+            $scope.paydesks = undefined;
             $scope.config.enter = undefined;
             game.enter = undefined;
             game.cupBoard = new Map(game.width * game.height);
