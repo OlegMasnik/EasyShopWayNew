@@ -21,7 +21,7 @@
         <md-input-container>
             <label>Heigth</label>
             <input type="number" ng-model="config.height" min=2 max=400> </md-input-container>
-        <md-button ng-click="openMap()">Open map</md-button>
+        <md-button ng-click="openMap()">Change Size</md-button>
     </form>
     <md-radio-group name="type" layout="row">
         <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">Pay Desk
@@ -33,11 +33,11 @@
     <md-button ng-click="onClick()">Go</md-button>
     </md-radio-group>
 	<md-input-container layout="row">
-		<md-button class="md-primary md-raised" ng-click="saveMap(map)">Save</md-button>
-		<md-button class="md-primary md-raised" ng-click="showConfirmDelete($event, map)">
+		<md-button class="md-primary md-raised" ng-click="saveMap()">Save</md-button>
+		<md-button class="md-primary md-raised" ng-click="deleteMap($event)">
       Delete
     </md-button>
-		<md-button class="md-primary md-raised" ng-click="clearMap(map)">Clear</md-button>
+		<md-button class="md-primary md-raised" ng-click="clearMap()">Clear</md-button>
 	</md-input-container>
     <div>
         <canvas></canvas>

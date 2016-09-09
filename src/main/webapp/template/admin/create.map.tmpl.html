@@ -1,4 +1,4 @@
-<md-dialog>
+<md-dialog >
 <form ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
@@ -11,31 +11,31 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
-		<form name="mapCreatForm">
+		<form name="mapCreatForm" ng-controller="CreateMapDialogController">
 			<div lanyout="row">
 				<md-input-container flex> <label>Please
 					enter map name (in english):</label> <input name="name_en" type="text"
-					ng-model="newMap.name_en" required></md-input-container>
+					ng-model="name_en" required></md-input-container>
 				<md-input-container flex> <label>Please
 					enter map name (in ukraine):</label>
-				<input name="name_uk" type="text" ng-model="newMap.name_uk" required>
+				<input name="name_uk" type="text" ng-model="name_uk" required>
 				</md-input-container>
 			</div>
 			<div lanyout="row">
 				<md-input-container flex>
 				<label>Please enter width:</label> <input name="width"
-					type="number" ng-model="newMap.weight" required></md-input-container>
+					type="number" ng-model="weight" required></md-input-container>
 				<md-input-container>
 				<md-input-container flex>
 				<label>Please enter height:</label> <input name="height"
-					type="number" ng-model="newMap.height" required></md-input-container>
+					type="number" ng-model="height" required></md-input-container>
 				<md-input-container>
 				</div>
 			</md-input-container>
 
 			<md-dialog-actions layout="row"> <span flex></span>
 			<md-button ng-click="cancel()"> Cancel </md-button> <md-button
-				 type="submit" ng-click="answer()"> Save </md-button></md-dialog-actions>
+				 type="submit" ng-click="createNewMap()"> Save </md-button></md-dialog-actions>
 		</form>
 </form>
 </md-dialog>
