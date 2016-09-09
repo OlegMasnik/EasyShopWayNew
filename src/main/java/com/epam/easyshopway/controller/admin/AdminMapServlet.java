@@ -59,12 +59,36 @@ public class AdminMapServlet extends HttpServlet {
 				response.getWriter().write(status);
 			}
 				break;
+			case "cupboard": {
+				String data = request.getParameter("values");
+				System.out.println(data);
+				int mapId = Integer.parseInt(request.getParameter("mapId"));
+				int bCount = Integer.parseInt(request.getParameter("bCount"));
+				int status = doForCupboard(data, bCount);
+				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
+				response.getWriter().write(cupboards.toString());
+			}
+				break;
 		}
 			
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		type = request.getParameter("type");
+		
+		switch (type) {
+			case "cupboard": {
+				String data = request.getParameter("values");
+				System.out.println(data);
+				int mapId = Integer.parseInt(request.getParameter("mapId"));
+				int bCount = Integer.parseInt(request.getParameter("bCount"));
+				int status = doForCupboard(data, bCount);
+				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
+				response.getWriter().write(cupboards.toString());
+			}
+				break;
+		}
 	}
 	
 	
@@ -74,12 +98,7 @@ public class AdminMapServlet extends HttpServlet {
 		String type = req.getParameter("type");
 		
 		switch (type) {
-		case "cupboard": {
-			String data = req.getParameter("values");
-			int bCount = Integer.parseInt(req.getParameter("b_count"));
-			int status = doForCupboard(data, bCount);
-		}
-			break;
+		
 
 		default:
 			break;

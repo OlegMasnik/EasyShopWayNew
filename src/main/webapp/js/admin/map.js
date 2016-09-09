@@ -1,6 +1,8 @@
 // ************************************************* MapCtrl ************************************************* 
 
 angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog) {
+	
+	var mapId;
 
     $scope.map = undefined;
     $scope.enter = undefined;
@@ -43,6 +45,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     $scope.getMapByid = function (m) {
         // $scope.map = m;
         console.log("get map by id " + m.id);
+        mapId = m.id;
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_map?type=map&id=" + m.id
@@ -693,7 +696,22 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     			});
     			game.draw();
     		}else{
-    			$http.put('/EasyShopWayNew/edit_map?type=cupboard&values=' + JSON.stringify(values) + '&b_count=' + b_count)
+    			
+    			var data = $.param({
+                    type: 'cupboard',
+                    values: JSON.stringify(values),
+                    bCount: b_count,
+                    mapId: mapId
+                });
+    			console.log('SEND CUPBOARD');
+    			console.log(data);
+    			var config = {
+    		            headers: {
+    		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+    		            }
+    		        }
+    			
+    			$http.post('/EasyShopWayNew/edit_map', data, config)
                 .success(function (data, status, headers) {
                     console.log('update');
                     $scope.cupboards = data.cupboards;
