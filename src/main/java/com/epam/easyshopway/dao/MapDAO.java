@@ -10,7 +10,7 @@ import com.epam.easyshopway.model.Map;
 
 public class MapDAO extends AbstractDAO<Map> {
 	private final String INSERT_MAP = "INSERT INTO map (weight, height, name_en, name_uk) VALUES (?, ?, ?, ?);";
-	private final String DELETE_MAP_BY_ID = "Delete * FROM map WHERE id = ?";
+	private final String DELETE_MAP_BY_ID = "Delete * FROM map WHERE id = ?;";
 	private final String SELECT_MAP_BY_ID = "SELECT * FROM map WHERE id = ?;";
 	private final String SELECT_CURRENT_MAP = "SELECT * FROM map GROUP BY id LIMIT 1 ";
 	private final String SELECT_ALL_MAPS = "SELECT * FROM map WHERE active = 1";

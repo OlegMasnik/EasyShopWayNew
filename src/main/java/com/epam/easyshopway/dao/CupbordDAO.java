@@ -13,7 +13,7 @@ public class CupbordDAO extends AbstractDAO<Cupboard> {
 	private Transformer<Cupboard> transformer;
 
 	private final String ADD_CUPBOARD = "INSERT INTO cupboard(board_amount, description_en, description_uk, active) VALUES (?, ?, ?, ?)";
-	private final String DELETE_CUPBOARD_BY_ID = "UPDATE cupboard SET active=0 WHERE id=?";
+	private final String DELETE_CUPBOARD_BY_ID = "DELETE FROM cupboard WHERE id = ?";
 	private final String UPDATE_CUPBOARD_BY_ID = "UPDATE cupboard SET board_amount=?, description_en=?, description_uk=?, active=? WHERE id=?";
 	private final String GET_CUPBOARD_BY_ID = "SELECT * FROM cupboard WHERE id=?";
 	private final String GET_ALL_CUPBOARD = "SELECT * FROM cupboard WHERE active=1";

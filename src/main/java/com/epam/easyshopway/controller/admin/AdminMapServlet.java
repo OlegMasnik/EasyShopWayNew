@@ -23,6 +23,7 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
+import com.sun.org.apache.xerces.internal.parsers.IntegratedParserConfiguration;
 
 public class AdminMapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -74,6 +75,20 @@ public class AdminMapServlet extends HttpServlet {
 				int mapId = doForCupboard(data);
 				JSONArray cupboards = cupboardsToJSON(CupboardInformationService.getCupboardsByMapId(mapId));
 				response.getWriter().write(cupboards.toString());
+			}
+				break;
+				
+			case "map":{
+				String height = request.getParameter("height");
+				String weight = request.getParameter("weight");
+				String nameEn = request.getParameter("name_en");
+				String nameUk = request.getParameter("name_uk");
+				Map map = new Map();
+				map.setHeight(Integer.valueOf(height));
+				map.setWeight(Integer.valueOf(weight));
+				map.setNameEn(nameEn);
+				map.setNameUk(nameUk);
+				MapService.insert(map);
 			}
 				break;
 		}
