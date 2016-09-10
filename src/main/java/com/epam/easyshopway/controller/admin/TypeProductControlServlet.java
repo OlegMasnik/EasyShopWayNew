@@ -114,9 +114,11 @@ public class TypeProductControlServlet extends HttpServlet {
 				     ImageIO.read(input).toString();
 				     fileItem.write(uploadedFile);
 				     System.out.println("Image download successful");
+				     req.setAttribute("message", "Image loaded successfully");
 				} catch (Exception e) {
 				      // It's not an image.
 					System.out.println("Image download failed");
+					req.setAttribute("message", "Image loading failed");
 					throw e;
 				}
 					
@@ -152,7 +154,7 @@ public class TypeProductControlServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
-		resp.sendRedirect("/EasyShopWayNew/cabinet#/products");
+		req.getRequestDispatcher("/EasyShopWayNew/cabinet#/products").forward(req, resp);
 	}
 	
 	
