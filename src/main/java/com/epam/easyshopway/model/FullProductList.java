@@ -9,6 +9,9 @@ public class FullProductList {
 	@Column("product_list.id")
 	private Integer id;
 
+	@Column("product_list. map_id")
+	private Integer mapId;
+
 	@Column("product_list.date")
 	private Date data;
 
@@ -96,6 +99,14 @@ public class FullProductList {
 
 	public void setTypeNameUk(String typeNameUk) {
 		this.typeNameUk = typeNameUk;
+	}
+
+	public Integer getMapId() {
+		return mapId;
+	}
+
+	public void setMapId(Integer mapId) {
+		this.mapId = mapId;
 	}
 
 }

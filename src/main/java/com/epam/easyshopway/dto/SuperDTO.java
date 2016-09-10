@@ -1,8 +1,6 @@
 package com.epam.easyshopway.dto;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 
 import com.epam.easyshopway.connection.ConnectionManager;
 
