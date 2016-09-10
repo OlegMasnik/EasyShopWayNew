@@ -296,14 +296,7 @@ app.controller('changePassCtrl',  ['$scope', '$http', function ($scope, $http) {
 	}
 	
 	$scope.cancel = function() {
-	    $scope.user = {};
-	    
-	    var defaultForm = {
-		    	   oldPass: "",
-		    	   newPass: ""
-		    	}
 	    $scope.changePassForm.$setPristine();
-		$scope.user = angular.copy(defaultForm);
 	    $scope.changePassForm.oldPass.$touched = false;
 	    $scope.changePassForm.newPass.$touched = false;
 	    $scope.message = undefined;

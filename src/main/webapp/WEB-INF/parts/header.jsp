@@ -9,7 +9,7 @@
 
 	<div layout="row">
 		<a flex class="logo" href="/EasyShopWayNew/home"><img alt="EasyShopWay"
-			src="images/logo/logo.gif"></a>
+			src="/EasyShopWayNew/images/logo/logo.gif"></a>
 	</div>
 	<span flex></span>
 
