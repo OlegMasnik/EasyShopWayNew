@@ -62,19 +62,19 @@ public class UploadImageServlet extends HttpServlet {
 			    // It's an image (only BMP, GIF, JPG and PNG are recognized).
 			      ImageIO.read(input).toString();
 			      item.write(uploadedFile);
-			      request.setAttribute("message", "Image loaded successfully");
+			      request.getSession(false).setAttribute("message", "Image loaded successfully");
 			      System.out.println("Image download successful");
 				 } catch (Exception e) {
 			      // It's not an image.
 					System.out.println("Image download failed");
-				    request.setAttribute("message", "Image loading failed");
+					request.getSession(false).setAttribute("message", "Image loading failed");
 				    throw e;
 				 }
 				
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
 				session.invalidate();
-				request.getSession(true).setAttribute("user", user);
+				request.getSession(false).setAttribute("user", user);
 			}
 
 		} catch (FileUploadException ex) {
@@ -93,7 +93,7 @@ public class UploadImageServlet extends HttpServlet {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		request.getRequestDispatcher("/EasyShopWayNew/cabinet#/").forward(request, response);
+		response.sendRedirect("/EasyShopWayNew/cabinet#/");
 
 	}
 
