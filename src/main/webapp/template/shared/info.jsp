@@ -63,7 +63,7 @@
 			</md-card-title-text> </md-card-title>
 			<input type="file" accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp" ng-model="file" name="file" id="file" class="md-raised" required />
 			<md-input-container> <md-button
-				class="md-raised" ng-click="sendImg()">Save</md-button> <md-button
+				class="md-raised" type="submit">Save</md-button> <md-button
 				class="md-raised" type="reset">Cancel</md-button>
 				 </md-input-container>
 		</form>
