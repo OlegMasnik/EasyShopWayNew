@@ -21,7 +21,7 @@ adminApp.config(function ($routeProvider) {
 });
 
 
-adminApp.controller('AdminCtrl', function ($scope, $http) {
+adminApp.controller('AdminCtrl', function ($scope, $http, $mdToast) {
 	
 	$scope.hello = 'Hello world';
 
@@ -38,7 +38,7 @@ adminApp.controller('InfoCtrl', function ($scope, $http) {
 // ************************************************* UserCtrl
 // *************************************************//
 
-adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($http, $scope, $location) {
+adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', function ($http, $scope, $location, $mdToast) {
 
     var original = {};
 
@@ -190,6 +190,7 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($ht
                 }).error(
                 function (data, status, header,
                     config) {});
+        showUserBlockToast(i.e, i.active);
         $http({
             method: "GET",
             url: "/EasyShopWayNew/users"
@@ -204,8 +205,15 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', function ($ht
             console.log(response.statusText);
         });
         console.log("Finish");
-
+        
     };
+    
+    function showUserBlockToast(email, active){
+    	if(active)
+    		showToast($mdToast, $scope, "User " + email + " is blocked")
+    	else
+    		showToast($mdToast, $scope, "User " + email + " is unlocked")
+    }
 }]);
 
 // ************************************************* ProdCtrl
@@ -795,8 +803,8 @@ function showToast($mdToast, $scope,msg) {
 	var last = {
 		bottom : true,
 		top : false,
-		left : true,
-		right : false
+		left : false,
+		right : true
 	};
 	$scope.toastPosition = angular.extend({}, last);
 
