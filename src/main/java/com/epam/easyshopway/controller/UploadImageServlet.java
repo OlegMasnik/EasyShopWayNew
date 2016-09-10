@@ -2,9 +2,11 @@ package com.epam.easyshopway.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
-import com.epam.easyshopway.utils.CheckImage;
 
 public class UploadImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,19 +58,29 @@ public class UploadImageServlet extends HttpServlet {
 				String fName = "images/user/" + user.getId() + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-				if (CheckImage.checkSignature(item.getInputStream(), type));
-					item.write(uploadedFile);
-
+				try (InputStream input = item.getInputStream()) {
+			    // It's an image (only BMP, GIF, JPG and PNG are recognized).
+			      ImageIO.read(input).toString();
+			      item.write(uploadedFile);
+			      request.getSession(false).setAttribute("message", "Image loaded successfully");
+			      System.out.println("Image download successful");
+				 } catch (Exception e) {
+			      // It's not an image.
+					System.out.println("Image download failed");
+					request.getSession(false).setAttribute("message", "Image loading failed");
+				    throw e;
+				 }
+				
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
 				session.invalidate();
-				request.getSession(true).setAttribute("user", user);
+				request.getSession(false).setAttribute("user", user);
 			}
 
 		} catch (FileUploadException ex) {
-			throw new ServletException(ex);
+			ex.printStackTrace();
 		} catch (Exception ex) {
-			throw new ServletException(ex);
+			ex.printStackTrace();
 		}
 		try {
 			Thread.sleep(2000);

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-<script src='js/moment.js'></script>
+<script src='/EasyShopWayNew/js/moment.js'></script>
 
 <md-toolbar class="md-hue-2">
 <div class="md-toolbar-tools" layout="column" ng-controller="AppCtrl"
