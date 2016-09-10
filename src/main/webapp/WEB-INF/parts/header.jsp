@@ -12,13 +12,13 @@
 			src="images/logo/logo.gif"></a>
 	</div>
 	<span flex></span>
-
+	
 	<c:choose>
 		<c:when test="${user == null}">
 			<md-button class="md-raised"
-				ng-click="showLogInForm($scope, $mdDialog)"> LogIn </md-button>
+				ng-click="showLogInForm($event, $scope, $mdDialog)"> LogIn </md-button>
 			<md-button class="md-raised"
-				ng-click="showRegistrationInFrom($scope, $mdDialog)">
+				ng-click="showRegistrationInFrom($event, $scope, $mdDialog)">
 			SignUp </md-button>
 		</c:when>
 		<c:otherwise>

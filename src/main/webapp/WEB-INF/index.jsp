@@ -5,9 +5,9 @@
 <html>
 
 <head>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/angular-material.min.css">
 <link rel="stylesheet" href="css/icon.css">
+<link rel="stylesheet" href="css/angular-material.min.css">
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -17,6 +17,9 @@
 	<i class="material-icons">&#xE84D;</i>
 	
 	
+	<md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
+	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
+    </md-button>
 
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src='js/angular.min.js'></script>
@@ -32,8 +35,7 @@
 
 </body>
 <script type='text/ng-template' id='info.html'>
-        <!-- List -->
-        <p>Choose an Item</p>
+        
     </script>
 
 </html>

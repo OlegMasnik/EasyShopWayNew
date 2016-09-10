@@ -50,7 +50,7 @@ public class SearchServlet extends HttpServlet {
 
 		if (uri.endsWith("search")) {
 			request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
-		} else {
+		} else if (uri.endsWith("searchProducts")){
 
 			List<ProductInformation> products = ProductInformationService.getAllProductOnSupermarket();
 
@@ -61,6 +61,8 @@ public class SearchServlet extends HttpServlet {
 
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());
+		} else {
+			
 		}
 	}
 

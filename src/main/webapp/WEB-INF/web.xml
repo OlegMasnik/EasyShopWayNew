@@ -218,6 +218,7 @@
 		<servlet-name>SearchServlet</servlet-name>
 		<url-pattern>/search</url-pattern>
 		<url-pattern>/searchProducts</url-pattern>
+		<url-pattern>/searchMaps</url-pattern>
 		<url-pattern>/saveProductList</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>

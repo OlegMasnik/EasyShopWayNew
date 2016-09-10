@@ -1,9 +1,19 @@
 var dateBirthday;
 var app = angular.module('MyApp', ['ngMaterial', 'ngRoute']);
 
+app.controller('PageRedirectCtrl', function($window) {
+	var ctrl = this;
+	
+	ctrl.goToPage = function(way) {
+		$window.location.href = way;	
+	}
+	
+});
+
 app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
     $scope.status = '  ';
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+    
     $scope.showLogInForm = function (ev) {
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
         $mdDialog.show({
@@ -67,6 +77,7 @@ app
                         }
                     }
                     if ($('#emailL').valid() && $('#passwordL').valid()) {
+                    	console.log("Valid data");
                         $http
                             .post(
                                 '/EasyShopWayNew/login',
@@ -75,12 +86,16 @@ app
                                 function (data, status,
                                     headers, config) {
                                     if (data.emailErrMsg == undefined) {
-                                        $window.location.href = 'cabinet';
+                                    	if (data.passwordErrMsg == undefined) {
+                                    		$window.location.href = 'cabinet';
+                                    	} else {
+                                    		$scope.error = data.passwordErrMsg;
+                                    	}
                                     } else {
                                         $scope.error = data.emailErrMsg;
                                     }
                                     console
-                                        .log(data.emailErrMsg);
+                                        .log("Error: " + data.emailErrMsg + " " + data.passwordErrMsg);
                                 }).error(
                                 function (data, status,
                                     header, config) {
@@ -117,12 +132,12 @@ app
 								}
 								var firstNameDefined = $('#fName1').val();
 								var lastNameDefined = $('#lName1').val();
+								console.log('Reg');
 								if ($('#emailR').valid() && $('#passwordR').valid()
 										&& firstNameDefined != "" && lastNameDefined != "") {
-
+									console.log('Before reg');
 									$http
-											.post('/EasyShopWayNew/reg', data,
-													config)
+											.post('/EasyShopWayNew/reg', data, config)
 											.success(
 													function(data, status,
 															headers, config) {
