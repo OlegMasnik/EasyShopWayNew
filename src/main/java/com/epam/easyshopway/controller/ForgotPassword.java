@@ -47,4 +47,11 @@ public class ForgotPassword extends HttpServlet {
 		req.getSession().setAttribute("reset_pass", MD5Util.md5Custom(password));
 	}
 
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String email = req.getParameter("email");
+		boolean b = UserService.hasEmail(email);
+		resp.getWriter().write("" + b);
+	}
+
 }

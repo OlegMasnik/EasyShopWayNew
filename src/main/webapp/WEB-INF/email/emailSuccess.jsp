@@ -15,7 +15,13 @@
 	<jsp:include page="/WEB-INF/parts/header.jsp"></jsp:include>
 	
 	
-	<h2>Successfull confirmation email</h2>
+	<div layout="row">
+	
+	<div flex="30"></div>
+	
+	<h2 flex>Successfull confirmation email</h2>
+	
+	</div>
 	
 	<md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
 	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>

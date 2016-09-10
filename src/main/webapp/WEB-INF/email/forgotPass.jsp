@@ -24,19 +24,16 @@
 				<label style="color: red;">{{status}}</label>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" flex layout="column">
-				<label>Email</label> <input type="email"
-					ng-model="e" name="email" required minlength="10"
-					maxlength="100" placeholder="enter your email"> </md-input-container>
+				<label>Your Email</label> <input type="email" ng-model="e"
+					name="email" required minlength="10" maxlength="100"> </md-input-container>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" layout="column" flex>
-				<label>Password</label> <input type="password"
-					ng-model="p" name="password" required minlength="6"
-					maxlength="25" placeholder="enter new password"> </md-input-container>
+				<label>New Password</label> <input type="password" ng-model="p"
+					name="password" required minlength="6" maxlength="25"> </md-input-container>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" layout="column" flex>
-				<label>Password</label> <input type="password"
-					ng-model="pr" name="passwordR" required minlength="6"
-					maxlength="25" placeholder="repeat new password"> </md-input-container>
+				<label>Repeat Password</label> <input type="password" ng-model="pr"
+					name="passwordR" required minlength="6" maxlength="25"> </md-input-container>
 				<div layout="row">
 					<div flex="70"></div>
 					<md-button flex ng-click='sendResetData()'
@@ -63,38 +60,108 @@
 	<script src="js/jquery.validate.min.js"></script>
 
 	<script type="text/javascript">
-		angular.module('MyApp').controller('ResetPassCtrl',	function($scope, $http) {
+		angular
+				.module('MyApp')
+				.controller(
+						'ResetPassCtrl',
+						function($scope, $http, $mdToast) {
 
-					$scope.sendResetData = function() {
+							$scope.sendResetData = function() {
 
-						if(typeof($scope.e) == 'undefined')
-							$scope.status = "Email is invalid";
-						else if (($scope.p != $scope.pr))
-							$scope.status = "Passwords do not match";
-						else if(typeof($scope.p) == 'undefined' || typeof($scope.pr) == 'undefined' )
-							$scope.status = "Passwords is invalid";
-						else{
-							var data = $.param({
-								email: $scope.e,
-								password: $scope.p
-			                });
-			                console.log(data);
-			                var config = {
-			                    headers: {
-			                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-			                    }
-			                }
-			                $http.post('/EasyShopWayNew/forgotpassword', data, config)
-			                    .success(function (response, status, headers) {
-			                        console.log('success');
-			                    })
-			                    .error(function (data, status, header, config) {
-			                        console.log('failed');
-			                    });
-						}
+								$http(
+										{
+											method : "PUT",
+											url : "/EasyShopWayNew/forgotpassword?email="
+													+ $scope.e
+										})
+										.then(
+												function mySucces(response) {
+													
+													var isContains = response.data;
+													
+													if (typeof ($scope.e) == 'undefined')
+														showToast($mdToast,	$scope,"Email is invalid");
+// 														$scope.status = "Email is invalid";
+													else if (isContains == "false")
+														showToast($mdToast,	$scope,"This email does not exist");
+// 														$scope.status = "This email does not exist";
+													else if (($scope.p != $scope.pr))
+														showToast($mdToast,	$scope,"Passwords do not match");
+// 														$scope.status = "Passwords do not match";
+													else if (typeof ($scope.p) == 'undefined'
+															|| typeof ($scope.pr) == 'undefined')
+														showToast($mdToast,	$scope,"Passwords is invalid");
+// 														$scope.status = "Passwords is invalid";
+													else {
+														var data = $.param({
+															email : $scope.e,
+															password : $scope.p
+														});
+														console.log(data);
+														var config = {
+															headers : {
+																'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+															}
+														}
+														$http
+																.post(
+																		'/EasyShopWayNew/forgotpassword',
+																		data,
+																		config)
+																.success(
+																		function(
+																				response,
+																				status,
+																				headers) {
+																			console
+																					.log('success');
+																			showToast(
+																					$mdToast,
+																					$scope,
+																					"Please check your email");
+																		})
+																.error(
+																		function(
+																				data,
+																				status,
+																				header,
+																				config) {
+																			console
+																					.log('failed');
+																		});
+													}
+												},
+												function myError(response) {
+													console
+															.log(response.statusText);
+												});
 
-					}
-				});
+							}
+						});
+
+		function showToast($mdToast, $scope, msg) {
+			var last = {
+				bottom : true,
+				top : false,
+				left : false,
+				right : true
+			};
+			$scope.toastPosition = angular.extend({}, last);
+
+			$scope.getToastPosition = function() {
+				return Object.keys($scope.toastPosition).filter(function(pos) {
+					return $scope.toastPosition[pos];
+				}).join(' ');
+			};
+
+			$scope.showSimpleToast = function() {
+				var pinTo = $scope.getToastPosition();
+
+				$mdToast.show($mdToast.simple().textContent(msg)
+						.position(pinTo).hideDelay(4000));
+			};
+			$scope.showSimpleToast();
+		}
 	</script>
 
 
