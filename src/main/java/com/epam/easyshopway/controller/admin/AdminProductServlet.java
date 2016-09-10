@@ -18,12 +18,14 @@ import com.epam.easyshopway.model.Cupboard;
 import com.epam.easyshopway.model.CupboardPlacement;
 import com.epam.easyshopway.model.CupboardProductInformation;
 import com.epam.easyshopway.model.Placement;
+import com.epam.easyshopway.model.Product;
 import com.epam.easyshopway.model.ProductPlacement;
 import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardProductsInformationService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.PlacementService;
 import com.epam.easyshopway.service.ProductPlacementService;
+import com.epam.easyshopway.service.ProductService;
 
 /**
  * Servlet implementation class AdminProductServlet
@@ -43,19 +45,28 @@ public class AdminProductServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		String type = request.getParameter("type");
 		
 		switch (type) {
-			case "getProducts":{
+			case "getAllProducts":{
+//				Integer cupboardId = Integer.valueOf(request.getParameter("cupboardId"));
+//				List<CupboardProductInformation> productsOnCupboard = 
+//						CupboardProductsInformationService.getAllProductbyCupdoardId(cupboardId);
+				List<Product> allProducts = ProductService.getAll();
+				JSONArray resultArray = new JSONArray();
+				for (Product cInformation : allProducts){
+					JSONObject product = new JSONObject();
+					product.put("prodId", cInformation.getId());
+					product.put("name_en", cInformation.getNameEn());
+					product.put("name_uk", cInformation.getNameUk());
+					resultArray.add(product);
+				}
+				response.getWriter().write(resultArray.toString());
+			}
+				break;
+				
+			case "getCupboardsProducts":{
 				Integer cupboardId = Integer.valueOf(request.getParameter("cupboardId"));
 				List<CupboardProductInformation> productsOnCupboard = 
 						CupboardProductsInformationService.getAllProductbyCupdoardId(cupboardId);
@@ -74,18 +85,31 @@ public class AdminProductServlet extends HttpServlet {
 				}
 				response.getWriter().write(resultArray.toString());
 			}
-				break;
+			break;
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
+		String type = request.getParameter("type");
+		
+		switch (type) {
 				
 			case "setProducts":{
 				String data = request.getParameter("data");
 				try {
 					JSONParser parser = new JSONParser();
 					JSONArray products = (JSONArray) parser.parse(data.toString());
+					System.out.println("Products size = " + products.size());
 					for (int i = 0; i < products.size(); i++){
 						JSONObject product  = (JSONObject)products.get(i);
-						int prodId = (Integer)product.get("prodId");
-						int cupboardId = (Integer)product.get("cupboardId");
-						int place = (Integer)product.get("place");
+						System.out.println(product);
+						int prodId = Integer.parseInt("" + product.get("prodId"));
+						int cupboardId = Integer.parseInt("" + product.get("cupboardId"));
+						int place = Integer.parseInt("" + product.get("place"));
 						ProductPlacement productPlacement = new ProductPlacement();
 						productPlacement.setProductId(prodId);
 						productPlacement.setCupboardId(cupboardId);

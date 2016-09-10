@@ -1,5 +1,5 @@
 <md-dialog id="cupboardEdit">
-<form ng-cloak >
+<form ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
 		<h2>Edit cupboard {{item.id}}</h2>
@@ -10,16 +10,24 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
-		<div layout="row" ng-repeat="k in item.board_count | range">
-			<md-input-container ng-repeat="i in item.values" flex>
-			<label>{{k}}{{$index}}</label>
-			<input type="text"></md-input-container>
+		<div layout="row">
+			<md-input-container flex> <label>Description
+				English</label> <input type="text" ng-model="name_en"> </md-input-container>
+			<md-input-container flex> <label>Description
+				Ukraine</label> <input type="text" ng-model="name_uk"> </md-input-container>
 		</div>
-		</script>
+		<div layout="row" ng-repeat="k in item.board_count | range">
+			<md-select ng-model="cupboardCells[k * item.values.length + $index]"  ng-repeat="i in item.values" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}"> 
+				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option> 
+			</md-select>
+		</div>
 		<md-dialog-actions layout="row"> <span flex></span>
 		<div layout="row">
-		<md-button ng-click="deleteCupboard(item)"> Delete </md-button> </md-dialog-actions>
-		<md-button ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions>
-		</div>
+			<md-button ng-click="deleteCupboard(item)"> Delete </md-button>
+		</md-dialog-actions>
+		<md-button ng-click="answer(item, selectedType)"> Save </md-button>
+		</md-dialog-actions>
+	</div>
+	</md-dialog-content>
 </form>
 </md-dialog>

@@ -650,11 +650,43 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             });
     };
 
+
+
+
     function EditCupboardCtrl($scope, $mdDialog, item) {
 
         console.log("item ");
         console.log(item);
         $scope.item = item;
+
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
+        }).then(function mySucces(response) {
+            console.log("current Prods")
+            $scope.curretProducts = response.data;
+            console.log(response);
+        }, function myError(response) {
+
+        });
+
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_products?type=getAllProducts&cupboardId=" + item.id
+        }).then(function mySucces(response) {
+            console.log("all Prods")
+            $scope.allProducts = response.data;
+            console.log(response);
+        }, function myError(response) {
+
+        });
+
+        $scope.cupboardCells = new Array(item.board_count * item.values.length);
+        if (typeof ($scope.curremtProducts) != "undefined")
+            for (var i = 0; i < $scope.currentProducts.length; i++)
+                for (var j = 0; j < $scope.curretProducts[i].place.length; j++)
+                    $scope.cupboardCells[$scope.curretProducts[i].place[j]] = $scope.products[i];
+        //        console.log($scope.cupboardCells);
 
         $scope.hide = function () {
             $mdDialog.hide();
@@ -664,8 +696,45 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $mdDialog.cancel();
         };
         $scope.answer = function () {
+            $scope.cupboardCells.map(function (e, i) {
+                if (typeof (e) == "string")
+                    $scope.cupboardCells[i] = JSON.parse(e)
+            })
+            console.log($scope.cupboardCells);
+            $scope.sendCupboardData();
             $mdDialog.hide();
         };
+
+        $scope.sendCupboardData = function () {
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+            var data = [];	
+            $scope.cupboardCells.map(function (e, i) {
+                if (typeof (e) != "undefined" || e != null)
+                    data.push({
+                        prodId: e.prodId,
+                        cupboardId: item.id,
+                        place: i
+                    })
+            });
+            
+            var sendData = $.param({
+            	type: 'setProducts',
+                data: JSON.stringify(data)
+            });
+            console.log($scope.cupboardCells);
+            console.log(data);
+            console.log(sendData);
+            $http.post('/EasyShopWayNew/edit_products', sendData, config)
+                .success(function (data, status, headers) {
+                    console.log("success send products")
+                }).error(function (data, status, header, config) {
+                    console.log('failed  send products');
+                });
+        }
 
         $scope.deleteCupboard = function (item) {
             console.log('delete cupboard');
