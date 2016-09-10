@@ -105,7 +105,7 @@ public class AdminMapServlet extends HttpServlet {
 		case "saveMap": {
 			String data = request.getParameter("data");
 			int mapId = saveMap(data);
-			response.getWriter().write("Ok");
+			response.getWriter().write(mapId);
 		}
 			break;
 
@@ -269,20 +269,15 @@ public class AdminMapServlet extends HttpServlet {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject) parser.parse(jsonData);
 			Long id = (Long) obj.get("mapId");
-			List<Long> walls = (List<Long>) obj.get("walls");
 			List<Long> enters = (List<Long>) obj.get("enters");
+			if (enters.size() == 0)
+				return 0;
+			List<Long> walls = (List<Long>) obj.get("walls");
 			List<Long> paydesks = (List<Long>) obj.get("paydesks");
 			PlacementService.deleteOldValueByMapId(id.intValue());
-			System.out.println(walls);
-			System.out.println(enters);
-			System.out.println(paydesks);
-
 			insertPlacements(id, walls, "wall");
-			System.out.println("Finish wall");
 			insertPlacements(id, enters, "enter");
-			System.out.println("Finish enter");
 			insertPlacements(id, paydesks, "paydesk");
-			System.out.println("Finish paydesk");
 			return 1;
 		} catch (org.json.simple.parser.ParseException e) {
 			e.printStackTrace();
