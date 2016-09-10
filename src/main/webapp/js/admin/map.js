@@ -960,7 +960,12 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
             $http.post('/EasyShopWayNew/edit_map', sendData, config)
                 .success(function (data, status, headers) {
-                    console.log('success save map');
+                	if (data == 0){
+                		console.log('success save map');
+                	} else{
+                		console.log('failed save map');
+                	}
+                	
                 })
                 .error(function (data, status, header, config) {
                     console.log('failed save map');

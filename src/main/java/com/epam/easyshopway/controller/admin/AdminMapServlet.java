@@ -301,8 +301,10 @@ public class AdminMapServlet extends HttpServlet {
 			JSONObject obj = (JSONObject) parser.parse(jsonData);
 			Long id = (Long) obj.get("mapId");
 			List<Long> enters = (List<Long>) obj.get("enters");
-			if (enters.size() == 0)
+			System.out.println(enters);
+			if (enters.get(0) == null){
 				return 0;
+			}
 			List<Long> walls = (List<Long>) obj.get("walls");
 			List<Long> paydesks = (List<Long>) obj.get("paydesks");
 			PlacementService.deleteOldValueByMapId(id.intValue());
