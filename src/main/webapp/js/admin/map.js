@@ -665,10 +665,20 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }).then(function mySucces(response) {
             console.log("current Prods")
             $scope.currentProducts = response.data;
-            console.log(response);
+            $scope.cupboardCells = new Array(item.board_count * item.values.length);
+            if (typeof ($scope.currentProducts) != "undefined"){
+                for (var i = 0; i < $scope.currentProducts.length; i++){
+                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++){
+                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
+                        console.log("prod i " + i);
+                        console.log($scope.cupboardCells);
+                    }
+                }
+            }
+            console.log($scope.currentProducts);
         }, function myError(response) {
-
         });
+        
 
         $http({
             method: "GET",
@@ -680,14 +690,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }, function myError(response) {
 
         });
-
-        $scope.cupboardCells = new Array(item.board_count * item.values.length);
-        if (typeof ($scope.currentProducts) != "undefined")
-            for (var i = 0; i < $scope.currentProducts.length; i++)
-                for (var j = 0; j < $scope.curretProducts[i].place.length; j++)
-                    $scope.cupboardCells[$scope.curretProducts[i].place[j]] = $scope.products[i];
-        //        console.log($scope.cupboardCells);
-
+       
+        console.log("cupBoarards");
+        console.log($scope.cupboardCells);
         $scope.hide = function () {
             $mdDialog.hide();
         };

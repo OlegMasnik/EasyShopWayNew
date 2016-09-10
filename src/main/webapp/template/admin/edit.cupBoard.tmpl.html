@@ -17,7 +17,7 @@
 				Ukraine</label> <input type="text" ng-model="name_uk"> </md-input-container>
 		</div>
 		<div layout="row" ng-repeat="k in item.board_count | range">
-			<md-select ng-model="cupboardCells[k * item.values.length + $index]"  ng-repeat="i in item.values" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}"> 
+			<md-select ng-model="cupboardCells[k * item.values.length + $index]"  ng-repeat="i in item.values" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}">
 				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option> 
 			</md-select>
 		</div>

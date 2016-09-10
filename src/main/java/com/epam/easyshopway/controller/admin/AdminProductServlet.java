@@ -77,7 +77,7 @@ public class AdminProductServlet extends HttpServlet {
 					for (Integer i : cInformation.getCoordinatesOnCupboard()){
 						places.add(i);
 					}
-					product.put("places", places);
+					product.put("place", places);
 					resultArray.add(product);
 				}
 				response.getWriter().write(resultArray.toString());
@@ -104,9 +104,9 @@ public class AdminProductServlet extends HttpServlet {
 					for (int i = 0; i < products.size(); i++){
 						JSONObject product  = (JSONObject)products.get(i);
 						System.out.println(product);
-						int prodId = Integer.parseInt("" + product.get("prodId"));
-						int cupboardId = Integer.parseInt("" + product.get("cupboardId"));
-						int place = Integer.parseInt("" + product.get("place"));
+						int prodId = ((Long) product.get("prodId")).intValue();
+						int cupboardId = ((Long) product.get("cupboardId")).intValue();
+						int place = ((Long) product.get("place")).intValue();
 						ProductPlacement productPlacement = new ProductPlacement();
 						productPlacement.setProductId(prodId);
 						productPlacement.setCupboardId(cupboardId);
