@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,6 @@ import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.ProductService;
 import com.epam.easyshopway.service.ProductTypeService;
 import com.epam.easyshopway.service.UserService;
-import com.epam.easyshopway.utils.CheckImage;
 
 import sun.net.www.content.image.jpeg;
 
@@ -100,10 +100,8 @@ public class TypeProductControlServlet extends HttpServlet {
 			FileItem fileItem = (FileItem) items.get(3);
 
 			String type = "";
-			boolean b = false;
 			try {
 				type = "" + fileItem.getName().substring(fileItem.getName().lastIndexOf('.') + 1);
-				b = CheckImage.checkSignature(fileItem.getInputStream(), type);
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
@@ -111,16 +109,26 @@ public class TypeProductControlServlet extends HttpServlet {
 				fName = "images/prod/" + id + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-				if (b)
-					fileItem.write(uploadedFile);
-				System.out.println("Check file: " + b);
+				try (InputStream input = fileItem.getInputStream()) {
+				    // It's an image (only BMP, GIF, JPG and PNG are recognized).
+				     ImageIO.read(input).toString();
+				     fileItem.write(uploadedFile);
+				     System.out.println("Image download successful");
+				     req.setAttribute("message", "Image loaded successfully");
+				} catch (Exception e) {
+				      // It's not an image.
+					System.out.println("Image download failed");
+					req.setAttribute("message", "Image loading failed");
+					throw e;
+				}
+					
 			}
 
 			if (id != 0) {
 				productType = ProductTypeService.getById(id);
 				productType.setNameEn(name_en);
 				productType.setNameUk(name_uk);
-				if (!"".equals(type) && b)
+				if (!"".equals(type))
 					productType.setImageUrl(fName);
 				if (ProductTypeService.update(id, productType) > 0) {
 					System.out.println("OK put");
@@ -131,8 +139,7 @@ public class TypeProductControlServlet extends HttpServlet {
 				productType = new ProductType();
 				productType.setNameEn(name_en);
 				productType.setNameUk(name_uk);
-				if (b)
-					productType.setImageUrl(fName);
+				productType.setImageUrl(fName);
 				productType.setActive(true);
 				if (ProductTypeService.insert(productType) > 0) {
 					System.out.println("OK insert");
@@ -147,7 +154,7 @@ public class TypeProductControlServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
-		resp.sendRedirect("/EasyShopWayNew/cabinet#/products");
+		req.getRequestDispatcher("/EasyShopWayNew/cabinet#/products").forward(req, resp);
 	}
 	
 	
