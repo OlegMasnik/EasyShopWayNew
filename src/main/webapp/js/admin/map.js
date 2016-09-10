@@ -26,7 +26,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         searchColor: '#ccc',
         pathColor: '#999'
     };
-    
+
     start();
 
     function start() {
@@ -37,9 +37,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $scope.mapsName = response.data;
             console.log("Get mapsName");
             console.log($scope.mapsName);
-            if(typeof(mapId) != 'undefined'){
-            	$scope.getMapByid(mapId);
-            	$scope.openMap();
+            if (typeof (mapId) != 'undefined') {
+                $scope.getMapByid(mapId);
+                $scope.openMap();
             }
         }, function myError(response) {
             console.log(response.statusText);
@@ -47,9 +47,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     };
 
     $scope.getMapByid = function (m) {
-        $scope.map = $scope.map || m;
+        $scope.map = m || $scope.map;
         console.log("get map by id " + $scope.map.id);
-        mapId = mapId || m.id;
+        mapId = m.id || mapId;
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_map?type=map&id=" + $scope.map.id
@@ -531,7 +531,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     name_uk: $scope.map.name_uk,
                     weight: $scope.config.width,
                     height: $scope.config.height
-                });	
+                });
 
                 console.log(data);
 
@@ -548,9 +548,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                             method: "GET",
                             url: "/EasyShopWayNew/edit_map?type=newId"
                         }).then(function mySucces(response) {
-                        	mapId = response;
-                        	console.log(responce);
-                        	start();
+                            mapId = response;
+                            console.log(responce);
+                            start();
                         }, function myError(response) {
                             console.log(response.statusText);
                         });
@@ -558,9 +558,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     .error(function (data, status, header, config) {
                         console.log('failed');
                     });
-            } else {
-                                game = new Game(document.querySelector('canvas'), $scope.config);
+                //            } else {
+
             }
+            game = new Game(document.querySelector('canvas'), $scope.config);
         }
     }
 
@@ -857,7 +858,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     walls: $scope.walls,
                     paydesks: $scope.paydesks,
                     enters: [game.enter]
-                })	
+                })
             });
 
             console.log(sendData);
