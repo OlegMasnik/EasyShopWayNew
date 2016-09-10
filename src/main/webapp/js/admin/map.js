@@ -47,12 +47,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     };
 
     $scope.getMapByid = function (m) {
-        $scope.map = m || $scope.map;
-        console.log("get map by id " + $scope.map.id);
         mapId = m.id || mapId;
         $http({
             method: "GET",
-            url: "/EasyShopWayNew/edit_map?type=map&id=" + $scope.map.id
+            url: "/EasyShopWayNew/edit_map?type=map&id=" + mapId
         }).then(function mySucces(response) {
             $scope.map = response.data.map;
             console.log($scope.map);
@@ -543,17 +541,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
                 $http.post('/EasyShopWayNew/edit_map', data, config)
                     .success(function (response, status, headers) {
-                        console.log('create new');
-                        $http({
-                            method: "GET",
-                            url: "/EasyShopWayNew/edit_map?type=newId"
-                        }).then(function mySucces(response) {
-                            mapId = response;
-                            console.log(responce);
-                            start();
-                        }, function myError(response) {
-                            console.log(response.statusText);
-                        });
+                    	console.log('create new');
+                    	mapId = response;
+                    	console.log(response);
                     })
                     .error(function (data, status, header, config) {
                         console.log('failed');
@@ -666,9 +656,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             console.log("current Prods")
             $scope.currentProducts = response.data;
             $scope.cupboardCells = new Array(item.board_count * item.values.length);
-            if (typeof ($scope.currentProducts) != "undefined"){
-                for (var i = 0; i < $scope.currentProducts.length; i++){
-                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++){
+            if (typeof ($scope.currentProducts) != "undefined") {
+                for (var i = 0; i < $scope.currentProducts.length; i++) {
+                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
                         $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
                         console.log("prod i " + i);
                         console.log($scope.cupboardCells);
@@ -676,9 +666,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 }
             }
             console.log($scope.currentProducts);
-        }, function myError(response) {
-        });
-        
+        }, function myError(response) {});
+
 
         $http({
             method: "GET",
@@ -690,7 +679,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }, function myError(response) {
 
         });
-       
+
         console.log("cupBoarards");
         console.log($scope.cupboardCells);
         $scope.hide = function () {
@@ -716,7 +705,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                 }
             }
-            var data = [];	
+            var data = [];
             $scope.cupboardCells.map(function (e, i) {
                 if (typeof (e) != "undefined" || e != null)
                     data.push({
@@ -725,9 +714,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         place: i
                     })
             });
-            
+
             var sendData = $.param({
-            	type: 'setProducts',
+                type: 'setProducts',
                 data: JSON.stringify(data)
             });
             console.log($scope.cupboardCells);
@@ -841,7 +830,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 }
                 $http.post('/EasyShopWayNew/edit_map', sendData, config)
                     .success(function (data, status, headers) {
-                        console.log('update');
+                        console.log('update cupboard');
                         $scope.cupboards = data;
                         console.log($scope.cupboards);
                         initCupBoard($scope.cupboards);
@@ -980,8 +969,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $scope.paydesks = undefined;
             $scope.config.enter = undefined;
             game.enter = undefined;
-            game.cupBoard = new Map(game.width * game.height);
-            game.draw();
+            $scope.getMapByid();
         }
     }
 

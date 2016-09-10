@@ -122,6 +122,7 @@ public class AdminMapServlet extends HttpServlet {
 			map.setNameEn(request.getParameter("name_en"));
 			map.setNameUk(request.getParameter("name_uk"));
 			MapService.insert(map);
+			response.getWriter().write(MapService.getCurrentMap().getId());
 		}
 			break;
 		}
