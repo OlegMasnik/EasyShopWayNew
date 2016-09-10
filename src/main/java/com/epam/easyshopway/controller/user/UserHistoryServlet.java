@@ -3,6 +3,7 @@
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -47,7 +48,7 @@ public class UserHistoryServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 
 		if (user != null) {
-			HashMap<Integer, List<FullProductList>> productLists = FullProductListService.getGroupedList(user.getId());
+			LinkedHashMap <Integer, List<FullProductList>> productLists = FullProductListService.getGroupedList(user.getId());
 			
 			JSONObject object = createJSON(productLists);
 			
@@ -84,7 +85,7 @@ public class UserHistoryServlet extends HttpServlet {
 		return jsonArray;
 	}
 	
-	private JSONObject createJSON (HashMap<Integer, List<FullProductList>> productLists) {
+	private JSONObject createJSON (LinkedHashMap<Integer, List<FullProductList>> productLists) {
 		
 		JSONArray arr = new JSONArray();
 		
@@ -92,7 +93,7 @@ public class UserHistoryServlet extends HttpServlet {
 			JSONObject o = new JSONObject();
 			o.put("products", setJsonArrayType(entry.getValue()));
 			o.put("id", entry.getKey());
-			arr.add(o);
+			arr.add(o); 
 		}
 		
 		JSONObject result = new JSONObject();

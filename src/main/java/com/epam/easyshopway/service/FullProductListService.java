@@ -3,12 +3,17 @@ package com.epam.easyshopway.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.epam.easyshopway.dto.FullProductListDTO;
 import com.epam.easyshopway.model.FullProductList;
 
 public class FullProductListService {
+	
+	public static void main(String[] args) {
+		getGroupedList(11);
+	}
 		
 	public static List<FullProductList> getProductListByUserId(Integer id) {
 		List<FullProductList> fullProductLists = null;
@@ -25,9 +30,9 @@ public class FullProductListService {
 		}
 	}
 	
-	public static HashMap<Integer, List<FullProductList>> getGroupedList (Integer id) { 
+	public static LinkedHashMap<Integer, List<FullProductList>> getGroupedList (Integer id) { 
 	    List<FullProductList> userProducts = new ArrayList<>(); 
-	    HashMap<Integer, List<FullProductList>> productLists = new HashMap<>(); 
+	    LinkedHashMap<Integer, List<FullProductList>> productLists = new LinkedHashMap<>(); 
 	     
 	    userProducts = getProductListByUserId(id); 
 	     

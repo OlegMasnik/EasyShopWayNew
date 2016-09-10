@@ -47,11 +47,12 @@ public class RegistrationServlet extends HttpServlet {
 			object = new JSONObject();
 			if (firstName == "" || lastName == "" || email == "" || birthday == "" || password == "") {
 				object.put("emailErrMsg", "Please enter all value.");
-				System.out.println("SDFGHJKL:SDFGHJKL:DFGHJKL");
+				System.out.println("empty form");
 			}
-			System.out.println("WHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHATWHAT");
+			
 			if (UserService.hasEmail(email)) {
 				object.put("emailErrMsg", "This email has already exists.");
+				System.out.println("This email has already exists.");
 			} else {
 				// new Thread(new ThreadMail(request, user)).start();
 				new Thread(new Runnable() {

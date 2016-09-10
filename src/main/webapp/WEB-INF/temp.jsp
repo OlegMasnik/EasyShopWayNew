@@ -178,7 +178,7 @@
 				if (item != undefined) {
 					if (find(item) == -1) {
 						$scope.items.push(item);
-						self.searchText = undefined;
+// 						self.searchText = undefined;
 					}
 				}
 

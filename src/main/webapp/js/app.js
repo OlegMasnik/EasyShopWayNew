@@ -1,51 +1,59 @@
 var dateBirthday;
 var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute' ]);
 
-app.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
-	$scope.status = '  ';
-	$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
-	$scope.showLogInForm = function(ev) {
-		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))
-				&& $scope.customFullscreen;
-		$mdDialog.show({
-			controller : DialogController,
-			templateUrl : 'login.tmpl.html',
-			parent : angular.element(document.body),
-			targetEvent : ev,
-			clickOutsideToClose : true,
-			fullscreen : useFullScreen
-		}).then(function(answer) {
-			$scope.status = 'You said the information was "' + answer + '".';
-		}, function() {
-			$scope.status = 'You cancelled the dialog.';
-		});
-		$scope.$watch(function() {
-			return $mdMedia('xs') || $mdMedia('sm');
-		}, function(wantsFullScreen) {
-			$scope.customFullscreen = (wantsFullScreen === true);
-		});
-	};
-	$scope.showRegistrationInFrom = function(ev) {
-		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))
-				&& $scope.customFullscreen;
-		$mdDialog.show({
-			controller : DialogController,
-			templateUrl : 'signup.tmpl.html',
-			parent : angular.element(document.body),
-			targetEvent : ev,
-			clickOutsideToClose : true,
-			fullscreen : useFullScreen
-		}).then(function(answer) {
-			$scope.status = 'You said the information was "' + answer + '".';
-		}, function() {
-			$scope.status = 'You cancelled the dialog.';
-		});
-		$scope.$watch(function() {
-			return $mdMedia('xs') || $mdMedia('sm');
-		}, function(wantsFullScreen) {
-			$scope.customFullscreen = (wantsFullScreen === true);
-		});
-	};
+app.controller('PageRedirectCtrl', function($window) {
+	var ctrl = this;
+	
+	ctrl.goToPage = function(way) {
+		$window.location.href = way;	
+	}
+	
+});
+
+app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
+    $scope.status = '  ';
+    $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+    
+    $scope.showLogInForm = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'login.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        }).then(function (answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+        }, function () {
+            $scope.status = 'You cancelled the dialog.';
+        });
+        $scope.$watch(function () {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function (wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    };
+    $scope.showRegistrationInFrom = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'signup.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        }).then(function (answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+        }, function () {
+            $scope.status = 'You cancelled the dialog.';
+        });
+        $scope.$watch(function () {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function (wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    };
 });
 
 app
@@ -64,36 +72,41 @@ app
 								});
 								console.log('Read ' + data);
 
-								var config = {
-									headers : {
-										'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
-									}
-								}
-								if ($('#emailL').valid()
-										&& $('#passwordL').valid()) {
-									$http
-											.post('/EasyShopWayNew/login',
-													data, config)
-											.success(
-													function(data, status,
-															headers, config) {
-														if (data.emailErrMsg == undefined) {
-															$window.location.href = 'cabinet';
-														} else {
-															$scope.error = data.emailErrMsg;
-														}
-														console
-																.log(data.emailErrMsg);
-													}).error(
-													function(data, status,
-															header, config) {
-														console.log('fail');
-													});
-								} else {
-									console.log("sory");
-								}
-							};
-						} ]);
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                        }
+                    }
+                    if ($('#emailL').valid() && $('#passwordL').valid()) {
+                    	console.log("Valid data");
+                        $http
+                            .post(
+                                '/EasyShopWayNew/login',
+                                data, config)
+                            .success(
+                                function (data, status,
+                                    headers, config) {
+                                    if (data.emailErrMsg == undefined) {
+                                    	if (data.passwordErrMsg == undefined) {
+                                    		$window.location.href = 'cabinet';
+                                    	} else {
+                                    		$scope.error = data.passwordErrMsg;
+                                    	}
+                                    } else {
+                                        $scope.error = data.emailErrMsg;
+                                    }
+                                    console
+                                        .log("Error: " + data.emailErrMsg + " " + data.passwordErrMsg);
+                                }).error(
+                                function (data, status,
+                                    header, config) {
+                                    console.log('fail');
+                                });
+                    } else {
+                        console.log("sory");
+                    }
+                };
+						}]);
 
 app
 		.controller(
@@ -101,8 +114,7 @@ app
 				[
 						'$scope',
 						'$http',
-						function($scope, $http) {
-
+						function ($scope, $http) {
 							$scope.sendRegData = function() {
 								console.log('hello ' + $scope.email)
 								console.log("date " + dateBirthday)
@@ -120,20 +132,14 @@ app
 										'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 									}
 								}
-
-								console.log($('#fName1').val());
-								console.log($('#lName1').val());
-
-								console.log($('#emailR').valid() + " "
-										+ $('#fName1').valid() + " "
-										+ $('#lName1').valid() + " "
-										+ $('#passwordR').valid())
-								if ($('#emailR').valid()
-										&& $('#passwordR').valid()) {
-
+								var firstNameDefined = $('#fName1').val();
+								var lastNameDefined = $('#lName1').val();
+								console.log('Reg');
+								if ($('#emailR').valid() && $('#passwordR').valid()
+										&& firstNameDefined != "" && lastNameDefined != "") {
+									console.log('Before reg');
 									$http
-											.post('/EasyShopWayNew/reg', data,
-													config)
+											.post('/EasyShopWayNew/reg', data, config)
 											.success(
 													function(data, status,
 															headers, config) {
@@ -144,13 +150,6 @@ app
 														if (data.emailErrMsg == undefined) {
 															$scope.success = "Check your email";
 														}
-														// var esc = $
-														// .Event(
-														// "keydown", {
-														// keyCode: 27
-														// });
-														// $("body").trigger(esc);
-
 													}).error(
 													function(data, status,
 															header, config) {
@@ -158,9 +157,10 @@ app
 													});
 								} else {
 									console.log("oq");
+									$scope.error = "Please fill all required fields.";
 								}
 							};
-						} ]);
+						}]);
 
 app.controller('DatePickerCtrl', function($scope) {
 

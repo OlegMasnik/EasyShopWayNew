@@ -11,14 +11,14 @@ import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.ProductList;
 
 public class ProductListDAO extends AbstractDAO<ProductList> {
-	private Connection connection;
+
 	private Transformer<ProductList> transformer;
-	private final String ADD_PRODUCT_LIST = "INSERT INTO product_list (user_id, date, time) VALUES (?, ?, ?)";
+	private final String ADD_PRODUCT_LIST = "INSERT INTO product_list (user_id, date, time) VALUES (?, CURDATE(), CURTIME())";
 	private final String DELETE_PRODUCT_LIST_BY_INDEX = "DELETE FROM product_list WHERE id=?";
 	private final String UPDATE_PRODUCT_LIST_BY_INDEX = "UPDATE product_list SET user_id=?,  date=?, time=? WHERE id=?";
 	private final String GET_PRODUCT_LIST_BY_INDEX = "SELECT * FROM product_list WHERE id=?";
 	private final String GET_ALL_PRODUCT_LISTS = "SELECT * FROM product_list";
-	private final String GET_CURRENT_PRODUCT_LISTS_ID = "SELECT id FROM product_list where user_id=?,  date=?, time=?";
+	private final String GET_CURRENT_PRODUCT_LISTS_ID = "SELECT id FROM product_list where user_id=? ORDER BY id DESC LIMIT 1";
 
 	public ProductListDAO() {
 		super();
@@ -26,39 +26,41 @@ public class ProductListDAO extends AbstractDAO<ProductList> {
 
 	@Override
 	public int insert(ProductList productList) throws SQLException {
-		PreparedStatement statement = connection
-				.prepareStatement(ADD_PRODUCT_LIST);
+		PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT_LIST);
 		statement.setInt(1, productList.getUserId());
-		statement.setDate(2, productList.getDate());
-		statement.setTime(3, productList.getTime());
+
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
 	}
 
 	public int insertAndGetId(ProductList productList) throws SQLException {
-		PreparedStatement statement = connection
-				.prepareStatement(ADD_PRODUCT_LIST);
+		PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT_LIST);
 		statement.setInt(1, productList.getUserId());
-		statement.setDate(2, productList.getDate());
-		statement.setTime(3, productList.getTime());
+		// statement.setDate(2, productList.getDate());
+		// statement.setTime(3, productList.getTime());
+		int res = statement.executeUpdate();
+		System.out.println("Result " + res);
 		statement.close();
-		PreparedStatement st = connection
-				.prepareStatement(GET_CURRENT_PRODUCT_LISTS_ID);
+		PreparedStatement st = connection.prepareStatement(GET_CURRENT_PRODUCT_LISTS_ID);
 		st.setInt(1, productList.getUserId());
-		st.setDate(2, productList.getDate());
-		st.setTime(3, productList.getTime());
+		// st.setDate(2, productList.getDate());
+		// st.setTime(3, productList.getTime());
 
 		ResultSet result = st.executeQuery();
-		int idList = result.getInt("id");
-		st.close();
-		return idList;
+		if (result.next()) {
+			Integer idList = result.getInt("id");
+			st.close();
+			return idList;
+		} else {
+			st.close();
+			return -1;
+		}
 	}
 
 	@Override
 	public int delete(Integer index) throws SQLException {
-		PreparedStatement statement = connection
-				.prepareStatement(DELETE_PRODUCT_LIST_BY_INDEX);
+		PreparedStatement statement = connection.prepareStatement(DELETE_PRODUCT_LIST_BY_INDEX);
 		statement.setInt(1, index);
 		int result = statement.executeUpdate();
 		statement.close();
@@ -66,12 +68,10 @@ public class ProductListDAO extends AbstractDAO<ProductList> {
 	}
 
 	@Override
-	public ProductList getById(Integer index) throws SQLException,
-			InstantiationException, IllegalAccessException {
+	public ProductList getById(Integer index) throws SQLException, InstantiationException, IllegalAccessException {
 		transformer = new Transformer<>(ProductList.class);
 		List<ProductList> list = new ArrayList<>();
-		PreparedStatement statement = connection
-				.prepareStatement(GET_PRODUCT_LIST_BY_INDEX);
+		PreparedStatement statement = connection.prepareStatement(GET_PRODUCT_LIST_BY_INDEX);
 		statement.setInt(1, index);
 		ResultSet rs = statement.executeQuery();
 		list = transformer.fromRStoCollection(rs);
@@ -85,12 +85,10 @@ public class ProductListDAO extends AbstractDAO<ProductList> {
 	}
 
 	@Override
-	public List<ProductList> getAll() throws SQLException,
-			InstantiationException, IllegalAccessException {
+	public List<ProductList> getAll() throws SQLException, InstantiationException, IllegalAccessException {
 		transformer = new Transformer<>(ProductList.class);
 		List<ProductList> list = new ArrayList<>();
-		PreparedStatement statement = connection
-				.prepareStatement(GET_ALL_PRODUCT_LISTS);
+		PreparedStatement statement = connection.prepareStatement(GET_ALL_PRODUCT_LISTS);
 		ResultSet rs = statement.executeQuery();
 		list = transformer.fromRStoCollection(rs);
 		rs.close();
@@ -99,10 +97,8 @@ public class ProductListDAO extends AbstractDAO<ProductList> {
 	}
 
 	@Override
-	public int update(Integer index, ProductList productList)
-			throws SQLException {
-		PreparedStatement statement = connection
-				.prepareStatement(UPDATE_PRODUCT_LIST_BY_INDEX);
+	public int update(Integer index, ProductList productList) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT_LIST_BY_INDEX);
 		statement.setInt(1, productList.getUserId());
 		statement.setDate(2, productList.getDate());
 		statement.setTime(3, productList.getTime());

@@ -8,7 +8,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class ConnectionPool {
-	private static final int COUNT_CONNECTION = 20;
+	private static final int COUNT_CONNECTION = 50;
 	private BlockingQueue<Connection> connections = new ArrayBlockingQueue<Connection>(
 			COUNT_CONNECTION);
 

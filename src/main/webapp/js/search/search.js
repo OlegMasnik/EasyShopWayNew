@@ -1,17 +1,94 @@
-(function () {
-    'use strict';
-    var dateBirthday;
+'use strict';
 
-    var app = angular
-        .module('SearchApp', ['ngMaterial', 'ngMessages']);
-    app.controller('ContactChipDemoCtrl', DemoCtrl);
+var dateBirthday;
+var serApp = angular
+    .module('SearchApp', ['ngMaterial', 'ngMessages']);
+serApp.controller('ProductListCtrl', DemoCtrl);
 
-    function DemoCtrl($q, $timeout, $http) {
-        var self = this;
-        var pendingSearch, cancelSearch = angular.noop;
-        var cachedQuery, lastSearch;
+function DemoCtrl($timeout, $q, $log, $scope, $http) {
+    var self = this;
 
-        //        self.allProducts = loadProducts();
+    self.simulateQuery = false;
+    self.isDisabled = true;
+    self.isDisabledMap = false;
+
+    //			Load all maps
+
+    var config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+        }
+    }
+
+    $http.get('/EasyShopWayNew/searchMaps', config).success(
+        function (data, status, headers, config) {
+            console.log(data);
+            self.maps = loadAllMaps(data);
+            console.log(self.maps);
+        }).error(function (data, status, header, config) {
+        console.log(data);
+        console.log('no products');
+    });
+
+    self.selectedMapItemChange = function (item) {
+        //			Load all products on curent map
+        
+        self.isDisabled = true;
+        
+        var data = $.param({
+            mapId : item.value
+        });
+
+        config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+
+        $http.get('/EasyShopWayNew/searchProducts', config).success(
+            function (data, status, headers, config) {
+                console.log(data);
+                self.states = loadAll(data);
+                console.log(self.states);
+                
+                self.isDisabled = false;
+                
+            }).error(function (data, status, header, config) {
+            console.log(data);
+            console.log('no products');
+            self.isDisabled = true;
+        });
+    }
+
+
+
+    self.querySearch = querySearch;
+    self.selectedItemChange = selectedItemChange;
+    self.searchTextChange = searchTextChange;
+
+    self.newState = newState;
+
+    self.toggleChecked = function (item) {
+        console.log("Remove " + item);
+        remove(item);
+    }
+
+    self.sendOnMap = function () {
+        console.log($scope.items);
+
+        var ids = [];
+
+        for (var i = 0; i < $scope.items.length; i++) {
+            ids[i] = ($scope.items[i].value);
+        }
+
+        console.log(ids);
+
+        var send = $.param({
+            data: JSON.stringify({
+                productIds: ids
+            })
+        });
 
         var config = {
             headers: {
@@ -20,293 +97,324 @@
         }
 
         $http
-            .get(
-                '/EasyShopWayNew/searchProducts',
-                config)
-            .success(
-                function (data, status, headers,
-                    config) {
-                    console.log(data);
-                    self.allProducts = loadProducts(data.products);
-                    console.log(self.allProducts);
+            .post('/EasyShopWayNew/saveProductList', send,
+                config).success(
+                function (send, status, headers, config) {
+                    console.log("Save to db");
                 }).error(
-                function (data, status, header, config) {
-                    console.log(data);
-                    console.log('no products');
-                });
+                function (send, status, header,
+                    config) {});
+    }
 
-        self.products = [];
+    $scope.items = [];
 
-        self.filterSelected = true;
+    function newState(state) {
+        alert("Sorry! You'll need to create a Constitution for " + state + " first!");
+    }
 
-        self.querySearch = querySearch;
+    // ******************************
+    // Internal methods
+    // ******************************
 
-        self.sendOnMap = sendOnMap;
+    /**
+     * Search for states... use $timeout to simulate
+     * remote dataservice call.
+     */
+    function querySearch(query) {
+        var results = query ? self.states
+            .filter(createFilterFor(query)) : self.states,
+            deferred;
+        if (self.simulateQuery) {
+            deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve(results);
+            }, Math.random() * 1000, false);
+            return deferred.promise;
+        } else {
+            return results;
+        }
+    }
 
-        function sendOnMap() {
-            console.log(self.products);
+    function searchTextChange(text) {
+        $log.info('Text changed to ' + text);
+    }
+
+    function selectedItemChange(item, text) {
+        if (item != undefined) {
+            if (find(item) == -1) {
+                $scope.items.push(item);
+                // 						self.searchText = undefined;
+            }
         }
 
-        /**
-         * Search for contacts; use a random delay to simulate a remote call
-         */
-        function querySearch(criteria) {
-            cachedQuery = cachedQuery || criteria;
-            return cachedQuery ? self.allProducts.filter(createFilterFor(cachedQuery)) : [];
+        console.log(JSON.stringify(item));
+    }
+
+    function find(value) {
+        console.log($scope.items);
+        for (var i = 0; i < $scope.items.length; i++) {
+            console.log($scope.items[i].value + " " + value.value);
+            if ($scope.items[i].value == value.value) {
+                return i;
+            }
         }
+        return -1;
+    }
 
-        function refreshDebounce() {
-            lastSearch = 0;
-            pendingSearch = null;
-            cancelSearch = angular.noop;
+    function remove(value) {
+        console.log($scope.items);
+        console.log(value);
+
+        for (var i = 0; i < $scope.items.length; i++) {
+            console.log($scope.items[i].value + " " + value.value);
+            if ($scope.items[i].value == value.value) {
+                $scope.items.splice(i, 1);
+                console.log($scope.items);
+                return;
+            }
         }
+    }
 
-        /**
-         * Debounce if querying faster than 300ms
-         */
-        function debounceSearch() {
-            var now = new Date().getMilliseconds();
-            lastSearch = lastSearch || now;
+    /**
+     * Build `states` list of key/value pairs
+     */
+    function loadAllMaps(data) {
 
-            return ((now - lastSearch) < 300);
-        }
+        console.log(data.maps);
+        var maps = data.maps;
 
-        /**
-         * Create filter function for a query string
-         */
-        function createFilterFor(query) {
-            var lowercaseQuery = angular.lowercase(query);
-
-            return function filterFn(product) {
-                return (product._lowername.indexOf(lowercaseQuery) != -1);;
+        return maps.map(function (it) {
+            return {
+                value: it.id,
+                name_uk: it.name_uk,
+                name_en: it.name_en,
+                display: it.name_en
             };
+        });
+    }
+    
+    function loadAll(data) {
 
-        }
+        console.log(data.products);
+        var products = data.products;
 
-        function loadProducts(data) {
-            var products = data;
-
-            var tmp = [{
-                id: 1,
-                img : " ",
-                name_en : "lobster",
-                name_uk : "лобстер"
-            }, {
-                id: 2,
-                img : " ",
-                name_en : "vobster",
-                name_uk : "лобстер"
-            }, {
-                id: 3,
-                img : " ",
-                name_en : "bobster",
-                name_uk : "лобстер"
-            }, {
-                id: 4,
-                img : " ",
-                name_en : "nobster",
-                name_uk : "лобстер"
-            }, {
-                id: 5,
-                img : " ",
-                name_en : "mobster",
-                name_uk : "лобстер"
-            }];
-
-            var pr = tmp.map(function (p, index) {
-                var product = {
-//                	$$hashKey : p.id,
-                	name: p.name_en,
-                    id: p.id,
-                    image: p.img,
-                    name_uk: p.name_uk
-                };
-                product._lowername = product.name.toLowerCase();
-                return product;
-            });
-            console.log(pr);
-            return pr;
-        }
+        return products.map(function (product) {
+            return {
+                value: product.id,
+                name_uk: product.name_uk,
+                name_en: product.name_en,
+                display: product.name_en,
+                img: product.img,
+                coordinates: product.coordinates
+            };
+        });
     }
 
-    app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
-        $scope.status = '  ';
-        $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
-        $scope.showLogInForm = function (ev) {
-            var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
-            $mdDialog.show({
-                controller: DialogController,
-                templateUrl: 'login.tmpl.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                fullscreen: useFullScreen
-            }).then(function (answer) {
+    /**
+     * Create filter function for a query string
+     */
+    
+    function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+
+        return function filterFn(state) {
+            return (state.display.indexOf(lowercaseQuery) === 0);
+        };
+    }
+}
+
+serApp.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
+    $scope.status = '  ';
+    $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+    $scope.showLogInForm = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'login.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        }).then(
+            function (answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
-            }, function () {
+            },
+            function () {
                 $scope.status = 'You cancelled the dialog.';
             });
-            $scope.$watch(function () {
-                return $mdMedia('xs') || $mdMedia('sm');
-            }, function (wantsFullScreen) {
-                $scope.customFullscreen = (wantsFullScreen === true);
-            });
-        };
-        $scope.showRegistrationInFrom = function (ev) {
-            var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
-            $mdDialog.show({
-                controller: DialogController,
-                templateUrl: 'signup.tmpl.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                fullscreen: useFullScreen
-            }).then(function (answer) {
+        $scope.$watch(function () {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function (wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    };
+    $scope.showRegistrationInFrom = function (ev) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'signup.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+        }).then(
+            function (answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
-            }, function () {
+            },
+            function () {
                 $scope.status = 'You cancelled the dialog.';
             });
-            $scope.$watch(function () {
-                return $mdMedia('xs') || $mdMedia('sm');
-            }, function (wantsFullScreen) {
-                $scope.customFullscreen = (wantsFullScreen === true);
-            });
-        };
-    });
+        $scope.$watch(function () {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function (wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    };
+});
 
-    app
-        .controller(
-            'LoginCtrl', [
-            						'$scope',
-            						'$http',
-            						'$window',
-            						function ($scope, $http, $window) {
-                    $scope.sendLoginData = function () {
-                        console.log('hello' + $scope.email)
-                        var data = $.param({
-                            email: $scope.email,
-                            password: $scope.password
-                        });
-                        console.log('Read ' + data);
+serApp
+    .controller(
+        'LoginCtrl', [
+								'$scope',
+								'$http',
+								'$window',
+								function ($scope, $http, $window) {
+                $scope.sendLoginData = function () {
+                    console.log('hello' + $scope.email)
+                    var data = $.param({
+                        email: $scope.email,
+                        password: $scope.password
+                    });
+                    console.log('Read ' + data);
 
-                        var config = {
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                            }
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                         }
-                        if ($('#emailL').valid() && $('#passwordL').valid()) {
-                            $http
-                                .post(
-                                    'http://localhost:8080/EasyShopWayNew/login',
-                                    data, config)
-                                .success(
-                                    function (data, status,
-                                        headers, config) {
-                                        if (data.emailErrMsg == undefined) {
-                                            $window.location.href = 'cabinet';
-                                        } else {
-                                            $scope.error = data.emailErrMsg;
-                                        }
-                                        console
-                                            .log(data.emailErrMsg);
-                                    }).error(
-                                    function (data, status,
-                                        header, config) {
-                                        console.log('fail');
-                                    });
-                        } else {
-                            cosole.log("sory");
-                        }
-                    };
-            						}]);
-
-    app
-        .controller(
-            'SignUpCtrl', [
-            						'$scope',
-            						'$http',
-            						function ($scope, $http) {
-
-                    $scope.sendRegData = function () {
-                        console.log('hello ' + $scope.email)
-                        console.log("date " + dateBirthday)
-                        var data = $.param({
-                            email: $scope.email,
-                            password: $scope.password,
-                            firstName: $scope.firstName,
-                            lastName: $scope.lastName,
-                            birthday: dateBirthday
-                        });
-                        console.log('Read ' + data);
-
-                        var config = {
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                            }
-                        }
-
-                        console.log($('#fName1').val());
-                        console.log($('#lName1').val());
-
-                        console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
-                        if ($('#emailR').valid() && $('#passwordR').valid() && $('#fName1').valid() && $('#lName1').valid()) {
-
-                            $http
-                                .post(
-                                    'http://localhost:8080/EasyShopWayNew/reg',
-                                    data, config)
-                                .success(
-                                    function (data, status,
-                                        headers, config) {
-                                        console
-                                            .log("QWEER" + data.emailErrMsg);
+                    }
+                    if ($('#emailL').valid() && $('#passwordL').valid()) {
+                        $http
+                            .post(
+                                'http://localhost:8080/EasyShopWayNew/login',
+                                data, config)
+                            .success(
+                                function (data,
+                                    status,
+                                    headers,
+                                    config) {
+                                    if (data.emailErrMsg == undefined) {
+                                        $window.location.href = 'cabinet';
+                                    } else {
                                         $scope.error = data.emailErrMsg;
-                                        if (data.emailErrMsg == undefined) {
-                                            $scope.success = "Check your email";
-                                        }
-                                        // var esc = $
-                                        // .Event(
-                                        // "keydown", {
-                                        // keyCode: 27
-                                        // });
-                                        // $("body").trigger(esc);
+                                    }
+                                    console
+                                        .log(data.emailErrMsg);
+                                })
+                            .error(
+                                function (data,
+                                    status,
+                                    header,
+                                    config) {
+                                    console
+                                        .log('fail');
+                                });
+                    } else {
+                        cosole.log("sory");
+                    }
+                };
+								}]);
 
-                                    }).error(
-                                    function (data, status,
-                                        header, config) {
-                                        console.log('fail');
-                                    });
-                        } else {
-                            console.log("oq");
+serApp
+    .controller(
+        'SignUpCtrl', [
+								'$scope',
+								'$http',
+								function ($scope, $http) {
+
+                $scope.sendRegData = function () {
+                    console.log('hello ' + $scope.email)
+                    console.log("date " + dateBirthday)
+                    var data = $.param({
+                        email: $scope.email,
+                        password: $scope.password,
+                        firstName: $scope.firstName,
+                        lastName: $scope.lastName,
+                        birthday: dateBirthday
+                    });
+                    console.log('Read ' + data);
+
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                         }
-                    };
-            						}]);
+                    }
 
-    app.controller('DatePickerCtrl', function ($scope) {
+                    console.log($('#fName1').val());
+                    console.log($('#lName1').val());
 
-        $scope.today = function () {
-            $scope.dt = new Date();
-        };
-        $scope.dateformat = "MM/dd/yyyy";
-        $scope.today();
-        $scope.showcalendar = function ($event) {
-            $scope.showdp = true;
-        };
-        $scope.showdp = false;
-        $scope.dtmax = new Date();
-        dateBirthday = moment($scope.dt).format('YYYY-MM-DD');
-    });
+                    console.log($('#emailR').valid() + " " + $('#fName1').valid() + " " + $('#lName1').valid() + " " + $('#passwordR').valid())
+                    if ($('#emailR').valid() && $('#passwordR').valid() && $('#fName1').valid() && $('#lName1').valid()) {
 
-    function DialogController($scope, $mdDialog) {
-        $scope.hide = function () {
-            $mdDialog.hide();
-        };
-        $scope.cancel = function () {
-            $mdDialog.cancel();
-        };
-        $scope.answer = function (answer) {
-            $mdDialog.hide(answer);
-        };
-    }
+                        $http
+                            .post(
+                                'http://localhost:8080/EasyShopWayNew/reg',
+                                data, config)
+                            .success(
+                                function (data,
+                                    status,
+                                    headers,
+                                    config) {
+                                    console
+                                        .log("QWEER" + data.emailErrMsg);
+                                    $scope.error = data.emailErrMsg;
+                                    if (data.emailErrMsg == undefined) {
+                                        $scope.success = "Check your email";
+                                    }
+                                    // var esc = $
+                                    // .Event(
+                                    // "keydown", {
+                                    // keyCode: 27
+                                    // });
+                                    // $("body").trigger(esc);
 
-})();
+                                })
+                            .error(
+                                function (data,
+                                    status,
+                                    header,
+                                    config) {
+                                    console
+                                        .log('fail');
+                                });
+                    } else {
+                        console.log("oq");
+                    }
+                };
+								}]);
+
+serApp.controller('DatePickerCtrl', function ($scope) {
+
+    $scope.today = function () {
+        $scope.dt = new Date();
+    };
+    $scope.dateformat = "MM/dd/yyyy";
+    $scope.today();
+    $scope.showcalendar = function ($event) {
+        $scope.showdp = true;
+    };
+    $scope.showdp = false;
+    $scope.dtmax = new Date();
+    dateBirthday = moment($scope.dt).format('YYYY-MM-DD');
+});
+
+function DialogController($scope, $mdDialog) {
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+    $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+    };
+}
