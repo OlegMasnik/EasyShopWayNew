@@ -154,7 +154,7 @@ public class TypeProductControlServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
-		req.getRequestDispatcher("/EasyShopWayNew/cabinet#/products").forward(req, resp);
+		resp.sendRedirect("/EasyShopWayNew/cabinet#/products");
 	}
 	
 	

@@ -22,6 +22,7 @@ public class UserDAO extends AbstractDAO<User> {
 	private final String UPDATE_ACTIVE = "UPDATE user SET active = ? WHERE email = ?;";
 	private final String GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user WHERE email = ? AND password = ? and active = 1";
 	private final String CHECK_EMAIL = "SELECT * FROM user WHERE email like ? and active = 1";
+	private final String UPDATE_PASSWORD_BY_EMAIL = "UPDATE `easy_shop_way`.`user` SET `password`=? WHERE `email` like ?;";
 
 	public UserDAO() {
 		super();
@@ -126,6 +127,16 @@ public class UserDAO extends AbstractDAO<User> {
 				.prepareStatement(UPDATE_PICTURE);
 		statement.setString(1, imageAddress);
 		statement.setInt(2, userId);
+		int result = statement.executeUpdate();
+		statement.close();
+		return result;
+	}
+	public int updatePassword(String email, String passsword)
+			throws SQLException {
+		PreparedStatement statement = connection
+				.prepareStatement(UPDATE_PASSWORD_BY_EMAIL);
+		statement.setString(1, passsword);
+		statement.setString(2, email);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;

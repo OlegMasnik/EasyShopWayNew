@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
 <link rel="stylesheet" href="css/style.css">
-<title>Error cofirmation email</title>
+<title>Password don`t changed</title>
 </head>
 
 <body ng-app="MyApp">
@@ -18,7 +18,7 @@
 	
 	<div flex="30"></div>
 	
-	<h2 flex>Error cofirmation email</h2>
+	<h2 flex>Failed to change password</h2>
 	
 	</div>
 	

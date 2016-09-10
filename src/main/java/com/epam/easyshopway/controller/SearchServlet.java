@@ -87,10 +87,10 @@ public class SearchServlet extends HttpServlet {
 
 			
 
-			ProductList productList = new ProductList(user.getId(), null, null);
+//			ProductList productList = new ProductList(user.getId(), null, null);
 
-			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
-			ProductListService.insertListAndProduct(productList, productIds);
+//			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
+//			ProductListService.insertListAndProduct(productList, productIds);
 		} else {
 			System.out.println("No user");
 		}
