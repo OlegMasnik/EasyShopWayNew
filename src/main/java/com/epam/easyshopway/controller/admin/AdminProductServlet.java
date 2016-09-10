@@ -50,9 +50,6 @@ public class AdminProductServlet extends HttpServlet {
 		
 		switch (type) {
 			case "getAllProducts":{
-//				Integer cupboardId = Integer.valueOf(request.getParameter("cupboardId"));
-//				List<CupboardProductInformation> productsOnCupboard = 
-//						CupboardProductsInformationService.getAllProductbyCupdoardId(cupboardId);
 				List<Product> allProducts = ProductService.getAll();
 				JSONArray resultArray = new JSONArray();
 				for (Product cInformation : allProducts){

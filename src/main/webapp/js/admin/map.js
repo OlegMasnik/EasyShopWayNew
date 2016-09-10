@@ -664,7 +664,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
         }).then(function mySucces(response) {
             console.log("current Prods")
-            $scope.curretProducts = response.data;
+            $scope.currentProducts = response.data;
             console.log(response);
         }, function myError(response) {
 
@@ -672,7 +672,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
         $http({
             method: "GET",
-            url: "/EasyShopWayNew/edit_products?type=getAllProducts&cupboardId=" + item.id
+            url: "/EasyShopWayNew/edit_products?type=getAllProducts"
         }).then(function mySucces(response) {
             console.log("all Prods")
             $scope.allProducts = response.data;
@@ -682,7 +682,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         });
 
         $scope.cupboardCells = new Array(item.board_count * item.values.length);
-        if (typeof ($scope.curremtProducts) != "undefined")
+        if (typeof ($scope.currentProducts) != "undefined")
             for (var i = 0; i < $scope.currentProducts.length; i++)
                 for (var j = 0; j < $scope.curretProducts[i].place.length; j++)
                     $scope.cupboardCells[$scope.curretProducts[i].place[j]] = $scope.products[i];
