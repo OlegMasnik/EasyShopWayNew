@@ -2,6 +2,8 @@ package com.epam.easyshopway.controller.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +27,9 @@ import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.ProductService;
 import com.epam.easyshopway.service.ProductTypeService;
 import com.epam.easyshopway.service.UserService;
+import com.epam.easyshopway.utils.CheckImage;
+
+import sun.net.www.content.image.jpeg;
 
 public class TypeProductControlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -95,23 +100,27 @@ public class TypeProductControlServlet extends HttpServlet {
 			FileItem fileItem = (FileItem) items.get(3);
 
 			String type = "";
+			boolean b = false;
 			try {
 				type = "" + fileItem.getName().substring(fileItem.getName().lastIndexOf('.') + 1);
+				b = CheckImage.checkSignature(fileItem.getInputStream(), type);
 			} catch (NullPointerException e) {
+				e.printStackTrace();
 			}
 			if (!"".equals(type)) {
 				fName = "images/prod/" + id + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-				System.out.println(absoluteDiskPath);
-				fileItem.write(uploadedFile);
+				if (b)
+					fileItem.write(uploadedFile);
+				System.out.println("Check file: " + b);
 			}
 
 			if (id != 0) {
 				productType = ProductTypeService.getById(id);
 				productType.setNameEn(name_en);
 				productType.setNameUk(name_uk);
-				if (!"".equals(type))
+				if (!"".equals(type) && b)
 					productType.setImageUrl(fName);
 				if (ProductTypeService.update(id, productType) > 0) {
 					System.out.println("OK put");
@@ -122,7 +131,8 @@ public class TypeProductControlServlet extends HttpServlet {
 				productType = new ProductType();
 				productType.setNameEn(name_en);
 				productType.setNameUk(name_uk);
-				productType.setImageUrl(fName);
+				if (b)
+					productType.setImageUrl(fName);
 				productType.setActive(true);
 				if (ProductTypeService.insert(productType) > 0) {
 					System.out.println("OK insert");
@@ -139,4 +149,7 @@ public class TypeProductControlServlet extends HttpServlet {
 		System.out.println("Before redirect");
 		resp.sendRedirect("/EasyShopWayNew/cabinet#/products");
 	}
+	
+	
+	
 }
