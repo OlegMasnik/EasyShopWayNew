@@ -39,7 +39,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             console.log($scope.mapsName);
             if (typeof (mapId) != 'undefined') {
                 $scope.getMapByid(mapId);
-                $scope.openMap();
+                $scope.someModel = mapId;
             }
         }, function myError(response) {
             console.log(response.statusText);
@@ -47,10 +47,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     };
 
     $scope.getMapByid = function (m) {
-        mapId = m.id || mapId;
-        $http({
+        $scope.m = mapId || m;
+    	$http({
             method: "GET",
-            url: "/EasyShopWayNew/edit_map?type=map&id=" + mapId
+            url: "/EasyShopWayNew/edit_map?type=map&id=" + $scope.m
         }).then(function mySucces(response) {
             $scope.map = response.data.map;
             console.log($scope.map);
@@ -541,14 +541,18 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
                 $http.post('/EasyShopWayNew/edit_map', data, config)
                     .success(function (response, status, headers) {
-                    	console.log('create new');
+                    	console.log('CHANGE SIZE old ' + mapId);
                     	mapId = response;
                     	console.log(response);
+                    	$scope.walls = undefined;
+                    	$scope.paydesks = undefined;
+                    	$scope.config.enter = undefined;
+                    	game.enter = undefined;
+                    	start();
                     })
                     .error(function (data, status, header, config) {
                         console.log('failed');
                     });
-                //            } else {
 
             }
             game = new Game(document.querySelector('canvas'), $scope.config);
@@ -965,10 +969,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 .error(function (data, status, header, config) {
                     console.log('failed clear');
                 });
-            $scope.walls = undefined;
-            $scope.paydesks = undefined;
-            $scope.config.enter = undefined;
-            game.enter = undefined;
             $scope.getMapByid();
         }
     }
