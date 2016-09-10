@@ -114,11 +114,11 @@ public class TypeProductControlServlet extends HttpServlet {
 				     ImageIO.read(input).toString();
 				     fileItem.write(uploadedFile);
 				     System.out.println("Image download successful");
-				     req.setAttribute("message", "Image loaded successfully");
+				     req.getSession(false).setAttribute("messageProd", "Image loaded successfully");
 				} catch (Exception e) {
 				      // It's not an image.
 					System.out.println("Image download failed");
-					req.setAttribute("message", "Image loading failed");
+					req.getSession(false).setAttribute("messageProd", "Image loading failed");
 					throw e;
 				}
 					
