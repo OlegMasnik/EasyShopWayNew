@@ -57,7 +57,9 @@ public class UploadImageServlet extends HttpServlet {
 				String fName = "images/user/" + user.getId() + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-				if (CheckImage.checkSignature(item.getInputStream(), type));
+				boolean b = CheckImage.checkSignature(item.getInputStream(), type);
+				System.out.println(b);
+				if (b)
 					item.write(uploadedFile);
 
 				UserService.updatePicture(user.getId(), fName);
