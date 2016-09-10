@@ -67,7 +67,7 @@ public class MapService {
 	
 	public static Map getLastInserted (){
 		try (MapDAO mapDAO = new MapDAO()){
-			return mapDAO.getCurrentMap();
+			return mapDAO.getLastInserted();
 		}catch (SQLException e){
 			e.printStackTrace();
 		}catch (IllegalAccessException | InstantiationException e){

@@ -41,7 +41,7 @@ public class AdminMapServlet extends HttpServlet {
 		case "mapsName": {
 			Integer currentMapId = (Integer) request.getSession(false).getAttribute("curMapId");
 			JSONArray responseJSON;
-			if(currentMapId == null)
+			if (currentMapId == null)
 				responseJSON = getMapsName();
 			else
 				responseJSON = getMapsName(currentMapId);
@@ -56,12 +56,12 @@ public class AdminMapServlet extends HttpServlet {
 			request.getSession(false).setAttribute("curMapId", mapId);
 		}
 			break;
-			case "setMapId": {
-				Integer mapId = Integer.valueOf(request.getParameter("id"));
-				request.getSession(false).setAttribute("curMapId", mapId);
-			}
+		case "setMapId": {
+			Integer mapId = Integer.valueOf(request.getParameter("id"));
+			request.getSession(false).setAttribute("curMapId", mapId);
+		}
 			break;
-	}
+		}
 
 	}
 
@@ -90,6 +90,7 @@ public class AdminMapServlet extends HttpServlet {
 			map.setNameEn(nameEn);
 			map.setNameUk(nameUk);
 			MapService.insert(map);
+			request.getSession(false).setAttribute("curMapId", MapService.getLastInserted().getId());
 			response.getWriter().write("" + MapService.getLastInserted().getId());
 		}
 			break;
@@ -103,6 +104,7 @@ public class AdminMapServlet extends HttpServlet {
 			Map map = MapService.getById(mapId);
 			MapService.delete(mapId);
 			MapService.insert(map);
+			request.getSession(false).setAttribute("curMapId", MapService.getLastInserted().getId());
 			response.getWriter().write("" + MapService.getLastInserted());
 		}
 			break;
@@ -127,6 +129,7 @@ public class AdminMapServlet extends HttpServlet {
 			map.setNameEn(request.getParameter("name_en"));
 			map.setNameUk(request.getParameter("name_uk"));
 			MapService.insert(map);
+			request.getSession(false).setAttribute("curMapId", MapService.getLastInserted().getId());
 			response.getWriter().write("" + MapService.getLastInserted().getId());
 		}
 			break;
@@ -147,6 +150,7 @@ public class AdminMapServlet extends HttpServlet {
 				CupboardService.delete(cupboard.getId());
 			}
 			MapService.delete(mapId);
+			req.getSession(false).setAttribute("curMapId", null);
 		}
 			break;
 
@@ -302,7 +306,7 @@ public class AdminMapServlet extends HttpServlet {
 			Long id = (Long) obj.get("mapId");
 			List<Long> enters = (List<Long>) obj.get("enters");
 			System.out.println(enters);
-			if (enters.get(0) == null){
+			if (enters.get(0) == null) {
 				return 0;
 			}
 			List<Long> walls = (List<Long>) obj.get("walls");
