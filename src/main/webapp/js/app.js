@@ -183,7 +183,8 @@ app
 				[
 						'$scope',
 						'$http',
-						function($scope, $http) {
+						'$mdToast',
+						function($scope, $http,$mdToast) {
 							$scope.showInfo = function() {
 
 								dateBirthday = moment($scope.birthday).format(
@@ -259,25 +260,18 @@ app
 										'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 									}
 								}
-
-								// Validate data
-
-								// End validate
-
 								$http
 										.post('/EasyShopWayNew/info', data,
 												config).success(
 												function(data, status, headers,
 														config) {
-
+													showToast($mdToast, $scope, "Your information is success updated");
 													console.log(data);
-
+													
 												}).error(
 												function(data, status, headers,
 														config) {
-
-													alert("error");
-
+													showToast($mdToast, $scope, data);
 												});
 
 							}
@@ -289,7 +283,9 @@ app
 				[
 						'$scope',
 						'$http',
-						function($scope, $http) {
+						'$route',
+						'$mdToast',
+						function($scope, $http, $route, $mdToast) {
 							$scope.changePass = function() {
 
 								if ($('#newPass').valid()
@@ -311,12 +307,12 @@ app
 											.success(
 													function(data, status,
 															headers, config) {
-														$scope.message = data.msg;
+														showToast($mdToast, $scope, data.msg);
 													})
 											.error(
 													function(data, status,
 															header, config) {
-														$scope.message = 'Changing failed';
+														showToast($mdToast, $scope, "Changing failed");
 													});
 								}
 							}
@@ -345,7 +341,8 @@ app.controller('UploadImageCtrl', [
 		'$scope',
 		'$http',
 		'$mdToast',
-		function($scope, $http, $mdToast) {
+		'$route',
+		function($scope, $http, $mdToast, $route) {
 			$scope.status = "Validation success";
 			
 
@@ -359,50 +356,37 @@ app.controller('UploadImageCtrl', [
 				case 'bmp':
 				case 'png':
 				case 'gif':
-					showToast("File type is allowed");
-					var fd = new FormData();
-			        fd.append('file', file);
-			        $http({
-			            method: 'POST',
-			            url: '/EasyShopWayNew/cabinet/image-upload',
-			            data: "file=" + file,
-			            headers: {'Content-Type': 'multipart/form-data'}
-			    }).success(function(){
-			    	console.log("ok");
-		        })
-		        .error(function(){
-		        	console.log("ne ok");
-		        });
+					showToast($mdToast, $scope, "File type is allowed");
 					break;
 				default:
 					console.log('ne ok');
-					showToast("File type not allowed");
+					showToast($mdToast, $scope, "File type not allowed");
 					this.value = '';
 				}
 			}
 
-			function showToast(msg) {
-				var last = {
-					bottom : true,
-					top : false,
-					left : false,
-					right : true
-				};
-				$scope.toastPosition = angular.extend({}, last);
-
-				$scope.getToastPosition = function() {
-					return Object.keys($scope.toastPosition).filter(
-							function(pos) {
-								return $scope.toastPosition[pos];
-							}).join(' ');
-				};
-
-				$scope.showSimpleToast = function() {
-					var pinTo = $scope.getToastPosition();
-
-					$mdToast.show($mdToast.simple().textContent(msg).position(
-							pinTo).hideDelay(4000));
-				};
-				$scope.showSimpleToast();
-			}
 		} ]);
+function showToast($mdToast, $scope,msg) {
+	var last = {
+		bottom : true,
+		top : false,
+		left : true,
+		right : false
+	};
+	$scope.toastPosition = angular.extend({}, last);
+
+	$scope.getToastPosition = function() {
+		return Object.keys($scope.toastPosition).filter(
+				function(pos) {
+					return $scope.toastPosition[pos];
+				}).join(' ');
+	};
+
+	$scope.showSimpleToast = function() {
+		var pinTo = $scope.getToastPosition();
+
+		$mdToast.show($mdToast.simple().textContent(msg).position(
+				pinTo).hideDelay(4000));
+	};
+	$scope.showSimpleToast();
+}

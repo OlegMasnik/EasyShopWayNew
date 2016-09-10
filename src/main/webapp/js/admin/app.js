@@ -780,7 +780,6 @@ var operators = {
     }
 };
 
-
 function matchRule(str, rule, smart) {
     str = String(str);
     rule = String(rule);
@@ -790,3 +789,29 @@ function matchRule(str, rule, smart) {
     }
     return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
 };
+
+
+function showToast($mdToast, $scope,msg) {
+	var last = {
+		bottom : true,
+		top : false,
+		left : true,
+		right : false
+	};
+	$scope.toastPosition = angular.extend({}, last);
+
+	$scope.getToastPosition = function() {
+		return Object.keys($scope.toastPosition).filter(
+				function(pos) {
+					return $scope.toastPosition[pos];
+				}).join(' ');
+	};
+
+	$scope.showSimpleToast = function() {
+		var pinTo = $scope.getToastPosition();
+
+		$mdToast.show($mdToast.simple().textContent(msg).position(
+				pinTo).hideDelay(4000));
+	};
+	$scope.showSimpleToast();
+}
