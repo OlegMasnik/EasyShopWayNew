@@ -39,7 +39,12 @@ public class AdminMapServlet extends HttpServlet {
 
 		switch (type) {
 		case "mapsName": {
-			JSONArray responseJSON = getMapsName();
+			Integer currentMapId = (Integer) request.getSession(false).getAttribute("curMapId");
+			JSONArray responseJSON;
+			if(currentMapId == null)
+				responseJSON = getMapsName();
+			else
+				responseJSON = getMapsName(currentMapId);
 			response.getWriter().write(responseJSON.toString());
 		}
 			break;
@@ -47,17 +52,16 @@ public class AdminMapServlet extends HttpServlet {
 		case "map": {
 			Integer mapId = Integer.valueOf(request.getParameter("id"));
 			JSONObject responseJSON = getMap(mapId);
-			responseJSON = getMap(mapId);
 			response.getWriter().write(responseJSON.toString());
+			request.getSession(false).setAttribute("curMapId", mapId);
 		}
 			break;
-		case "newId": {
-			int newMapId = MapService.getCurrentMap().getId();
-			System.out.println(newMapId);
-			response.getWriter().write(newMapId);
-		}
-
-		}
+			case "setMapId": {
+				Integer mapId = Integer.valueOf(request.getParameter("id"));
+				request.getSession(false).setAttribute("curMapId", mapId);
+			}
+			break;
+	}
 
 	}
 
@@ -86,6 +90,7 @@ public class AdminMapServlet extends HttpServlet {
 			map.setNameEn(nameEn);
 			map.setNameUk(nameUk);
 			MapService.insert(map);
+			response.getWriter().write("" + MapService.getLastInserted().getId());
 		}
 			break;
 
@@ -98,7 +103,7 @@ public class AdminMapServlet extends HttpServlet {
 			Map map = MapService.getById(mapId);
 			MapService.delete(mapId);
 			MapService.insert(map);
-			response.getWriter().write(map.getId());
+			response.getWriter().write("" + MapService.getLastInserted());
 		}
 			break;
 
@@ -122,7 +127,7 @@ public class AdminMapServlet extends HttpServlet {
 			map.setNameEn(request.getParameter("name_en"));
 			map.setNameUk(request.getParameter("name_uk"));
 			MapService.insert(map);
-			response.getWriter().write("" + MapService.getCurrentMap().getId());
+			response.getWriter().write("" + MapService.getLastInserted().getId());
 		}
 			break;
 		}
@@ -162,6 +167,31 @@ public class AdminMapServlet extends HttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
+	private JSONArray getMapsName(int curMapId) {
+		JSONArray mapNameArray = new JSONArray();
+		List<Map> maps = MapService.getAll();
+		if (maps != null) {
+			Map cMap = MapService.getById(curMapId);
+			if (cMap != null) {
+				JSONObject map = new JSONObject();
+				map.put("id", cMap.getId());
+				map.put("name_en", cMap.getNameEn());
+				map.put("name_uk", cMap.getNameUk());
+				mapNameArray.add(map);
+				for (Map i : maps) {
+					if (i.getId() != curMapId) {
+						map = new JSONObject();
+						map.put("id", i.getId());
+						map.put("name_en", i.getNameEn());
+						map.put("name_uk", i.getNameUk());
+						mapNameArray.add(map);
+					}
+				}
+			}
+		}
+		return mapNameArray;
+	}
+
 	private JSONArray getMapsName() {
 		JSONArray mapNameArray = new JSONArray();
 		List<Map> maps = MapService.getAll();

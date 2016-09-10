@@ -13,7 +13,8 @@ public class MapDAO extends AbstractDAO<Map> {
 	private final String DELETE_MAP_BY_ID = "DELETE FROM `easy_shop_way`.`map` WHERE `id`=?;";
 	private final String SELECT_MAP_BY_ID = "SELECT * FROM map WHERE id = ?;";
 	private final String SELECT_CURRENT_MAP = "SELECT * FROM map GROUP BY id LIMIT 1 ";
-	private final String SELECT_ALL_MAPS = "SELECT * FROM map";
+	private final String SELECT_LAST_INSERTED = "SELECT * FROM map where id = (select max(id) from map);";
+	private final String SELECT_ALL_MAPS = "SELECT * FROM map;";
 	private final String UPDATE_MAP_BY_ID = "UPDATE map SET weight = ?, height = ?, name_en=?, name_uk=? WHERE id = ?";
 
 	public MapDAO() {
@@ -90,6 +91,21 @@ public class MapDAO extends AbstractDAO<Map> {
 			IllegalAccessException {
 		PreparedStatement statement = connection
 				.prepareStatement(SELECT_CURRENT_MAP);
+		ResultSet resultSet = statement.executeQuery();
+		List<Map> maps = new Transformer<Map>(Map.class)
+				.fromRStoCollection(resultSet);
+		statement.close();
+		if (maps.size() > 0) {
+			return maps.iterator().next();
+		} else {
+			return null;
+		}
+	}
+	
+	public Map getLastInserted() throws SQLException, InstantiationException,
+	IllegalAccessException {
+		PreparedStatement statement = connection
+				.prepareStatement(SELECT_LAST_INSERTED);
 		ResultSet resultSet = statement.executeQuery();
 		List<Map> maps = new Transformer<Map>(Map.class)
 				.fromRStoCollection(resultSet);

@@ -35,22 +35,39 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             url: "/EasyShopWayNew/edit_map?type=mapsName"
         }).then(function mySucces(response) {
             $scope.mapsName = response.data;
+            mapId = $scope.mapsName[0].id;
             console.log("Get mapsName");
             console.log($scope.mapsName);
             if (typeof (mapId) != 'undefined') {
+            	$scope.someModel = mapId;
                 $scope.getMapByid(mapId);
-                $scope.someModel = mapId;
             }
         }, function myError(response) {
             console.log(response.statusText);
         });
+        console.log("ROOT SCOPE");
     };
-
-    $scope.getMapByid = function (m) {
-        $scope.m = mapId || m;
+    
+    $scope.clickOnSelect = function(mId){
     	$http({
             method: "GET",
-            url: "/EasyShopWayNew/edit_map?type=map&id=" + $scope.m
+            url: "/EasyShopWayNew/edit_map?type=setMapId&id=" + mId
+        }).then(function mySucces(response) {
+        	$route.reload();
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
+    }
+    
+    $scope.getMapByid = function (m) {
+    	game = undefined;
+    	console.log(game);
+        $scope.m = m;
+        mapId = m || mapId;
+        console.log(mapId);
+    	$http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_map?type=map&id=" + mapId
         }).then(function mySucces(response) {
             $scope.map = response.data.map;
             console.log($scope.map);
@@ -66,7 +83,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $scope.config.height = $scope.map.height;
             console.log("size = " + $scope.config.width + $scope.config.height);
             console.log("size = " + $scope.config.enter);
+            
             $scope.openMap();
+            console.log($scope.config);
         }, function myError(response) {
             console.log(response.statusText);
         });
@@ -517,7 +536,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     $scope.openMap = function () {
         if (typeof ($scope.map) == 'undefined') {
-            showToast('Please, first selected map')
+            showToast('Please, first selected map');
         } else {
             console.log("size " + $scope.config.width + $scope.config.height);
             if ($scope.map.weight != $scope.config.width || $scope.map.height != $scope.config.height) {
@@ -542,20 +561,21 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 $http.post('/EasyShopWayNew/edit_map', data, config)
                     .success(function (response, status, headers) {
                     	console.log('CHANGE SIZE old ' + mapId);
-                    	mapId = response;
-                    	console.log(response);
-                    	$scope.walls = undefined;
-                    	$scope.paydesks = undefined;
-                    	$scope.config.enter = undefined;
-                    	game.enter = undefined;
-                    	start();
+                    	$route.reload();
+//                    	mapId = response;
+//                    	console.log(response);
+//                    	$scope.walls = undefined;
+//                    	$scope.paydesks = undefined;
+//                    	$scope.config.enter = undefined;
+//                    	game.enter = undefined;
+//                    	start();
                     })
                     .error(function (data, status, header, config) {
                         console.log('failed');
                     });
-
             }
             game = new Game(document.querySelector('canvas'), $scope.config);
+            game.draw();
         }
     }
 
@@ -858,8 +878,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 fullscreen: $scope.customFullscreen
             })
             .then(function (answer) {
-
                 console.log(answer);
+                
 
             }, function () {
                 console.log("cancel");
@@ -898,8 +918,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $http.post('/EasyShopWayNew/edit_map', data, config)
                 .success(function (data, status, headers) {
                     console.log('create new');
+//                    mapId = data;
+//                    console.log("create new map with id " + mapId);
+//                    start();
                     $route.reload();
-
                 })
                 .error(function (data, status, header, config) {
                     console.log('failed');
@@ -952,7 +974,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         } else {
             var data = $.param({
                 type: 'clearMap',
-                mapId: $scope.map.id,
+                mapId: mapId,
             });
             console.log(data);
 
@@ -964,12 +986,13 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $http.post('/EasyShopWayNew/edit_map', data, config)
                 .success(function (data, status, headers) {
                     $route.reload();
-                    console.log(data);
+//                	mapId = data;
+//                	$scope.getMapByid(mapId);
+//                    console.log(data);
                 })
                 .error(function (data, status, header, config) {
                     console.log('failed clear');
                 });
-            $scope.getMapByid();
         }
     }
 
