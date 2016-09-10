@@ -18,6 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
+import com.epam.easyshopway.utils.CheckImage;
 
 public class UploadImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -47,19 +48,17 @@ public class UploadImageServlet extends HttpServlet {
 			Iterator iter = items.iterator();
 			FileItem item = (FileItem) iter.next();
 
-			System.out.println("Field " + item.getString());
 			if (!item.isFormField()) {
+				File deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
+				if (deleteFile.exists())
+					deleteFile.delete();
+
 				String type = "" + item.getName().substring(item.getName().lastIndexOf('.') + 1);
 				String fName = "images/user/" + user.getId() + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-
-				File deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
-				if (deleteFile.exists())
-					deleteFile.delete();
-				
-				System.out.println(absoluteDiskPath);
-				item.write(uploadedFile);
+				if (CheckImage.checkSignature(item.getInputStream(), type));
+					item.write(uploadedFile);
 
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
@@ -78,6 +77,11 @@ public class UploadImageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		response.sendRedirect("/EasyShopWayNew/cabinet#/");
 
 	}

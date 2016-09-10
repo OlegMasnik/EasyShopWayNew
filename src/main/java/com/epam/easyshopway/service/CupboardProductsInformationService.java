@@ -8,13 +8,8 @@ import com.epam.easyshopway.model.CupboardProductInformation;
 
 public class CupboardProductsInformationService {
 
-	public static void main(String[] args) {
-		List<CupboardProductInformation> cup = getAllProductbyCupdoardId(1);
-		
-		System.out.println(cup.size());
-	}
 
-	private static List<CupboardProductInformation> getAllProductbyCupdoardId(Integer id) {
+	public static List<CupboardProductInformation> getAllProductbyCupdoardId(Integer id) {
 		List<CupboardProductInformation> productInformations = null;
 		try (CupboardProductsInformationDTO dto = new CupboardProductsInformationDTO()) {
 			productInformations = dto.getAllProductbyCupdoardId(id);

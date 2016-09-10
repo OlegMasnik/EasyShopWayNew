@@ -22,6 +22,8 @@ adminApp.config(function ($routeProvider) {
 
 
 adminApp.controller('AdminCtrl', function ($scope, $http) {
+	
+	$scope.hello = 'Hello world';
 
 });
 

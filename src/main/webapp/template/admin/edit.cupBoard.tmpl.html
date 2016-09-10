@@ -1,8 +1,8 @@
-<md-dialog>
+<md-dialog id="cupboardEdit">
 <form ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Edit Product</h2>
+		<h2>Edit cupboard {{item.id}}</h2>
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
 	</div>
@@ -10,20 +10,24 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
-	<h1>EDIT CUPBOARD {{item.id}}</h1>
-	<p ng-model="i" ng-repeat="i in item.values">{{i}}</p>
-	<p>hello world</p>
-<!-- 		<md-input-container> <label>English name</label> -->
-<!-- 		<input name="name_en" type="text" required ng-model="item.nen"></md-input-container> -->
-
-<!-- 		<md-input-container> <label>Ukraine name</label> -->
-<!-- 		<input name="name_uk" type="text" required ng-model="item.nuk"></md-input-container> -->
-<!-- 		<br> -->
-<!-- 		<md-select ng-model="selectedType"> <md-option -->
-<!-- 			ng-value="type" ng-repeat="type in types">{{ type.nen }} - {{type.nuk}}</md-option> -->
-<!-- 		</md-select> -->
-
-<!-- 		<md-dialog-actions layout="row"> <span flex></span><md-button -->
-<!-- 			ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions> -->
+		<div layout="row">
+			<md-input-container flex> <label>Description
+				English</label> <input type="text" ng-model="name_en"> </md-input-container>
+			<md-input-container flex> <label>Description
+				Ukraine</label> <input type="text" ng-model="name_uk"> </md-input-container>
+		</div>
+		<div layout="row" ng-repeat="k in item.board_count | range">
+			<md-select ng-model="cupboardCells[k * item.values.length + $index]"  ng-repeat="i in item.values" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}">
+				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option> 
+			</md-select>
+		</div>
+		<md-dialog-actions layout="row"> <span flex></span>
+		<div layout="row">
+			<md-button ng-click="deleteCupboard(item)"> Delete </md-button>
+		</md-dialog-actions>
+		<md-button ng-click="answer(item, selectedType)"> Save </md-button>
+		</md-dialog-actions>
+	</div>
+	</md-dialog-content>
 </form>
 </md-dialog>

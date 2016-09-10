@@ -15,9 +15,6 @@ public class Cupboard {
 	@Column("description_uk")
 	private String descriptionUk;
 
-	@Column("active")
-	private Boolean active;
-
 	public Cupboard() {
 		super();
 	}
@@ -28,7 +25,6 @@ public class Cupboard {
 		this.boardAmount = boardAmount;
 		this.descriptionEn = descriptionEn;
 		this.descriptionUk = descriptionUk;
-		this.active = active;
 	}
 
 	public Integer getId() {
@@ -63,11 +59,4 @@ public class Cupboard {
 		this.descriptionUk = descriptionUk;
 	}
 
-	public Boolean isActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
 }
