@@ -18,6 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
+import com.epam.easyshopway.utils.CheckImage;
 
 public class UploadImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -56,9 +57,8 @@ public class UploadImageServlet extends HttpServlet {
 				String fName = "images/user/" + user.getId() + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-
-				System.out.println(absoluteDiskPath);
-				item.write(uploadedFile);
+				if (CheckImage.checkSignature(item.getInputStream(), type));
+					item.write(uploadedFile);
 
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
