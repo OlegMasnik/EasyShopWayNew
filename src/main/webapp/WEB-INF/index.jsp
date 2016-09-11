@@ -14,12 +14,16 @@
 <body ng-app="MyApp">
 	<jsp:include page="parts/header.jsp"></jsp:include>
 	<h2>{{2+2}}</h2>
+
+	<h2>{{ 'HEADLINE' | translate }}</h2>
+	<p>{{ 'INTRO_TEXT' | translate }}</p>
 	<i class="material-icons">&#xE84D;</i>
-	
-	
-	<md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
-	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
-    </md-button>
+
+
+	<md-button ng-click="page.goToPage('search')"
+		class="md-fab md-fab-bottom-right"
+		ng-controller="PageRedirectCtrl as page"> <md-icon
+		md-svg-src="images/svg/vectorpaint.svg"></md-icon> </md-button>
 
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src='js/angular.min.js'></script>
@@ -27,6 +31,7 @@
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
+	<script src='js/angular-translate.js'></script>
 
 	<script src='js/app.js'></script>
 	<script src="js/jquery.validate.min.js"></script>

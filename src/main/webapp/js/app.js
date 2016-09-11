@@ -1,5 +1,25 @@
 var dateBirthday;
-var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute' ]);
+var lang;
+
+(function(){
+	lang = $('#lang').val();
+	console.log(lang);
+})();
+
+var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute', 'pascalprecht.translate']);
+
+
+app.config(function($translateProvider) {
+	$translateProvider.translations('en', {
+	    HEADLINE: 'Hello there, This is my awesome app!',
+	    INTRO_TEXT: 'And it has i18n support!'
+	  })
+	  .translations('ua', {
+	    HEADLINE: 'Доброго вам здоров`ячка, це наша прога!',
+	    INTRO_TEXT: 'І є підтримка і18н!'
+	  });
+	  $translateProvider.preferredLanguage(lang);
+});
 
 app.controller('PageRedirectCtrl', function($window) {
 	var ctrl = this;
@@ -10,7 +30,7 @@ app.controller('PageRedirectCtrl', function($window) {
 	
 });
 
-app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
+app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate) {
     $scope.status = '  ';
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
     
@@ -54,6 +74,20 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
             $scope.customFullscreen = (wantsFullScreen === true);
         });
     };
+    $scope.language = lang;
+    $scope.en = 'en';
+    $scope.ua = 'ua';
+    
+    $scope.changeLang = function(lang){
+    	$http.put('/EasyShopWayNew/home?lang=' + lang)
+        .success(function (data, status, headers) {
+            $scope.language = lang;
+            $translate.use(lang);
+        })
+        .error(function (data, status, header, config) {
+            console.log('failed');
+        });
+	}
 });
 
 app

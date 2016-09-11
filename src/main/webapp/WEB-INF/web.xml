@@ -143,6 +143,13 @@
 		<servlet-name>ForgotPassword</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.ForgotPassword</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>LanguageServlet</display-name>
+		<servlet-name>LanguageServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.LanguageServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -250,6 +257,10 @@
 	<servlet-mapping>
 		<servlet-name>ForgotPassword</servlet-name>
 		<url-pattern>/forgotpassword</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LanguageServlet</servlet-name>
+		<url-pattern>/lang</url-pattern>
 	</servlet-mapping>
 
 	<filter>
