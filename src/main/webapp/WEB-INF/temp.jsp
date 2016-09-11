@@ -247,7 +247,7 @@
                     }
 
                     function searchTextChange(text) {
-                        $log.info('Text changed to ' + text);
+//                         $log.info('Text changed to ' + text);
                     }
 
                     function selectedItemChange(item, text) {
