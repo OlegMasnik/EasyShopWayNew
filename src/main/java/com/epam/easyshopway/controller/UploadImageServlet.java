@@ -2,9 +2,11 @@ package com.epam.easyshopway.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,30 +49,37 @@ public class UploadImageServlet extends HttpServlet {
 			Iterator iter = items.iterator();
 			FileItem item = (FileItem) iter.next();
 
-			System.out.println("Field " + item.getString());
 			if (!item.isFormField()) {
+				File deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
+				if (deleteFile.exists())
+					deleteFile.delete();
+
 				String type = "" + item.getName().substring(item.getName().lastIndexOf('.') + 1);
 				String fName = "images/user/" + user.getId() + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-
-				File deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
-				if (deleteFile.exists())
-					deleteFile.delete();
+				try (InputStream input = item.getInputStream()) {
+			    // It's an image (only BMP, GIF, JPG and PNG are recognized).
+			      ImageIO.read(input).toString();
+			      item.write(uploadedFile);
+			      request.getSession(false).setAttribute("message", "Image loaded successfully");
+			      System.out.println("Image download successful");
+				 } catch (Exception e) {
+			      // It's not an image.
+					System.out.println("Image download failed");
+					request.getSession(false).setAttribute("message", "Image loading failed");
+				    throw e;
+				 }
 				
-				System.out.println(absoluteDiskPath);
-				item.write(uploadedFile);
-
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
-				session.invalidate();
-				request.getSession(true).setAttribute("user", user);
+				request.getSession(false).setAttribute("user", user);
 			}
 
 		} catch (FileUploadException ex) {
-			throw new ServletException(ex);
+			ex.printStackTrace();
 		} catch (Exception ex) {
-			throw new ServletException(ex);
+			ex.printStackTrace();
 		}
 		try {
 			Thread.sleep(2000);
@@ -78,6 +87,11 @@ public class UploadImageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		response.sendRedirect("/EasyShopWayNew/cabinet#/");
 
 	}

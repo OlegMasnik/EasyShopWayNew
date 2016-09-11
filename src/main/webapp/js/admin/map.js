@@ -1,14 +1,16 @@
 // ************************************************* MapCtrl ************************************************* 
 
-angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog) {
+angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope, $http, $mdDialog) {
+
+    var mapId;
 
     $scope.map = undefined;
     $scope.enter = undefined;
-//    $scope.paydesks = [1, 5, 45, 25, 65];
-//    $scope.walls = [2, 45, 10, 4, 8];
     $scope.paydesks = undefined;
     $scope.walls = undefined;
-    
+
+    $scope.newMap = {};
+
     $scope.cupboards = undefined;
 
     $scope.config = {
@@ -25,41 +27,65 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         pathColor: '#999'
     };
 
-    (function () {
+    start();
+
+    function start() {
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_map?type=mapsName"
         }).then(function mySucces(response) {
             $scope.mapsName = response.data;
+            mapId = $scope.mapsName[0].id;
             console.log("Get mapsName");
             console.log($scope.mapsName);
+            if (typeof (mapId) != 'undefined') {
+                $scope.someModel = mapId;
+                $scope.getMapByid(mapId);
+            }
         }, function myError(response) {
             console.log(response.statusText);
         });
-    })();
+        console.log("ROOT SCOPE");
+    };
 
-    $scope.getMapByid = function (m) {
-        //    	$scope.map = m;
-        console.log("get map by id " + m.id);
+    $scope.clickOnSelect = function (mId) {
         $http({
             method: "GET",
-            url: "/EasyShopWayNew/edit_map?type=map&id=" + m.id
+            url: "/EasyShopWayNew/edit_map?type=setMapId&id=" + mId
+        }).then(function mySucces(response) {
+            $route.reload();
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
+    }
+
+    $scope.getMapByid = function (m) {
+        game = undefined;
+        console.log(game);
+        $scope.m = m;
+        mapId = m || mapId;
+        console.log(mapId);
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_map?type=map&id=" + mapId
         }).then(function mySucces(response) {
             $scope.map = response.data.map;
             console.log($scope.map);
             console.log(response.data);
-            
+
             $scope.config.enter = response.data.enters[0];
             $scope.walls = response.data.walls;
             $scope.paydesks = response.data.paydesks;
             $scope.cupboards = response.data.cupboards;
-            
-            console.log($scope.cupboards)
-            
+            console.log($scope.cupboards);
+
             $scope.config.width = $scope.map.weight;
             $scope.config.height = $scope.map.height;
             console.log("size = " + $scope.config.width + $scope.config.height);
             console.log("size = " + $scope.config.enter);
+
+            $scope.openMap();
+            console.log($scope.config);
         }, function myError(response) {
             console.log(response.statusText);
         });
@@ -68,7 +94,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     var game;
     var tCell;
     var arrayTarget = new Array();
-//    var arrayPayDesk = new Array();
     var arrayCupBoard = new Array();
     var buffPath;
     var curTarget;
@@ -77,6 +102,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     var type;
     var waycolor = '#d80000';
     $scope.typeValue = undefined;
+    var targetsCopy;
 
     var Game = function (canvas, conf) {
         game = this;
@@ -98,12 +124,10 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         this.canvas.width = this.width * this.cellSpace + this.borderWidth;
         this.canvas.height = this.height * this.cellSpace + this.borderWidth;
         this.player = new Player(this);
-//        this.walls = new Map(this.width * this.height);
         this.way = new Map(this.width * this.height);
-//        this.payDesk = new Map(this.width * this.height);
         this.cupBoard = new Map(this.width * this.height);
         this.targets = new Map(this.width * this.height);
-        initCupBoard();
+        initCupBoard($scope.cupboards);
 
         this.paint = {
             value: false,
@@ -115,7 +139,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             game.draw();
         }
 
-        var targetsCopy;
         this.getCellColor = function (cell) {
             switch (cell) {
             case this.player.cell:
@@ -124,11 +147,6 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             case this.enter:
                 return '#252';
             }
-//            if (this.payDesk.map) return '#ff870d';
-//            if (this.way.map[cell]) return waycolor;
-//            if (this.cupBoard.map[cell]) return '#038ef0';
-//            if (this.targets.map[cell]) return '#522';
-//            if (this.walls.map[cell]) return '#555';
             if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
             if (this.way.map[cell]) return waycolor;
@@ -207,9 +225,9 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                     case 'payDesk':
                         game.paint.value = !($scope.paydesks.indexOf(cell) != -1);
                         if ($scope.paydesks.indexOf(cell) == -1) {
-                        	$scope.paydesks.add(cell);
+                            $scope.paydesks.add(cell);
                         } else {
-                        	$scope.paydesks.removeUndefined(cell);
+                            $scope.paydesks.removeUndefined(cell);
                         }
                         console.log("Каси " + $scope.paydesks);
                         game.draw();
@@ -231,9 +249,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                                     });
                                     console.log(arr)
                                     arrayCupBoard.push(arr);
-                                } else {
-                                    // game.cupBoard.map[startCupBoard] = false;
-                                    // game.cupBoard.map[endCupBoard] = false;
+                                    $scope.createCupBoard(arr, undefined);
                                 }
                             } else if ((endCupBoard % $scope.config.width) == (startCupBoard % $scope.config.width)) {
                                 console.log("in vertical: start=" + startCupBoard + " end=" + endCupBoard);
@@ -244,6 +260,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                                     });
                                     console.log(arr)
                                     arrayCupBoard.push(arr);
+                                    $scope.createCupBoard(arr, undefined);
                                 } else {
                                     game.cupBoard.map[startCupBoard] = false;
                                     game.cupBoard.map[endCupBoard] = false;
@@ -257,24 +274,16 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                         }
                         break;
                     case 'wall':
-                    	game.paint.value = !($scope.walls.indexOf(cell) != -1);
-                      if ($scope.walls.indexOf(cell) == -1) {
-                      	$scope.walls.add(cell);
-                      } else {
-                      	$scope.walls.removeUndefined(cell);
-                      }
-                      console.log("Каси " + $scope.paydesks);
+                        game.paint.value = !($scope.walls.indexOf(cell) != -1);
+                        if ($scope.walls.indexOf(cell) == -1) {
+                            $scope.walls.add(cell);
+                        } else {
+                            $scope.walls.removeUndefined(cell);
+                        }
                         break;
                     case 'edit':
                         console.log("CELL #" + cell)
 
-//                        for (var q = 0; q < arrayCupBoard.length; q++) {
-//                            for (var w = 0; w < arrayCupBoard[q].length; w++) {
-//                                if (cell == arrayCupBoard[q][w]) {
-//                                    console.log("You click on: " + arrayCupBoard[q]);
-//                                }
-//                            }
-//                        }
                         for (var q = 0; q < $scope.cupboards.length; q++) {
                             for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
                                 if (cell == $scope.cupboards[q].values[w]) {
@@ -319,18 +328,18 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                         switch (type) {
                         case 'wall':
                             if (!(game.cupBoard.map[cell]) && !($scope.paydesks.indexOf(cell) != -1) && !(game.enter == cell))
-                            	if(game.paint.value)
-                            		$scope.walls.add(cell);
-                            	else 
-                            		$scope.walls.removeUndefined(cell);
+                                if (game.paint.value)
+                                    $scope.walls.add(cell);
+                                else
+                                    $scope.walls.removeUndefined(cell);
                             break;
                         case 'payDesk':
                             console.log("in mouse move")
                             if (!(game.cupBoard.map[cell]) && !($scope.walls.indexOf(cell) != -1) && !(game.enter == cell))
-                            	if(game.paint.value)
-                            		$scope.paydesks.add(cell);
-                            	else 
-                            		$scope.paydesks.removeUndefined(cell);
+                                if (game.paint.value)
+                                    $scope.paydesks.add(cell);
+                                else
+                                    $scope.paydesks.removeUndefined(cell);
                             break;
                         default:
                             break;
@@ -363,7 +372,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         this.target = this.cell;
 
         this.findStart = function () {
-        	for (var i = 0; i < $scope.paydesks.length; i++) {
+            for (var i = 0; i < $scope.paydesks.length; i++) {
                 this.cell = $scope.paydesks[i];
                 for (var j = 0; j < arrayTarget.length; j++) {
                     this.target = arrayTarget[j];
@@ -414,12 +423,12 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                 curTarget = undefined;
                 this.target = undefined;
             }
-            if(typeof(buffPath) != 'undefined'){
-            buffPath.tracePath();
-            arrayTarget.removeUndefined(curTarget);
-            buffPath = undefined;
-            this.cell = curTarget;
-            this.moveTo();
+            if (typeof (buffPath) != 'undefined') {
+                buffPath.tracePath();
+                arrayTarget.removeUndefined(curTarget);
+                buffPath = undefined;
+                this.cell = curTarget;
+                this.moveTo();
             }
         }
     }
@@ -430,7 +439,7 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             this.map[cell] = false;
         }
     };
-    
+
     var Path = function (game, start, target, callback) {
         var path = this;
         this.cells = [];
@@ -469,10 +478,10 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
             if (pos + game.width > this.closed.map.length) blocked[5] = blocked[6] = blocked[7] = true;
             if (Math.floor((pos - 1) / game.width) < row) blocked[0] = blocked[3] = blocked[5] = true;
             if (Math.floor((pos + 1) / game.width) > row) blocked[2] = blocked[4] = blocked[7] = true;
-            if (($scope.walls.indexOf(pos -1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[0] = true;
-            if (($scope.walls.indexOf(pos -1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[5] = true;
-            if (($scope.walls.indexOf(pos +1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[2] = true;
-            if (($scope.walls.indexOf(pos +1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[7] = true;
+            if (($scope.walls.indexOf(pos - 1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[0] = true;
+            if (($scope.walls.indexOf(pos - 1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[5] = true;
+            if (($scope.walls.indexOf(pos + 1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[2] = true;
+            if (($scope.walls.indexOf(pos + 1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[7] = true;
             for (var i = 0; i < adjacent.length; i++) {
                 if (path.closed.map[adjacent[i]] || ($scope.walls.indexOf(adjacent[i]) != -1) || game.cupBoard.map[adjacent[i]] || blocked[i]) continue;
                 path.open.map[adjacent[i]] = true;
@@ -526,14 +535,48 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
     }
 
     $scope.openMap = function () {
-        console.log("size " + $scope.config.width + $scope.config.height);
-        game = new Game(document.querySelector('canvas'), $scope.config);
-    }
+        if (typeof ($scope.map) == 'undefined') {
+            showToast('Please, first selected map');
+        } else {
+            console.log("size " + $scope.config.width + $scope.config.height);
+            if ($scope.map.weight != $scope.config.width || $scope.map.height != $scope.config.height) {
+                console.log('change map size');
+                var data = $.param({
+                    type: 'changeSize',
+                    mapId: $scope.map.id,
+                    name_en: $scope.map.name_en,
+                    name_uk: $scope.map.name_uk,
+                    weight: $scope.config.width,
+                    height: $scope.config.height
+                });
 
-    $scope.clearWay = function () {
-        console.log("clear last way")
-        clear();
-        game.draw();
+                console.log(data);
+
+                var config = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    }
+                }
+
+                $http.post('/EasyShopWayNew/edit_map', data, config)
+                    .success(function (response, status, headers) {
+                        console.log('CHANGE SIZE old ' + mapId);
+                        $route.reload();
+                        //                    	mapId = response;
+                        //                    	console.log(response);
+                        //                    	$scope.walls = undefined;
+                        //                    	$scope.paydesks = undefined;
+                        //                    	$scope.config.enter = undefined;
+                        //                    	game.enter = undefined;
+                        //                    	start();
+                    })
+                    .error(function (data, status, header, config) {
+                        console.log('failed');
+                    });
+            }
+            game = new Game(document.querySelector('canvas'), $scope.config);
+            game.draw();
+        }
     }
 
     function wait(ms) {
@@ -548,13 +591,16 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         game.way = new Map($scope.config.width * $scope.config.height);
         game.targets = new Map($scope.config.width * $scope.config.height);
     }
-    
-    function initCupBoard(){
-    	for(var i = 0; i<$scope.cupboards.length; i++){
-    		$scope.cupboards[i].values.map(function(e, i){
-    			game.cupBoard.map[e] = true;
-    		});
-    	}
+
+    function initCupBoard(obj) {
+        game.cupBoard = new Map(game.width * game.height);
+        $scope.cupboards = obj;
+        for (var i = 0; i < obj.length; i++) {
+            console.log(obj[i]);
+            obj[i].values.map(function (e, i) {
+                game.cupBoard.map[e] = true;
+            });
+        }
     }
 
     Array.prototype.removeUndefined = function (value) {
@@ -598,9 +644,9 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
 
 
     $scope.openCupBoard = function (cupBoard) {
-    	console.log('before open');
+        console.log('before open');
         $mdDialog.show({
-                controller: DialogController,
+                controller: EditCupboardCtrl,
                 templateUrl: 'template/admin/edit.cupBoard.tmpl.html',
                 parent: angular.element(document.body),
                 resolve: {
@@ -608,38 +654,58 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
                         return cupBoard;
                     }
                 },
-                clickOutsideToClose: true,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm
-                    // breakpoints.
             })
             .then(function (answer) {
-            	console.log(answer);
-//                $http({
-//                    method: "GET",
-//                    url: "/EasyShopWayNew/products"
-//                }).then(function mySucces(response) {
-//                    $scope.data = response.data;
-//                    originalProd.prods = $scope.data.prods;
-//                    originalProd.count = $scope.data.prods.length;
-//                    $scope.datatable = angular.copy(originalProd);
-//                    console.log("Get");
-//                    console.log($scope.data);
-//                }, function myError(response) {
-//                    console.log(response.statusText);
-//                });
-            	
+                console.log(answer);
+
             }, function () {
-//                $scope.status = 'You cancelled the dialog.';
                 console.log("cancel");
             });
     };
 
-    function DialogController($scope, $mdDialog, item) {
+
+
+
+    function EditCupboardCtrl($scope, $mdDialog, item) {
 
         console.log("item ");
         console.log(item);
         $scope.item = item;
 
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
+        }).then(function mySucces(response) {
+            console.log("current Prods")
+            $scope.currentProducts = response.data;
+            $scope.cupboardCells = new Array(item.board_count * item.values.length);
+            if (typeof ($scope.currentProducts) != "undefined") {
+                for (var i = 0; i < $scope.currentProducts.length; i++) {
+                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
+                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
+                        console.log("prod i " + i);
+                        console.log($scope.cupboardCells);
+                    }
+                }
+            }
+            console.log($scope.currentProducts);
+        }, function myError(response) {});
+
+
+        $http({
+            method: "GET",
+            url: "/EasyShopWayNew/edit_products?type=getAllProducts"
+        }).then(function mySucces(response) {
+            console.log("all Prods")
+            $scope.allProducts = response.data;
+            console.log(response);
+        }, function myError(response) {
+
+        });
+
+        console.log("cupBoarards");
+        console.log($scope.cupboardCells);
         $scope.hide = function () {
             $mdDialog.hide();
         };
@@ -647,11 +713,371 @@ angular.module('MyApp').controller('MapCtrl', function ($scope, $http, $mdDialog
         $scope.cancel = function () {
             $mdDialog.cancel();
         };
-
         $scope.answer = function () {
+            $scope.cupboardCells.map(function (e, i) {
+                if (typeof (e) == "string")
+                    $scope.cupboardCells[i] = JSON.parse(e)
+            })
+            console.log($scope.cupboardCells);
+            $scope.sendCupboardData();
+            $mdDialog.hide();
+        };
+
+        $scope.sendCupboardData = function () {
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+            var data = [];
+            $scope.cupboardCells.map(function (e, i) {
+                if (typeof (e) != "undefined" || e != null)
+                    data.push({
+                        prodId: e.prodId,
+                        cupboardId: item.id,
+                        place: i
+                    })
+            });
+
+            var sendData = $.param({
+                type: 'setProducts',
+                data: JSON.stringify(data)
+            });
+            console.log($scope.cupboardCells);
+            console.log(data);
+            console.log(sendData);
+            $http.post('/EasyShopWayNew/edit_products', sendData, config)
+                .success(function (data, status, headers) {
+                    console.log("success send products")
+                }).error(function (data, status, header, config) {
+                    console.log('failed  send products');
+                });
+        }
+
+        $scope.deleteCupboard = function (item) {
+            console.log('delete cupboard');
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+
+            $http.delete('/EasyShopWayNew/edit_map?type=cupboard&id=' + item.id + '&mapId=' + mapId, config)
+                .then(
+                    function (response) {
+                        initCupBoard(response.data);
+                        console.log($scope.cupboards);
+                        game.draw();
+                    },
+                    function (response) {
+                        console.log('delete failed')
+                    }
+                );
+            $mdDialog.hide();
+        }
+    }
+
+    $scope.createCupBoard = function (values, b_count) {
+
+        console.log('before create');
+        $mdDialog.show({
+                controller: CreateDialogController,
+                templateUrl: 'template/admin/create.cupBoard.tmpl.html',
+                parent: angular.element(document.body),
+                resolve: {
+                    values: function () {
+                        return values;
+                    },
+                    b_count: function () {
+                        return b_count;
+                    }
+                },
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm
+            })
+            .then(function (answer) {
+                console.log(answer);
+
+            }, function () {
+                console.log("cancel");
+            });
+    };
+
+    function CreateDialogController($scope, $mdDialog, values, b_count) {
+
+        console.log("values");
+        console.log(values);
+        $scope.values = values;
+
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function (values) {
+            console.log("Cancel");
+            values.map(function (e, i) {
+                game.cupBoard.map[e] = false;
+            });
+            game.draw();
+            console.log(values);
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function (values) {
+            console.log("Send");
+            console.log(values);
+            console.log($scope.b_count);
+            console.log($scope.name_en);
+            console.log($scope.name_uk);
+            if (typeof ($scope.b_count) == 'undefined') {
+                values.map(function (e, i) {
+                    game.cupBoard.map[e] = false;
+                });
+                game.draw();
+            } else {
+
+                var sendData = $.param({
+                    type: 'cupboard',
+                    data: JSON.stringify({
+                        values: values,
+                        bCount: $scope.b_count,
+                        name_en: $scope.name_en,
+                        name_uk: $scope.name_uk,
+                        mapId: mapId
+                    })
+                });
+                console.log('SEND CUPBOARD');
+                console.log(sendData);
+                var config = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    }
+                }
+                $http.post('/EasyShopWayNew/edit_map', sendData, config)
+                    .success(function (data, status, headers) {
+                        console.log('update cupboard');
+                        $scope.cupboards = data;
+                        console.log($scope.cupboards);
+                        initCupBoard($scope.cupboards);
+                        game.draw();
+                    })
+                    .error(function (data, status, header, config) {
+                        console.log('failed');
+                    });
+            }
             $mdDialog.hide();
         };
     }
 
+    $scope.createMap = function () {
 
+        console.log('before create');
+        $mdDialog.show({
+                controller: CreateMapDialogController,
+                templateUrl: 'template/admin/create.map.tmpl.html',
+                parent: angular.element(document.body),
+                fullscreen: $scope.customFullscreen
+            })
+            .then(function (answer) {
+                console.log(answer);
+
+
+            }, function () {
+                console.log("cancel");
+            });
+    };
+
+    function CreateMapDialogController($scope, $mdDialog) {
+
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function (values) {
+            console.log("Cancel");
+            $mdDialog.cancel();
+        };
+
+        $scope.createNewMap = function () {
+            console.log("create new map");
+            var data = $.param({
+                type: 'createMap',
+                name_en: $scope.name_en,
+                name_uk: $scope.name_uk,
+                weight: $scope.weight,
+                height: $scope.height
+            });
+
+            console.log(data);
+
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+
+            $http.post('/EasyShopWayNew/edit_map', data, config)
+                .success(function (data, status, headers) {
+                    console.log('create new');
+                    //                    mapId = data;
+                    //                    console.log("create new map with id " + mapId);
+                    //                    start();
+                    $route.reload();
+                })
+                .error(function (data, status, header, config) {
+                    console.log('failed');
+                });
+            $scope.hide();
+        }
+    }
+
+    $scope.saveMap = function () {
+        if (typeof ($scope.map) == 'undefined') {
+            console.log('map undefined')
+            showToast('Please, firstl select map');
+        } else {
+            console.log($scope.map);
+            console.log($scope.walls);
+            console.log($scope.paydesks);
+            console.log(game.enter);
+
+            var sendData = $.param({
+                type: 'saveMap',
+                data: JSON.stringify({
+                    mapId: $scope.map.id,
+                    walls: $scope.walls,
+                    paydesks: $scope.paydesks,
+                    enters: [game.enter]
+                })
+            });
+
+            console.log(sendData);
+
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+
+            $http.post('/EasyShopWayNew/edit_map', sendData, config)
+                .success(function (data, status, headers) {
+                    if (data == 0) {
+                        console.log('success save map');
+                    } else {
+                        console.log('failed save map');
+                    }
+
+                })
+                .error(function (data, status, header, config) {
+                    console.log('failed save map');
+                });
+        }
+    }
+
+    $scope.clearMap = function () {
+        if (typeof ($scope.map) == 'undefined') {
+            showToast('Please, first select map')
+        } else {
+            var data = $.param({
+                type: 'clearMap',
+                mapId: mapId,
+            });
+            console.log(data);
+
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+            $http.post('/EasyShopWayNew/edit_map', data, config)
+                .success(function (data, status, headers) {
+                    $route.reload();
+                    //                	mapId = data;
+                    //                	$scope.getMapByid(mapId);
+                    //                    console.log(data);
+                })
+                .error(function (data, status, header, config) {
+                    console.log('failed clear');
+                });
+        }
+    }
+
+    $scope.deleteMap = function (ev) {
+        console.log(typeof ($scope.map) == 'undefined');
+        if (typeof ($scope.map) == 'undefined') {
+            showToast('Please, first select map');
+
+        } else {
+            var confirm = $mdDialog.confirm()
+                .title('Would you like to delete this map?')
+                .textContent('All of the banks have agreed to forgive you your debts.')
+                .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('Yes')
+                .cancel('No');
+
+            $mdDialog.show(confirm).then(function () {
+                var config = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    }
+                }
+                $http.delete('/EasyShopWayNew/edit_map?type=map&id=' + $scope.map.id, config).success(function (data, status, headers) {
+                        console.log('delete map');
+                        $route.reload();
+                    })
+                    .error(function (data, status, header, config) {
+                        console.log('failed delete');
+                    });
+            }, function () {
+                console.log('You decided to keep your debt.');
+            });
+        }
+
+    }
+
+    $scope.showConfirmDelete = function (ev) {
+
+
+    };
+
+    function showToast(msg) {
+        var last = {
+            bottom: true,
+            top: false,
+            left: false,
+            right: true
+        };
+        $scope.toastPosition = angular.extend({}, last);
+
+        $scope.getToastPosition = function () {
+            return Object.keys($scope.toastPosition)
+                .filter(function (pos) {
+                    return $scope.toastPosition[pos];
+                })
+                .join(' ');
+        };
+
+        $scope.showSimpleToast = function () {
+            var pinTo = $scope.getToastPosition();
+
+            $mdToast.show(
+                $mdToast.simple()
+                .textContent(msg)
+                .position(pinTo)
+                .hideDelay(4000)
+            );
+        };
+        $scope.showSimpleToast();
+    }
+
+
+
+}).filter('range', function () {
+    return function (n) {
+        var res = [];
+        for (var i = 0; i < n; i++) {
+            res.push(i);
+        }
+        return res;
+    };
 });

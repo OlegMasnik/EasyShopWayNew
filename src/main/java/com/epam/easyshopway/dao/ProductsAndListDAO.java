@@ -1,6 +1,5 @@
 package com.epam.easyshopway.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.epam.easyshopway.dao.transformer.Transformer;
-import com.epam.easyshopway.model.ProductList;
 import com.epam.easyshopway.model.ProductsAndList;
 
 public class ProductsAndListDAO extends AbstractDAO<ProductsAndList> {

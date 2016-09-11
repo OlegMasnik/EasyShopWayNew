@@ -22,6 +22,20 @@ public class ProductInformationService {
 			return productInformations;
 		}
 	}
+	public static List<ProductInformation> getAllProductByMapId(Integer mapId) {
+		List<ProductInformation> productInformations = null;
+		try (ProductInformationDTO dto = new ProductInformationDTO()) {
+			productInformations = dto.getAllProductByMapId(mapId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return productInformations;
+		}
+	}
 
 	private static List<ProductInformation> getAllProductByUserListId(Integer id) {
 		List<ProductInformation> productInformations = null;

@@ -9,7 +9,7 @@ import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.FullProductList;
 
 public class FullProductListDTO extends SuperDTO {
-	private final String SELECT_User_Product_Lists = "SELECT product_list.date,  product_list.time,  product.name_uk,  product.name_en,"
+	private final String SELECT_User_Product_Lists = "SELECT product_list.date,product_list.map_id,  product_list.time,  product.name_uk,  product.name_en,"
 			+ "  product_list.id,  product_type.img,  product_type.name_en,  product_type.name_uk FROM product_list"
 			+ " JOIN list_and_product  ON product_list.id = list_and_product.product_list_id JOIN product"
 			+ " ON list_and_product.product_id = product.id   JOIN product_type  "

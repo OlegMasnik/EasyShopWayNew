@@ -2,10 +2,13 @@ package com.epam.easyshopway.controller.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,8 @@ import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.ProductService;
 import com.epam.easyshopway.service.ProductTypeService;
 import com.epam.easyshopway.service.UserService;
+
+import sun.net.www.content.image.jpeg;
 
 public class TypeProductControlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -98,13 +103,25 @@ public class TypeProductControlServlet extends HttpServlet {
 			try {
 				type = "" + fileItem.getName().substring(fileItem.getName().lastIndexOf('.') + 1);
 			} catch (NullPointerException e) {
+				e.printStackTrace();
 			}
 			if (!"".equals(type)) {
 				fName = "images/prod/" + id + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
-				System.out.println(absoluteDiskPath);
-				fileItem.write(uploadedFile);
+				try (InputStream input = fileItem.getInputStream()) {
+				    // It's an image (only BMP, GIF, JPG and PNG are recognized).
+				     ImageIO.read(input).toString();
+				     fileItem.write(uploadedFile);
+				     System.out.println("Image download successful");
+				     req.getSession(false).setAttribute("messageProd", "Image loaded successfully");
+				} catch (Exception e) {
+				      // It's not an image.
+					System.out.println("Image download failed");
+					req.getSession(false).setAttribute("messageProd", "Image loading failed");
+					throw e;
+				}
+					
 			}
 
 			if (id != 0) {
@@ -139,4 +156,7 @@ public class TypeProductControlServlet extends HttpServlet {
 		System.out.println("Before redirect");
 		resp.sendRedirect("/EasyShopWayNew/cabinet#/products");
 	}
+	
+	
+	
 }

@@ -6,17 +6,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.epam.easyshopway.connection.ConnectionManager;
 import com.epam.easyshopway.dao.transformer.Transformer;
 
 public abstract class AbstractDAO<E> implements AutoCloseable {
+	
+	protected final Logger LOGGER = Logger.getLogger(this.getClass());
 
 	protected Connection connection;
 
 	public AbstractDAO() {
 		super();
 		connection = ConnectionManager.getInstance().getConnectionPool().getConnection();
-		System.out.println("Get connection by " + this.getClass().getName() + "\n\t" + connection);
 	}
 
 	public abstract int insert(E el) throws SQLException;
@@ -32,7 +35,6 @@ public abstract class AbstractDAO<E> implements AutoCloseable {
 	@Override
 	public void close() throws Exception {
 		ConnectionManager.getInstance().getConnectionPool().putConnection(connection);
-		System.out.println("---Close connection by " + this.getClass().getName() + "\n\t" + connection);
 	}
 
 	public Connection getConnection() {

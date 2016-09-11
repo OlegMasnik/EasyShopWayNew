@@ -129,6 +129,20 @@
 		<servlet-name>AdminMapServlet</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.admin.AdminMapServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>AdminProductServlet</display-name>
+		<servlet-name>AdminProductServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.AdminProductServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ForgotPassword</display-name>
+		<servlet-name>ForgotPassword</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.ForgotPassword</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
@@ -218,6 +232,7 @@
 		<servlet-name>SearchServlet</servlet-name>
 		<url-pattern>/search</url-pattern>
 		<url-pattern>/searchProducts</url-pattern>
+		<url-pattern>/searchMaps</url-pattern>
 		<url-pattern>/saveProductList</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -228,9 +243,17 @@
 		<servlet-name>AdminMapServlet</servlet-name>
 		<url-pattern>/edit_map</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AdminProductServlet</servlet-name>
+		<url-pattern>/edit_products</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ForgotPassword</servlet-name>
+		<url-pattern>/forgotpassword</url-pattern>
+	</servlet-mapping>
 
 	<filter>
-		<filter-name>EncodingFilter</filter-name>
+		<filter-name>EncodingFilter</filter-name>	
 		<filter-class>com.epam.easyshopway.filter.EncodingFilter</filter-class>
 	</filter>
 	<filter-mapping>

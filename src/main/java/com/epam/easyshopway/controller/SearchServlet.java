@@ -50,7 +50,7 @@ public class SearchServlet extends HttpServlet {
 
 		if (uri.endsWith("search")) {
 			request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
-		} else {
+		} else if (uri.endsWith("searchProducts")){
 
 			List<ProductInformation> products = ProductInformationService.getAllProductOnSupermarket();
 
@@ -61,6 +61,8 @@ public class SearchServlet extends HttpServlet {
 
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());
+		} else {
+			
 		}
 	}
 
@@ -85,10 +87,10 @@ public class SearchServlet extends HttpServlet {
 
 			
 
-			ProductList productList = new ProductList(user.getId(), null, null);
+//			ProductList productList = new ProductList(user.getId(), null, null);
 
-			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
-			ProductListService.insertListAndProduct(productList, productIds);
+//			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
+//			ProductListService.insertListAndProduct(productList, productIds);
 		} else {
 			System.out.println("No user");
 		}

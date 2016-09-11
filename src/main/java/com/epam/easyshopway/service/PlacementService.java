@@ -28,6 +28,16 @@ public class PlacementService {
 		}
 		return 0;
 	}
+	public static int deleteOldValueByMapId(Integer id) {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.deleteOldValueByMapId(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 	public static int insert(Placement placement) {
 		try (PlacementDAO placementDAO = new PlacementDAO()) {
@@ -129,5 +139,18 @@ public class PlacementService {
 		}
 		return null;
 	}
-
+	
+	public static Placement getLastInserted() {
+		try (PlacementDAO placementDAO = new PlacementDAO()) {
+			return placementDAO.getLastInserted();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
