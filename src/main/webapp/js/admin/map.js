@@ -464,6 +464,21 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             }
         }
         var pos = start;
+//        var aroundCell = game.cupBoard.map[pos + 1] ? (game.cupBoard.map[pos - 1] ? (game.cupBoard.map[pos + game.width] ? (game.cupBoard.map[pos - game.width] ? undefined : pos - game.width) : pos + game.width) : pos - 1) : pos + 1
+//        var newPos;
+//        if(!game.cupBoard.map[pos + 1])
+//        	newPos = pos + 1;
+//        if(!game.cupBoard.map[pos - 1])
+//        	newPos = pos - 1;
+//        if(!game.cupBoard.map[pos + game.width])
+//        	newPos = pos + game.width;
+//        if(!game.cupBoard.map[pos - game.width])
+//        	newPos = pos - game.width;
+        
+//        if(aroundCell == undefined)
+//        	return;
+//        else
+//        	pos = aroundCell;
         this.g[pos] = 0;
         this.search = function () {
             path.closed.map[pos] = true;
@@ -491,6 +506,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     path.parents[adjacent[i]] = pos;
                 }
             }
+            console.log("Pos: " + pos);
             this.fmin = 131071;
             for (var i = 0; i < path.g.length; i++) {
                 var f = path.g[i] + path.h[i];
