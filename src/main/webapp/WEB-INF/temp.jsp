@@ -43,7 +43,7 @@
             </md-toolbar>
 
             <md-content layout="row" ng-controller="ProductListCtrl as ctrl" class="main-page" flex>
-                <md-slidenav class="search-sidenav" md-is-locked-open="true" layout="column" flex md-whiteframe="4">
+                <md-slidenav class="search-sidenav" md-is-locked-open="true" layout="column"  md-whiteframe="4">
 
                     <div class="autocompletedemoBasicUsage" layout="column" flex ng-cloak="">
                     	
@@ -81,6 +81,7 @@
                     </div>
                     <md-button ng-click="ctrl.sendOnMap()" style="background-color : #E91E63; color : #fff;">Show</md-button>
                 </md-slidenav>
+                
             </md-content>
             <script src="js/jquery-3.1.0.min.js"></script>
             <script src='js/angular.min.js'></script>
@@ -89,6 +90,7 @@
             <script src='js/angular-material.min.js'></script>
             <script src='js/angular-route.min.js'></script>
             <script src="js/angular-messages.min.js"></script>
+            <script src='js/angular-translate.js'></script>
 
             <!--         <script src='js/app.js'></script> -->
             <script src="js/jquery.validate.min.js"></script>

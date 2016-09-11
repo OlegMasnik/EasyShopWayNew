@@ -40,7 +40,7 @@
     <body ng-app="MyApp" layout="column">
         <jsp:include page="parts/header.jsp"></jsp:include>
 
-        <!--        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YZDPCiEKZOI?controls=0&autoplay=1&loop=1&playlist=YZDPCiEKZOI&showinfo=0" frameborder="0" allowfullscreen></iframe>-->
+<!--                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YZDPCiEKZOI?controls=0&autoplay=1&loop=1&playlist=YZDPCiEKZOI&showinfo=0" frameborder="0" allowfullscreen></iframe> -->
         <div class="content" flex>
             <div class="error-msg">
                 <div class="error-txt">404 PAGE NOT FOUND</div>
@@ -54,6 +54,7 @@
 	<script src='/EasyShopWayNew/js/angular-animate.js'></script>
 	<script src='/EasyShopWayNew/js/angular-material.min.js'></script>
 	<script src='/EasyShopWayNew/js/angular-route.min.js'></script>
+	<script src='/EasyShopWayNew/js/angular-translate.js'></script>
 	<script src='/EasyShopWayNew/js/app.js'></script>
 	<script src="/EasyShopWayNew/js/jquery.validate.min.js"></script>
 
