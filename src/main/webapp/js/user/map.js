@@ -113,7 +113,17 @@
 
 			function selectedItemChange(item, text) {
 				console.log("select" + item  + " " + text);
-				console.log(item)
+				console.log(item);
+				
+				item.coordinates.map(function(e, i){
+					game.targets.map[e] = true;
+					arrayTarget.add(e);
+	                game.draw();
+	                console.log("Цілі " + arrayTarget);
+	                targetsCopy = game.targets.map;
+				})
+				
+				
 				if (item != undefined) {
 					if (find(item) == -1) {
 						$scope.items.push(item);

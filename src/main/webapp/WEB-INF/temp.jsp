@@ -92,8 +92,7 @@
 		
 		 <md-content layout-margin flex> 
    <div layout="row">
-   <div flex="30">
-     <label>Scale:</label>
+   <div flex="10">
      <md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 30">
      <i class="material-icons">add_circle_outline</i></md-button>
      <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 15">
