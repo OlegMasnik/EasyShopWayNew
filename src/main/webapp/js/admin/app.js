@@ -219,7 +219,7 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', f
 // ************************************************* ProdCtrl
 // *************************************************//
 
-adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', function ($http, $scope, $location, $mdDialog) {
+adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', function ($http, $scope, $location, $mdDialog, $mdToast) {
 
     $scope.empty = undefined;
     $scope.showPromptProd = function (types, item) {
@@ -248,6 +248,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
                     url: "/EasyShopWayNew/products"
                 }).then(function mySucces(response) {
                     $scope.data = response.data;
+                    showToast($mdToast, $scope, "Successful editing  " + item.nen);	
                     originalProd.prods = $scope.data.prods;
                     originalProd.count = $scope.data.prods.length;
                     $scope.datatable = angular.copy(originalProd);
@@ -545,6 +546,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
             .then(
                 function (response) {
                     console.log("success delete prod " + id);
+                    showToast($mdToast, $scope, "Products with id " + id + " is deleted");
                     $http({
                         method: "GET",
                         url: "/EasyShopWayNew/products"
@@ -557,7 +559,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
                         console.log($scope.data);
                     }, function myError(response) {
                         console.log(response.statusText);
-                        showToast($mdToast, $scope, "Products with id " + id + " is deleted")
                     });
                 },
                 function (response) {
@@ -801,7 +802,7 @@ function matchRule(str, rule, smart) {
 };
 
 
-function showToast($mdToast, $scope,msg) {
+function showToast($mdToast, $scope, msg) {
 	var last = {
 		bottom : true,
 		top : false,
@@ -825,3 +826,4 @@ function showToast($mdToast, $scope,msg) {
 	};
 	$scope.showSimpleToast();
 }
+
