@@ -38,10 +38,10 @@
                         </md-list-item>
                     </md-list>
                 </md-content>
-                <md-divider></md-divider>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button class="md-raised" ng-click="sendToMap(historyItem)" style="background-color : #E91E63; color : #fff;">Show on map</md-button>
-                </md-card-actions>
+<!--                 <md-divider></md-divider> -->
+<!--                 <md-card-actions layout="row" layout-align="end center"> -->
+<!--                     <md-button class="md-raised" ng-click="sendToMap(historyItem)" style="background-color : #E91E63; color : #fff;">Show on map</md-button> -->
+<!--                 </md-card-actions> -->
             </md-card-content>
         </md-card>
 

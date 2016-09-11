@@ -17,7 +17,7 @@ public class ProductList {
 
 	@Column("time")
 	private Time time;
-	@Column("product_list. map_id")
+	@Column("product_list.map_id")
 	private Integer mapId;
 
 	public ProductList() {
