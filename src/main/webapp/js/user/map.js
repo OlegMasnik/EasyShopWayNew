@@ -112,6 +112,8 @@
 			}
 
 			function selectedItemChange(item, text) {
+				console.log("select" + item  + " " + text);
+				console.log(item)
 				if (item != undefined) {
 					if (find(item) == -1) {
 						$scope.items.push(item);
@@ -198,6 +200,10 @@
 		    $scope.decScale = function(){
 		    	console.log("-")
 		    	$scope.config.cellSize--;
+		    	start();
+		    	start();
+		    }
+		    $scope.scale = function(){
 		    	start();
 		    	start();
 		    }

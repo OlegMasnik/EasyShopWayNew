@@ -91,18 +91,22 @@
 		
 		
 		 <md-content layout-margin flex> 
-		  	<label>Scale:</label>
-		  	<md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 30">
-		  	<i class="material-icons">add_circle_outline</i></md-button>
-		  	<md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 15">
-		  	<i class="material-icons">remove</i></md-button>
-		 <md-input-container>
-		 	
-		 </md-input-container>
-		 
-		 <canvas></canvas> 
-		 
-		 </md-content> 
+   <div layout="row">
+   <div flex="30">
+     <label>Scale:</label>
+     <md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 30">
+     <i class="material-icons">add_circle_outline</i></md-button>
+     <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 15">
+     <i class="material-icons">remove</i></md-button>
+     </div>
+     <md-slider flex="" min="14" max="31" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
+     </div>
+   
+   <div>
+   <canvas></canvas> 
+   </div>
+   
+   </md-content>
 		 
 		 </md-content>
 	<script src="js/jquery-3.1.0.min.js"></script>
