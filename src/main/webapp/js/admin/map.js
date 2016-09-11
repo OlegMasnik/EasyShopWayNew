@@ -147,11 +147,11 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             case this.enter:
                 return '#252';
             }
+            if (this.targets.map[cell]) return '#522';
             if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
             if (this.way.map[cell]) return waycolor;
             if (this.cupBoard.map[cell]) return '#038ef0';
-            if (this.targets.map[cell]) return '#522';
             return '#eee';
         };
 
@@ -562,13 +562,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     .success(function (response, status, headers) {
                         console.log('CHANGE SIZE old ' + mapId);
                         $route.reload();
-                        //                    	mapId = response;
-                        //                    	console.log(response);
-                        //                    	$scope.walls = undefined;
-                        //                    	$scope.paydesks = undefined;
-                        //                    	$scope.config.enter = undefined;
-                        //                    	game.enter = undefined;
-                        //                    	start();
                     })
                     .error(function (data, status, header, config) {
                         console.log('failed');
@@ -639,7 +632,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
 
     function checkCell(i) {
-        return $scope.paydesks.indexOf(i) != -1 || game.cupBoard.map[i] || game.enter == i;
+        return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 || game.enter == i;
     }
 
 
