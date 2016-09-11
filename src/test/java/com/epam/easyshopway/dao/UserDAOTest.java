@@ -2,80 +2,82 @@ package com.epam.easyshopway.dao;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Field;
-import java.sql.Connection;
 import java.sql.Date;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import com.epam.easyshopway.connection.ConnectionManager;
 import com.epam.easyshopway.dao.UserDAO;
 import com.epam.easyshopway.model.User;
 
 public class UserDAOTest {
-	private UserDAO userDAO;
-	private static Connection connection;
-	private User firstUser;
-	private User secondUser;
+	private static UserDAO userDAO;
+	private User firstUser = new User(12, "Unit", "Tester", "unittester@gmail.com", "111111", new Date(111111111), true,
+			"user", "ua", "\\test\\1.img");
+	private User secondUser = new User(12, "Mock", "Tester", "mocktester@gmail.com", "222222", new Date(111111111),
+			true, "user", "ua", "\\test\\2.img");
 
-//	@BeforeClass
-//	public static void setUpBeforeClass() throws Exception {
-//		connection = ConnectionManager.getInstance().getConnectionPool().getConnection();
-//	}
-//
-//	@AfterClass
-//	public static void tearDownAfterClass() throws Exception {
-//		ConnectionManager.getInstance().getConnectionPool().putConnection(connection);
-//	}
-//
-//	@Before
-//	public void setUp() throws Exception {
-//		firstUser = new User(12, "Unit", "Tester", "unittester@gmail.com", "111111", new Date(111111111), true, "user",
-//				"ua", "\\test\\1.img");
-//		secondUser = new User(12, "Mock", "Tester", "mocktester@gmail.com", "222222", new Date(111111111), true, "user",
-//				"ua", "\\test\\2.img");
-//	}
-	
-	@Test
-	public void testInsert() throws Exception {
+	@BeforeClass
+	public static void runBeforeClass() {
+		userDAO = new UserDAO();
+	}
+
+	@AfterClass
+	public static void runAfterClass() {
 		try {
-			firstUser = new User(12, "Unit", "Tester", "unittester@gmail.com", "111111", new Date(111111111), true, "user",
-					"ua", "\\test\\1.img");
-			secondUser = new User(12, "Mock", "Tester", "mocktester@gmail.com", "222222", new Date(111111111), true, "user",
-					"ua", "\\test\\2.img");
-//			Class userDAOClass = UserDAO.class;
-			//Field field = userDAOClass.getField("connection");
-//			Field field = AbstractDAO.class.getField("connection");
-//			field.setAccessible(true);
-//			System.out.println(AbstractDAO.class.isAssignableFrom(userDAOClass));
-//			System.out.println(userDAOClass.getClass().getSuperclass().getName());
-//			Field[] fs = userDAOClass.getClass().getSuperclass().getDeclaredFields();
-//			connection = (Connection) field.get(userDAO);
-//	        fs[0].setAccessible(true);
-//	        for (Field fields : fs) {
-//	        	System.out.println(fields.getName());
-//	        }
-//	        System.out.println(fs[0].getName());
-			//Connection connection = (Connection) field.get(userDAO);
-			//connection.setAutoCommit(false);
-			userDAO.insertUser(firstUser);
-			userDAO.insertUser(secondUser);
-			User insertedFirstUser = userDAO.getByEmail(firstUser.getEmail());
-			User insertedSecondUser = userDAO.getByEmail(secondUser.getEmail());
-			assertEquals(firstUser.getFirstName(), insertedFirstUser.getFirstName());
-			assertEquals(firstUser.getImage(), insertedFirstUser.getImage());
-			assertEquals(firstUser.getLanguage(), insertedFirstUser.getLanguage());
-			assertEquals(secondUser.getLastName(), insertedSecondUser.getLastName());
-			assertEquals(secondUser.getPassword(), insertedSecondUser.getPassword());
-			assertEquals(secondUser.getEmail(), insertedSecondUser.getEmail());
+			userDAO.close();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
+	@Test
+	public void testCRUDOperations() throws Exception {
+		// try (UserDAO userDAO = new UserDAO()) {
+		userDAO.insertUser(firstUser);
+		userDAO.insertUser(secondUser);
+		User insertedFirstUser = userDAO.getByEmail(firstUser.getEmail());
+		User insertedSecondUser = userDAO.getByEmail(secondUser.getEmail());
+		assertEquals("Comparimg first name", firstUser.getFirstName(), insertedFirstUser.getFirstName());
+		assertEquals("Comparimg image", firstUser.getImage(), insertedFirstUser.getImage());
+		assertEquals("Comparimg language", firstUser.getLanguage(), insertedFirstUser.getLanguage());
+		assertEquals("Comparimg last name", secondUser.getLastName(), insertedSecondUser.getLastName());
+		assertEquals("Comparimg password", secondUser.getPassword(), insertedSecondUser.getPassword());
+		assertEquals("Comparimg email", secondUser.getEmail(), insertedSecondUser.getEmail());
+		assertNotEquals("Comparing email with wrong email", "wrongemail@gmail.com", firstUser.getEmail());
+		assertNotEquals("Comparing first name with wrong first name", "John Paul", firstUser.getFirstName());
+		userDAO.updatePassword(firstUser.getEmail(), "asdasdasd");
+		insertedFirstUser.setPassword("asdasdasd");
+		assertNotEquals("Comparing new pass wiith previous one", firstUser.getPassword(),
+				userDAO.getByEmail(secondUser.getEmail()).getPassword());
+		assertNotEquals("Comparing changed pass matches", insertedFirstUser.getPassword(),
+				userDAO.getByEmail(secondUser.getEmail()).getPassword());
+		userDAO.delete(insertedFirstUser.getId());
+		userDAO.delete(insertedSecondUser.getId());
+		assertNull("Checking if first user is succesfully deleted from database",
+				userDAO.getByEmail(firstUser.getEmail()));
+		assertNull("Checking if second user is succesfully deleted from database",
+				userDAO.getByEmail(secondUser.getEmail()));
+		// }
+	}
+	
+	@Test
+	public void testUserValidation() throws Exception {
+		userDAO.insertUser(firstUser);
+		assertTrue("Checking if pass matches", userDAO.validateUser(firstUser.getEmail(), firstUser.getPassword()));
+		assertFalse("Checking if pass matches", userDAO.validateUser(firstUser.getEmail(), firstUser.getPassword() + "asd"));
+		userDAO.delete(userDAO.getByEmail(firstUser.getEmail()).getId());
+	}
+	
+	@Test
+	public void testCheckMail() throws Exception {
+		userDAO.insertUser(firstUser);
+		assertTrue("Checking if user with such email exists", userDAO.hasEmail(firstUser.getEmail()));
+		//deleting user
+		userDAO.delete(userDAO.getByEmail(firstUser.getEmail()).getId());
+		assertFalse("Checking if user exists after deleting", userDAO.hasEmail(firstUser.getEmail()));
 	}
 
 }

@@ -34,8 +34,7 @@ public class UserDAO extends AbstractDAO<User> {
 		return 0;
 	}
 
-	public User insertUser(User user) throws SQLException,
-			InstantiationException, IllegalAccessException {
+	public User insertUser(User user) throws SQLException, InstantiationException, IllegalAccessException {
 		PreparedStatement statement = connection.prepareStatement(INSERT);
 		statement.setString(1, user.getFirstName());
 		statement.setString(2, user.getLastName());
@@ -50,17 +49,16 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setString(8, user.getLanguage());
 		statement.setString(9, user.getImage());
 
-		statement.executeUpdate();
+		System.out.println(statement.executeUpdate());
 		statement.close();
 
-		LOGGER.info("Create new user for email: " + user.getEmail() + "("
-				+ user.getFirstName() + " " + user.getLastName() + ")");
+		LOGGER.info("Create new user for email: " + user.getEmail() + "(" + user.getFirstName() + " "
+				+ user.getLastName() + ")");
 		return getByEmail(user.getEmail());
 	}
 
 	@Override
-	public List<User> getAll() throws SQLException, IllegalAccessException,
-			InstantiationException {
+	public List<User> getAll() throws SQLException, IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_ALL);
 		ResultSet resultSet = statement.executeQuery(SELECT_ALL);
 		List<User> users = new UserTransformer().getAllUsers(resultSet);
@@ -70,14 +68,12 @@ public class UserDAO extends AbstractDAO<User> {
 	}
 
 	@Override
-	public User getById(Integer id) throws SQLException,
-			IllegalAccessException, InstantiationException {
+	public User getById(Integer id) throws SQLException, IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
 		statement.setInt(1, id);
 		ResultSet resultSet = statement.executeQuery();
 		User user = new UserTransformer().getUser(resultSet);
-		LOGGER.info("Get user by id: " + user.getId() + "("
-				+ user.getFirstName() + " " + user.getLastName() + ")");
+		LOGGER.info("Get user by id: " + user.getId() + "(" + user.getFirstName() + " " + user.getLastName() + ")");
 		// List<User> users = new Transformer<User>(User.class)
 		// .fromRStoCollection(resultSet);
 		// statement.close();
@@ -87,16 +83,15 @@ public class UserDAO extends AbstractDAO<User> {
 		// return null;
 	}
 
-	public User getByEmail(String email) throws SQLException,
-			IllegalAccessException, InstantiationException {
-		PreparedStatement statement = connection
-				.prepareStatement(SELECT_BY_EMAIL);
+	public User getByEmail(String email) throws SQLException, IllegalAccessException, InstantiationException {
+		PreparedStatement statement = connection.prepareStatement(SELECT_BY_EMAIL);
 		statement.setString(1, email);
 		ResultSet resultSet = statement.executeQuery();
 		User user = new UserTransformer().getUser(resultSet);
-
-		LOGGER.info("Get user for email: " + user.getEmail() + "("
-				+ user.getFirstName() + " " + user.getLastName() + ")");
+		if (user != null) {
+			LOGGER.info("Get user for email: " + user.getEmail() + "(" + user.getFirstName() + " " + user.getLastName()
+					+ ")");
+		}
 
 		return user;
 	}
@@ -116,25 +111,22 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setInt(10, userId);
 		int result = statement.executeUpdate();
 		statement.close();
-		LOGGER.info("Update user for email: " + user.getEmail() + "("
-				+ user.getFirstName() + " " + user.getLastName() + ")");
+		LOGGER.info("Update user for email: " + user.getEmail() + "(" + user.getFirstName() + " " + user.getLastName()
+				+ ")");
 		return result;
 	}
 
-	public int updatePicture(Integer userId, String imageAddress)
-			throws SQLException {
-		PreparedStatement statement = connection
-				.prepareStatement(UPDATE_PICTURE);
+	public int updatePicture(Integer userId, String imageAddress) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(UPDATE_PICTURE);
 		statement.setString(1, imageAddress);
 		statement.setInt(2, userId);
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
 	}
-	public int updatePassword(String email, String passsword)
-			throws SQLException {
-		PreparedStatement statement = connection
-				.prepareStatement(UPDATE_PASSWORD_BY_EMAIL);
+
+	public int updatePassword(String email, String passsword) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(UPDATE_PASSWORD_BY_EMAIL);
 		statement.setString(1, passsword);
 		statement.setString(2, email);
 		int result = statement.executeUpdate();
@@ -149,31 +141,27 @@ public class UserDAO extends AbstractDAO<User> {
 		int result = statement.executeUpdate();
 		statement.close();
 		User user = UserService.getById(id);
-		LOGGER.info("Delete user for email: " + user.getEmail() + "("
-				+ user.getFirstName() + " " + user.getLastName() + ")");
+		LOGGER.info("Delete user for email: " + user.getEmail() + "(" + user.getFirstName() + " " + user.getLastName()
+				+ ")");
 		return result;
 	}
 
 	public boolean validateUser(String email, String password)
 			throws SQLException, InstantiationException, IllegalAccessException {
-		PreparedStatement preparedStatement = connection
-				.prepareStatement(GET_USER_BY_LOGIN_AND_PASSWORD);
+		PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_LOGIN_AND_PASSWORD);
 		preparedStatement.setString(1, email);
 		preparedStatement.setString(2, password);
 		ResultSet rs = preparedStatement.executeQuery();
-		List<User> users = new Transformer<User>(User.class)
-				.fromRStoCollection(rs);
+		List<User> users = new Transformer<User>(User.class).fromRStoCollection(rs);
 		preparedStatement.close();
 		boolean validate = users.size() != 0;
-		LOGGER.info("User for email: " + email + "and password" + password
-				+ " is valid:" + validate + ".");
+		LOGGER.info("User for email: " + email + "and password" + password + " is valid:" + validate + ".");
 
 		return validate;
 	}
 
 	public int setActive(String email, boolean active) throws SQLException {
-		PreparedStatement statement = connection
-				.prepareStatement(UPDATE_ACTIVE);
+		PreparedStatement statement = connection.prepareStatement(UPDATE_ACTIVE);
 		statement.setBoolean(1, active);
 		statement.setString(2, email);
 		int result = statement.executeUpdate();
@@ -181,14 +169,11 @@ public class UserDAO extends AbstractDAO<User> {
 		return result;
 	}
 
-	public boolean hasEmail(String email) throws SQLException,
-			InstantiationException, IllegalAccessException {
-		PreparedStatement preparedStatement = connection
-				.prepareStatement(CHECK_EMAIL);
+	public boolean hasEmail(String email) throws SQLException, InstantiationException, IllegalAccessException {
+		PreparedStatement preparedStatement = connection.prepareStatement(CHECK_EMAIL);
 		preparedStatement.setString(1, email);
 		ResultSet rs = preparedStatement.executeQuery();
-		List<User> users = new Transformer<User>(User.class)
-				.fromRStoCollection(rs);
+		List<User> users = new Transformer<User>(User.class).fromRStoCollection(rs);
 		preparedStatement.close();
 		return users.size() != 0;
 	}
