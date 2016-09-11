@@ -36,17 +36,12 @@
 	<md-button href="#statistic">Statistic</md-button> </md-content> </md-slidenav> <md-content
 		layout="row" class="main-page" flex>
 
-
-
-
 	<div flex class="content" layout="column">
 		<div ng-view onload="getFoodData()"></div>
 	</div>
 	</md-content> </md-content>
 
 <md-button  ng-href="/EasyShopWayNew/search" class="md-fab md-fab-bottom-right">
-	<md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
-	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
     </md-button>
 
 	<script src="js/jquery-3.1.0.min.js"></script>
@@ -56,9 +51,10 @@
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src="js/datatable/md-data-table.js"></script>
+	<script src='js/angular-translate.js'></script>
+	
 	<script src="js/shared/highcharts.js"></script>
 	<script src="js/shared/exporting.js"></script>
-	<script src='js/angular-translate.js'></script>
 
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>

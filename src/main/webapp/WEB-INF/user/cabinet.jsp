@@ -62,6 +62,7 @@
             <script src="js/shared/highcharts.js"></script>
             <script src="js/shared/exporting.js"></script>
 			<script src='js/angular-translate.js'></script>
+			
             <script src='js/app.js'></script>
             <script src='js/user/app.js'></script>
             <script src='js/user/user-history.js'></script>
