@@ -99,49 +99,9 @@
                 var serApp = angular
                     .module('SearchApp', ['ngMaterial', 'ngMessages']);
                 
-                serApp.service('productService', function() {
-                	  var items;
-                	  var maps;
-                	  var mapId;
-
-                	  var addItems = function(newObj) {
-                		  items = newObj;
-                	  };
-
-                	  var getItems = function(){
-                	      return items;
-                	  };
-                	  
-                	  var addMaps = function(newObj) {
-                		  maps = newObj;
-                	  };
-
-                	  var getMaps = function(){
-                	      return maps;
-                	  };
-                	  
-                	  var addMapId = function(newObj) {
-                		  mapId = newObj;
-                	  };
-
-                	  var getMapId = function(){
-                	      return mapId;
-                	  };
-
-                	  return {
-                		  addItems: addItems,
-                		  getItems: getItems,
-                		  addMaps: addMaps,
-                		  getMaps: getMaps,
-                		  addMapId: addMapId,
-                		  getMapId: getMapId
-                	  };
-
-                	});
-                
                 serApp.controller('ProductListCtrl', DemoCtrl);
 
-                function DemoCtrl($timeout, $q, $log, $scope, $http, productService) {
+                function DemoCtrl($timeout, $q, $log, $scope, $http) {
                     var self = this;
 
                     self.a = 1;
