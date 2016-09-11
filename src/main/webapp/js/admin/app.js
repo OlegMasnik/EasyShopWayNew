@@ -557,6 +557,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
                         console.log($scope.data);
                     }, function myError(response) {
                         console.log(response.statusText);
+                        showToast($mdToast, $scope, "Products with id " + id + " is deleted")
                     });
                 },
                 function (response) {
@@ -587,6 +588,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', fu
                         originalType.types = $scope.data.types;
                         originalType.count = $scope.data.types.length;
                         $scope.datatableType = angular.copy(originalType);
+                        showToast($mdToast, $scope, "ProductTypes with id " + id + " is deleted");
                         console.log("Get");
                         console.log($scope.data);
                     }, function myError(response) {

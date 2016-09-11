@@ -15,7 +15,7 @@
 	<jsp:include page="/WEB-INF/parts/header.jsp"></jsp:include>
 	
 	
-	div layout="row">
+	<div layout="row">
 	
 	<div flex="30"></div>
 	

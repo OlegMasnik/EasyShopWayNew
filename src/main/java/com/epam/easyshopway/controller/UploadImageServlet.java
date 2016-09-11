@@ -73,7 +73,6 @@ public class UploadImageServlet extends HttpServlet {
 				
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
-				session.invalidate();
 				request.getSession(false).setAttribute("user", user);
 			}
 
