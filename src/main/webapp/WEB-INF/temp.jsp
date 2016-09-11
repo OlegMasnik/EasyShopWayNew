@@ -91,6 +91,14 @@
 		
 		
 		 <md-content layout-margin flex> 
+		  	<label>Scale:</label>
+		  	<md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 30">
+		  	<i class="material-icons">add_circle_outline</i></md-button>
+		  	<md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 15">
+		  	<i class="material-icons">remove</i></md-button>
+		 <md-input-container>
+		 	
+		 </md-input-container>
 		 
 		 <canvas></canvas> 
 		 

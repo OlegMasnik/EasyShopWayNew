@@ -16,10 +16,39 @@
 				}
 			}
 			self.click = function() {
-				console.log($scope.maps);
-				$scope.getMapByid($scope.maps);
-				start();
-			}
+			    console.log($scope.maps);
+			    $scope.getMapByid($scope.maps);
+			    
+			    self.isDisabled = false;
+			    
+			          var data = $.param({
+			           mapId : $scope.maps
+			          });
+			          
+			          console.log(data);
+			 
+			          config = {
+			              headers: {
+			                  'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+			              }
+			          }
+			 
+			          $http.get('/EasyShopWayNew/searchProducts?' + data, config).success(
+			              function (data, status, headers, config) {
+			                  console.log(data);
+			                  self.states = loadAll(data);
+			                  console.log(self.states);
+			                  
+			                  self.isDisabled = false;
+			                  
+			              }).error(function (data, status, header, config) {
+			              console.log(data);
+			              console.log('no products');
+			              self.isDisabled = true;
+			          });
+			    
+			    start();
+			   }
 
 			$http.get('/EasyShopWayNew/searchMaps', config).success(
 					function(data, status, headers, config) {
@@ -134,8 +163,6 @@
 				};
 			}
 			
-			
-			
 			var mapId;
 
 		    $scope.map = [];
@@ -161,6 +188,20 @@
 		        pathColor: '#999'
 		    };
 
+		    
+		    $scope.incScale = function(){
+		    	console.log("+")
+		    	$scope.config.cellSize++;
+		    	start();
+		    	start();
+		    };
+		    $scope.decScale = function(){
+		    	console.log("-")
+		    	$scope.config.cellSize--;
+		    	start();
+		    	start();
+		    }
+		    
 		    function start() {
 		        game = new Game(document.querySelector('canvas'), $scope.config);
 		        game.draw();
