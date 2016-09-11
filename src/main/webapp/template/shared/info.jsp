@@ -55,17 +55,18 @@
 		ng-click="showInfo()">Cancel</md-button> </md-card-actions> </md-card>
 
 	<div flex layout="column">
-		<md-card flex ng-controller="UploadImageCtrl">	
-		<form method="POST" action="cabinet/image-upload"
+		<md-card flex ng-controller="UploadImageCtrl">
+		<form method="POST" id="formUserImg" action="cabinet/image-upload"
 			enctype="multipart/form-data">
 			<md-card-title> <md-card-title-text>
 			<div class="cab-category">Update your photo</div>
 			</md-card-title-text> </md-card-title>
-			<input type="file" accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp" ng-model="file" name="file" id="file" class="md-raised" required />
+			<input type="file"
+				accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
+				ng-model="file" name="file" id="file" class="md-raised" required />
 			<md-input-container> <md-button
-				class="md-raised" ng-click="sendImg()">Save</md-button> <md-button
-				class="md-raised" type="reset">Cancel</md-button>
-				 </md-input-container>
+				class="md-raised" type="submit" ng-click="sendImg()">Save</md-button>
+			<md-button class="md-raised" type="reset">Cancel</md-button> </md-input-container>
 		</form>
 		</md-card>
 
@@ -86,10 +87,10 @@
 			<label> New password </label> <input id="newPass" required
 				type="password" name="newPass" ng-model="user.newPass" minlength="6"
 				maxlength="25" ng-model="newPass"> </md-input-container>
-			<span style="color: red" ng-bind="message"></span>
-			<md-card-actions layout="row" layout-align="end center">
-			<md-button class="md-raised" ng-click="changePass()">Save</md-button> <md-button class="md-raised"
-				type="reset" ng-click="cancel()">Cancel</md-button> </md-card-actions>
+			<md-input-container layout="row" layout-align="end center">
+			<md-button class="md-raised" ng-click="changePass()">Save</md-button>
+			<md-button class="md-raised" type="reset" ng-click="cancel()">Cancel</md-button>
+			</md-input-container>
 		</form>
 		</md-card-content> </md-card>
 	</div>

@@ -16,7 +16,6 @@ public class EncodingFilter implements Filter {
 
 	// Default constructor
 	public EncodingFilter() {
-		System.out.println("Request response encoder Filter object has been created");
 	}
 
 	// Intitialization method

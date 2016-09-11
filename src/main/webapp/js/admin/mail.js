@@ -32,7 +32,7 @@ mailApp.controller("MailCtrl", function($scope, $http, $mdDialog) {
 			            headers: {
 			                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
 			            }
-			        }
+			 }
 			 var data = $.param({
 					emails : answer.email,
 					header : answer.title,

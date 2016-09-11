@@ -123,4 +123,14 @@ public class UserService {
 		}
 		return 0;
 	}
+	public static int updatePasswordByEmail(String email, String password) {
+		try (UserDAO userDAO = new UserDAO()) {
+			return userDAO.updatePassword(email, password);	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

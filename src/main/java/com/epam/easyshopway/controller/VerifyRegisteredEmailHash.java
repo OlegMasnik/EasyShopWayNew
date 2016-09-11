@@ -36,16 +36,16 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
 			}
 		}
 		if (scope.equals("resetPassword")) {
-//			newPassSession = (String) request.getSession().getAttribute("newPass");
-//			email = (String) request.getSession().getAttribute("email");
-//			if (newPassSession.equals("")) {
-//				request.getRequestDispatcher("pages/checkEmailError.jsp").forward(request, response);
-//			} else if (newPassSession.equals(hash)) {
-//				UserService.updatePasswordByEmail(email, newPassSession);
-//				request.getSession().setAttribute("email", null);
-//				request.getSession().setAttribute("newPass", null);
-//				request.getRequestDispatcher("pages/checkEmailSuccess.jsp").forward(request, response);
-//			}
+			newPassSession = (String) request.getSession().getAttribute("reset_pass");
+			email = (String) request.getSession().getAttribute("reset_email");	
+			if (newPassSession.equals("")) {
+				request.getRequestDispatcher("/WEB-INF/email/passError.jsp").forward(request, response);
+			} else if (newPassSession.equals(hash)) {
+				UserService.updatePasswordByEmail(email, newPassSession);
+				request.getSession().setAttribute("email", null);
+				request.getSession().setAttribute("newPass", null);
+				request.getRequestDispatcher("/WEB-INF/email/passSuccess.jsp").forward(request, response);
+			}
 		}
 	}
 

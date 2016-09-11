@@ -1,5 +1,25 @@
 var dateBirthday;
-var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute' ]);
+var lang;
+
+(function(){
+	lang = $('#lang').val();
+	console.log(lang);
+})();
+
+var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute', 'pascalprecht.translate']);
+
+
+app.config(function($translateProvider) {
+	$translateProvider.translations('en', {
+	    HEADLINE: 'Hello there, This is my awesome app!',
+	    INTRO_TEXT: 'And it has i18n support!'
+	  })
+	  .translations('ua', {
+	    HEADLINE: 'Доброго вам здоров`ячка, це наша прога!',
+	    INTRO_TEXT: 'І є підтримка і18н!'
+	  });
+	  $translateProvider.preferredLanguage(lang);
+});
 
 app.controller('PageRedirectCtrl', function($window) {
 	var ctrl = this;
@@ -10,7 +30,7 @@ app.controller('PageRedirectCtrl', function($window) {
 	
 });
 
-app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
+app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate) {
     $scope.status = '  ';
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
     
@@ -54,6 +74,20 @@ app.controller('AppCtrl', function ($scope, $mdDialog, $mdMedia) {
             $scope.customFullscreen = (wantsFullScreen === true);
         });
     };
+    $scope.language = lang;
+    $scope.en = 'en';
+    $scope.ua = 'ua';
+    
+    $scope.changeLang = function(lang){
+    	$http.put('/EasyShopWayNew/home?lang=' + lang)
+        .success(function (data, status, headers) {
+            $scope.language = lang;
+            $translate.use(lang);
+        })
+        .error(function (data, status, header, config) {
+            console.log('failed');
+        });
+	}
 });
 
 app
@@ -183,7 +217,8 @@ app
 				[
 						'$scope',
 						'$http',
-						function($scope, $http) {
+						'$mdToast',
+						function($scope, $http,$mdToast) {
 							$scope.showInfo = function() {
 
 								dateBirthday = moment($scope.birthday).format(
@@ -259,25 +294,18 @@ app
 										'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 									}
 								}
-
-								// Validate data
-
-								// End validate
-
 								$http
 										.post('/EasyShopWayNew/info', data,
 												config).success(
 												function(data, status, headers,
 														config) {
-
+													showToast($mdToast, $scope, "Your information is success updated");
 													console.log(data);
-
+													
 												}).error(
 												function(data, status, headers,
 														config) {
-
-													alert("error");
-
+													showToast($mdToast, $scope, data);
 												});
 
 							}
@@ -289,7 +317,9 @@ app
 				[
 						'$scope',
 						'$http',
-						function($scope, $http) {
+						'$route',
+						'$mdToast',
+						function($scope, $http, $route, $mdToast) {
 							$scope.changePass = function() {
 
 								if ($('#newPass').valid()
@@ -311,12 +341,12 @@ app
 											.success(
 													function(data, status,
 															headers, config) {
-														$scope.message = data.msg;
+														showToast($mdToast, $scope, data.msg);
 													})
 											.error(
 													function(data, status,
 															header, config) {
-														$scope.message = 'Changing failed';
+														showToast($mdToast, $scope, "Changing failed");
 													});
 								}
 							}
@@ -345,7 +375,8 @@ app.controller('UploadImageCtrl', [
 		'$scope',
 		'$http',
 		'$mdToast',
-		function($scope, $http, $mdToast) {
+		'$route',
+		function($scope, $http, $mdToast, $route) {
 			$scope.status = "Validation success";
 			
 
@@ -359,50 +390,37 @@ app.controller('UploadImageCtrl', [
 				case 'bmp':
 				case 'png':
 				case 'gif':
-					showToast("File type is allowed");
-					var fd = new FormData();
-			        fd.append('file', file);
-			        $http({
-			            method: 'POST',
-			            url: '/EasyShopWayNew/cabinet/image-upload',
-			            data: "file=" + file,
-			            headers: {'Content-Type': 'multipart/form-data'}
-			    }).success(function(){
-			    	console.log("ok");
-		        })
-		        .error(function(){
-		        	console.log("ne ok");
-		        });
+					showToast($mdToast, $scope, "File type is allowed");
 					break;
 				default:
 					console.log('ne ok');
-					showToast("File type not allowed");
+					showToast($mdToast, $scope, "File type not allowed");
 					this.value = '';
 				}
 			}
 
-			function showToast(msg) {
-				var last = {
-					bottom : true,
-					top : false,
-					left : false,
-					right : true
-				};
-				$scope.toastPosition = angular.extend({}, last);
-
-				$scope.getToastPosition = function() {
-					return Object.keys($scope.toastPosition).filter(
-							function(pos) {
-								return $scope.toastPosition[pos];
-							}).join(' ');
-				};
-
-				$scope.showSimpleToast = function() {
-					var pinTo = $scope.getToastPosition();
-
-					$mdToast.show($mdToast.simple().textContent(msg).position(
-							pinTo).hideDelay(4000));
-				};
-				$scope.showSimpleToast();
-			}
 		} ]);
+function showToast($mdToast, $scope,msg) {
+	var last = {
+		bottom : true,
+		top : false,
+		left : true,
+		right : false
+	};
+	$scope.toastPosition = angular.extend({}, last);
+
+	$scope.getToastPosition = function() {
+		return Object.keys($scope.toastPosition).filter(
+				function(pos) {
+					return $scope.toastPosition[pos];
+				}).join(' ');
+	};
+
+	$scope.showSimpleToast = function() {
+		var pinTo = $scope.getToastPosition();
+
+		$mdToast.show($mdToast.simple().textContent(msg).position(
+				pinTo).hideDelay(4000));
+	};
+	$scope.showSimpleToast();
+}

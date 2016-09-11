@@ -38,6 +38,23 @@ public class User {
 	public User() {
 		super();
 	}
+	
+
+	public User(Integer id, String firstName, String lastName, String email, String password, Date dateOfBirth,
+			Boolean active, String role, String language, String image) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.dateOfBirth = dateOfBirth;
+		this.active = active;
+		this.role = role;
+		this.language = language;
+		this.image = image;
+	}
+
 
 	public User(String firstName, String lastName, String email,
 			String password, Boolean active, String role,

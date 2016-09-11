@@ -27,7 +27,6 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 			} else if (user.getPassword().equals(MD5Util.md5Custom(password))) {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("user", user);
+				session.setAttribute("lang", user.getLanguage());
 				System.out.println(user.getFirstName());
 			} else {
 				object.put("passwordErrMsg", "Uncorrect password.");
