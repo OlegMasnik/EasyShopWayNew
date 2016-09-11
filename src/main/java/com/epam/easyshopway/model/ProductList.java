@@ -17,17 +17,20 @@ public class ProductList {
 
 	@Column("time")
 	private Time time;
+	@Column("product_list.map_id")
+	private Integer mapId;
 
 	public ProductList() {
 		super();
 	}
 
-	public ProductList(Integer userId, Date date, Time time) {
+	public ProductList(Integer userId, Date date, Time time, Integer mapId) {
 		super();
 
 		this.userId = userId;
 		this.date = date;
 		this.time = time;
+		this.mapId = mapId;
 	}
 
 	public Integer getId() {
@@ -60,6 +63,14 @@ public class ProductList {
 
 	public void setTime(String time) {
 		this.time = Time.valueOf(time);
+	}
+
+	public Integer getMapId() {
+		return mapId;
+	}
+
+	public void setMapId(Integer mapId) {
+		this.mapId = mapId;
 	}
 
 }

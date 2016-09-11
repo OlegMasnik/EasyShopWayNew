@@ -22,6 +22,20 @@ public class ProductInformationService {
 			return productInformations;
 		}
 	}
+	public static List<ProductInformation> getAllProductByMapId(Integer mapId) {
+		List<ProductInformation> productInformations = null;
+		try (ProductInformationDTO dto = new ProductInformationDTO()) {
+			productInformations = dto.getAllProductByMapId(mapId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return productInformations;
+		}
+	}
 
 	private static List<ProductInformation> getAllProductByUserListId(Integer id) {
 		List<ProductInformation> productInformations = null;
@@ -53,8 +67,8 @@ public class ProductInformationService {
 		}
 	}
 
-	// РјС–Р№ РјР°Р»РµРЅСЊРєРёР№ РєРѕСЃС‚РёР»СЊ РґР»СЏ Р·РЅР°С…РѕРґР¶РµРЅРЅСЏ РІСЃС–С… РїСЂРѕРґСѓРєС‚С–РІ, С‰Рѕ Р РћР—РЎРўРђР’Р›Р•РќР† РІР¶Рµ
-	// РІ РјР°РіР°Р·РёРЅС–
+	// мій маленький костиль для знаходження всіх продуктів, що РОЗСТАВЛЕНІ вже
+	// в магазині
 	public static List<ProductInformation> getAllProductOnSupermarket() {
 		List<ProductInformation> informations = getAllProduct();
 		List<ProductInformation> currentInformations = new ArrayList<>();

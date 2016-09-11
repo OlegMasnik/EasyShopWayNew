@@ -49,28 +49,37 @@
                         <md-content class="md-padding" layout="column" flex>
                             <form ng-submit="$event.preventDefault()">
                                 <md-autocomplete 
-                                   ng-model="searchMap" 
-                                   ng-disabled="ctrl.isDisabledMap" 
-                                   md-no-cache="ctrl.noCache" 
+                                   ng-model="searchModel" 
+                                   ng-disabled="ctrl.isDisabledMap"
                                    md-selected-item="ctrl.selectedMapItem" 
                                    md-search-text-change="ctrl.searchTextChange(ctrl.searchMapText)" 
                                    md-search-text="ctrl.searchMapText" 
-                                   md-selected-item-change="ctrl.selectedMapItemChange(map)" 
-                                   md-items="map in ctrl.querySearch(ctrl.searchMapText)" 
-                                   md-item-text="map.display" 
+                                   md-selected-item-change="ctrl.selectedMapItemChange(item)" 
+                                   md-items="item in ctrl.querySearch(ctrl.searchMapText)" 
+                                   md-item-text="item.display" 
                                    md-min-length="0" 
                                    placeholder="Enter map name">
                                     <md-item-template>
-                                        <span md-highlight-text="ctrl.searchMapText" md-highlight-flags="^i">{{map.display}}</span>
+                                        <span md-highlight-text="ctrl.searchMapText" md-highlight-flags="^i">{{item.display}}</span>
                                     </md-item-template>
                                     <md-not-found> No maps matching "{{ctrl.searchMapText}}" were found. </md-not-found>
                                 </md-autocomplete>
-                                <md-autocomplete ng-model="searchModel" ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item, ctrl.searchText)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="What are You looking for?">
-                                    <md-item-template>
-                                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
-                                    </md-item-template>
-                                    <md-not-found> No products matching "{{ctrl.searchText}}" were found. </md-not-found>
-                                </md-autocomplete>
+<!--                                 <md-autocomplete  -->
+<!--                                    ng-model="searchModel"  -->
+<!--                                    ng-disabled="ctrl.isDisabled"  -->
+<!--                                    md-selected-item="ctrl.selectedItem"  -->
+<!--                                    md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"  -->
+<!--                                    md-search-text="ctrl.searchText"  -->
+<!--                                    md-selected-item-change="ctrl.selectedItemChange(item, ctrl.searchText)"  -->
+<!--                                    md-items="item in ctrl.querySearch(ctrl.searchText)"  -->
+<!--                                    md-item-text="item.display"  -->
+<!--                                    md-min-length="0"  -->
+<!--                                    placeholder="What are You looking for?"> -->
+<!--                                     <md-item-template> -->
+<!--                                         <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span> -->
+<!--                                     </md-item-template> -->
+<!--                                     <md-not-found> No products matching "{{ctrl.searchText}}" were found. </md-not-found> -->
+<!--                                 </md-autocomplete> -->
                                 <br>
                             </form>
                             <md-content flex>
