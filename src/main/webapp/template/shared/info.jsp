@@ -21,21 +21,22 @@
 		<label> <md-icon md-svg-src="images/icons/person.svg"
 				class="name cab-icon"></md-icon> First Name
 		</label> <input ng-model="firstName"> </md-input-container>
+		
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/person.svg" class="name cab-icon"></md-icon></span>
 			Last Name
 		</label> <input ng-model="lastName"> </md-input-container>
-		<!--
-                    <md-input-container class="md-block" flex-gt-sm="">
-                        <label> <span><md-icon
-     md-svg-src="images/icons/birth.svg" class="name cab-icon"></md-icon></span> Birth Day
+		
+		<div>
+		<label> <span><md-icon md-svg-src="images/icons/birth.svg" class="name cab-icon"></md-icon></span> Birth Day
                         </label>
-                        <input ng-model="birthday"> </md-input-container>
--->
 		<md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}"
 			ng-model="birthday" is-open="showdp" max-date="dtmax" id="birthday"
 			md-placeholder="Enter date" name="birthday"></md-datepicker>
+			</div>
+			<br>
+			<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span>

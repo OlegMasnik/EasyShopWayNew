@@ -211,9 +211,11 @@
 		    var type;
 		    var waycolor = '#d80000';
 		    var targetsCopy;
+		    var imageObj = new Image();
 
 		    var Game = function (canvas, conf) {
 		        game = this;
+		        imageObj.src = 'images/cupboard/central pat_ capboard.gif';
 		        this.enter = $scope.config.enter;
 		        this.canvas = canvas;
 		        this.width = conf.width;
@@ -254,10 +256,17 @@
 		                return '#252';
 		            }
 		            if (this.targets.map[cell]) return '#522';
-		            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
+		            if ($scope.paydesks.indexOf(cell) != -1){
+		            	imageObj.src = 'images/paydesk/payDesk_90x90.gif';
+		            	return;	
+//		            	return '#ff870d;
+		            }
 		            if ($scope.walls.indexOf(cell) != -1) return '#555';
 		            if (this.way.map[cell]) return waycolor;
-		            if (this.cupBoard.map[cell]) return '#038ef0';
+		            if (this.cupBoard.map[cell]){
+		            	imageObj.src = 'images/cupboard/central pat_ capboard.gif';
+		            	return;
+		            }
 		            return '#eee';
 		        };
 
@@ -291,11 +300,15 @@
 		                            game.ctx.fillStyle = game.getCellColor(cell);
 		                            this.targets.map[cell] = tmp1;
 		                            this.way.map[cell] = tmp2;
+		                        }else if(game.cupBoard.map[cell] || $scope.paydesks.indexOf(cell) != -1){
+		                        	game.ctx.drawImage(imageObj, x * game.cellSpace + game.borderWidth,
+				                            y * game.cellSpace + game.borderWidth,
+				                            game.cellSize, game.cellSize);	
+		                        }else{
+			                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+			                            y * game.cellSpace + game.borderWidth,
+			                            game.cellSize, game.cellSize);
 		                        }
-
-		                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-		                            y * game.cellSpace + game.borderWidth,
-		                            game.cellSize, game.cellSize);
 		                    }
 		                    cell++;
 		                }
@@ -409,7 +422,6 @@
 		            	var _targetToDelete;
 		                for (var f = 0; f < arrayTarget.length; f++) {
 		                    this.target = arrayTarget[f];
-		                    console.log("FROM LIST" + this.target);
 		                    _target = this.target;
 		    		        if(!game.cupBoard.map[_target + 1])
 		    		        	this.target = _target + 1;
@@ -419,7 +431,6 @@
 		    		        	this.target = _target +  game.width;
 		    		        else if(!game.cupBoard.map[_target - game.width])
 		    		        	this.target = _target - game.width;
-		    		        console.log("TARGET" + this.target);
 		                    this.path = new Path(game, this.cell, this.target, this.followPath);
 		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
 		                        buffPath = this.path;
@@ -428,8 +439,6 @@
 		                    }
 		                }
 		                buffPath.tracePath();
-		                
-		                console.log("REMOVED" + this.target);
 		                arrayTarget.removeUndefined(_targetToDelete);
 		                buffPath = undefined;
 		                this.cell = curTarget;
