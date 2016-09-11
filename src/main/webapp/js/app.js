@@ -2,7 +2,7 @@ var dateBirthday;
 var lang;
 
 (function(){
-	lang = $('#lang').val();
+	lang = $('#lang').val()  || 'en';
 	console.log(lang);
 })();
 
