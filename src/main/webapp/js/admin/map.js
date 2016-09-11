@@ -147,11 +147,11 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             case this.enter:
                 return '#252';
             }
+            if (this.targets.map[cell]) return '#522';
             if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
             if (this.way.map[cell]) return waycolor;
             if (this.cupBoard.map[cell]) return '#038ef0';
-            if (this.targets.map[cell]) return '#522';
             return '#eee';
         };
 
@@ -464,6 +464,21 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             }
         }
         var pos = start;
+//        var aroundCell = game.cupBoard.map[pos + 1] ? (game.cupBoard.map[pos - 1] ? (game.cupBoard.map[pos + game.width] ? (game.cupBoard.map[pos - game.width] ? undefined : pos - game.width) : pos + game.width) : pos - 1) : pos + 1
+//        var newPos;
+//        if(!game.cupBoard.map[pos + 1])
+//        	newPos = pos + 1;
+//        if(!game.cupBoard.map[pos - 1])
+//        	newPos = pos - 1;
+//        if(!game.cupBoard.map[pos + game.width])
+//        	newPos = pos + game.width;
+//        if(!game.cupBoard.map[pos - game.width])
+//        	newPos = pos - game.width;
+        
+//        if(aroundCell == undefined)
+//        	return;
+//        else
+//        	pos = aroundCell;
         this.g[pos] = 0;
         this.search = function () {
             path.closed.map[pos] = true;
@@ -491,6 +506,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     path.parents[adjacent[i]] = pos;
                 }
             }
+            console.log("Pos: " + pos);
             this.fmin = 131071;
             for (var i = 0; i < path.g.length; i++) {
                 var f = path.g[i] + path.h[i];
@@ -562,13 +578,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     .success(function (response, status, headers) {
                         console.log('CHANGE SIZE old ' + mapId);
                         $route.reload();
-                        //                    	mapId = response;
-                        //                    	console.log(response);
-                        //                    	$scope.walls = undefined;
-                        //                    	$scope.paydesks = undefined;
-                        //                    	$scope.config.enter = undefined;
-                        //                    	game.enter = undefined;
-                        //                    	start();
                     })
                     .error(function (data, status, header, config) {
                         console.log('failed');
@@ -639,7 +648,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
 
     function checkCell(i) {
-        return $scope.paydesks.indexOf(i) != -1 || game.cupBoard.map[i] || game.enter == i;
+        return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 || game.enter == i;
     }
 
 
