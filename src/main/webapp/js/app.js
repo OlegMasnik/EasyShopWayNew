@@ -59,7 +59,20 @@ app.config(function($translateProvider) {
 		COLUMN:'Column',
 		
 		PRODUCT_TYPE:'Product type',
-		IMAGE:'Image'
+		IMAGE:'Image',
+		ADD_NEW:'Add new',
+		WIDHT:'Widht',
+		HEIGHT:'Height',
+		CHANGE_SIZE:'Change size',
+		PAY_DESCK:'Paydesck',
+		CUP_BOARD:'Cupboard',
+		ENTER:'Enter',
+		WALL:'Wall',
+		EDIT:'Edit',
+		SAVE:'Save',
+		DELETE:'Delete',
+		CLEAR:'Clear'
+		
 		
 	
 	
@@ -112,7 +125,19 @@ app.config(function($translateProvider) {
 		OPTION:'Опції',
 		PRODUCT_TYPE:'Тип продуктів',
 		COLUMN:'Колонки',
-		IMAGE:'Картинка'
+		IMAGE:'Картинка',
+		ADD_NEW:'Додати нову',
+		WIDHT:'Ширина',
+		HEIGHT:'Довжина',
+		CHANGE_SIZE:'Змінити розмір',
+		PAY_DESCK:'Каса',
+		CUP_BOARD:'Стелаж',
+		ENTER:'Вхід',
+		WALL:'Стіна',
+		EDIT:'Змінити',
+		SAVE:'Зберегти',
+		DELETE:'Видалити',
+		CLEAR:'Очистити'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
