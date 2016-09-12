@@ -31,7 +31,13 @@ app.config(function($translateProvider) {
 		
 		RESET_PASS:'Reset password',
 		NEW_PASS:'New password',
-		REPEAT_PASS: 'Repeat password'
+		REPEAT_PASS: 'Repeat password',
+		
+		INVALID_EMAIL:'Invalid email',
+		EMAIL_DOES_NOT_EXIST:"This email does not exist",
+		PASSWORDS_DONT_MATCH:'Passwords do not match',
+		PASSWORDS_INVALID:'Passwords is invalid',
+		CHECK_EMAIL:'Please check your email'
 		
 	
 	
@@ -57,7 +63,13 @@ app.config(function($translateProvider) {
 		
 		RESET_PASS:'Відновлення паролю',
 		NEW_PASS:'Новий пароль',
-		REPEAT_PASS:'Повторіть пароль'
+		REPEAT_PASS:'Повторіть пароль',
+		
+		INVALID_EMAIL:'Невірна електрона пошта',
+		EMAIL_DOES_NOT_EXIST:'Електронна пошта не зареєстрована в системі',
+		PASSWORDS_DONT_MATCH:'Паролі не співпадають',
+		PASSWORDS_INVALID:'Некоректний пароль',
+		CHECK_EMAIL:'Будь ласка, перевірте свою електронну пошту'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -73,6 +85,7 @@ app.controller('PageRedirectCtrl', function($window) {
 
 app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate) {
     $scope.status = '  ';
+    
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
     
     $scope.showLogInForm = function (ev) {
