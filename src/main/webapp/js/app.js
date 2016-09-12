@@ -83,6 +83,9 @@ app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, 
         .success(function (data, status, headers) {
             $scope.language = lang;
             $translate.use(lang);
+            if ((window.location.href).indexOf("statistic") !== -1){
+            	$route.reload();
+            }
         })
         .error(function (data, status, header, config) {
             console.log('failed');

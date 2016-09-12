@@ -89,7 +89,7 @@ userApp.config(function($routeProvider) {
 	});
 });
 
-userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
+userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $http, $route) {
 	
 	$scope.date = new Date();
 	
@@ -114,7 +114,7 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
 		            }
 		        }
-		 
+
 		 $http.post('/EasyShopWayNew/stat', data, config)
 		 		.success(function (data, status, headers, config) {
 		 			   response = data;
@@ -145,33 +145,34 @@ userApp.controller('ChartCtrl', ['$scope', '$http', function($scope, $http) {
 			    series: response.pie.series
 			});
 		        	   
-		        	   $('#columnContainer').highcharts({
-		        	        chart: {
-		        	            type: 'column'
-		        	        },
-		        	        title: response.column.title,
-		        	        xAxis: response.column.xAxis,
-		        	        yAxis: response.column.yAxis,
-		        	        legend: {
-		        	            enabled: false
-		        	        },
-		        	        plotOptions: {
-		        	            series: {
-		        	                borderWidth: 0,
-		        	                dataLabels: {
-		        	                    enabled: true,
-		        	                    format: '{point.y:.1f}%'
-		        	                }
-		        	            }
-		        	        },
+    	   $('#columnContainer').highcharts({
+    	        chart: {
+    	            type: 'column'
+    	        },
+    	        title: response.column.title,
+    	        xAxis: response.column.xAxis,
+    	        yAxis: response.column.yAxis,
+    	        legend: {
+    	            enabled: false
+    	        },
+    	        plotOptions: {
+    	            series: {
+    	                borderWidth: 0,
+    	                dataLabels: {
+    	                    enabled: true,
+    	                    format: '{point.y:.1f}%'
+    	                }
+    	            }
+    	        },
 
-		        	        tooltip: {
-		        	            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-		        	            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-		        	        },
+    	        tooltip: {
+    	            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+    	            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b><br/>'
+    	        },
 
-		        	        series: response.column.series
-		        	    });
+    	        series: response.column.series
+    	    });
+		        //$route.reload();
 		       }).error(
 	             function (data, status, header, config) {
 	                 console.log('fail');

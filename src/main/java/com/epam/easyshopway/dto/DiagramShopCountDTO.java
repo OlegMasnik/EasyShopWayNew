@@ -15,13 +15,13 @@ public class DiagramShopCountDTO extends SuperDTO {
 			+ "WHERE product_list.date BETWEEN ? AND ? " + "GROUP BY map.name_en ORDER BY count DESC;";
 
 	private final String SELECT_SHOP_COUNT_BY_USER_ID = "" + "SELECT map.name_uk, map.name_en, COUNT(*) AS count "
-			+ "FROM map  INNER JOIN product_list ON product_list.mapk_id = map.id "
+			+ "FROM map  INNER JOIN product_list ON product_list.map_id = map.id "
 			+ "WHERE product_list.user_id = ? and product_list.date BETWEEN ? AND ? "
 			+ "GROUP BY map.name_en ORDER BY count DESC;";
 
 	private final String SELECT_TOTAL_COUNT_SHOP = "SELECT  COUNT(*) AS count " + "FROM  product_list WHERE product_list.date BETWEEN ? AND ? ";
 	private final String SELECT_TOTAL_COUNT_SHOP_BY_USER_ID = "SELECT  COUNT(*) AS count " 
-			+ "FROM  product_list wher user_id = ?  AND product_list.date BETWEEN ? AND ?";
+			+ "FROM  product_list where user_id = ?  AND product_list.date BETWEEN ? AND ?;";
 
 	public List<DiagramShopCount> getShopCountAdmin(Date startDate, Date endDate)
 			throws SQLException, IllegalAccessException, InstantiationException {
