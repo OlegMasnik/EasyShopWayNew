@@ -51,7 +51,44 @@ app.config(function($translateProvider) {
 		TIME:'Time',
 		FROM:'From',
 		TO:'To',
-		SHOW:'Show'
+		SHOW:'Show',
+		
+		SMART_SEARCH:'Smart search',
+		SEARCH:'Search',
+		OPTION:'Option',
+		COLUMN:'Column',
+		
+		PRODUCT_TYPE:'Product type',
+		PRODUCT:'Product',
+		EDIT_TYPE:'Edit type',
+		IMAGE:'Image',
+		ADD_NEW:'Add new',
+		WIDTH:'Width',
+		HEIGHT:'Height',
+		CHANGE_SIZE:'Change size',
+		PAY_DESCK:'Paydesck',
+		CUP_BOARD:'Cupboard',
+		
+		CREATE_NEW_CUPBOARD:'Create new cupboard',
+		ENGLISH_DESCRIPTION:'English description',
+		UKRAINE_DESCRIPTION:'Ukrainian description',
+		BOARD_COUNT:'Board count',
+		EDIT_CUPBOARD:'Edit cupboard',
+		
+		CREATE_NEW_MAP:'Create new map',
+		
+		ENTER:'Enter',
+		WALL:'Wall',
+		EDIT:'Edit',
+		SAVE:'Save',
+		CANCEL:'Cancel',
+		DELETE:'Delete',
+		CLEAR:'Clear',
+		CHOOSE_IMAGE:'Choose image',
+		
+		ENGLISH_NAME:'English name',
+		UKRAINE_NAME:'Ukrainian name'
+		
 		
 	
 	
@@ -97,7 +134,42 @@ app.config(function($translateProvider) {
 		TIME:'Час',
 		FROM:'Від',
 		TO:'До',
-		SHOW:'Показати'
+		SHOW:'Показати',
+		
+		SMART_SEARCH:'Розумний пошук',
+		SEARCH:'Пошук',
+		OPTION:'Опції',
+		PRODUCT_TYPE:'Тип продуктів',
+		PRODUCT:'Продукти',
+		EDIT_TYPE:'Редагувати тип',
+		COLUMN:'Колонки',
+		
+		CREATE_NEW_CUPBOARD:'Створити новий стелаж',
+		ENGLISH_DESCRIPTION:'Опис англійською',
+		UKRAINE_DESCRIPTION:'Опис українською',
+		BOARD_COUNT:'Кількість полиць',
+		EDIT_CUPBOARD:'Редагувати стелаж',
+		
+		CREATE_NEW_MAP:'Створити нову карту',
+		
+		IMAGE:'Картинка',
+		ADD_NEW:'Додати нову',
+		WIDTH:'Ширина',
+		HEIGHT:'Довжина',
+		CHANGE_SIZE:'Змінити розмір',
+		PAY_DESCK:'Каса',
+		CUP_BOARD:'Стелаж',
+		ENTER:'Вхід',
+		WALL:'Стіна',
+		EDIT:'Змінити',
+		SAVE:'Зберегти',
+		CANCEL:'Відмінити',
+		DELETE:'Видалити',
+		CLEAR:'Очистити',
+		CHOOSE_IMAGE:'Обрати зображення',
+		
+		ENGLISH_NAME:'Назва англійською',
+		UKRAINE_NAME:'Назва українською'
 	});
 	$translateProvider.preferredLanguage(lang);
 });

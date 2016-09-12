@@ -2,7 +2,7 @@
 <form ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Create new map</h2>
+		<h2>{{ 'CREATE_NEW_MAP' | translate }}</h2>
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="cancel(values)">
 		x </md-button>
@@ -13,29 +13,27 @@
 	<div class="md-dialog-content">
 		<form name="mapCreatForm" ng-controller="CreateMapDialogController">
 			<div lanyout="row">
-				<md-input-container flex> <label>Please
-					enter map name (in english):</label> <input name="name_en" type="text"
+				<md-input-container flex> <label>{{ 'ENGLISH_NAME' | translate }}</label> <input name="name_en" type="text"
 					ng-model="name_en" required></md-input-container>
-				<md-input-container flex> <label>Please
-					enter map name (in ukraine):</label>
+				<md-input-container flex> <label>{{ 'UKRAINE_NAME' | translate }}</label>
 				<input name="name_uk" type="text" ng-model="name_uk" required>
 				</md-input-container>
 			</div>
 			<div lanyout="row">
 				<md-input-container flex>
-				<label>Please enter width:</label> <input name="width"
+				<label>{{ 'WIDTH' | translate }}</label> <input name="width"
 					type="number" ng-model="weight" required></md-input-container>
 				<md-input-container>
 				<md-input-container flex>
-				<label>Please enter height:</label> <input name="height"
+				<label>{{ 'HEIGHT' | translate }}</label> <input name="height"
 					type="number" ng-model="height" required></md-input-container>
 				<md-input-container>
 				</div>
 			</md-input-container>
 
 			<md-dialog-actions layout="row"> <span flex></span>
-			<md-button ng-click="cancel()"> Cancel </md-button> <md-button
-				 type="submit" ng-click="createNewMap()"> Save </md-button></md-dialog-actions>
+			<md-button ng-click="cancel()"> {{ 'CANCEL' | translate }} </md-button> <md-button
+				 type="submit" ng-click="createNewMap()"> {{ 'SAVE' | translate }} </md-button></md-dialog-actions>
 		</form>
 </form>
 </md-dialog>
