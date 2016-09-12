@@ -1,33 +1,75 @@
 var dateBirthday;
 var lang;
 
-(function(){
-	lang = $('#lang').val()  || 'en';
+(function() {
+	lang = $('#lang').val() || 'en';
 	console.log(lang);
 })();
 
-var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute', 'pascalprecht.translate']);
-
+var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute',
+		'pascalprecht.translate' ]);
 
 app.config(function($translateProvider) {
 	$translateProvider.translations('en', {
-	    HEADLINE: 'Hello there, This is my awesome app!',
-	    INTRO_TEXT: 'And it has i18n support!'
-	  })
-	  .translations('ua', {
-	    HEADLINE: 'Доброго вам здоров`ячка, це наша прога!',
-	    INTRO_TEXT: 'І є підтримка і18н!'
-	  });
-	  $translateProvider.preferredLanguage(lang);
+		HEADLINE : 'Hello there, This is my awesome app!',
+		INTRO_TEXT : 'And it has i18n support!',
+		ERROR_PAGE_NOT_FOUND : '404 OH, TROUBLE...',
+
+		REGISTRATION : 'SignUp',
+		FIRST_NAME : 'First name',
+		LAST_NAME : 'Last name',
+		EMAIL : 'Email',
+		PASSWORD : 'Password',
+		SUBMIT : 'Submit',
+		SIGN_UP_WITH_SN : 'Or sign up with',
+		LOGIN : 'LogIn',
+		LOGIN_WITH_SN : 'Or login with',
+		FOGOT_PASS : 'Forgot Password',
+		LOGOUT:'LogOut',
+		
+		ERROR_CONFIRMATION_EMAIL:'Error confirmation email',
+		SUCCESS_CONF_EMAIL:'Successful confirmation email',
+		
+		RESET_PASS:'Reset password',
+		NEW_PASS:'New password',
+		REPEAT_PASS: 'Repeat password'
+		
+	
+	
+	}).translations('ua', {
+		HEADLINE : 'Доброго вам здоров`ячка, це наша прога!',
+		INTRO_TEXT : 'І є підтримка і18н!',
+		ERROR_PAGE_NOT_FOUND : '404 ОЙ, ДІДЬКО...',
+
+		REGISTRATION : 'Реєстрація',
+		FIRST_NAME : "Ім'я",
+		LAST_NAME : 'Прізвище',
+		EMAIL : 'Електронна пошта',
+		PASSWORD : 'Пароль',
+		SUBMIT : 'Відправити',
+		SIGN_UP_WITH_SN : 'Або зареєструйся з допомогою',
+		LOGIN : 'Вхід',
+		LOGIN_WITH_SN : 'Або увійти з допомогою',
+		FOGOT_PASS : 'Нагадати пароль',
+		LOGOUT:'Вихід',
+		
+		ERROR_CONFIRMATION_EMAIL:'Помилка підтвердження електронної пошти',
+		SUCCESS_CONF_EMAIL:'Успішне підтвердження через електронну пошту',
+		
+		RESET_PASS:'Відновлення паролю',
+		NEW_PASS:'Новий пароль',
+		REPEAT_PASS:'Повторіть пароль'
+	});
+	$translateProvider.preferredLanguage(lang);
 });
 
 app.controller('PageRedirectCtrl', function($window) {
 	var ctrl = this;
-	
+
 	ctrl.goToPage = function(way) {
-		$window.location.href = way;	
+		$window.location.href = way;
 	}
-	
+
 });
 
 app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate) {
@@ -109,41 +151,44 @@ app
 								});
 								console.log('Read ' + data);
 
-                    var config = {
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                        }
-                    }
-                    if ($('#emailL').valid() && $('#passwordL').valid()) {
-                    	console.log("Valid data");
-                        $http
-                            .post(
-                                '/EasyShopWayNew/login',
-                                data, config)
-                            .success(
-                                function (data, status,
-                                    headers, config) {
-                                    if (data.emailErrMsg == undefined) {
-                                    	if (data.passwordErrMsg == undefined) {
-                                    		$window.location.href = 'cabinet';
-                                    	} else {
-                                    		$scope.error = data.passwordErrMsg;
-                                    	}
-                                    } else {
-                                        $scope.error = data.emailErrMsg;
-                                    }
-                                    console
-                                        .log("Error: " + data.emailErrMsg + " " + data.passwordErrMsg);
-                                }).error(
-                                function (data, status,
-                                    header, config) {
-                                    console.log('fail');
-                                });
-                    } else {
-                        console.log("sory");
-                    }
-                };
-						}]);
+								var config = {
+									headers : {
+										'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+									}
+								}
+								if ($('#emailL').valid()
+										&& $('#passwordL').valid()) {
+									console.log("Valid data");
+									$http
+											.post('/EasyShopWayNew/login',
+													data, config)
+											.success(
+													function(data, status,
+															headers, config) {
+														if (data.emailErrMsg == undefined) {
+															if (data.passwordErrMsg == undefined) {
+																$window.location.href = 'cabinet';
+															} else {
+																$scope.error = data.passwordErrMsg;
+															}
+														} else {
+															$scope.error = data.emailErrMsg;
+														}
+														console
+																.log("Error: "
+																		+ data.emailErrMsg
+																		+ " "
+																		+ data.passwordErrMsg);
+													}).error(
+													function(data, status,
+															header, config) {
+														console.log('fail');
+													});
+								} else {
+									console.log("sory");
+								}
+							};
+						} ]);
 
 app
 		.controller(
@@ -151,7 +196,7 @@ app
 				[
 						'$scope',
 						'$http',
-						function ($scope, $http) {
+						function($scope, $http) {
 							$scope.sendRegData = function() {
 								console.log('hello ' + $scope.email)
 								console.log("date " + dateBirthday)
@@ -172,11 +217,14 @@ app
 								var firstNameDefined = $('#fName1').val();
 								var lastNameDefined = $('#lName1').val();
 								console.log('Reg');
-								if ($('#emailR').valid() && $('#passwordR').valid()
-										&& firstNameDefined != "" && lastNameDefined != "") {
+								if ($('#emailR').valid()
+										&& $('#passwordR').valid()
+										&& firstNameDefined != ""
+										&& lastNameDefined != "") {
 									console.log('Before reg');
 									$http
-											.post('/EasyShopWayNew/reg', data, config)
+											.post('/EasyShopWayNew/reg', data,
+													config)
 											.success(
 													function(data, status,
 															headers, config) {
@@ -197,7 +245,7 @@ app
 									$scope.error = "Please fill all required fields.";
 								}
 							};
-						}]);
+						} ]);
 
 app.controller('DatePickerCtrl', function($scope) {
 
@@ -221,7 +269,7 @@ app
 						'$scope',
 						'$http',
 						'$mdToast',
-						function($scope, $http,$mdToast) {
+						function($scope, $http, $mdToast) {
 							$scope.showInfo = function() {
 
 								dateBirthday = moment($scope.birthday).format(
@@ -299,16 +347,19 @@ app
 								}
 								$http
 										.post('/EasyShopWayNew/info', data,
-												config).success(
+												config)
+										.success(
 												function(data, status, headers,
 														config) {
-													showToast($mdToast, $scope, "Your information is success updated");
+													showToast($mdToast, $scope,
+															"Your information is success updated");
 													console.log(data);
-													
+
 												}).error(
 												function(data, status, headers,
 														config) {
-													showToast($mdToast, $scope, data);
+													showToast($mdToast, $scope,
+															data);
 												});
 
 							}
@@ -338,19 +389,18 @@ app
 										}
 									}
 
-									$http
-											.post('/EasyShopWayNew/pass', data,
-													config)
-											.success(
-													function(data, status,
-															headers, config) {
-														showToast($mdToast, $scope, data.msg);
-													})
-											.error(
-													function(data, status,
-															header, config) {
-														showToast($mdToast, $scope, "Changing failed");
-													});
+									$http.post('/EasyShopWayNew/pass', data,
+											config).success(
+											function(data, status, headers,
+													config) {
+												showToast($mdToast, $scope,
+														data.msg);
+											}).error(
+											function(data, status, header,
+													config) {
+												showToast($mdToast, $scope,
+														"Changing failed");
+											});
 								}
 							}
 
@@ -374,19 +424,14 @@ function DialogController($scope, $mdDialog) {
 	};
 }
 
-app.controller('UploadImageCtrl', [
-		'$scope',
-		'$http',
-		'$mdToast',
-		'$route',
+app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
 		function($scope, $http, $mdToast, $route) {
 			$scope.status = "Validation success";
-			
 
 			$scope.sendImg = function() {
-				
+
 				var file = document.getElementById('file');
-				
+
 				var ext = file.value.match(/\.([^\.]+)$/)[1];
 				switch (ext) {
 				case 'jpg':
@@ -403,7 +448,7 @@ app.controller('UploadImageCtrl', [
 			}
 
 		} ]);
-function showToast($mdToast, $scope,msg) {
+function showToast($mdToast, $scope, msg) {
 	var last = {
 		bottom : true,
 		top : false,
@@ -413,17 +458,16 @@ function showToast($mdToast, $scope,msg) {
 	$scope.toastPosition = angular.extend({}, last);
 
 	$scope.getToastPosition = function() {
-		return Object.keys($scope.toastPosition).filter(
-				function(pos) {
-					return $scope.toastPosition[pos];
-				}).join(' ');
+		return Object.keys($scope.toastPosition).filter(function(pos) {
+			return $scope.toastPosition[pos];
+		}).join(' ');
 	};
 
 	$scope.showSimpleToast = function() {
 		var pinTo = $scope.getToastPosition();
 
-		$mdToast.show($mdToast.simple().textContent(msg).position(
-				pinTo).hideDelay(4000));
+		$mdToast.show($mdToast.simple().textContent(msg).position(pinTo)
+				.hideDelay(4000));
 	};
 	$scope.showSimpleToast();
 }
