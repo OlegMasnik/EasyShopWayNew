@@ -32,10 +32,16 @@
     </md-card>
 
 
-    <div layout="row" flex="none">
-        <md-card flex md-theme-watch>
+    <div layout="column" flex="none">
+        <md-card flex md-theme-watch layout-align="center center">
             <md-card-content>
-                <div flex="70" id="container"></div>
+                <div flex="100" id="pieContainer"></div>
+            </md-card-content>
+        </md-card>
+        
+        <md-card flex md-theme-watch layout-align="center center">
+            <md-card-content>
+                <div flex="100" id="columnContainer"></div>
             </md-card-content>
         </md-card>
     </div>

@@ -24,7 +24,7 @@ public class ProductsTypeCountDTO extends SuperDTO{
 		return productTypes;
 	}
 	
-	public List<ProductsTypeCount> getUserProductTypesAdmin(Integer id, Date startDate, Date endDate) throws SQLException, IllegalAccessException, InstantiationException {
+	public List<ProductsTypeCount> getUserProductTypesAdmin(Date startDate, Date endDate) throws SQLException, IllegalAccessException, InstantiationException {
 		PreparedStatement statement = connection.prepareStatement(SELECT_PRODUCT_TYPES_ADMIN);
 		statement.setDate(1, startDate);
 		statement.setDate(2, endDate);

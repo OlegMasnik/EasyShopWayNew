@@ -11,12 +11,13 @@
 
 </head>
 
-<body ng-app="MyApp">
+<body ng-app="MyApp" ng-controller="AppCtrl">
 	<jsp:include page="parts/header.jsp"></jsp:include>
 	<h2>{{2+2}}</h2>
 
 	<h2>{{ 'HEADLINE' | translate }}</h2>
 	<p>{{ 'INTRO_TEXT' | translate }}</p>
+	<p>{{pageTitle}}</p>
 	<i class="material-icons">&#xE84D;</i>
 
 

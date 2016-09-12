@@ -113,14 +113,23 @@
 
 			function selectedItemChange(item, text) {
 				console.log("select" + item  + " " + text);
-				console.log(item)
+				console.log(item);
+				console.log("sosd" + item.coordinates);
 				if (item != undefined) {
 					if (find(item) == -1) {
 						$scope.items.push(item);
-						// self.searchText = undefined;
 					}
 				}
-
+				if(item.coordinates.length > 0){
+					item.coordinates.map(function(e, i){
+						game.targets.map[e] = true;
+		                game.draw();
+		                console.log("Цілі " + arrayTarget);
+		                targetsCopy = game.targets.map;
+					});
+					arrayTarget.add(item.coordinates);
+					console.log(arrayTarget);
+				}
 			}
 
 			function find(value) {
@@ -392,20 +401,22 @@
 		                            }
 		                    }
 		                    game.draw();
-		                } else {
-		                    if (!checkCell(cell)) {
+		                } else {		
+		                    if (checkCell(cell) && !game.paint.active) {
 		                        game.paint.active = true;
 
 		                        game.paint.value = !game.targets.map[cell];
 		                        game.targets.map[cell] = game.paint.value;
 		                        if (game.targets.map[cell]) {
-		                            arrayTarget.add(cell);
+		                            arrayTarget.add([cell]);
 		                        } else {
-		                            arrayTarget.removeUndefined(cell);
+		                            arrayTarget.removeUndefined([cell]);
 		                        }
 		                        game.draw();
-		                        console.log("Цілі " + arrayTarget);
+		                        console.log("Цілі ");
+		                        console.log(arrayTarget);
 		                        targetsCopy = game.targets.map;
+		                        game.paint.active = false;
 		                    } else {
 		                        console.log("хуйня якась")
 		                    }
@@ -413,6 +424,9 @@
 
 		            }
 		        };
+		        this.mouseMove = function (e) {
+		        	game.paint.active = false;
+		        }
 		        this.mouseUp = function () {
 		            game.paint.active = false;
 		        };
@@ -433,27 +447,53 @@
 		        var player = this;
 		        this.target = this.cell;
 
+//		        this.findStart = function () {
+//		            for (var i = 0; i < $scope.paydesks.length; i++) {
+//		                this.cell = $scope.paydesks[i];
+//		                for (var j = 0; j < arrayTarget.length; j++) {
+//		                    this.target = arrayTarget[j];
+//		                    var _target = this.target;
+//		    		        if(!game.cupBoard.map[_target + 1])
+//		    		        	this.target = _target + 1;
+//		    		        else if(!game.cupBoard.map[_target - 1])
+//		    		        	this.target = _target - 1;
+//		    		        else if(!game.cupBoard.map[_target + game.width])
+//		    		        	this.target = _target +  game.width;
+//		    		        else if(!game.cupBoard.map[_target - game.width])
+//		    		        	this.target = _target - game.width;
+//		                    this.path = new Path(game, this.cell, this.target, this.followPath);
+//		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+//		                        buffPath = this.path;
+//		                        curTarget = this.cell;
+//		                    }
+//		                }
+//		            }
+//		            return curTarget;
+//		        };
 		        this.findStart = function () {
 		            for (var i = 0; i < $scope.paydesks.length; i++) {
 		                this.cell = $scope.paydesks[i];
 		                for (var j = 0; j < arrayTarget.length; j++) {
-		                    this.target = arrayTarget[j];
-		                    var _target = this.target;
-		    		        if(!game.cupBoard.map[_target + 1])
-		    		        	this.target = _target + 1;
-		    		        else if(!game.cupBoard.map[_target - 1])
-		    		        	this.target = _target - 1;
-		    		        else if(!game.cupBoard.map[_target + game.width])
-		    		        	this.target = _target +  game.width;
-		    		        else if(!game.cupBoard.map[_target - game.width])
-		    		        	this.target = _target - game.width;
-		                    this.path = new Path(game, this.cell, this.target, this.followPath);
-		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-		                        buffPath = this.path;
-		                        curTarget = this.cell;
-		                    }
+		                	for(var k = 0; k < arrayTarget[j].length; k++){
+			                    this.target = arrayTarget[j][k];
+			                    var _target = this.target;
+			    		        if(!game.cupBoard.map[_target + 1])
+			    		        	this.target = _target + 1;
+			    		        else if(!game.cupBoard.map[_target - 1])
+			    		        	this.target = _target - 1;
+			    		        else if(!game.cupBoard.map[_target + game.width])
+			    		        	this.target = _target +  game.width;
+			    		        else if(!game.cupBoard.map[_target - game.width])
+			    		        	this.target = _target - game.width;
+			                    this.path = new Path(game, this.cell, this.target, this.followPath);
+			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+			                        buffPath = this.path;
+			                        curTarget = this.cell;
+			                    }
+		                	}
 		                }
 		            }
+		            console.log("Start " + curTarget);
 		            return curTarget;
 		        };
 
@@ -464,30 +504,41 @@
 		            };
 		        }
 		        this.moveTo = function () {
+		        	console.log(arrayTarget);
 		            if (arrayTarget.length > 0) {
 		            	var _target;
 		            	var _targetToDelete;
+		            	var _targetListToDelete;
 		                for (var f = 0; f < arrayTarget.length; f++) {
-		                    this.target = arrayTarget[f];
-		                    _target = this.target;
-		    		        if(!game.cupBoard.map[_target + 1])
-		    		        	this.target = _target + 1;
-		    		        else if(!game.cupBoard.map[_target - 1])
-		    		        	this.target = _target - 1;
-		    		        else if(!game.cupBoard.map[_target + game.width])
-		    		        	this.target = _target +  game.width;
-		    		        else if(!game.cupBoard.map[_target - game.width])
-		    		        	this.target = _target - game.width;
-		                    this.path = new Path(game, this.cell, this.target, this.followPath);
-		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-		                        buffPath = this.path;
-		                        curTarget = this.target;
-		                        _targetToDelete = _target;
-		                    }
+		                	console.log(arrayTarget[f]);
+		                	for(var z = 0; z < arrayTarget[f].length; z++){
+			                    this.target = arrayTarget[f][z];
+			                    _target = this.target;
+			                    console.log(_target)
+			    		        if(!game.cupBoard.map[_target + 1])
+			    		        	this.target = _target + 1;
+			    		        else if(!game.cupBoard.map[_target - 1])
+			    		        	this.target = _target - 1;
+			    		        else if(!game.cupBoard.map[_target + game.width])
+			    		        	this.target = _target +  game.width;
+			    		        else if(!game.cupBoard.map[_target - game.width])
+			    		        	this.target = _target - game.width;
+			                    this.path = new Path(game, this.cell, this.target, this.followPath);
+			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+			                        buffPath = this.path;
+			                        curTarget = this.target;
+			                        _targetToDelete = _target;
+			                        _targetListToDelete = arrayTarget[f];
+			                    }
+		                	}
 		                }
 		                buffPath.tracePath();
-		                arrayTarget.removeUndefined(_targetToDelete);
+		                console.log("toDelete");
+		                console.log(_targetListToDelete);
+		                arrayTarget.removeUndefined(_targetListToDelete);
 		                buffPath = undefined;
+		                _targetToDelete = undefined;
+                        _targetListToDelete = undefined;
 		                this.cell = curTarget;
 //		                console.log("Targets: " + arrayTarget);
 		                this.moveTo();
@@ -640,16 +691,30 @@
 		    }
 
 		    Array.prototype.removeUndefined = function (value) {
-		        this[this.indexOf(value)] = undefined;
-		        this.sort();
-		        if (typeof (this[this.length - 1]) == "undefined") {
-		            this.pop();
-		        }
+		    	if(value != undefined){
+			        this[this.indexOf(value)] = undefined;
+			        this.sort();
+			        if (typeof (this[this.length - 1]) == "undefined") {
+			            this.pop();
+			        }
+		    	}
 		    }
+		    	
 		    Array.prototype.add = function (value) {
-		        if (this.indexOf(value) == -1) {
+		    	var check = true;
+		    	this.map(function(e, i){
+		    		e.map(function(e, i){
+		    			 if (e == value[0]) {
+		    				 check = false;
+		    			 }
+		    		})
+		    	})
+		        if (check) {
 		            this.push(value);
 		        }
+//		    	if (this.indexOf(value) == -1) {
+//		    		this.push(value);
+//		    	}
 		    }
 
 		    function checkRange(s, e, d) {
@@ -675,7 +740,8 @@
 
 
 		    function checkCell(i) {
-		        return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 || game.enter == i;
+		        return game.cupBoard.map[i];
+//		        return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 || game.enter == i;
 		    }
 
 
