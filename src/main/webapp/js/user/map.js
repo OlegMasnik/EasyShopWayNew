@@ -115,6 +115,11 @@
 				console.log("select" + item  + " " + text);
 				console.log(item);
 				console.log("sosd" + item.coordinates);
+				if (item != undefined) {
+					if (find(item) == -1) {
+						$scope.items.push(item);
+					}
+				}
 				if(item.coordinates.length > 0){
 					item.coordinates.map(function(e, i){
 						game.targets.map[e] = true;
@@ -127,8 +132,13 @@
 				}
 			}
 
-			function initTarget(value) {
-				
+			function find(value) {
+				for (var i = 0; i < $scope.items.length; i++) {
+					if ($scope.items[i].value == value.value) {
+						return i;
+					}
+				}
+				return -1;
 			}
 
 			function remove(value) {
@@ -391,20 +401,22 @@
 		                            }
 		                    }
 		                    game.draw();
-		                } else {			
-		                    if (!checkCell(cell)) {
+		                } else {		
+		                    if (checkCell(cell) && !game.paint.active) {
 		                        game.paint.active = true;
 
 		                        game.paint.value = !game.targets.map[cell];
 		                        game.targets.map[cell] = game.paint.value;
 		                        if (game.targets.map[cell]) {
-		                            arrayTarget.add(cell);
+		                            arrayTarget.add([cell]);
 		                        } else {
-		                            arrayTarget.removeUndefined(cell);
+		                            arrayTarget.removeUndefined([cell]);
 		                        }
 		                        game.draw();
-		                        console.log("Цілі " + arrayTarget);
+		                        console.log("Цілі ");
+		                        console.log(arrayTarget);
 		                        targetsCopy = game.targets.map;
+		                        game.paint.active = false;
 		                    } else {
 		                        console.log("хуйня якась")
 		                    }
@@ -412,6 +424,9 @@
 
 		            }
 		        };
+		        this.mouseMove = function (e) {
+		        	game.paint.active = false;
+		        }
 		        this.mouseUp = function () {
 		            game.paint.active = false;
 		        };
@@ -522,6 +537,8 @@
 		                console.log(_targetListToDelete);
 		                arrayTarget.removeUndefined(_targetListToDelete);
 		                buffPath = undefined;
+		                _targetToDelete = undefined;
+                        _targetListToDelete = undefined;
 		                this.cell = curTarget;
 //		                console.log("Targets: " + arrayTarget);
 		                this.moveTo();
@@ -684,9 +701,20 @@
 		    }
 		    	
 		    Array.prototype.add = function (value) {
-		        if (this.indexOf(value) == -1) {
+		    	var check = true;
+		    	this.map(function(e, i){
+		    		e.map(function(e, i){
+		    			 if (e == value[0]) {
+		    				 check = false;
+		    			 }
+		    		})
+		    	})
+		        if (check) {
 		            this.push(value);
 		        }
+//		    	if (this.indexOf(value) == -1) {
+//		    		this.push(value);
+//		    	}
 		    }
 
 		    function checkRange(s, e, d) {
@@ -712,7 +740,8 @@
 
 
 		    function checkCell(i) {
-		        return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 || game.enter == i;
+		        return game.cupBoard.map[i];
+//		        return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 || game.enter == i;
 		    }
 
 
