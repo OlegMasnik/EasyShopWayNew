@@ -67,8 +67,8 @@ public class ProductInformationService {
 		}
 	}
 
-	// РјС–Р№ РјР°Р»РµРЅСЊРєРёР№ РєРѕСЃС‚РёР»СЊ РґР»СЏ Р·РЅР°С…РѕРґР¶РµРЅРЅСЏ РІСЃС–С… РїСЂРѕРґСѓРєС‚С–РІ, С‰Рѕ Р РћР—РЎРўРђР’Р›Р•РќР† РІР¶Рµ
-	// РІ РјР°РіР°Р·РёРЅС–
+	// мій маленький костиль для знаходження всіх продуктів, що РОЗСТАВЛЕНІ вже
+	// в магазині
 	public static List<ProductInformation> getAllProductOnSupermarket() {
 		List<ProductInformation> informations = getAllProduct();
 		List<ProductInformation> currentInformations = new ArrayList<>();

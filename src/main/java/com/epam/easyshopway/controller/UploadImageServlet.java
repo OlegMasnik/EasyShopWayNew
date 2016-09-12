@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -60,18 +59,19 @@ public class UploadImageServlet extends HttpServlet {
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
 				try (InputStream input = item.getInputStream()) {
-			    // It's an image (only BMP, GIF, JPG and PNG are recognized).
-			      ImageIO.read(input).toString();
-			      item.write(uploadedFile);
-			      request.getSession(false).setAttribute("message", "Image loaded successfully");
-			      System.out.println("Image download successful");
-				 } catch (Exception e) {
-			      // It's not an image.
+					// It's an image (only BMP, GIF, JPG and PNG are
+					// recognized).
+					ImageIO.read(input).toString();
+					item.write(uploadedFile);
+					request.getSession(false).setAttribute("message", "Image loaded successfully");
+					System.out.println("Image download successful");
+				} catch (Exception e) {
+					// It's not an image.
 					System.out.println("Image download failed");
 					request.getSession(false).setAttribute("message", "Image loading failed");
-				    throw e;
-				 }
-				
+					throw e;
+				}
+
 				UserService.updatePicture(user.getId(), fName);
 				user = UserService.getById(user.getId());
 				request.getSession(false).setAttribute("user", user);
@@ -84,7 +84,7 @@ public class UploadImageServlet extends HttpServlet {
 		}
 		System.out.println("Before redirect");
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

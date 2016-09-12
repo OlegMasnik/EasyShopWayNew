@@ -44,7 +44,6 @@ public class UserHistoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-
 		User user = (User) request.getSession().getAttribute("user");
 
 		if (user != null) {
@@ -73,6 +72,7 @@ public class UserHistoryServlet extends HttpServlet {
 		JSONObject object;
 		for (FullProductList p : list) {
 			object = new JSONObject();
+			object.put("mapId", p.getMapId());
 			object.put("img", p.getImage());
 			object.put("name_uk", p.getProductNameUk());
 			object.put("name_en", p.getProductNameEn());

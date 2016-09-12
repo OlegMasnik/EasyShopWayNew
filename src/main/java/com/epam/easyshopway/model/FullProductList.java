@@ -9,7 +9,7 @@ public class FullProductList {
 	@Column("product_list.id")
 	private Integer id;
 
-	@Column("product_list. map_id")
+	@Column("product_list.map_id")
 	private Integer mapId;
 
 	@Column("product_list.date")
