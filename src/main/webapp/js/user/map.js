@@ -114,32 +114,21 @@
 			function selectedItemChange(item, text) {
 				console.log("select" + item  + " " + text);
 				console.log(item);
-				
-				item.coordinates.map(function(e, i){
-					game.targets.map[e] = true;
-					arrayTarget.add(e);
-	                game.draw();
-	                console.log("Цілі " + arrayTarget);
-	                targetsCopy = game.targets.map;
-				})
-				
-				
-				if (item != undefined) {
-					if (find(item) == -1) {
-						$scope.items.push(item);
-						// self.searchText = undefined;
-					}
+				console.log("sosd" + item.coordinates);
+				if(item.coordinates.length > 0){
+					item.coordinates.map(function(e, i){
+						game.targets.map[e] = true;
+		                game.draw();
+		                console.log("Цілі " + arrayTarget);
+		                targetsCopy = game.targets.map;
+					});
+					arrayTarget.add(item.coordinates);
+					console.log(arrayTarget);
 				}
-
 			}
 
-			function find(value) {
-				for (var i = 0; i < $scope.items.length; i++) {
-					if ($scope.items[i].value == value.value) {
-						return i;
-					}
-				}
-				return -1;
+			function initTarget(value) {
+				
 			}
 
 			function remove(value) {
@@ -402,7 +391,7 @@
 		                            }
 		                    }
 		                    game.draw();
-		                } else {
+		                } else {			
 		                    if (!checkCell(cell)) {
 		                        game.paint.active = true;
 
@@ -443,27 +432,53 @@
 		        var player = this;
 		        this.target = this.cell;
 
+//		        this.findStart = function () {
+//		            for (var i = 0; i < $scope.paydesks.length; i++) {
+//		                this.cell = $scope.paydesks[i];
+//		                for (var j = 0; j < arrayTarget.length; j++) {
+//		                    this.target = arrayTarget[j];
+//		                    var _target = this.target;
+//		    		        if(!game.cupBoard.map[_target + 1])
+//		    		        	this.target = _target + 1;
+//		    		        else if(!game.cupBoard.map[_target - 1])
+//		    		        	this.target = _target - 1;
+//		    		        else if(!game.cupBoard.map[_target + game.width])
+//		    		        	this.target = _target +  game.width;
+//		    		        else if(!game.cupBoard.map[_target - game.width])
+//		    		        	this.target = _target - game.width;
+//		                    this.path = new Path(game, this.cell, this.target, this.followPath);
+//		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+//		                        buffPath = this.path;
+//		                        curTarget = this.cell;
+//		                    }
+//		                }
+//		            }
+//		            return curTarget;
+//		        };
 		        this.findStart = function () {
 		            for (var i = 0; i < $scope.paydesks.length; i++) {
 		                this.cell = $scope.paydesks[i];
 		                for (var j = 0; j < arrayTarget.length; j++) {
-		                    this.target = arrayTarget[j];
-		                    var _target = this.target;
-		    		        if(!game.cupBoard.map[_target + 1])
-		    		        	this.target = _target + 1;
-		    		        else if(!game.cupBoard.map[_target - 1])
-		    		        	this.target = _target - 1;
-		    		        else if(!game.cupBoard.map[_target + game.width])
-		    		        	this.target = _target +  game.width;
-		    		        else if(!game.cupBoard.map[_target - game.width])
-		    		        	this.target = _target - game.width;
-		                    this.path = new Path(game, this.cell, this.target, this.followPath);
-		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-		                        buffPath = this.path;
-		                        curTarget = this.cell;
-		                    }
+		                	for(var k = 0; k < arrayTarget[j].length; k++){
+			                    this.target = arrayTarget[j][k];
+			                    var _target = this.target;
+			    		        if(!game.cupBoard.map[_target + 1])
+			    		        	this.target = _target + 1;
+			    		        else if(!game.cupBoard.map[_target - 1])
+			    		        	this.target = _target - 1;
+			    		        else if(!game.cupBoard.map[_target + game.width])
+			    		        	this.target = _target +  game.width;
+			    		        else if(!game.cupBoard.map[_target - game.width])
+			    		        	this.target = _target - game.width;
+			                    this.path = new Path(game, this.cell, this.target, this.followPath);
+			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+			                        buffPath = this.path;
+			                        curTarget = this.cell;
+			                    }
+		                	}
 		                }
 		            }
+		            console.log("Start " + curTarget);
 		            return curTarget;
 		        };
 
@@ -474,29 +489,38 @@
 		            };
 		        }
 		        this.moveTo = function () {
+		        	console.log(arrayTarget);
 		            if (arrayTarget.length > 0) {
 		            	var _target;
 		            	var _targetToDelete;
+		            	var _targetListToDelete;
 		                for (var f = 0; f < arrayTarget.length; f++) {
-		                    this.target = arrayTarget[f];
-		                    _target = this.target;
-		    		        if(!game.cupBoard.map[_target + 1])
-		    		        	this.target = _target + 1;
-		    		        else if(!game.cupBoard.map[_target - 1])
-		    		        	this.target = _target - 1;
-		    		        else if(!game.cupBoard.map[_target + game.width])
-		    		        	this.target = _target +  game.width;
-		    		        else if(!game.cupBoard.map[_target - game.width])
-		    		        	this.target = _target - game.width;
-		                    this.path = new Path(game, this.cell, this.target, this.followPath);
-		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-		                        buffPath = this.path;
-		                        curTarget = this.target;
-		                        _targetToDelete = _target;
-		                    }
+		                	console.log(arrayTarget[f]);
+		                	for(var z = 0; z < arrayTarget[f].length; z++){
+			                    this.target = arrayTarget[f][z];
+			                    _target = this.target;
+			                    console.log(_target)
+			    		        if(!game.cupBoard.map[_target + 1])
+			    		        	this.target = _target + 1;
+			    		        else if(!game.cupBoard.map[_target - 1])
+			    		        	this.target = _target - 1;
+			    		        else if(!game.cupBoard.map[_target + game.width])
+			    		        	this.target = _target +  game.width;
+			    		        else if(!game.cupBoard.map[_target - game.width])
+			    		        	this.target = _target - game.width;
+			                    this.path = new Path(game, this.cell, this.target, this.followPath);
+			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+			                        buffPath = this.path;
+			                        curTarget = this.target;
+			                        _targetToDelete = _target;
+			                        _targetListToDelete = arrayTarget[f];
+			                    }
+		                	}
 		                }
 		                buffPath.tracePath();
-		                arrayTarget.removeUndefined(_targetToDelete);
+		                console.log("toDelete");
+		                console.log(_targetListToDelete);
+		                arrayTarget.removeUndefined(_targetListToDelete);
 		                buffPath = undefined;
 		                this.cell = curTarget;
 //		                console.log("Targets: " + arrayTarget);
@@ -650,12 +674,15 @@
 		    }
 
 		    Array.prototype.removeUndefined = function (value) {
-		        this[this.indexOf(value)] = undefined;
-		        this.sort();
-		        if (typeof (this[this.length - 1]) == "undefined") {
-		            this.pop();
-		        }
+		    	if(value != undefined){
+			        this[this.indexOf(value)] = undefined;
+			        this.sort();
+			        if (typeof (this[this.length - 1]) == "undefined") {
+			            this.pop();
+			        }
+		    	}
 		    }
+		    	
 		    Array.prototype.add = function (value) {
 		        if (this.indexOf(value) == -1) {
 		            this.push(value);
