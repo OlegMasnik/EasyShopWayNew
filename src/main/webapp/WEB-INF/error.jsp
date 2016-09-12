@@ -16,22 +16,25 @@
                 background-size: 100%;
             }
             .error-txt {
-                text-align: center;
+/*                 text-align: center; */
                 font-size: 250%;
                 font-weight: 800;
                 color: white;
-                display: table-cell;
-                vertical-align: middle;
+/*                 display: table-cell; */
+/*                 vertical-align: middle; */
+                height: 200px;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.57);
             }
             
             .error-msg {
-                display: table;
-                height: 200px;
-                width: 100%;
-                position: fixed;
-                top: 47%;
+/*                 display: table; */
+/*                 height: 200px; */
+/*                 width: 100%; */
+/*                 position: fixed; */
+/*                 top: 47%; */
                 /*                left: 50%;*/
-                background-color: rgba(0, 0, 0, 0.57);
+/*                 background-color: rgba(0, 0, 0, 0.57); */
             }
         </style>
 
@@ -46,6 +49,7 @@
                 <div class="error-txt">{{ 'ERROR_PAGE_NOT_FOUND' | translate }}</div>
             </div>
         </div>
+        
         
         
     <script src="/EasyShopWayNew/js/jquery-3.1.0.min.js"></script>

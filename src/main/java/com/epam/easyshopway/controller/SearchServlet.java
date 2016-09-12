@@ -52,7 +52,7 @@ public class SearchServlet extends HttpServlet {
 
 			List<ProductInformation> products = ProductInformationService.getAllProductByMapId(mapId);
 			System.out.println(products);
-			
+
 			JSONObject object = new JSONObject();
 			object.put("products", setJsonArrayType(products));
 
@@ -76,7 +76,7 @@ public class SearchServlet extends HttpServlet {
 			}
 
 			object.put("maps", arr);
-			
+
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());
 		}
@@ -101,7 +101,7 @@ public class SearchServlet extends HttpServlet {
 			}
 
 			ProductList productList = new ProductList(user.getId(), null, null, mapId);
-			
+
 			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
 			ProductListService.insertListAndProduct(productList, productIds);
 		} else {
@@ -113,20 +113,22 @@ public class SearchServlet extends HttpServlet {
 		JSONArray jsonArray = new JSONArray();
 		JSONObject object;
 		for (ProductInformation p : list) {
-			object = new JSONObject();
-			object.put("img", p.getImage());
-			object.put("name_uk", p.getProductNameUk());
-			object.put("name_en", p.getProductNameEn());
-			object.put("id", p.getId());
+			if (p.getCoordinates().size() > 0) {
+				object = new JSONObject();
+				object.put("img", p.getImage());
+				object.put("name_uk", p.getProductNameUk());
+				object.put("name_en", p.getProductNameEn());
+				object.put("id", p.getId());
 
-			JSONArray cordArr = new JSONArray();
+				JSONArray cordArr = new JSONArray();
 
-			for (Integer cord : p.getCoordinates()) {
-				cordArr.add(cord);
+				for (Integer cord : p.getCoordinates()) {
+					cordArr.add(cord);
+				}
+
+				object.put("coordinates", cordArr);
+				jsonArray.add(object);
 			}
-
-			object.put("coordinates", cordArr);
-			jsonArray.add(object);
 		}
 		return jsonArray;
 	}
