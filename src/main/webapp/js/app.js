@@ -12,11 +12,13 @@ var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute', 'pascalprecht.trans
 app.config(function($translateProvider) {
 	$translateProvider.translations('en', {
 	    HEADLINE: 'Hello there, This is my awesome app!',
-	    INTRO_TEXT: 'And it has i18n support!'
+	    INTRO_TEXT: 'And it has i18n support!',
+	    HELLO_WORLD: 'Hello world'
 	  })
 	  .translations('ua', {
 	    HEADLINE: 'Доброго вам здоров`ячка, це наша прога!',
-	    INTRO_TEXT: 'І є підтримка і18н!'
+	    INTRO_TEXT: 'І є підтримка і18н!',
+	    	HELLO_WORLD: 'Привіт світ'
 	  });
 	  $translateProvider.preferredLanguage(lang);
 });
@@ -30,8 +32,10 @@ app.controller('PageRedirectCtrl', function($window) {
 	
 });
 
-app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate) {
-    $scope.status = '  ';
+app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate, $filter) {
+
+	$scope.pageTitle = $translate.instant('HELLO_WORLD');
+	
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
     
     $scope.showLogInForm = function (ev) {
@@ -218,7 +222,8 @@ app
 						'$scope',
 						'$http',
 						'$mdToast',
-						function($scope, $http,$mdToast) {
+						'$route',
+						function($scope, $http,$mdToast, $route) {
 							$scope.showInfo = function() {
 
 								dateBirthday = moment($scope.birthday).format(
@@ -301,6 +306,7 @@ app
 														config) {
 													showToast($mdToast, $scope, "Your information is success updated");
 													console.log(data);
+													$route.reload();
 													
 												}).error(
 												function(data, status, headers,
