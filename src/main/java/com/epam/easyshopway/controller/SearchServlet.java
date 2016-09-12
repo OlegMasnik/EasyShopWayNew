@@ -27,9 +27,6 @@ import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.ProductInformationService;
 import com.epam.easyshopway.service.ProductListService;
 
-/**
- * Servlet implementation class SearchServlet
- */
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -54,11 +51,10 @@ public class SearchServlet extends HttpServlet {
 			System.out.println(mapId);
 
 			List<ProductInformation> products = ProductInformationService.getAllProductByMapId(mapId);
-
+			System.out.println(products);
+			
 			JSONObject object = new JSONObject();
 			object.put("products", setJsonArrayType(products));
-
-			System.out.println(products.size());
 
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());
@@ -105,7 +101,7 @@ public class SearchServlet extends HttpServlet {
 			}
 
 			ProductList productList = new ProductList(user.getId(), null, null, mapId);
-
+			
 			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
 			ProductListService.insertListAndProduct(productList, productIds);
 		} else {
