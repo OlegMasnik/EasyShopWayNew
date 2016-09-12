@@ -1,6 +1,7 @@
 package com.epam.easyshopway.controller.user;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.List;
 
@@ -42,22 +43,26 @@ public class UserStatisticServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("utf-8");
-		User user = (User) request.getSession().getAttribute("user");
-		Date startDate = Date.valueOf(request.getParameter("startDate"));
-		Date endDate = Date.valueOf(request.getParameter("endDate"));
-		JSONObject pieChart = drawPieChart(user, startDate, endDate);	
-		JSONObject columnChart = drawColumnChart(user, startDate, endDate);
-		System.out.println(pieChart);
-		System.out.println(columnChart);
-		JSONObject responseObject = new JSONObject();
-		responseObject.put("pie", pieChart);
-		responseObject.put("column", columnChart);
-		response.getWriter().write(responseObject.toString());
+			response.setCharacterEncoding("utf-8");
+			User user = (User) request.getSession().getAttribute("user");
+			Date startDate = Date.valueOf(request.getParameter("startDate"));
+			Date endDate = Date.valueOf(request.getParameter("endDate"));
+			try{
+				JSONObject pieChart = drawPieChart(user, startDate, endDate);	
+				JSONObject columnChart = drawColumnChart(user, startDate, endDate);
+				System.out.println(pieChart);
+				System.out.println(columnChart);
+				JSONObject responseObject = new JSONObject();
+				responseObject.put("pie", pieChart);
+				responseObject.put("column", columnChart);
+				response.getWriter().write(responseObject.toString());
+			}catch(UnsupportedEncodingException e){
+				e.printStackTrace();
+			}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject drawPieChart (User user, Date startDate, Date endDate){
+	public JSONObject drawPieChart (User user, Date startDate, Date endDate) throws UnsupportedEncodingException{
 		boolean isEnglish = "en".equals(user.getLanguage());
 		List<ProductsTypeCount> productsType;
 		String diagramName;
@@ -99,7 +104,7 @@ public class UserStatisticServlet extends HttpServlet {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject drawColumnChart (User user, Date startDate, Date endDate){
+	public JSONObject drawColumnChart (User user, Date startDate, Date endDate) throws UnsupportedEncodingException{
 		boolean isEnglish = "en".equals(user.getLanguage());
 		List<DiagramShopCount> shopsCount;
 		int count;
