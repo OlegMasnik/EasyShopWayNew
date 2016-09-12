@@ -2,17 +2,17 @@
 
 	<md-toolbar class="md-whiteframe-1dp">
 	<div class="md-toolbar-tools">
-		<div class="md-title">Product Type</div>
+		<div class="md-title">{{ 'PRODUCT_TYPE' | translate }}</div>
 	</div>
 	</md-toolbar>
 	<!--Toolbar-->
 	<md-card> <md-content flex="" layout-padding="">
 	<md-whiteframe layout="row" ng-repeat="single in multisearchType">
-	<md-input-container> <label>Column</label> <md-select
+	<md-input-container> <label>{{ 'COLUMN' | translate }}</label> <md-select
 		ng-model="single.column" ng-change="updateDataTableType()">
 	<md-optgroup label="Column"> <md-option
 		ng-value="column.name" ng-repeat="column in autocolumnType">{{column.display}}</md-option>
-	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>Search</label>
+	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>{{ 'SEARCH' | translate }}</</label>
 	<input ng-change="updateDataTableType()" ng-model="single.ident">
 	</md-input-container> </md-whiteframe> </md-content> </md-card>
 	<md-card> <md-content layout="column" flex> <md-table-container>
@@ -20,11 +20,11 @@
 	<table md-table>
 		<thead md-head md-order="queryType.order">
 			<tr md-row>
-				<th md-column>Image</th>
+				<th md-column>{{ 'IMAGE' | translate }}</th>
 				<th md-column md-order-by="{{autocolumnType[1].name}}"><span>{{autocolumnType[1].display}}</span>
 				<th md-column md-order-by="{{autocolumnType[2].name}}"><span>{{autocolumnType[2].display}}</span>
 				</th>
-				<th md-column>Option</th>
+				<th md-column>{{ 'OPTION' | translate }}</th>
 			</tr>
 		</thead>
 		<tbody md-body>
@@ -51,17 +51,17 @@
 
 	<md-toolbar class="md-whiteframe-1dp">
 	<div class="md-toolbar-tools">
-		<div class="md-title">Products</div>
+		<div class="md-title">{{ 'ADMIN_CABINET_PRODUCTS' | translate }}</div>
 	</div>
 	</md-toolbar>
 	<!--Toolbar-->
 	<md-card> <md-content flex="" layout-padding="">
 	<md-whiteframe layout="row" ng-repeat="single in multisearchProd">
-	<md-input-container> <label>Column</label> <md-select
+	<md-input-container> <label>{{ 'COLUMN' | translate }}</label> <md-select
 		ng-model="single.column" ng-change="updateDataTableProd()">
 	<md-optgroup label="Column"> <md-option
 		ng-value="column.name" ng-repeat="column in autocolumnProd">{{column.display}}</md-option>
-	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>Search</label>
+	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>{{ 'SEARCH' | translate }}</</label>
 	<input ng-change="updateDataTableProd()" ng-model="single.ident">
 	</md-input-container> </md-whiteframe> </md-content> </md-card>
 	<md-card> <md-content layout="column" flex> <md-button
@@ -73,7 +73,7 @@
 				<th md-column ng-repeat="column in autocolumnProd"
 					md-order-by="{{column.name}}"><span>{{column.display}}</span>
 				</th>
-				<th md-column>Option</th>
+				<th md-column>{{ 'OPTION' | translate }}</th>
 			</tr>
 		</thead>
 		<tbody md-body>

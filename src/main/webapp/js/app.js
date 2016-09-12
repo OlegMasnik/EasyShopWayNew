@@ -51,7 +51,15 @@ app.config(function($translateProvider) {
 		TIME:'Time',
 		FROM:'From',
 		TO:'To',
-		SHOW:'Show'
+		SHOW:'Show',
+		
+		SMART_SEARCH:'Smart search',
+		SEARCH:'Search',
+		OPTION:'Option',
+		COLUMN:'Column',
+		
+		PRODUCT_TYPE:'Product type',
+		IMAGE:'Image'
 		
 	
 	
@@ -97,7 +105,14 @@ app.config(function($translateProvider) {
 		TIME:'Час',
 		FROM:'Від',
 		TO:'До',
-		SHOW:'Показати'
+		SHOW:'Показати',
+		
+		SMART_SEARCH:'Розумний пошук',
+		SEARCH:'Пошук',
+		OPTION:'Опції',
+		PRODUCT_TYPE:'Тип продуктів',
+		COLUMN:'Колонки',
+		IMAGE:'Картинка'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
