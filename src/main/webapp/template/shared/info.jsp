@@ -54,9 +54,11 @@
 			<div class="cab-category">Update your photo</div>
 			</md-card-title-text> </md-card-title>
 			<md-card-content >
-				<input align="center" type="file"
+			<div style="text-align: center">
+				<input  style="width: 65%;" type="file"
 					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
 					ng-model="file" name="file" id="file" class="md-raised" required />
+			</div>
 			</md-card-content>
 			<md-card-actions layout="row" layout-align="end center"> <md-button
 				class="md-raised" type="submit" ng-click="sendImg()">Save</md-button>
