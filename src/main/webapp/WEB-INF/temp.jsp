@@ -93,13 +93,13 @@
 		 <md-content layout-margin flex> 
    <div layout="row">
    <div flex="10">
-     <md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 40">
+     <md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 50">
      <i class="material-icons">add_circle_outline</i></md-button>
      
      </div>
-     <md-slider flex="" min="9" max="41" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
+     <md-slider flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
      </div>
-     <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 10">
+     <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 6">
      <i class="material-icons">remove</i></md-button>
    
    <div>

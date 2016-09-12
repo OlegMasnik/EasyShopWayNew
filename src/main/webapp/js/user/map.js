@@ -795,10 +795,8 @@
 
 
 		    function getImgByProdId(id){
-		    	console.log(self.states);
 		    	for(var i=0;i<self.states.length; i++){
 		    		if(id == self.states[i].value){
-		    			console.log(self.states[i].img);
 		    			return self.states[i].img;
 		    		}
 		    	}
@@ -807,30 +805,21 @@
 
 
 		    function OpenCupboardCtrl($scope, $mdDialog, item) {
-		        console.log("item ");
-		        console.log(item);
 		        $scope.item = item;
-		        
-		        console.log("prods ");
-		        
 		        $http({
 		            method: "GET",
 		            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
 		        }).then(function mySucces(response) {
-		            console.log("current Prods")
 		            $scope.currentProducts = response.data;
-		            console.log($scope.currentProducts);
 		            $scope.cupboardCells = new Array(item.board_count * item.values.length);
 		            if (typeof ($scope.currentProducts) != "undefined") {
 		                for (var i = 0; i < $scope.currentProducts.length; i++) {
 		                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
 		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
 		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]].img = getImgByProdId($scope.cupboardCells[$scope.currentProducts[i].place[j]].prodId);
-		                        console.log($scope.cupboardCells[$scope.currentProducts[i].place[j]]);
 		                    }
 		                }
 		            }
-		            console.log($scope.currentProducts);
 		        }, function myError(response) {});
 //				
 //

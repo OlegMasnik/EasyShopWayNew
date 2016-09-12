@@ -1,31 +1,50 @@
-<md-dialog id="cupboardEdit">
-<form ng-cloak>
-	<md-toolbar>
-	<div class="md-toolbar-tools">
-		<h2>{{item.name_en}}/{{item.name_uk}}</h2>
-		<span flex></span>
-		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
-	</div>
-	</md-toolbar>
+<style>
+md-dialog .md-dialog-content {
+    padding: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
 
-	<md-dialog-content>
-	<div class="md-dialog-content">
+table {
+	border: none;
+}
 
-		<table>
-			<tr ng-repeat="row in item.board_count | range">
-				<td  ng-repeat="cell in item.values">{{cupboardCells[row * item.values.length + $index].name_en}}</td>
-			</tr>
-		</table>
+tr td {
+	background: url('images/cupboard/p2.jpg') 100% 100% no-repeat;
+	background-size: cover;
+}
 
-<!-- 		<div layout="row" ng-repeat="k in item.board_count | range"> -->
-<!-- 			<md-select ng-model="cupboardCells[k * item.values.length + $index]"  ng-repeat="i in item.values" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}"> -->
-<!-- 				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option>  -->
-<!-- 			</md-select> -->
-<!-- 		</div> -->
-		<md-dialog-actions layout="row"> <span flex></span>
-		<md-button ng-click="cancel()">Ok</md-button>
-		</md-dialog-actions>
-	</div>
-	</md-dialog-content>
-</form>
-</md-dialog>
+tr td:first-child {
+	background: url('images/cupboard/p1.jpg') 100% 100% no-repeat;
+	background-size: cover;
+}
+
+tr td:last-child {
+	background: url('images/cupboard/p3.jpg') 100% 100% no-repeat;
+	background-size: cover;
+}
+</style>
+<md-dialog id="cupboardEdit"> <md-toolbar>
+<div class="md-toolbar-tools">
+	<h2>{{item.name_en}}/{{item.name_uk}}</h2>
+	<span flex></span>
+	<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+</div>
+</md-toolbar> <md-dialog-content>
+<div class="md-dialog-content">
+
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr ng-repeat="row in item.board_count | range">
+			<td ng-repeat="cell in item.values"><img width="100" height="100"
+				src="{{cupboardCells[row * item.values.length + $index].img}}"
+				title="{{cupboardCells[row * item.values.length + $index].name_en}}"></td>
+		</tr>
+	</table>
+
+	<md-dialog-actions layout="row"> <span flex></span>
+	<md-button ng-click="cancel()">Ok</md-button> </md-dialog-actions>
+</div>
+</md-dialog-content> </md-dialog>
+
