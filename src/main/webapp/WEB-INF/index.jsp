@@ -6,7 +6,7 @@
 
 <head>
 <link rel="stylesheet" href="css/icon.css">
-<link rel="stylesheet" href="css/angular-material.min.css">
+<link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -20,37 +20,37 @@
 	<!-- 	<p>{{pageTitle}}</p> -->
 	<!-- 	<i class="material-icons">&#xE84D;</i> -->
 
-	<md-content id="main-content" flex>
+	<md-content id="main-content" style="background-image: url('images/index.jpg')" flex>
 	<div id="div0" layout="column">
 		<div flex layout="column" layout-align="center center">
-			<md-button style="background-color : #E91E63; font-size: 30px; color : #fff;" ng-controller="PageRedirectCtrl as page" ng-click="page.goToPage('search')">Create product list now</md-button>
+			<md-button style="background-color : rgba(233, 30, 99, 0.6); height: 45px; font-size: 30px; color : #fff;" ng-controller="PageRedirectCtrl as page" ng-click="page.goToPage('search')">Create product list now</md-button>
 			<div>or</div>
-			<md-button class="md-accent" id="down_1">See tutorial</md-button>
+			<md-button class="md-accent" style="height: 45px; font-size: 25px;" id="down_1">See tutorial</md-button>
 		</div>
 	</div>
-	<div id="div1" layout="column">
+	<div id="div1" layout="column" md-whiteframe="2" style="background-color: white;">
 		<md-button id="up_1"><i class="material-icons">keyboard_arrow_up</i></md-button>
 
-		<div layout="row" flex>
+		<div layout="row" flex >
 			<div flex layout="row" layout-align="center center" md-whiteframe="4"
-				layout-margin>Image</div>
+				layout-margin style="background-color: white;">Image</div>
 			<div flex layout="row" layout-align="center center">Description</div>
 		</div>
 
 		<md-button id="down_2"> <i class="material-icons">keyboard_arrow_down</i></md-button>
 	</div>
-	<div id="div2" layout="column">
+	<div id="div2" layout="column"   style="background-color: rgba(255, 255, 255, 0.65);" >
 		<md-button id="up_2"> <i class="material-icons">keyboard_arrow_up</i></md-button>
 		
 		<div layout="row" flex>
 			<div flex layout="row" layout-align="center center">Description</div>
 			<div flex layout="row" layout-align="center center" md-whiteframe="4"
-				layout-margin>Image</div>
+				layout-margin style="background-color: white;">Image</div>
 
 		</div>
 		<md-button id="down_3"> <i class="material-icons">keyboard_arrow_down</i></md-button>
 	</div>
-	<div id="div3" layout="column">
+	<div id="div3" layout="column" md-whiteframe="2" style="background-color: white;">
 		<md-button id="up_3" style="font-size: 30px;"> <i
 			class="material-icons">keyboard_arrow_up</i></md-button>
 		<div layout="row" flex>
@@ -58,10 +58,11 @@
 				layout-margin>Image</div>
 			<div flex layout="row" layout-align="center center">
 				Description
-				<md-button ng-click="page.goToPage('search')" class="md-fab"
+				
+			</div>
+			<md-button ng-click="page.goToPage('search')" class="md-fab"
 					ng-controller="PageRedirectCtrl as page"> <md-icon
 					md-svg-src="images/svg/vectorpaint.svg"></md-icon> </md-button>
-			</div>
 		</div>
 
 	</div>

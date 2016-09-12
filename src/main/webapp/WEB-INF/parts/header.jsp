@@ -4,7 +4,7 @@
 <script src='/EasyShopWayNew/js/moment.js'></script>
 
 <md-toolbar id="header" class="md-hue-2">
-<div class="md-toolbar-tools" layout="column" ng-controller="AppCtrl"
+<div class="md-toolbar-tools" layout="row" ng-controller="AppCtrl"
 	md-whiteframe="4">
 
 	<div layout="row">

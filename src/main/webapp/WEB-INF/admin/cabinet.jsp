@@ -6,7 +6,7 @@
 
 <head>
 <title><c:out value="${user.firstName }"></c:out></title>
-<link rel="stylesheet" href="css/angular-material.min.css">
+<link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/style.css">
 <link href="css/icon.css" rel="stylesheet">
