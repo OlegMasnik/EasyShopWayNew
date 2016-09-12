@@ -93,13 +93,13 @@
 		 <md-content layout-margin flex> 
    <div layout="row">
    <div flex="10">
-     <md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 30">
+     <md-button  class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 40">
      <i class="material-icons">add_circle_outline</i></md-button>
      
      </div>
-     <md-slider flex="" min="14" max="31" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
+     <md-slider flex="" min="9" max="41" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
      </div>
-     <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 15">
+     <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 10">
      <i class="material-icons">remove</i></md-button>
    
    <div>
@@ -116,6 +116,7 @@
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
 	<script src="js/angular-messages.min.js"></script>
+	<script src="js/angular-translate.js"></script>
 
 	<script src='js/app.js'></script>
 	<script src='js/user/map.js'></script>
