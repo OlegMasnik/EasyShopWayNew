@@ -84,6 +84,9 @@
 			}
 
 			self.sendOnMap = function() {
+				startered = true;
+				start();
+		    	start();
 				$scope.onClick();
 			}
 
@@ -175,6 +178,7 @@
 			}
 			
 			var mapId;
+			var startered = false;
 
 		    $scope.map = [];
 		    $scope.enter = [];
@@ -325,8 +329,6 @@
 		            }
 		            return '#eee';
 		        };
-
-
 		        this.draw = function () {
 		            game.ctx.fillStyle = '#bbb';
 		            game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
@@ -389,44 +391,51 @@
 		        this.mouseDown = function (e) {
 		            var cell = game.getMouseCell(e);
 		            if (cell !== false) {
-		                if (e.button === 0) {
-		                        console.log("CELL #" + cell)
-		                        for (var q = 0; q < $scope.cupboards.length; q++) {
-		                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
-		                                if (cell == $scope.cupboards[q].values[w]) {
-		                                    console.log("You click on: ");
-		                                    console.log($scope.cupboards[q]);
-		                                    $scope.openCupBoard($scope.cupboards[q]);
-		                                }
-		                            }
-		                    }
-		                    game.draw();
-		                } else {		
-		                    if (checkCell(cell) && !game.paint.active) {
+		            	switch (e.button) {
+						case 0:
+							if(!game.paint.active){
+							console.log("CELL #" + cell)
+							game.paint.active = true;
+	                        for (var q = 0; q < $scope.cupboards.length; q++) {
+	                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
+	                                if (cell == $scope.cupboards[q].values[w]) {
+	                                    console.log("You click on: ");
+	                                    console.log($scope.cupboards[q]);
+	                                    $scope.openCupBoard($scope.cupboards[q]);
+	                                }
+	                            }
+	                        }
+	                    }
+	                    game.draw();
+							break;
+						case 2:
+							if(startered){
+								startered = false();
+						    	game.draw();
+							}
+							if (checkCell(cell) && !game.paint.active) {
 		                        game.paint.active = true;
 
 		                        game.paint.value = !game.targets.map[cell];
 		                        game.targets.map[cell] = game.paint.value;
 		                        if (game.targets.map[cell]) {
+		                        	console.log('add target')
 		                            arrayTarget.add([cell]);
 		                        } else {
+		                        	console.log('remove target')
 		                            arrayTarget.removeUndefined([cell]);
 		                        }
-		                        game.draw();
 		                        console.log("Цілі ");
 		                        console.log(arrayTarget);
 		                        targetsCopy = game.targets.map;
-		                        game.paint.active = false;
 		                    } else {
 		                        console.log("хуйня якась")
 		                    }
-		                }
-
+							game.draw();
+							break;
+						}
 		            }
 		        };
-		        this.mouseMove = function (e) {
-		        	game.paint.active = false;
-		        }
 		        this.mouseUp = function () {
 		            game.paint.active = false;
 		        };
