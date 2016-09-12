@@ -65,7 +65,7 @@
 				.module('MyApp')
 				.controller(
 						'ResetPassCtrl',
-						function($scope, $http, $mdToast) {
+						function($scope, $http, $mdToast, $translate) {
 
 							$scope.sendResetData = function() {
 
@@ -79,19 +79,18 @@
 												function mySucces(response) {
 													
 													var isContains = response.data;
-													
 													if (typeof ($scope.e) == 'undefined')
-														showToast($mdToast,	$scope,"Email is invalid");
+														showToast($mdToast,	$scope, $translate.instant('INVALID_EMAIL'));
 // 														$scope.status = "Email is invalid";
 													else if (isContains == "false")
-														showToast($mdToast,	$scope,"This email does not exist");
+														showToast($mdToast,	$scope, $translate.instant('EMAIL_DOES_NOT_EXIST'));
 // 														$scope.status = "This email does not exist";
 													else if (($scope.p != $scope.pr))
-														showToast($mdToast,	$scope,"Passwords do not match");
+														showToast($mdToast,	$scope, $translate.instant('PASSWORDS_DONT_MATCH'));
 // 														$scope.status = "Passwords do not match";
 													else if (typeof ($scope.p) == 'undefined'
 															|| typeof ($scope.pr) == 'undefined')
-														showToast($mdToast,	$scope,"Passwords is invalid");
+														showToast($mdToast,	$scope, $translate.instant('PASSWORDS_INVALID'));
 // 														$scope.status = "Passwords is invalid";
 													else {
 														var data = $.param({
@@ -114,12 +113,10 @@
 																				response,
 																				status,
 																				headers) {
-																			console
-																					.log('success');
+																			
 																			showToast(
 																					$mdToast,
-																					$scope,
-																					"Please check your email");
+																					$scope, $translate.instant('CHECK_EMAIL'));
 																		})
 																.error(
 																		function(

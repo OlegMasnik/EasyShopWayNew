@@ -31,7 +31,64 @@ app.config(function($translateProvider) {
 		
 		RESET_PASS:'Reset password',
 		NEW_PASS:'New password',
-		REPEAT_PASS: 'Repeat password'
+		REPEAT_PASS: 'Repeat password',
+		
+		INVALID_EMAIL:'Invalid email',
+		EMAIL_DOES_NOT_EXIST:"This email does not exist",
+		PASSWORDS_DONT_MATCH:'Passwords do not match',
+		PASSWORDS_INVALID:'Passwords is invalid',
+		CHECK_EMAIL:'Please check your email',
+		
+		USER_CABINET_STATISTIC:'Statistic',
+		USER_CABINET_HISTORY:'History',
+		
+		ADMIN_CABINET_MAP:'Map',
+		ADMIN_CABINET_USERS:'Users',
+		ADMIN_CABINET_PRODUCTS:'Products',
+		ADMIN_CABINET_STATISTIC:'Statistic',
+		
+		DATE:'Date',
+		TIME:'Time',
+		FROM:'From',
+		TO:'To',
+		SHOW:'Show',
+		
+		SMART_SEARCH:'Smart search',
+		SEARCH:'Search',
+		OPTION:'Option',
+		COLUMN:'Column',
+		
+		PRODUCT_TYPE:'Product type',
+		PRODUCT:'Product',
+		EDIT_TYPE:'Edit type',
+		IMAGE:'Image',
+		ADD_NEW:'Add new',
+		WIDTH:'Width',
+		HEIGHT:'Height',
+		CHANGE_SIZE:'Change size',
+		PAY_DESCK:'Paydesck',
+		CUP_BOARD:'Cupboard',
+		
+		CREATE_NEW_CUPBOARD:'Create new cupboard',
+		ENGLISH_DESCRIPTION:'English description',
+		UKRAINE_DESCRIPTION:'Ukrainian description',
+		BOARD_COUNT:'Board count',
+		EDIT_CUPBOARD:'Edit cupboard',
+		
+		CREATE_NEW_MAP:'Create new map',
+		
+		ENTER:'Enter',
+		WALL:'Wall',
+		EDIT:'Edit',
+		SAVE:'Save',
+		CANCEL:'Cancel',
+		DELETE:'Delete',
+		CLEAR:'Clear',
+		CHOOSE_IMAGE:'Choose image',
+		
+		ENGLISH_NAME:'English name',
+		UKRAINE_NAME:'Ukrainian name'
+		
 		
 	
 	
@@ -57,7 +114,62 @@ app.config(function($translateProvider) {
 		
 		RESET_PASS:'Відновлення паролю',
 		NEW_PASS:'Новий пароль',
-		REPEAT_PASS:'Повторіть пароль'
+		REPEAT_PASS:'Повторіть пароль',
+		
+		INVALID_EMAIL:'Невірна електрона пошта',
+		EMAIL_DOES_NOT_EXIST:'Електронна пошта не зареєстрована в системі',
+		PASSWORDS_DONT_MATCH:'Паролі не співпадають',
+		PASSWORDS_INVALID:'Некоректний пароль',
+		CHECK_EMAIL:'Будь ласка, перевірте свою електронну пошту',
+		
+		USER_CABINET_STATISTIC:'Статистика',
+		USER_CABINET_HISTORY:'Історія',
+		
+		ADMIN_CABINET_MAP:'Карта',
+		ADMIN_CABINET_USERS:'Користувачі',
+		ADMIN_CABINET_PRODUCTS:'Продукти',
+		ADMIN_CABINET_STATISTIC:'Статистика',
+		
+		DATE:'Дата',
+		TIME:'Час',
+		FROM:'Від',
+		TO:'До',
+		SHOW:'Показати',
+		
+		SMART_SEARCH:'Розумний пошук',
+		SEARCH:'Пошук',
+		OPTION:'Опції',
+		PRODUCT_TYPE:'Тип продуктів',
+		PRODUCT:'Продукти',
+		EDIT_TYPE:'Редагувати тип',
+		COLUMN:'Колонки',
+		
+		CREATE_NEW_CUPBOARD:'Створити новий стелаж',
+		ENGLISH_DESCRIPTION:'Опис англійською',
+		UKRAINE_DESCRIPTION:'Опис українською',
+		BOARD_COUNT:'Кількість полиць',
+		EDIT_CUPBOARD:'Редагувати стелаж',
+		
+		CREATE_NEW_MAP:'Створити нову карту',
+		
+		IMAGE:'Картинка',
+		ADD_NEW:'Додати нову',
+		WIDTH:'Ширина',
+		HEIGHT:'Довжина',
+		CHANGE_SIZE:'Змінити розмір',
+		PAY_DESCK:'Каса',
+		CUP_BOARD:'Стелаж',
+		ENTER:'Вхід',
+		WALL:'Стіна',
+		EDIT:'Змінити',
+		SAVE:'Зберегти',
+		CANCEL:'Відмінити',
+		DELETE:'Видалити',
+		CLEAR:'Очистити',
+		CHOOSE_IMAGE:'Обрати зображення',
+		
+		ENGLISH_NAME:'Назва англійською',
+		UKRAINE_NAME:'Назва українською'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -73,6 +185,7 @@ app.controller('PageRedirectCtrl', function($window) {
 
 app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate) {
     $scope.status = '  ';
+    
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
     
     $scope.showLogInForm = function (ev) {

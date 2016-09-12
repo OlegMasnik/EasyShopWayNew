@@ -31,9 +31,10 @@
 				<c:out value="${ user.lastName}"></c:out>
 			</div>
 		</div>
-	</a> <md-button href="#edit_map">Map</md-button> <md-button
-		href="#products">Products</md-button> <md-button href="#users">Users</md-button>
-	<md-button href="#statistic">Statistic</md-button> </md-content> </md-slidenav> <md-content
+	</a> <md-button href="#edit_map">{{ 'ADMIN_CABINET_MAP' | translate }}</md-button> 
+	<md-button href="#products">{{ 'ADMIN_CABINET_PRODUCTS' | translate }}</md-button> 
+		<md-button href="#users">{{ 'ADMIN_CABINET_USERS' | translate }}</md-button>
+	<md-button href="#statistic">{{ 'ADMIN_CABINET_STATISTIC' | translate }}</md-button> </md-content> </md-slidenav> <md-content
 		layout="row" class="main-page" flex>
 
 	<div flex class="content" layout="column">

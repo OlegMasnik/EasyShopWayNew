@@ -20,8 +20,8 @@
         <md-toolbar>
             <md-card-title  layout="column">
             
-                <div class="prod-card-date" flex>Date: {{historyItem.products[0].date}}</div>
-                <div class="prod-card-time" flex>Time: {{historyItem.products[0].time}}</div>
+                <div class="prod-card-date" flex>{{ 'DATE' | translate }}: {{historyItem.products[0].date}}</div>
+                <div class="prod-card-time" flex>{{ 'TIME' | translate }}: {{historyItem.products[0].time}}</div>
                 
             </md-card-title>
             </md-toolbar>

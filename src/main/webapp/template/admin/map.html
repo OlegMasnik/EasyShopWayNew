@@ -7,41 +7,51 @@
     }
 </style>
 <div ng-controller="MapCtrl">
+<md-toolbar class="md-whiteframe-1dp">
+	<div class="md-toolbar-tools">
+		<div class="md-title">
+			{{ 'ADMIN_CABINET_MAP' | translate }}
+		</div>
+	</div>
+	</md-toolbar>
+	<md-card> <md-content flex="" layout-padding="">
     <md-input-container>
         <md-select ng-model="someModel" placeholder="Select a map">
             <md-option ng-model="m" value="{{_m.id}}"  ng-click="clickOnSelect(_m.id)" ng-repeat="_m in mapsName">{{ _m.id }} {{_m.name_en}}</md-option>
-            <md-option ng-click="createMap()">Add new</md-option>
+            <md-option ng-click="createMap()">{{ 'ADD_NEW' | translate }}</md-option>
         </md-select>
     </md-input-container>
     
     <form>
         <md-input-container>
-            <label>Width</label>
+            <label>{{ 'WIDTH' | translate }}</label>
             <input type="number" ng-model="config.width" min=2 max=400> </md-input-container>
         <md-input-container>
-            <label>Heigth</label>
+            <label>{{ 'HEIGHT' | translate }}</label>
             <input type="number" ng-model="config.height" min=2 max=400> </md-input-container>
-        <md-button ng-click="openMap()">Change Size</md-button>
+        <md-button ng-click="openMap()">{{ 'CHANGE_SIZE' | translate }}</md-button>
     </form>
     <md-radio-group name="type" layout="row">
-        <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">Pay Desk
+        <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">{{ 'PAY_DESCK' | translate }}
         </md-radio-button>
-        <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">Cup Board </md-radio-button>
-        <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">Enter</md-radio-button>
-        <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">Wall</md-radio-button>
-        <md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">Edit</md-radio-button>
+        <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">{{ 'CUP_BOARD' | translate }}</md-radio-button>
+        <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">{{ 'ENTER' | translate }}</md-radio-button>
+        <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">{{ 'WALL' | translate }}</md-radio-button>
+        <md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">{{ 'EDIT' | translate }}</md-radio-button>
     <md-button ng-click="onClick()">Go</md-button>
     </md-radio-group>
 	<md-input-container layout="row">
-		<md-button class="md-primary md-raised" ng-click="saveMap()">Save</md-button>
+		<md-button class="md-primary md-raised" ng-click="saveMap()">{{ 'SAVE' | translate }}</md-button>
 		<md-button class="md-primary md-raised" ng-click="deleteMap($event)">
-      Delete
+      {{ 'DELETE' | translate }}
     </md-button>
-		<md-button class="md-primary md-raised" ng-click="clearMap()">Clear</md-button>
+		<md-button class="md-primary md-raised" ng-click="clearMap()">{{ 'CLEAR' | translate }}</md-button>
 	</md-input-container>
     <div>
         <canvas></canvas>
     </div>
+    </md-content>
+    </md-card>
     <div></div>
 </div>
 </div>
