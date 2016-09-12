@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
 <link rel="stylesheet" href="css/style.css">
-<title>Successfull confirmation email</title>
+<title>Successful confirmation email</title>
 </head>
 
 <body ng-app="MyApp">
@@ -19,7 +19,7 @@
 	
 	<div flex="30"></div>
 	
-	<h2 flex>Successfull confirmation email</h2>
+	<h2 flex>{{ 'SUCCESS_CONF_EMAIL' | translate }}</h2>
 	
 	</div>
 	

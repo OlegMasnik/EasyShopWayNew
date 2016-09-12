@@ -20,24 +20,24 @@
 		<div flex>
 			<form name="logForm" layout="column" action="/forgetpassword"
 				method="post" ng-controller="ResetPassCtrl">
-				<h2>Reset password:</h2>
+				<h2>{{ 'RESET_PASS' | translate }}</h2>
 				<label style="color: red;">{{status}}</label>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" flex layout="column">
-				<label>Your Email</label> <input type="email" ng-model="e"
+				<label>{{ 'EMAIL' | translate }}</label> <input type="email" ng-model="e"
 					name="email" required minlength="10" maxlength="100"> </md-input-container>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" layout="column" flex>
-				<label>New Password</label> <input type="password" ng-model="p"
+				<label>{{ 'NEW_PASS' | translate }}</label> <input type="password" ng-model="p"
 					name="password" required minlength="6" maxlength="25"> </md-input-container>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" layout="column" flex>
-				<label>Repeat Password</label> <input type="password" ng-model="pr"
+				<label>{{ 'REPEAT_PASS' | translate }}</label> <input type="password" ng-model="pr"
 					name="passwordR" required minlength="6" maxlength="25"> </md-input-container>
 				<div layout="row">
 					<div flex="70"></div>
 					<md-button flex ng-click='sendResetData()'
-						class="md-raised md-primary">Reset</md-button>
+						class="md-raised md-primary">{{ 'SUBMIT' | translate }}</md-button>
 				</div>
 			</form>
 		</div>
