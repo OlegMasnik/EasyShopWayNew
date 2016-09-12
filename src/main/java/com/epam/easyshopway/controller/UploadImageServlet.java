@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -25,7 +26,7 @@ public class UploadImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 5;
-	private static final int MAX_REQUEST_SIZE = 1024 * 1024;
+	private static final int MAX_REQUEST_SIZE = -1 ;//1024 * 1024 * 10;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
@@ -42,8 +43,8 @@ public class UploadImageServlet extends HttpServlet {
 
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 		ServletFileUpload upload = new ServletFileUpload(factory);
-
 		upload.setSizeMax(MAX_REQUEST_SIZE);
+		System.out.println(upload.getSizeMax());
 		try {
 			List items = upload.parseRequest(request);
 			Iterator iter = items.iterator();
@@ -80,11 +81,6 @@ public class UploadImageServlet extends HttpServlet {
 			ex.printStackTrace();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
 		try {
