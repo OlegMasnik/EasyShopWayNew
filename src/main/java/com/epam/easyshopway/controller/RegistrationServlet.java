@@ -1,7 +1,6 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -38,20 +37,18 @@ public class RegistrationServlet extends HttpServlet {
 			String firstName = request.getParameter("firstName");
 			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
-			String birthday = request.getParameter("birthday");
 			String password = MD5Util.md5Custom(request.getParameter("password"));
 			User user = new User(firstName, lastName, email, password, true, "user", "en", "");
-			user.setDateOfBirth(birthday);
 
 			System.out.println(firstName.equals(""));
 			object = new JSONObject();
-			if (firstName == "" || lastName == "" || email == "" || birthday == "" || password == "") {
-				object.put("emailErrMsg", "Please enter all value.");
+			if (firstName == "" || lastName == "" || email == "" || password == "") {
+				object.put("emailErrMsg", "Please, fill all fields");
 				System.out.println("empty form");
 			}
 			
 			if (UserService.hasEmail(email)) {
-				object.put("emailErrMsg", "This email has already exists.");
+				object.put("emailErrMsg", "This email already exists");
 				System.out.println("This email has already exists.");
 			} else {
 				// new Thread(new ThreadMail(request, user)).start();

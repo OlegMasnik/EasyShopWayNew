@@ -18,9 +18,6 @@ public class UserTransformer {
 			if (rs.getString("password") != null) {
 				user.setPassword(rs.getString("password"));//null
 			}
-			if (rs.getDate("date_of_birth") != null) {
-				user.setDateOfBirth(rs.getDate("date_of_birth").toString());
-			}
 			Boolean active;
 			if (rs.getInt("active") == 1) {
 				active = true;
@@ -47,9 +44,6 @@ public class UserTransformer {
 			user.setLastName(rs.getString("last_name"));
 			if (rs.getString("password") != null) {
 				user.setPassword(rs.getString("password"));//null
-			}
-			if (rs.getDate("date_of_birth") != null) {
-				user.setDateOfBirth(rs.getDate("date_of_birth").toString());
 			}
 			Boolean active;
 			if (rs.getInt("active") == 1) {

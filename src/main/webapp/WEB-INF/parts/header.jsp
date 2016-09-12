@@ -15,23 +15,23 @@
 	<span flex></span>
 	<md-input-container>
 	<md-select  style="color: white; !important " ng-model="language">
-	<md-option ng-model="ua" value="ua" ng-click='changeLang(ua)'>Ukraine</md-option>
+	<md-option ng-model="ua" value="ua" ng-click='changeLang(ua)'>Українська</md-option>
 	<md-option ng-model="en" value="en" ng-click='changeLang(en)'>English</md-option>
 	</md-select> </md-input-container>
 	<c:choose>
 		<c:when test="${user == null}">
 			<md-button class="md-raised"
 				ng-click="showLogInForm($event, $scope, $mdDialog)">
-			LogIn </md-button>
+			{{ 'LOGIN' | translate }} </md-button>
 			<md-button class="md-raised"
 				ng-click="showRegistrationInFrom($event, $scope, $mdDialog)">
-			SignUp </md-button>
+			{{ 'REGISTRATION' | translate }} </md-button>
 		</c:when>
 		<c:otherwise>
 			<md-button class="md-raised" href="/EasyShopWayNew/cabinet#/">
 			<c:out value="${user.firstName } ${user.lastName }"></c:out></md-button>
 			<md-button class="md-raised" href="/EasyShopWayNew/logout">
-			LogOut </md-button>
+			{{ 'LOGOUT' | translate }} </md-button>
 		</c:otherwise>
 	</c:choose>
 </div>

@@ -30,9 +30,6 @@ public class UserInfoServlet extends HttpServlet {
 		object.put("lastName", user.getLastName());
 		object.put("language", user.getLanguage());
 		object.put("email", user.getEmail());
-		if (user.getDateOfBirth() != null) {
-			object.put("birthday", user.getDateOfBirth().getTime());
-		}
 		object.put("img", user.getImage());
 
 		response.setCharacterEncoding("UTF-8");
@@ -56,7 +53,6 @@ public class UserInfoServlet extends HttpServlet {
 //		user.setEmail(email);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setDateOfBirth(birthday);
 
 		UserService.update(user.getId(), user);
 		
