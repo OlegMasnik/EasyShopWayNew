@@ -27,12 +27,10 @@ public class ProductsTypeCountService {
 	}
 
 	@SuppressWarnings("finally")
-	public static List<ProductsTypeCount> getUserProductTypesAdmin(
-			Integer userId, Date startDate, Date endDate) {
+	public static List<ProductsTypeCount> getUserProductTypesAdmin(Date startDate, Date endDate) {
 		List<ProductsTypeCount> userProducts = new ArrayList<>();
 		try (ProductsTypeCountDTO dto = new ProductsTypeCountDTO()) {
-			userProducts = dto.getUserProductTypesAdmin(userId, startDate,
-					endDate);
+			userProducts = dto.getUserProductTypesAdmin(startDate, endDate);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | InstantiationException e) {
