@@ -20,24 +20,24 @@
 		<div flex>
 			<form name="logForm" layout="column" action="/forgetpassword"
 				method="post" ng-controller="ResetPassCtrl">
-				<h2>Reset password:</h2>
+				<h2>{{ 'RESET_PASS' | translate }}</h2>
 				<label style="color: red;">{{status}}</label>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" flex layout="column">
-				<label>Your Email</label> <input type="email" ng-model="e"
+				<label>{{ 'EMAIL' | translate }}</label> <input type="email" ng-model="e"
 					name="email" required minlength="10" maxlength="100"> </md-input-container>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" layout="column" flex>
-				<label>New Password</label> <input type="password" ng-model="p"
+				<label>{{ 'NEW_PASS' | translate }}</label> <input type="password" ng-model="p"
 					name="password" required minlength="6" maxlength="25"> </md-input-container>
 				<md-input-container class="md-block"
 					style="margin-top: 0; margin-bottom: 10px;" layout="column" flex>
-				<label>Repeat Password</label> <input type="password" ng-model="pr"
+				<label>{{ 'REPEAT_PASS' | translate }}</label> <input type="password" ng-model="pr"
 					name="passwordR" required minlength="6" maxlength="25"> </md-input-container>
 				<div layout="row">
 					<div flex="70"></div>
 					<md-button flex ng-click='sendResetData()'
-						class="md-raised md-primary">Reset</md-button>
+						class="md-raised md-primary">{{ 'SUBMIT' | translate }}</md-button>
 				</div>
 			</form>
 		</div>
@@ -65,7 +65,7 @@
 				.module('MyApp')
 				.controller(
 						'ResetPassCtrl',
-						function($scope, $http, $mdToast) {
+						function($scope, $http, $mdToast, $translate) {
 
 							$scope.sendResetData = function() {
 
@@ -79,19 +79,18 @@
 												function mySucces(response) {
 													
 													var isContains = response.data;
-													
 													if (typeof ($scope.e) == 'undefined')
-														showToast($mdToast,	$scope,"Email is invalid");
+														showToast($mdToast,	$scope, $translate.instant('INVALID_EMAIL'));
 // 														$scope.status = "Email is invalid";
 													else if (isContains == "false")
-														showToast($mdToast,	$scope,"This email does not exist");
+														showToast($mdToast,	$scope, $translate.instant('EMAIL_DOES_NOT_EXIST'));
 // 														$scope.status = "This email does not exist";
 													else if (($scope.p != $scope.pr))
-														showToast($mdToast,	$scope,"Passwords do not match");
+														showToast($mdToast,	$scope, $translate.instant('PASSWORDS_DONT_MATCH'));
 // 														$scope.status = "Passwords do not match";
 													else if (typeof ($scope.p) == 'undefined'
 															|| typeof ($scope.pr) == 'undefined')
-														showToast($mdToast,	$scope,"Passwords is invalid");
+														showToast($mdToast,	$scope, $translate.instant('PASSWORDS_INVALID'));
 // 														$scope.status = "Passwords is invalid";
 													else {
 														var data = $.param({
@@ -114,12 +113,10 @@
 																				response,
 																				status,
 																				headers) {
-																			console
-																					.log('success');
+																			
 																			showToast(
 																					$mdToast,
-																					$scope,
-																					"Please check your email");
+																					$scope, $translate.instant('CHECK_EMAIL'));
 																		})
 																.error(
 																		function(

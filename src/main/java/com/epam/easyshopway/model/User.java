@@ -20,9 +20,6 @@ public class User {
 	@Column("password")
 	private String password;
 
-	@Column("date_of_birth")
-	private Date dateOfBirth;
-
 	@Column("active")
 	private Boolean active;
 
@@ -48,7 +45,6 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.dateOfBirth = dateOfBirth;
 		this.active = active;
 		this.role = role;
 		this.language = language;
@@ -108,18 +104,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		if ("null".equalsIgnoreCase(dateOfBirth)) {
-			this.dateOfBirth = new Date(new java.util.Date().getTime());
-		} else {
-			this.dateOfBirth = Date.valueOf(dateOfBirth);
-		}
 	}
 
 	public Boolean isActive() {

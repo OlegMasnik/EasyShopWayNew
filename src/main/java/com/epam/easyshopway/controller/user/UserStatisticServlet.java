@@ -10,17 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
+import org.json.simple.JSONArray;
 import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.model.DiagramShopCount;
 import com.epam.easyshopway.model.ProductsTypeCount;
 import com.epam.easyshopway.service.DiagramShopCountService;
 import com.epam.easyshopway.service.ProductsTypeCountService;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
-import jdk.nashorn.internal.scripts.JS;
 
 /**
  * Servlet implementation class UserStatisticServlet
@@ -51,24 +46,8 @@ public class UserStatisticServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		Date startDate = Date.valueOf(request.getParameter("startDate"));
 		Date endDate = Date.valueOf(request.getParameter("endDate"));
-		
-		List<ProductsTypeCount> productTypes;
-		List<DiagramShopCount> shopCounts;
-		int count;
-		if ("user".equals(user.getRole())){
-			productTypes = ProductsTypeCountService.getUserProductTypesUser(user.getId(), startDate, endDate);
-			shopCounts = DiagramShopCountService.getShopCountByUserId(user.getId(), startDate, endDate);
-			count = DiagramShopCountService.getTotalShopCountByUserId(user.getId(), startDate, endDate);
-			System.out.println(count);
-		}else {
-			productTypes = ProductsTypeCountService.getUserProductTypesAdmin(startDate, endDate);
-			shopCounts = DiagramShopCountService.getShopCount(startDate, endDate);
-			count = DiagramShopCountService.getTotalShopCount(startDate, endDate);
-			System.out.println(count);
-		}
-		boolean isEnglish = "en".equals(user.getLanguage());
-		JSONObject pieChart = drawPieChart(productTypes, startDate, endDate, isEnglish);	
-		JSONObject columnChart = drawColumnChart(shopCounts, startDate, endDate, isEnglish, count);
+		JSONObject pieChart = drawPieChart(user, startDate, endDate);	
+		JSONObject columnChart = drawColumnChart(user, startDate, endDate);
 		System.out.println(pieChart);
 		System.out.println(columnChart);
 		JSONObject responseObject = new JSONObject();
@@ -78,19 +57,32 @@ public class UserStatisticServlet extends HttpServlet {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject drawPieChart (List<ProductsTypeCount> productsType, Date startDate, Date endDate, boolean isEnglish){
+	public JSONObject drawPieChart (User user, Date startDate, Date endDate){
+		boolean isEnglish = "en".equals(user.getLanguage());
+		List<ProductsTypeCount> productsType;
+		String diagramName;
+		
+		if("user".equals(user.getRole())){
+			int id = user.getId();
+			productsType = ProductsTypeCountService.getUserProductTypesUser(id, startDate, endDate);
+			diagramName = isEnglish ? "Often searched groups of food" : "Групи продуктів, які Ви часто шукали";
+		}else{
+			productsType = ProductsTypeCountService.getUserProductTypesAdmin(startDate, endDate);
+			diagramName = isEnglish ? "Often searched groups of food" : "Групи продуктів, які часто шукають";
+		}
+		
 		JSONObject responseObject = new JSONObject();
 		JSONArray series = new JSONArray();
 		JSONObject inSeries = new JSONObject();
 		JSONArray data = new JSONArray();
 		inSeries.put("colorByPoint", true);
 		JSONObject title = new JSONObject();
-		title.put("text", isEnglish ? "Often searched groups of food" : "Групи продуктів, які часто шукають");
+		title.put("text", diagramName);
 		responseObject.put("title", title);
 		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках");
 		for (int i=0; i<productsType.size(); i++){
 			JSONObject foodType = new JSONObject();
-			String productTypeName = isEnglish ? productsType.get(i).getNameEnglish() : productsType.get(i).getNameEnglish() ;
+			String productTypeName = isEnglish ? productsType.get(i).getNameEnglish() : productsType.get(i).getNameUkrainian() ;
 			foodType.put("name", productTypeName);
 			double percent = productsType.get(i).getCount();
 			foodType.put("y", percent);
@@ -107,7 +99,22 @@ public class UserStatisticServlet extends HttpServlet {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject drawColumnChart (List<DiagramShopCount> shopsCount, Date startDate, Date endDate, boolean isEnglish, int count){
+	public JSONObject drawColumnChart (User user, Date startDate, Date endDate){
+		boolean isEnglish = "en".equals(user.getLanguage());
+		List<DiagramShopCount> shopsCount;
+		int count;
+		String diagramName;
+		if ("user".equals(user.getRole())){
+			int id = user.getId();
+			shopsCount = DiagramShopCountService.getShopCountByUserId(id, startDate, endDate);
+			count = DiagramShopCountService.getTotalShopCountByUserId(id, startDate, endDate);
+			diagramName = isEnglish ? "Shops You often searched in" : "Магазини, в яких Ви часто шукаєте";
+		}else {
+			shopsCount = DiagramShopCountService.getShopCount(startDate, endDate);
+			count = DiagramShopCountService.getTotalShopCount(startDate, endDate);
+			diagramName = isEnglish ? "Most popular shops" : "Найпопулярніші магазини";
+		}
+		
 		JSONObject responseObject = new JSONObject();
 		JSONArray series = new JSONArray();
 		JSONObject inSeries = new JSONObject();
@@ -122,14 +129,13 @@ public class UserStatisticServlet extends HttpServlet {
 		JSONArray data = new JSONArray();
 		inSeries.put("colorByPoint", true);
 		JSONObject title = new JSONObject();
-		title.put("text", isEnglish ? "Most popular shops" : "Найпопулярніші магазини");
+		title.put("text", diagramName);
 		responseObject.put("title", title);
 		inSeries.put("name", isEnglish ? "Shop" : "Магазин");
 		for (int i=0; i<shopsCount.size(); i++){
 			JSONObject shop = new JSONObject();
-			String shopName = isEnglish ? shopsCount.get(i).getNameEnglish() : shopsCount.get(i).getNameEnglish() ;
+			String shopName = isEnglish ? shopsCount.get(i).getNameEnglish() : shopsCount.get(i).getNameUkrainian() ;
 			shop.put("name", shopName);
-System.out.println(shopsCount.get(i).getCount());
 			double percent = (shopsCount.get(i).getCount() / (double)count) * 100;
 			shop.put("y", percent);
 			data.add(shop);

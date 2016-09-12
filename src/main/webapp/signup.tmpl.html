@@ -1,48 +1,42 @@
 <script src="js/jquery.validate.min.js"></script>
 <md-dialog aria-label="Registration" ng-controller="SignUpCtrl">
-    <md-toolbar>
+    <md-toolbar layout="row">
         <div class="md-toolbar-tools">
-            <h2>Registration</h2>
+            <h2>{{ 'REGISTRATION' | translate }}</h2>
             <span flex></span>
         </div>
+        <span flex></span>
+		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
     </md-toolbar>
     <md-dialog-content>
         <div layout="column" ng-cloak>
             <md-content layout="row">
                 <form id="regForm"  layout-padding flex layout="column" ng-model="regForm" name="regForm">
                     <md-input-container class="md-block" style="margin-top: 0; margin-bottom: 0;">
-                        <label>First name</label>
+                        <label>{{ 'FIRST_NAME' | translate }}</label>
                         <input type="name" id="fName1" required name="firstName" ng-model="firstName" pattern="[a-zA-Z0-9]+">
                     </md-input-container>
                     <md-input-container class="md-block" style="margin-top: 0; margin-bottom: 0;">
-                        <label>Last name</label>
+                        <label>{{ 'LAST_NAME' | translate }}</label>
                         <input id="lName1" required name="lastName" ng-model="lastName">
                     </md-input-container>
-
-                    <md-content ng-controller="DatePickerCtrl" class="md-block" style="margin-top: 0; margin-bottom: 0;">
-                        <label class="custom-label">Date of birth</label>
-                        <md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="dt" is-open="showdp" max-date="dtmax" id="birthday" md-placeholder="Enter date" name="myDate"></md-datepicker>
-                    </md-content>
-
                     <md-input-container class="md-block" style="margin-top: 0; margin-bottom: 0;">
-                        <label>Email</label>
+                        <label>{{ 'EMAIL' | translate }}</label>
                         <input id="emailR" required type="email" name="email" ng-model="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
                     </md-input-container>
 
                     <md-input-container class="md-block" style="margin-top: 0; margin-bottom: 0;">
-                        <label>Password</label>
+                        <label>{{ 'PASSWORD' | translate }}</label>
                         <input id="passwordR" required type="password" name="password" ng-model="password" minlength="6" maxlength="25">
                     </md-input-container>
-                    <span style="color : red" ng-bind="error"></span>
-                    <span style="color : green" ng-bind="success"></span>
-                        <md-button type="submit" flex class="md-raised md-primary" ng-click="sendRegData()">Submit</md-button>
+                        <md-button type="submit" flex class="md-raised md-primary" ng-click="sendRegData()">{{ 'SUBMIT' | translate }}</md-button>
 
                 </form>
                 
 <!--                 <div class="vertical-divider"></div> -->
                 
                 <div flex="30" layout="column" layout-align="center center" md-whiteframe="1">
-                	<div>Or sign up with</div>
+                	<div align="center">{{ 'SIGN_UP_WITH_SN' | translate }}</div>
         <div layout="row">
             <a flex class="social-button" href="/EasyShopWayNew/google-plus-reg">
                 <img class="social-img" ng-src="images/social/g+.png"></img>

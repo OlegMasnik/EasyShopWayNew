@@ -28,15 +28,6 @@
 			Last Name
 		</label> <input ng-model="lastName"> </md-input-container>
 		
-		<div>
-		<label> <span><md-icon md-svg-src="images/icons/birth.svg" class="name cab-icon"></md-icon></span> Birth Day
-                        </label>
-		<md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}"
-			ng-model="birthday" is-open="showdp" max-date="dtmax" id="birthday"
-			md-placeholder="Enter date" name="birthday"></md-datepicker>
-			</div>
-			<br>
-			<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span>
@@ -62,37 +53,42 @@
 			<md-card-title> <md-card-title-text>
 			<div class="cab-category">Update your photo</div>
 			</md-card-title-text> </md-card-title>
-			<input type="file"
-				accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
-				ng-model="file" name="file" id="file" class="md-raised" required />
-			<md-input-container> <md-button
+			<md-card-content >
+			<div style="text-align: center">
+				<input  style="width: 65%;" type="file"
+					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
+					ng-model="file" name="file" id="file" class="md-raised" required />
+			</div>
+			</md-card-content>
+			<md-card-actions layout="row" layout-align="end center"> <md-button
 				class="md-raised" type="submit" ng-click="sendImg()">Save</md-button>
-			<md-button class="md-raised" type="reset">Cancel</md-button> </md-input-container>
+			<md-button class="md-raised" type="reset">Cancel</md-button> </md-card-actions>
 		</form>
 		</md-card>
 
-		<md-card flex ng-controller="changePassCtrl"> <md-card-title>
-		<md-card-title-text>
-		<div class="cab-category">Change password</div>
-		</md-card-title-text>
-
-		<div style="heigth: 400px;"></div>
-		</md-card-title> <md-card-content>
-		<form id="changePassForm" ng-model="changePassForm"
-			name="changePassForm" action="">
-			<md-input-container class="md-block" flex-gt-sm="">
-			<label> Old password </label> <input id="oldPass" required
-				type="password" name="oldPass" ng-model="user.oldPass" minlength="6"
-				maxlength="25" ng-model="oldPass"> </md-input-container>
-			<md-input-container class="md-block" flex-gt-sm="">
-			<label> New password </label> <input id="newPass" required
-				type="password" name="newPass" ng-model="user.newPass" minlength="6"
-				maxlength="25" ng-model="newPass"> </md-input-container>
-			<md-input-container layout="row" layout-align="end center">
-			<md-button class="md-raised" ng-click="changePass()">Save</md-button>
-			<md-button class="md-raised" type="reset" ng-click="cancel()">Cancel</md-button>
-			</md-input-container>
+<md-card flex="60" ng-controller="changePassCtrl">
+		<form id="changePassForm" ng-model="changePassForm"vname="changePassForm" action="">
+			<md-card-title> <md-card-title-text>
+			<div class="cab-category">Change password</div>
+			</md-card-title-text> </md-card-title>
+			<md-card-content> 
+				<form id="changePassForm" ng-model="changePassForm"
+					name="changePassForm" action="">
+					<md-input-container class="md-block" flex-gt-sm="">
+					<label> Old password </label> <input id="oldPass" required
+						type="password" name="oldPass" ng-model="user.oldPass" minlength="6"
+						maxlength="25" ng-model="oldPass"> </md-input-container>
+					<md-input-container class="md-block" flex-gt-sm="">
+					<label> New password </label> <input id="newPass" required
+						type="password" name="newPass" ng-model="user.newPass" minlength="6"
+						maxlength="25" ng-model="newPass"> </md-input-container>
+				</form>
+				<md-card-actions layout="row" layout-align="end center">
+					<md-button class="md-raised" ng-click="changePass()">Save</md-button>
+					<md-button class="md-raised" type="reset" ng-click="cancel()">Cancel</md-button>
+				</md-card-actions>
+			</md-card-content> 
 		</form>
-		</md-card-content> </md-card>
+		</md-card>
 	</div>
 </div>
