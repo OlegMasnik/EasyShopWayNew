@@ -1,8 +1,10 @@
 <script src="js/jquery.validate.min.js"></script>
 <md-dialog aria-label="" style="width: 300px;" ng-controller="LoginCtrl">
-    <md-toolbar>
+    <md-toolbar layout="row">
         <h2 class="md-toolbar-tools">
 	<span>{{ 'LOGIN' | translate }}</span>
+	<span flex></span>
+	<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
 </h2>
     </md-toolbar>
     <md-dialog-content>

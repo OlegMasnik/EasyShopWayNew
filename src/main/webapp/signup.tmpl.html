@@ -1,10 +1,12 @@
 <script src="js/jquery.validate.min.js"></script>
 <md-dialog aria-label="Registration" ng-controller="SignUpCtrl">
-    <md-toolbar>
+    <md-toolbar layout="row">
         <div class="md-toolbar-tools">
             <h2>{{ 'REGISTRATION' | translate }}</h2>
             <span flex></span>
         </div>
+        <span flex></span>
+		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
     </md-toolbar>
     <md-dialog-content>
         <div layout="column" ng-cloak>
@@ -27,8 +29,6 @@
                         <label>{{ 'PASSWORD' | translate }}</label>
                         <input id="passwordR" required type="password" name="password" ng-model="password" minlength="6" maxlength="25">
                     </md-input-container>
-                    <span style="color : red" ng-bind="error"></span>
-                    <span style="color : green" ng-bind="success"></span>
                         <md-button type="submit" flex class="md-raised md-primary" ng-click="sendRegData()">{{ 'SUBMIT' | translate }}</md-button>
 
                 </form>
@@ -36,7 +36,7 @@
 <!--                 <div class="vertical-divider"></div> -->
                 
                 <div flex="30" layout="column" layout-align="center center" md-whiteframe="1">
-                	<div>{{ 'SIGN_UP_WITH_SN' | translate }}</div>
+                	<div align="center">{{ 'SIGN_UP_WITH_SN' | translate }}</div>
         <div layout="row">
             <a flex class="social-button" href="/EasyShopWayNew/google-plus-reg">
                 <img class="social-img" ng-src="images/social/g+.png"></img>

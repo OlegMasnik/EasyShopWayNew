@@ -1,4 +1,3 @@
-var dateBirthday;
 var lang;
 
 (function() {
@@ -196,7 +195,8 @@ app
 				[
 						'$scope',
 						'$http',
-						function($scope, $http) {
+						'$mdToast',
+						function($scope, $http, $mdToast) {
 							$scope.sendRegData = function() {
 								console.log('hello ' + $scope.email)
 								console.log("date " + dateBirthday)
@@ -205,7 +205,6 @@ app
 									password : $scope.password,
 									firstName : $scope.firstName,
 									lastName : $scope.lastName,
-									birthday : dateBirthday
 								});
 								console.log('Read ' + data);
 
@@ -231,9 +230,9 @@ app
 														console
 																.log("QWEER"
 																		+ data.emailErrMsg);
-														$scope.error = data.emailErrMsg;
+														showToast($mdToast, $scope, data.emailErrMsg);
 														if (data.emailErrMsg == undefined) {
-															$scope.success = "Check your email";
+															showToast($mdToast, $scope, "Check your email");
 														}
 													}).error(
 													function(data, status,
@@ -247,20 +246,7 @@ app
 							};
 						} ]);
 
-app.controller('DatePickerCtrl', function($scope) {
 
-	$scope.today = function() {
-		$scope.dt = new Date();
-	};
-	$scope.dateformat = "MM/dd/yyyy";
-	$scope.today();
-	$scope.showcalendar = function($event) {
-		$scope.showdp = true;
-	};
-	$scope.showdp = false;
-	$scope.dtmax = new Date();
-	dateBirthday = moment($scope.dt).format('YYYY-MM-DD');
-});
 
 app
 		.controller(
