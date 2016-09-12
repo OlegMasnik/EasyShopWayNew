@@ -88,6 +88,34 @@
 				start();
 		    	start();
 				$scope.onClick();
+				
+				var ids = [];
+
+				for (var i = 0; i < $scope.items.length; i++) {
+				ids[i] = ($scope.items[i].value);
+				}
+
+				console.log(ids);
+				var send = $.param({
+				data: JSON.stringify({
+				productIds: ids
+				})
+				});
+
+				var config = {
+				headers: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+				}
+				}
+
+				$http
+				.post('/EasyShopWayNew/saveProductList', send,
+				config).success(
+				function (send, status, headers, config) {
+				console.log("Save to db");
+				}).error(
+				function (send, status, header,
+				config) {});
 			}
 
 			$scope.items = [];
