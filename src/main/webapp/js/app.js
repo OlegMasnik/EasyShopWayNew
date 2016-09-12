@@ -37,7 +37,21 @@ app.config(function($translateProvider) {
 		EMAIL_DOES_NOT_EXIST:"This email does not exist",
 		PASSWORDS_DONT_MATCH:'Passwords do not match',
 		PASSWORDS_INVALID:'Passwords is invalid',
-		CHECK_EMAIL:'Please check your email'
+		CHECK_EMAIL:'Please check your email',
+		
+		USER_CABINET_STATISTIC:'Statistic',
+		USER_CABINET_HISTORY:'History',
+		
+		ADMIN_CABINET_MAP:'Map',
+		ADMIN_CABINET_USERS:'Users',
+		ADMIN_CABINET_PRODUCTS:'Products',
+		ADMIN_CABINET_STATISTIC:'Statistic',
+		
+		DATE:'Date',
+		TIME:'Time',
+		FROM:'From',
+		TO:'To',
+		SHOW:'Show'
 		
 	
 	
@@ -69,7 +83,21 @@ app.config(function($translateProvider) {
 		EMAIL_DOES_NOT_EXIST:'Електронна пошта не зареєстрована в системі',
 		PASSWORDS_DONT_MATCH:'Паролі не співпадають',
 		PASSWORDS_INVALID:'Некоректний пароль',
-		CHECK_EMAIL:'Будь ласка, перевірте свою електронну пошту'
+		CHECK_EMAIL:'Будь ласка, перевірте свою електронну пошту',
+		
+		USER_CABINET_STATISTIC:'Статистика',
+		USER_CABINET_HISTORY:'Історія',
+		
+		ADMIN_CABINET_MAP:'Карта',
+		ADMIN_CABINET_USERS:'Користувачі',
+		ADMIN_CABINET_PRODUCTS:'Продукти',
+		ADMIN_CABINET_STATISTIC:'Статистика',
+		
+		DATE:'Дата',
+		TIME:'Час',
+		FROM:'Від',
+		TO:'До',
+		SHOW:'Показати'
 	});
 	$translateProvider.preferredLanguage(lang);
 });

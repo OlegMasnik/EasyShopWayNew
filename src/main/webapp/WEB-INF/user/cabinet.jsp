@@ -32,8 +32,8 @@
                                 </div>
                             </div>
                         </a>
-                        <md-button href="#statistic">Statistic</md-button>
-                        <md-button href="#history">History</md-button>
+                        <md-button href="#statistic">{{ 'USER_CABINET_STATISTIC' | translate }}</md-button>
+                        <md-button href="#history">{{ 'USER_CABINET_HISTORY' | translate }}</md-button>
                     </md-content>
                 </md-slidenav>
             <md-content layout="row" class="main-page" flex>
