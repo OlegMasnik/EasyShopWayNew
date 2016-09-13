@@ -238,11 +238,9 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
 				
 		};
 		
-		if (users.length > 2) {
+		if (users.length > 1) {
 			messData.username = users[0].username + " and " + (users.length - 1) + " more users.";
 		} else if (users.length == 1) {
-			messData.username = users[0].username + " and one more user.";
-		} else if (users.length == 2) {
 			messData.username = users[0].username;
 		}
 		console.log(users);
