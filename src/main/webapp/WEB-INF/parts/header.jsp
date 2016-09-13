@@ -14,8 +14,8 @@
 	<input type="text"  ng-show="false" id="lang" value="${lang}">
 	<span flex></span>
 	<md-input-container>
-	<md-select  style="color: white; !important " ng-model="language">
-	<md-option ng-model="ua" value="ua" ng-click='changeLang(ua)'>Українська</md-option>
+	<md-select  style="color: white; !important " ng-model="language" >
+	<md-option ng-model="uk" value="uk" ng-click='changeLang(uk)'>Українська</md-option>
 	<md-option ng-model="en" value="en" ng-click='changeLang(en)'>English</md-option>
 	</md-select> </md-input-container>
 	<c:choose>

@@ -20,13 +20,13 @@ public class SendMailControlServlet extends HttpServlet {
 		super();
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		emails = request.getParameter("emails");
 		header = request.getParameter("header");
 		body = request.getParameter("body");
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {

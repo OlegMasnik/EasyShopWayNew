@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 		object = new JSONObject();
 		
 		if(request.getSession().getAttribute("pre_user") != null){
-			object.put("emailErrMsg", "Please check your email.");
+			object.put("emailSuccMsg", "Please check your email.");
 		}else{
 			
 			email = request.getParameter("email");

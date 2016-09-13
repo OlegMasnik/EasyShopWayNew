@@ -32,7 +32,7 @@ var lang;
 				headers : {
 					'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 				}
-			}
+			}	
 			self.click = function() {
 			    console.log($scope.maps);
 			    $scope.getMapByid($scope.maps);
@@ -166,6 +166,7 @@ var lang;
 						$scope.items.push(item);
 					}
 				}
+//				self.simulateQuery = false;
 				if(item.coordinates.length > 0){
 					item.coordinates.map(function(e, i){
 						game.targets.map[e] = true;
@@ -218,7 +219,7 @@ var lang;
 					};
 				});
 			}
-
+			
 			function createFilterFor(query) {
 				var lowercaseQuery = angular.lowercase(query);
 
@@ -497,16 +498,20 @@ var lang;
 		                            arrayTarget.add([cell]);
 		                        } else {
 		                        	console.log('remove target')
-		                            var remEl = arrayTarget.removeUndefined([cell]);
-		                        	remEl.map(function(e, i){
-		                            	 game.targets.map[e] = false;
-		                            });
-		                        	for (var i = 0; i < $scope.items.length; i++) {
-		        						if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
-		        							$scope.items.splice(i, 1);
-		        							return;
-		        						}
-		        					}
+		                        	console.log(arrayTarget)
+		                            arrayTarget.removeOne(cell);
+		                        	console.log(arrayTarget)
+		                        	game.targets.map[cell] = false;
+		                        	
+//		                        	remEl.map(function(e, i){
+//		                            	 game.targets.map[e] = false;
+//		                            });
+//		                        	for (var i = 0; i < $scope.items.length; i++) {
+//		        						if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
+//		        							$scope.items.splice(i, 1);
+//		        							return;
+//		        						}
+//		        					}
 		                        }
 		                        console.log("Цілі ");
 		                        console.log(arrayTarget);
@@ -555,6 +560,8 @@ var lang;
 			    		        else if(!game.cupBoard.map[_target - game.width])
 			    		        	this.target = _target - game.width;
 			                    this.path = new Path(game, this.cell, this.target, this.followPath);
+			                    console.log(this.path.found);
+			                    console.log(this.path.fmin);
 			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
 			                        buffPath = this.path;
 			                        curTarget = this.cell;
@@ -570,7 +577,9 @@ var lang;
 		            player.cell = player.path.cells.pop();
 		            if (player.path.cells.length > 0) {
 		                game.step(player.followPath);
-		            };
+		            }else{
+		            	console.log('fail');
+		            }
 		        }
 		        this.moveTo = function () {
 		        	console.log(arrayTarget);
@@ -594,7 +603,9 @@ var lang;
 			    		        else if(!game.cupBoard.map[_target - game.width])
 			    		        	this.target = _target - game.width;
 			                    this.path = new Path(game, this.cell, this.target, this.followPath);
-			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+			                    	console.log(this.path.found);
+			                    	console.log(this.path.fmin);
+			                    	if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
 			                        buffPath = this.path;
 			                        curTarget = this.target;
 			                        _targetToDelete = _target;
@@ -701,12 +712,14 @@ var lang;
 		                    pos = i;
 		                }
 		            }
-		            if (this.fmin !== 131071) {
+		            if (this.fmin < 131071) {
 		                if (pos === target) {
 		                    return this;
 		                } else {
 		                    path.search();
 		                }
+		            }  else {
+		            	console.log('BAD WAY ******************************')
 		            }
 		        };
 		        this.tracePath = function () {
@@ -727,8 +740,11 @@ var lang;
 		        clear();
 		        game.draw();
 		        game.player.cell = game.player.findStart();
+//		        if(typeof(game.player.cell) != "undefied"){
 		        console.log("On click start " + game.player.cell);
 		        if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
+//		        }else
+		        	console.log('BadWay')
 		    }
 
 		    $scope.openMap = function () {
@@ -774,6 +790,16 @@ var lang;
 		    	}
 		    	return undefined;
 		    }
+		    Array.prototype.removeOne = function (value) {
+	    		for(var i=0;i<this.length; i++){
+	    			var index = this[i].indexOf(value);
+	    			if(index != -1){
+	    				this[i][index] = undefined;
+	    				this[i].sort();
+	    				this[i].pop();
+	    			}
+	    		}
+	    }
 		    Array.prototype.remove = function (value) {
 		    	if(value != undefined){
 		    		var i = this.indexOf(value);
