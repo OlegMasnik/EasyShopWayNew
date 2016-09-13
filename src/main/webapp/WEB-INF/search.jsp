@@ -17,7 +17,7 @@
 <body ng-app="SearchApp" layout="column">
 	<script src='js/moment.js'></script>
 
-	<md-toolbar class="md-hue-2">
+	<%-- <md-toolbar class="md-hue-2">
 	<div class="md-toolbar-tools" layout="row" ng-controller="AppCtrl"
 		md-whiteframe="4">
 
@@ -43,7 +43,8 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	</md-toolbar>
+	</md-toolbar> --%>
+	<jsp:in
 
 	<md-content layout="row" ng-controller="ProductListCtrl as ctrl"
 		class="main-page" flex> <md-slidenav
