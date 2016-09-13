@@ -106,6 +106,7 @@ app.config(function($translateProvider) {
 		UKRAINE_NAME:'Ukrainian name',
 		
 		EMAIL_EXIST: 'This email already exists',
+		UNCORRECT_PASSWORD: 'Ucorrect password'
 		
 	
 	
@@ -202,6 +203,7 @@ app.config(function($translateProvider) {
 		UKRAINE_NAME:'Назва українською',
 		
 		EMAIL_EXIST: 'Така електрона пошта вже використовуєься',
+		UNCORRECT_PASSWORD: 'Невірний пароль'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -286,7 +288,9 @@ app
 						'$scope',
 						'$http',
 						'$window',
-						function($scope, $http, $window) {
+						'$mdToast',
+						'$translate',
+						function($scope, $http, $window, $mdToast, $translate) {
 							$scope.sendLoginData = function() {
 								console.log('hello' + $scope.email)
 								var data = $.param({
@@ -309,14 +313,15 @@ app
 											.success(
 													function(data, status,
 															headers, config) {
+														
 														if (data.emailErrMsg == undefined) {
 															if (data.passwordErrMsg == undefined) {
 																$window.location.href = 'cabinet';
 															} else {
-																$scope.error = data.passwordErrMsg;
+																showToast($mdToast, $scope, $translate.instant('UNCORRECT_PASSWORD'));
 															}
 														} else {
-															$scope.error = data.emailErrMsg;
+															showToast($mdToast, $scope, $translate.instant('EMAIL_DOES_NOT_EXIST'));
 														}
 														console
 																.log("Error: "
@@ -341,7 +346,8 @@ app
 						'$scope',
 						'$http',
 						'$mdToast',
-						function($scope, $http, $mdToast) {
+						'$translate',
+						function($scope, $http, $mdToast, $translate) {
 							$scope.sendRegData = function() {
 								console.log('hello ' + $scope.email)
 								var data = $.param({
@@ -364,7 +370,6 @@ app
 										&& $('#passwordR').valid()
 										&& firstNameDefined != ""
 										&& lastNameDefined != "") {
-									console.log('Before reg');
 									$http
 											.post('/EasyShopWayNew/reg', data,
 													config)
@@ -374,10 +379,10 @@ app
 														console
 																.log("QWEER"
 																		+ data.emailErrMsg);
-														showToast($mdToast, $scope, data.emailErrMsg);
-														if (data.emailErrMsg == undefined) {
+														if (data.emailSuccMsg != undefined) 
 															showToast($mdToast, $scope, $translate.instant('CHECK_EMAIL'));
-														}
+														if (data.emailErrMsg != undefined) 
+																showToast($mdToast, $scope, $translate.instant('EMAIL_EXIST'));
 													}).error(
 													function(data, status,
 															header, config) {

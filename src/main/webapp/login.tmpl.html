@@ -17,7 +17,6 @@
                     <label>{{ 'PASSWORD' | translate }}</label>
                     <input id="passwordL" type="password" ng-model="password" name="password" required minlength="6" maxlength="25"> </md-input-container>
                 <div flex>
-                    <span style="color: red" ng-bind="error"></span>
                 </div>
                 <md-button flex ng-click='sendLoginData()' class="md-raised md-primary">{{ 'LOGIN' | translate }}</md-button>
                 <md-button flex href="/EasyShopWayNew/forgotpassword" md-no-ink="md-no-ink">{{ 'FOGOT_PASS' | translate }} </md-button>
