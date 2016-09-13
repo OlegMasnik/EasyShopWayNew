@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/style.css">
 <link href="css/icon.css" rel="stylesheet">
+<link rel="shortcut icon" href="favicon.ico">
 
 <link rel="stylesheet" href="css/datatable/md-data-table.css">
 
