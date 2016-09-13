@@ -560,8 +560,6 @@ var lang;
 			    		        else if(!game.cupBoard.map[_target - game.width])
 			    		        	this.target = _target - game.width;
 			                    this.path = new Path(game, this.cell, this.target, this.followPath);
-			                    console.log(this.path.found);
-			                    console.log(this.path.fmin);
 			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
 			                        buffPath = this.path;
 			                        curTarget = this.cell;
@@ -577,8 +575,6 @@ var lang;
 		            player.cell = player.path.cells.pop();
 		            if (player.path.cells.length > 0) {
 		                game.step(player.followPath);
-		            }else{
-		            	console.log('fail');
 		            }
 		        }
 		        this.moveTo = function () {
