@@ -32,7 +32,7 @@ var lang;
 				headers : {
 					'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 				}
-			}
+			}	
 			self.click = function() {
 			    console.log($scope.maps);
 			    $scope.getMapByid($scope.maps);
@@ -497,16 +497,20 @@ var lang;
 		                            arrayTarget.add([cell]);
 		                        } else {
 		                        	console.log('remove target')
-		                            var remEl = arrayTarget.removeUndefined([cell]);
-		                        	remEl.map(function(e, i){
-		                            	 game.targets.map[e] = false;
-		                            });
-		                        	for (var i = 0; i < $scope.items.length; i++) {
-		        						if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
-		        							$scope.items.splice(i, 1);
-		        							return;
-		        						}
-		        					}
+		                        	console.log(arrayTarget)
+		                            arrayTarget.removeOne(cell);
+		                        	console.log(arrayTarget)
+		                        	game.targets.map[cell] = false;
+		                        	
+//		                        	remEl.map(function(e, i){
+//		                            	 game.targets.map[e] = false;
+//		                            });
+//		                        	for (var i = 0; i < $scope.items.length; i++) {
+//		        						if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
+//		        							$scope.items.splice(i, 1);
+//		        							return;
+//		        						}
+//		        					}
 		                        }
 		                        console.log("Цілі ");
 		                        console.log(arrayTarget);
@@ -774,6 +778,16 @@ var lang;
 		    	}
 		    	return undefined;
 		    }
+		    Array.prototype.removeOne = function (value) {
+	    		for(var i=0;i<this.length; i++){
+	    			var index = this[i].indexOf(value);
+	    			if(index != -1){
+	    				this[i][index] = undefined;
+	    				this[i].sort();
+	    				this[i].pop();
+	    			}
+	    		}
+	    }
 		    Array.prototype.remove = function (value) {
 		    	if(value != undefined){
 		    		var i = this.indexOf(value);

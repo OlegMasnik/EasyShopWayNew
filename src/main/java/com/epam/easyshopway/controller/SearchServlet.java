@@ -6,7 +6,9 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -114,6 +116,7 @@ public class SearchServlet extends HttpServlet {
 		JSONObject object;
 		for (ProductInformation p : list) {
 			if (p.getCoordinates().size() > 0) {
+				Set<Integer> setCoard = new HashSet<>(p.getCoordinates()); 
 				object = new JSONObject();
 				object.put("img", p.getImage());
 				object.put("name_uk", p.getProductNameUk());
@@ -122,7 +125,7 @@ public class SearchServlet extends HttpServlet {
 
 				JSONArray cordArr = new JSONArray();
 
-				for (Integer cord : p.getCoordinates()) {
+				for (Integer cord : setCoard) {
 					cordArr.add(cord);
 				}
 
