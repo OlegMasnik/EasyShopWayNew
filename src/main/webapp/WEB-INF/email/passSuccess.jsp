@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="favicon.ico">
 <title>Password changed</title>
 </head>
 

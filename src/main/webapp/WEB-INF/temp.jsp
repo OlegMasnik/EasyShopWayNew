@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/search-style.css">
+<link rel="shortcut icon" href="favicon.ico">
 
 </head>
 

@@ -8,7 +8,7 @@
         <title>404 - Page not found</title>
         <link rel="stylesheet" href="/EasyShopWayNew/css/style.css">
         <link rel="stylesheet" href="/EasyShopWayNew/css/angular-material.min.css">
-
+		<link rel="shortcut icon" href="favicon.ico">
         <style>
             body {
                 background-image: url('/EasyShopWayNew/images/404.gif');
