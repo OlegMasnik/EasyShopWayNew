@@ -16,7 +16,7 @@ app.config(function($translateProvider) {
 		CHANGE_PASSWORD:'Change Password',
 		OLD_PASSWORD:'Old password',
 		NEW_PASSWORD:'New password',
-		USER_LANGUAGE:'Language',
+		LANGUAGE:'Language',
 		
 		SELECT_MAP:'Select map',
 		SEARCH:'Search',
@@ -103,19 +103,20 @@ app.config(function($translateProvider) {
 		CHOOSE_IMAGE:'Choose image',
 		
 		ENGLISH_NAME:'English name',
-		UKRAINE_NAME:'Ukrainian name'
+		UKRAINE_NAME:'Ukrainian name',
 		
+		EMAIL_EXIST: 'This email already exists',
 		
 	
 	
-	}).translations('ua', {
+	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
 		UPDATE_YOUR_PHOTO:'Оновити фото',
 		CHANGE_PASSWORD:'Змінити пароль',
 		OLD_PASSWORD:'Старий пароль',
 		NEW_PASSWORD:'Новий пароль',
-		USER_LANGUAGE:'Мова',
+		LANGUAGE:'Мова',
 		
 		SELECT_MAP:'Вибрати магазин',
 		SEARCH:'Пошук',
@@ -198,7 +199,9 @@ app.config(function($translateProvider) {
 		CHOOSE_IMAGE:'Обрати зображення',
 		
 		ENGLISH_NAME:'Назва англійською',
-		UKRAINE_NAME:'Назва українською'
+		UKRAINE_NAME:'Назва українською',
+		
+		EMAIL_EXIST: 'Така електрона пошта вже використовуєься',
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -259,7 +262,7 @@ app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, 
     };
     $scope.language = lang;
     $scope.en = 'en';
-    $scope.ua = 'ua';
+    $scope.uk = 'uk';
     
     $scope.changeLang = function(lang){
     	$http.put('/EasyShopWayNew/home?lang=' + lang)
@@ -341,7 +344,6 @@ app
 						function($scope, $http, $mdToast) {
 							$scope.sendRegData = function() {
 								console.log('hello ' + $scope.email)
-								console.log("date " + dateBirthday)
 								var data = $.param({
 									email : $scope.email,
 									password : $scope.password,
@@ -374,7 +376,7 @@ app
 																		+ data.emailErrMsg);
 														showToast($mdToast, $scope, data.emailErrMsg);
 														if (data.emailErrMsg == undefined) {
-															showToast($mdToast, $scope, "Check your email");
+															showToast($mdToast, $scope, $translate.instant('CHECK_EMAIL'));
 														}
 													}).error(
 													function(data, status,

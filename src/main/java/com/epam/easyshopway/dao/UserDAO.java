@@ -21,7 +21,7 @@ public class UserDAO extends AbstractDAO<User> {
 	private final String DELETE = "UPDATE user SET active = 0 WHERE id = ?;";
 	private final String UPDATE_ACTIVE = "UPDATE user SET active = ? WHERE email = ?;";
 	private final String GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user WHERE email = ? AND password = ? and active = 1";
-	private final String CHECK_EMAIL = "SELECT * FROM user WHERE email like ? and active = 1";
+	private final String CHECK_EMAIL = "SELECT * FROM user WHERE email like ?;";
 	private final String UPDATE_PASSWORD_BY_EMAIL = "UPDATE `easy_shop_way`.`user` SET `password`=? WHERE `email` like ?;";
 
 	public UserDAO() {

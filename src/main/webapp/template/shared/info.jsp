@@ -39,14 +39,14 @@
 		<label> <span><md-icon
 					md-svg-src="images/icons/lang.svg" class="name cab-icon"></md-icon></span>
 			{{ 'LANGUAGE' | translate }}
-		</label> <md-select placeholder="User language" ng-model="language"
+		</label> <md-select placeholder="{{ 'LANGUAGE' | translate }}" ng-model="language"
 			md-on-open="loadUsers()" style="min-width: 200px;"> <md-option
 			ng-value="language.sName" ng-repeat="language in languages">{{language.name}}</md-option>
 		</md-select> </md-input-container>
 	</form>
 	</md-card-content> <md-card-actions layout="row" layout-align="end center">
 	<md-button class="md-raised" ng-click="saveInfo()">{{ 'SAVE' | translate }}</md-button> <md-button class="md-raised"
-		ng-click="showInfo()">{{ 'CANSEL' | translate }}</md-button> </md-card-actions> 
+		ng-click="showInfo()">{{ 'CANCEL' | translate }}</md-button> </md-card-actions> 
 		</md-card>
 		</div>
 
