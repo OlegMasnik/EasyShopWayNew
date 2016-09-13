@@ -4,7 +4,7 @@ var lang;
 
 (function() {
 	lang = $('#lang').val() || 'en';
-	console.log(lang);
+	//console.log(lang);
 })();
 
 		var serApp = angular
@@ -27,14 +27,14 @@ var lang;
 			self.a = 1;
 			self.simulateQuery = false;
 			self.isDisabled = true;
-			console.log($scope.tryToSend);
+			//console.log($scope.tryToSend);
 			var config = {
 				headers : {
 					'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 				}
 			}	
 			self.click = function() {
-			    console.log($scope.maps);
+			    //console.log($scope.maps);
 			    $scope.getMapByid($scope.maps);
 			    
 			    self.isDisabled = false;
@@ -43,7 +43,7 @@ var lang;
 			           mapId : $scope.maps
 			          });
 			          
-			          console.log(data);
+			          //console.log(data);
 			 
 			          config = {
 			              headers: {
@@ -53,15 +53,15 @@ var lang;
 			 
 			          $http.get('/EasyShopWayNew/searchProducts?' + data, config).success(
 			              function (data, status, headers, config) {
-			                  console.log(data);
+			                  //console.log(data);
 			                  self.states = loadAll(data);
-			                  console.log(self.states);
+			                  //console.log(self.states);
 			                  
 			                  self.isDisabled = false;
 			                  
 			              }).error(function (data, status, header, config) {
-			              console.log(data);
-			              console.log('no products');
+			              //console.log(data);
+			              //console.log('no products');
 			              self.isDisabled = true;
 			          });
 			    
@@ -70,11 +70,11 @@ var lang;
 
 			$http.get('/EasyShopWayNew/searchMaps', config).success(
 					function(data, status, headers, config) {
-						console.log(data);
+						//console.log(data);
 						self.maps = loadAllMaps(data);
-						console.log(self.maps);
+						//console.log(self.maps);
 					}).error(function(data, status, header, config) {
-				console.log(data);
+				//console.log(data);
 			});
 
 			function loadAllMaps(data) {
@@ -113,10 +113,11 @@ var lang;
 					ids[i] = ($scope.items[i].value);
 				}
 
-				console.log(ids);
+				//console.log(ids);
 				var send = $.param({
 				data: JSON.stringify({
-				productIds: ids
+				productIds: ids,
+				mapId: $scope.maps
 				})
 				});
 
@@ -125,7 +126,7 @@ var lang;
 				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
 				}
 				}
-
+				console.log(send);
 				$http
 				.post('/EasyShopWayNew/saveProductList', send,
 				config).success(
@@ -166,16 +167,20 @@ var lang;
 						$scope.items.push(item);
 					}
 				}
-//				self.simulateQuery = false;
+// self.simulateQuery = false;
+				 var esc = $.Event("keydown", {
+					 keyCode: 27
+				 });
+				 $("body").trigger(esc);
 				if(item.coordinates.length > 0){
 					item.coordinates.map(function(e, i){
 						game.targets.map[e] = true;
 		                game.draw();
-		                console.log("Цілі " + arrayTarget);
+		                //console.log("Цілі " + arrayTarget);
 		                targetsCopy = game.targets.map;
 					});
 					arrayTarget.add(item.coordinates);
-					console.log(arrayTarget);
+					//console.log(arrayTarget);
 				}
 			}
 
@@ -189,7 +194,7 @@ var lang;
 			}
 
 			function remove(value) {
-				console.log('remove')
+				//console.log('remove')
 				if(value != undefined){
 					value.coordinates.map(function(e, i){
 						game.targets.map[e] = false;
@@ -256,12 +261,12 @@ var lang;
 
 		    
 		    $scope.incScale = function(){
-		    	console.log("+")
+		    	//console.log("+")
 		    	$scope.config.cellSize++;
 		    	updateMap(game);
 		    };
 		    $scope.decScale = function(){
-		    	console.log("-")
+		    	//console.log("-")
 		    	$scope.config.cellSize--;
 		    	updateMap(game);
 		    }
@@ -311,7 +316,7 @@ var lang;
 
 		            $scope.openMap();
 		        }, function myError(response) {
-		            console.log(response.statusText);
+		            //console.log(response.statusText);
 		        });
 		    }
 
@@ -381,13 +386,13 @@ var lang;
 		            }
 		            if (this.targets.map[cell]) return '#522';
 		            if (this.way.map[cell]) return waycolor;
-//		            if ($scope.paydesks.indexOf(cell) != -1){
-//		            	return '#ff870d';
-//		            }
+// if ($scope.paydesks.indexOf(cell) != -1){
+// return '#ff870d';
+// }
 		            if ($scope.walls.indexOf(cell) != -1) return '#555';
-//		            if (this.cupBoard.map[cell]){
-//		            	return "";
-//		            }
+// if (this.cupBoard.map[cell]){
+// return "";
+// }
 		            return '#eee';
 		        };
 		        this.draw = function () {
@@ -469,13 +474,13 @@ var lang;
 		            	switch (e.button) {
 						case 0:
 							if(!game.paint.active){
-							console.log("CELL #" + cell)
+							//console.log("CELL #" + cell)
 							game.paint.active = true;
 	                        for (var q = 0; q < $scope.cupboards.length; q++) {
 	                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
 	                                if (cell == $scope.cupboards[q].values[w]) {
-	                                    console.log("You click on: ");
-	                                    console.log($scope.cupboards[q]);
+	                                    //console.log("You click on: ");
+	                                    //console.log($scope.cupboards[q]);
 	                                    $scope.openCupBoard($scope.cupboards[q]);
 	                                }
 	                            }
@@ -494,30 +499,30 @@ var lang;
 		                        game.paint.value = !game.targets.map[cell];
 		                        game.targets.map[cell] = game.paint.value;
 		                        if (game.targets.map[cell]) {
-		                        	console.log('add target')
+		                        	//console.log('add target')
 		                            arrayTarget.add([cell]);
 		                        } else {
-		                        	console.log('remove target')
-		                        	console.log(arrayTarget)
+		                        	//console.log('remove target')
+		                        	//console.log(arrayTarget)
 		                            arrayTarget.removeOne(cell);
-		                        	console.log(arrayTarget)
+		                        	//console.log(arrayTarget)
 		                        	game.targets.map[cell] = false;
 		                        	
-//		                        	remEl.map(function(e, i){
-//		                            	 game.targets.map[e] = false;
-//		                            });
-//		                        	for (var i = 0; i < $scope.items.length; i++) {
-//		        						if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
-//		        							$scope.items.splice(i, 1);
-//		        							return;
-//		        						}
-//		        					}
+// remEl.map(function(e, i){
+// game.targets.map[e] = false;
+// });
+// for (var i = 0; i < $scope.items.length; i++) {
+// if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
+// $scope.items.splice(i, 1);
+// return;
+// }
+// }
 		                        }
-		                        console.log("Цілі ");
-		                        console.log(arrayTarget);
+		                        //console.log("Цілі ");
+		                        //console.log(arrayTarget);
 		                        targetsCopy = game.targets.map;
 		                    } else {
-		                        console.log("хуйня якась")
+		                        //console.log("хуйня якась")
 		                    }
 							game.draw();
 							break;
@@ -567,7 +572,7 @@ var lang;
 		                	}
 		                }
 		            }
-		            console.log("Start " + curTarget);
+		            //console.log("Start " + curTarget);
 		            return curTarget;
 		        };
 
@@ -578,17 +583,17 @@ var lang;
 		            }
 		        }
 		        this.moveTo = function () {
-		        	console.log(arrayTarget);
+		        	//console.log(arrayTarget);
 		            if (arrayTarget.length > 0) {
 		            	var _target;
 		            	var _targetToDelete;
 		            	var _targetListToDelete;
 		                for (var f = 0; f < arrayTarget.length; f++) {
-		                	console.log(arrayTarget[f]);
+		                	//console.log(arrayTarget[f]);
 		                	for(var z = 0; z < arrayTarget[f].length; z++){
 			                    this.target = arrayTarget[f][z];
 			                    _target = this.target;
-			                    console.log(_target);
+			                    //console.log(_target);
 			                    game.notVisit.addInArray(_target);
 			    		        if(!game.cupBoard.map[_target + 1])
 			    		        	this.target = _target + 1;
@@ -599,34 +604,34 @@ var lang;
 			    		        else if(!game.cupBoard.map[_target - game.width])
 			    		        	this.target = _target - game.width;
 			                    this.path = new Path(game, this.cell, this.target, this.followPath);
-			                    	console.log(this.path.found);
-			                    	console.log(this.path.fmin);
+			                    	//console.log(this.path.found);
+			                    	//console.log(this.path.fmin);
 			                    	if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-			                        buffPath = this.path;
-			                        curTarget = this.target;
-			                        _targetToDelete = _target;
-			                        _targetListToDelete = arrayTarget[f];
-			                    }
-		                	}
+			                    		buffPath = this.path;
+			                    		curTarget = this.target;
+			                    		_targetToDelete = _target;
+			                    		_targetListToDelete = arrayTarget[f];
+			                    	}
+		                		}
 		                	game.notVisit.remove(_targetToDelete);
 		                	_targetToDelete = undefined;
-		                	console.log("not visit");
-		                	console.log(game.notVisit);
+		                	//console.log("not visit");
+		                	//console.log(game.notVisit);
 		                }
 		                buffPath.tracePath();
-		                console.log("toDelete");
-		                console.log(_targetListToDelete);
+		                //console.log("toDelete");
+		                //console.log(_targetListToDelete);
 		                arrayTarget.removeUndefined(_targetListToDelete);
 		                buffPath = undefined;
 		                _targetToDelete = undefined;
                         _targetListToDelete = undefined;
 		                this.cell = curTarget;
-// console.log("Targets: " + arrayTarget);
+		                //console.log("Targets: " + arrayTarget);
 		                this.moveTo();
 		            } else {
 		                this.path = new Path(game, this.cell, game.enter, this.followPath);
 		                this.path.tracePath();
-		                console.log("Finish");
+		                //console.log("Finish");
 		                this.cell = undefined;
 		                curTarget = undefined;
 		                this.target = undefined;
@@ -715,7 +720,7 @@ var lang;
 		                    path.search();
 		                }
 		            }  else {
-		            	console.log('BAD WAY ******************************')
+		            	//console.log('BAD WAY ******************************')
 		            }
 		        };
 		        this.tracePath = function () {
@@ -736,11 +741,11 @@ var lang;
 		        clear();
 		        game.draw();
 		        game.player.cell = game.player.findStart();
-//		        if(typeof(game.player.cell) != "undefied"){
-		        console.log("On click start " + game.player.cell);
+// if(typeof(game.player.cell) != "undefied"){
+		        //console.log("On click start " + game.player.cell);
 		        if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
-//		        }else
-		        	console.log('BadWay')
+// }else
+		        	//console.log('BadWay')
 		    }
 
 		    $scope.openMap = function () {
@@ -854,7 +859,7 @@ var lang;
 
 
 		    $scope.openCupBoard = function (cupBoard) {
-		        console.log('before open');
+		        //console.log('before open');
 		        $mdDialog.show({
 		                controller: OpenCupboardCtrl,
 		                templateUrl: 'template/shared/open.cupBoard.tmpl.html',
@@ -867,10 +872,10 @@ var lang;
 		                fullscreen: $scope.customFullscreen // Only for -xs, -sm
 		            })
 		            .then(function (answer) {
-		                console.log(answer);
+		                //console.log(answer);
 
 		            }, function () {
-		                console.log("cancel");
+		                //console.log("cancel");
 		            });
 		    };
 
@@ -1023,12 +1028,12 @@ var lang;
 								'$window',
 								function($scope, $http, $window) {
 									$scope.sendLoginData = function() {
-										console.log('hello' + $scope.email)
+										//console.log('hello' + $scope.email)
 										var data = $.param({
 											email : $scope.email,
 											password : $scope.password
 										});
-										console.log('Read ' + data);
+										//console.log('Read ' + data);
 
 										var config = {
 											headers : {
@@ -1051,16 +1056,14 @@ var lang;
 																} else {
 																	$scope.error = data.emailErrMsg;
 																}
-																console
-																		.log(data.emailErrMsg);
+																//console.log(data.emailErrMsg);
 															})
 													.error(
 															function(data,
 																	status,
 																	header,
 																	config) {
-																console
-																		.log('fail');
+																//console.log('fail');
 															});
 										} else {
 											cosole.log("sory");
@@ -1077,8 +1080,8 @@ var lang;
 								function($scope, $http) {
 
 									$scope.sendRegData = function() {
-										console.log('hello ' + $scope.email)
-										console.log("date " + dateBirthday)
+										//console.log('hello ' + $scope.email)
+										//console.log("date " + dateBirthday)
 										var data = $.param({
 											email : $scope.email,
 											password : $scope.password,
@@ -1086,7 +1089,7 @@ var lang;
 											lastName : $scope.lastName,
 											birthday : dateBirthday
 										});
-										console.log('Read ' + data);
+										//console.log('Read ' + data);
 
 										var config = {
 											headers : {
@@ -1094,13 +1097,13 @@ var lang;
 											}
 										}
 
-										console.log($('#fName1').val());
-										console.log($('#lName1').val());
+										//console.log($('#fName1').val());
+										//console.log($('#lName1').val());
 
-										console.log($('#emailR').valid() + " "
-												+ $('#fName1').valid() + " "
-												+ $('#lName1').valid() + " "
-												+ $('#passwordR').valid())
+//										console.log($('#emailR').valid() + " "
+//												+ $('#fName1').valid() + " "
+//												+ $('#lName1').valid() + " "
+//												+ $('#passwordR').valid())
 										if ($('#emailR').valid()
 												&& $('#passwordR').valid()
 												&& $('#fName1').valid()
@@ -1115,9 +1118,7 @@ var lang;
 																	status,
 																	headers,
 																	config) {
-																console
-																		.log("QWEER"
-																				+ data.emailErrMsg);
+																//console.log("QWEER"+ data.emailErrMsg);
 																$scope.error = data.emailErrMsg;
 																if (data.emailErrMsg == undefined) {
 																	$scope.success = "Check your email";
@@ -1135,11 +1136,10 @@ var lang;
 																	status,
 																	header,
 																	config) {
-																console
-																		.log('fail');
+																//console.log('fail');
 															});
 										} else {
-											console.log("oq");
+											//console.log("oq");
 										}
 									};
 								} ]);
