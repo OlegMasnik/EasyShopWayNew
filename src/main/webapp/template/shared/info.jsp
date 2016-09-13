@@ -4,7 +4,7 @@
 <md-toolbar class="md-hue-2" md-whiteframe="4">
 <div class="md-toolbar-tools">
 	<h2>
-		<span>Profile</span>
+		<span>{{ 'PROFILE' | translate }}</span>
 	</h2>
 </div>
 </md-toolbar>
@@ -13,45 +13,45 @@
 
 	<md-card flex="50" ng-controller="formCtrl" md-theme-watch> <md-card-title>
 	<md-card-title-text>
-	<div class="cab-category">General information</div>
+	<div class="cab-category">{{ 'GENERAL_INFORMATION' | translate }}</div>
 	</md-card-title-text> </md-card-title> <md-card-content>
 	<form name="userForm" data-ng-init="showInfo()">
 
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <md-icon md-svg-src="images/icons/person.svg"
-				class="name cab-icon"></md-icon> First Name
+				class="name cab-icon"></md-icon> {{ 'FIRST_NAME' | translate }}
 		</label> <input ng-model="firstName"> </md-input-container>
 		
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/person.svg" class="name cab-icon"></md-icon></span>
-			Last Name
+			{{ 'LAST_NAME' | translate }}
 		</label> <input ng-model="lastName"> </md-input-container>
 		
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span>
-			Email
+			{{ 'EMAIL' | translate }}
 		</label> <input ng-model="email" disabled> </md-input-container>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/lang.svg" class="name cab-icon"></md-icon></span>
-			Preferred language
+			{{ 'LANGUAGE' | translate }}
 		</label> <md-select placeholder="User language" ng-model="language"
 			md-on-open="loadUsers()" style="min-width: 200px;"> <md-option
 			ng-value="language.sName" ng-repeat="language in languages">{{language.name}}</md-option>
 		</md-select> </md-input-container>
 	</form>
 	</md-card-content> <md-card-actions layout="row" layout-align="end center">
-	<md-button ng-click="saveInfo()">Save</md-button> <md-button
-		ng-click="showInfo()">Cancel</md-button> </md-card-actions> </md-card>
+	<md-button ng-click="saveInfo()">{{ 'SAVE' | translate }}</md-button> <md-button
+		ng-click="showInfo()">{{ 'CANCEL' | translate }}</md-button> </md-card-actions> </md-card>
 
 	<div flex layout="column">
 		<md-card flex ng-controller="UploadImageCtrl">
 		<form method="POST" id="formUserImg" action="cabinet/image-upload"
 			enctype="multipart/form-data">
 			<md-card-title> <md-card-title-text>
-			<div class="cab-category">Update your photo</div>
+			<div class="cab-category">{{ 'UPDATE_YOUR_PHOTO' | translate }}</div>
 			</md-card-title-text> </md-card-title>
 			<md-card-content >
 			<div style="text-align: center">
@@ -61,31 +61,31 @@
 			</div>
 			</md-card-content>
 			<md-card-actions layout="row" layout-align="end center"> <md-button
-				class="md-raised" type="submit" ng-click="sendImg()">Save</md-button>
-			<md-button class="md-raised" type="reset">Cancel</md-button> </md-card-actions>
+				class="md-raised" type="submit" ng-click="sendImg()">{{ 'SAVE' | translate }}</md-button>
+			<md-button class="md-raised" type="reset">{{ 'CANCEL' | translate }}</md-button> </md-card-actions>
 		</form>
 		</md-card>
 
 <md-card flex="60" ng-controller="changePassCtrl">
 		<form id="changePassForm" ng-model="changePassForm"vname="changePassForm" action="">
 			<md-card-title> <md-card-title-text>
-			<div class="cab-category">Change password</div>
+			<div class="cab-category">{{ 'CHANGE_PASSWORD' | translate }}</div>
 			</md-card-title-text> </md-card-title>
 			<md-card-content> 
 				<form id="changePassForm" ng-model="changePassForm"
 					name="changePassForm" action="">
 					<md-input-container class="md-block" flex-gt-sm="">
-					<label> Old password </label> <input id="oldPass" required
+					<label>{{ 'OLD_PASSWORD' | translate }} </label> <input id="oldPass" required
 						type="password" name="oldPass" ng-model="user.oldPass" minlength="6"
 						maxlength="25" ng-model="oldPass"> </md-input-container>
 					<md-input-container class="md-block" flex-gt-sm="">
-					<label> New password </label> <input id="newPass" required
+					<label>{{ 'NEW PASSWORD' | translate }}</label> <input id="newPass" required
 						type="password" name="newPass" ng-model="user.newPass" minlength="6"
 						maxlength="25" ng-model="newPass"> </md-input-container>
 				</form>
 				<md-card-actions layout="row" layout-align="end center">
-					<md-button class="md-raised" ng-click="changePass()">Save</md-button>
-					<md-button class="md-raised" type="reset" ng-click="cancel()">Cancel</md-button>
+					<md-button class="md-raised" ng-click="changePass()">{{ 'SAVE' | translate }}</md-button>
+					<md-button class="md-raised" type="reset" ng-click="cancel()">{{ 'CANCEL' | translate }}</md-button>
 				</md-card-actions>
 			</md-card-content> 
 		</form>
