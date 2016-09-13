@@ -262,6 +262,8 @@ public class AdminMapServlet extends HttpServlet {
 				} while (i < size && id.equals(cupboards.get(i).getCupboardId()));
 				i--;
 				cupboard.put("values", values);
+				cupboard.put("name_en", cupboards.get(i).getDescriptionEn());
+				cupboard.put("name_uk", cupboards.get(i).getDescriptionUk());
 				cupboard.put("board_count", cupboards.get(i).getBoardAmount());
 				result.add(cupboard);
 			}

@@ -21,9 +21,11 @@
 		class="md-fab md-raised" ng-click="addRow()"> + </md-button> </md-whiteframe> </md-content> </md-card>
 	<!--AMADTS Table-->
 	<md-card> <md-content layout="column" flex> <md-table-container>
+	<form>
 	<table md-table>
 		<thead md-head md-order="query.order">
 			<tr md-row>
+				<th>Checkbox</th>
 				<th md-column ng-repeat="column in autocolumn"
 					md-order-by="{{column.name}}"><span>{{column.display}}</span>
 				</th>
@@ -33,6 +35,7 @@
 		<tbody md-body ng-controller="MailCtrl as mail">
 			<tr md-row
 				ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+				<td md-cell><input type = "checkbox" name = "emails" value = "{{row.e}}"></td>
 				<td md-cell>{{row.fn}}</td>
 				<td md-cell>{{row.ln}}</td>
 				<td md-cell>{{row.e}}</td>
@@ -48,6 +51,7 @@
 			</tr>
 		</tbody>
 	</table>
+	</form>
 	</md-table-container> <md-table-pagination md-limit="query.limit"
 		md-limit-options="limitOptions" md-page="query.page"
 		md-total="{{datatable.count}}" md-page-select="options.pageSelect"></md-table-pagination>
