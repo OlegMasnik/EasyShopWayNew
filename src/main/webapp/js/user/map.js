@@ -218,7 +218,7 @@ var lang;
 					};
 				});
 			}
-
+			
 			function createFilterFor(query) {
 				var lowercaseQuery = angular.lowercase(query);
 
