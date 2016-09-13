@@ -19,9 +19,12 @@
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
 
 	<jsp:include page="../parts/header.jsp"></jsp:include>
-	<md-content layout="row" flex> <span style="width: 250px;"></span>
-	<md-slidenav class="cabinet-sidenav" md-is-locked-open="true"
-		layout="column" flex md-whiteframe="4"> <md-content
+	<md-content layout="row" flex> 
+	
+<!-- 	<span style="width: 250px;"></span> -->
+	
+	<md-slidenav class="cabinet-sidenav" layout="column" md-is-locked-open="true"
+		layout="column" md-whiteframe="4"> <md-content  md-whiteframe="4"
 		layout="column" flex> <a href="#/">
 		<div class="cab-user-logo" layot="row" layout-padding>
 
@@ -36,9 +39,9 @@
 	<md-button href="#products">{{ 'ADMIN_CABINET_PRODUCTS' | translate }}</md-button> 
 		<md-button href="#users">{{ 'ADMIN_CABINET_USERS' | translate }}</md-button>
 	<md-button href="#statistic">{{ 'ADMIN_CABINET_STATISTIC' | translate }}</md-button> </md-content> </md-slidenav> <md-content
-		layout="row" class="main-page" flex>
+		layout="row" flex style="margin-left: 10px;">
 
-	<div flex class="content" layout="column">
+	<div flex class="content" layout="column" >
 		<div ng-view onload="getFoodData()"></div>
 	</div>
 	</md-content> </md-content>

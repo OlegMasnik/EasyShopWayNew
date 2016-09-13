@@ -1,8 +1,8 @@
 @CHARSET "UTF-8";
 
-md-content {
-	background-color: white;
-}
+/* md-content { */
+/* 	background-color: white; */
+/* } */
 
 md-toolbar {
 	
@@ -13,13 +13,14 @@ md-toolbar {
 }
 
 .cabinet-sidenav {
-	position: fixed;
-	top: 63px;
-	height: 100%;
+/* 	position: fixed; */
+/* 	top: 63px; */
+/* 	height: 100%; */
 	width: 250px;
 }
 
 .content {
+	mar
 	background-color: transparent;
 /* 	margin-left: 250px; */
 	padding: 30px;

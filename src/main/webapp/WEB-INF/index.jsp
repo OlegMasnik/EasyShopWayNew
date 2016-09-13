@@ -24,7 +24,7 @@
 	<md-content id="main-content" style="background-image: url('images/index.jpg')" flex>
 	<div id="div0" layout="column">
 		<div flex layout="column" layout-align="center center">
-			<md-button style="background-color : rgba(233, 30, 99, 0.6); height: 45px; font-size: 30px; color : #fff;" ng-controller="PageRedirectCtrl as page" ng-click="page.goToPage('search')">Create product list now</md-button>
+			<md-button style="background-color : rgba(233, 30, 99, 0.8); height: 45px; font-size: 30px; color : #fff;" ng-controller="PageRedirectCtrl as page" ng-click="page.goToPage('search')">Create product list now</md-button>
 			<div>or</div>
 			<md-button class="md-accent" style="height: 45px; font-size: 25px;" id="down_1">See tutorial</md-button>
 		</div>
