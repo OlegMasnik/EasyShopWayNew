@@ -12,49 +12,98 @@ var cH;
 //	});
 //}
 
+
 $(document).ready(function() {
+	
+	$(document).keydown(function(e) {
+		console.log(Math.abs($("#div0").offset().top) + 64);
+		var current = Math.floor((Math.abs($("#div0").offset().top) + 64) /  $('#main-content').height());
+		console.log("Current pos " + current);
+	    switch(e.which) {
+
+	        case 38: // up
+	        	console.log("up");
+	        	$('html, #main-content').animate({
+	    			scrollTop : $('#main-content').height() * (current - 1)
+	    		}, 1000);
+	        break;
+
+	        case 40: // down
+	        	console.log("down");
+	        	$('html, #main-content').animate({
+	    			scrollTop : $('#main-content').height() * (current + 1)
+	    		}, 1000);
+	        break;
+
+	        default: return; // exit this handler for other keys
+	    }
+	    e.preventDefault(); // prevent the default action (scroll / move caret)
+	});
 
 	cH = $('#main-content').height();
 	
 	$("#down_1").click(function() {
+		console.log("Window " + $(window).scrollTop());
+		console.log("Top " + $("#div0").offset().top);
+		console.log("Top " + $("#div1").offset().top);
 		console.log("Top " + $("#div2").offset().top);
+		console.log("Top " + $("#div3").offset().top);
 		$('html, #main-content').animate({
 			scrollTop : $('#div1').height()
 		}, 1000);
 	});
 	
 	$("#down_2").click(function() {
-		console.log("div3 " + $("#div3").offset().top);
-		console.log("div2 " + $("#div2").offset().top);
+		console.log("Window " + $(window).scrollTop());
+		console.log("Top " + $("#div0").offset().top);
+		console.log("Top " + $("#div1").offset().top);
+		console.log("Top " + $("#div2").offset().top);
+		console.log("Top " + $("#div3").offset().top);
+		
 		$('html, #main-content').animate({
 			scrollTop : $('#div2').height() * 2
 		}, 1000);
 	});
 	
 	$("#down_3").click(function() {
-		console.log("div3 " + $("#div3").offset().top);
-		console.log("div2 " + $("#div2").offset().top);
+		console.log("Window " + $(window).scrollTop());
+		console.log("Top " + $("#div0").offset().top);
+		console.log("Top " + $("#div1").offset().top);
+		console.log("Top " + $("#div2").offset().top);
+		console.log("Top " + $("#div3").offset().top);
 		$('html, #main-content').animate({
 			scrollTop : $('#div3').height() * 3
 		}, 1000);
 	});
 	
 	$("#up_1").click(function() {
+		console.log("Window " + $(window).scrollTop());
+		console.log("Top " + $("#div0").offset().top);
 		console.log("Top " + $("#div1").offset().top);
+		console.log("Top " + $("#div2").offset().top);
+		console.log("Top " + $("#div3").offset().top);
 		$('html, #main-content').animate({
 			scrollTop : 0
 		}, 1000);''
 	});
 	
 	$("#up_2").click(function() {
-		console.log("Top " + ($("#div3").offset().top * 2));
+		console.log("Window " + $(window).scrollTop());
+		console.log("Top " + $("#div0").offset().top);
+		console.log("Top " + $("#div1").offset().top);
+		console.log("Top " + $("#div2").offset().top);
+		console.log("Top " + $("#div3").offset().top);
 		$('html, #main-content').animate({
 			scrollTop : $('#main-content').height()
 		}, 1000);
 	});
 	
 	$("#up_3").click(function() {
-		console.log("Top " + ($("#div3").offset().top * 2));
+		console.log("Window " + $(window).scrollTop());
+		console.log("Top " + $("#div0").offset().top);
+		console.log("Top " + $("#div1").offset().top);
+		console.log("Top " + $("#div2").offset().top);
+		console.log("Top " + $("#div3").offset().top);
 		$('html, #main-content').animate({
 			scrollTop : $('#main-content').height() * 2
 		}, 1000);

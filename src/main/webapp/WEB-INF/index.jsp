@@ -27,6 +27,11 @@
 			<div>or</div>
 			<md-button class="md-accent" style="height: 45px; font-size: 25px;" id="down_1">See tutorial</md-button>
 		</div>
+		<div layout="row" class="support-container" layout-align="center center" layout-padding>
+		<div class="support" flex="none">
+			<div layout="row" layout-align="center center" layout-margin>You can use up <img class="support-img" alt="" src="images/keys/up-button.png"> and down <img class="support-img down-but" alt="" src="images/keys/up-button.png"> keys for navigations</div>
+		</div>
+		</div>		
 	</div>
 	<div id="div1" layout="column" md-whiteframe="2" style="background-color: white;">
 		<md-button id="up_1"><i class="material-icons">keyboard_arrow_up</i></md-button>

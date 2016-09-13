@@ -1,6 +1,14 @@
 'use strict';
+
+var lang;
+
+(function() {
+	lang = $('#lang').val() || 'en';
+	console.log(lang);
+})();
+
 		var serApp = angular
-				.module('SearchApp', [ 'ngMaterial', 'ngMessages' ]);
+				.module('SearchApp', [ 'ngMaterial', 'ngMessages', 'pascalprecht.translate' ]);
 		
 		serApp.filter('range', function () {
 		    return function (n) {
@@ -11,7 +19,7 @@
 		        return res;
 		    };
 		});
-
+		
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
 		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog) {
@@ -24,7 +32,7 @@
 				headers : {
 					'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 				}
-			}
+			}	
 			self.click = function() {
 			    console.log($scope.maps);
 			    $scope.getMapByid($scope.maps);
@@ -153,9 +161,6 @@
 			}
 
 			function selectedItemChange(item, text) {
-				console.log("select" + item  + " " + text);
-				console.log(item);
-				console.log("sosd" + item.coordinates);
 				if (item != undefined) {
 					if (find(item) == -1) {
 						$scope.items.push(item);
@@ -183,11 +188,18 @@
 			}
 
 			function remove(value) {
-
-				for (var i = 0; i < $scope.items.length; i++) {
-					if ($scope.items[i].value == value.value) {
-						$scope.items.splice(i, 1);
-						return;
+				console.log('remove')
+				if(value != undefined){
+					value.coordinates.map(function(e, i){
+						game.targets.map[e] = false;
+					});
+					arrayTarget.removeUndefined(value.coordinates);
+					game.draw();
+					for (var i = 0; i < $scope.items.length; i++) {
+						if ($scope.items[i].value == value.value) {
+							$scope.items.splice(i, 1);
+							return;
+						}
 					}
 				}
 			}
@@ -259,6 +271,7 @@
 		    function updateMap(oldMap){
 		    	game = new Game(document.querySelector('canvas'), $scope.config);
 		    	game.way = oldMap.way;
+		    	game.notVisit = oldMap.notVisit;
 		        game.draw();
 		    }
 		    
@@ -314,11 +327,18 @@
 		    var targetsCopy;
 		    var imageCupboard = new Image();
 		    var imagePaydesk = new Image();
+		    var imageTarget = new Image();
+		    var imageTarget_off = new Image();
+		    var imageEnter = new Image();
+		    imageCupboard.src = 'images/cupboard/central pat_ capboard.gif';
+		    imagePaydesk.src =  'images/paydesk/payDesk_90x90.gif';
+		    imageTarget.src =  'images/elements/target.png';
+		    imageTarget_off.src =  'images/elements/target_off.png';
+		    imageEnter.src =  'images/elements/enter.png';
 
 		    var Game = function (canvas, conf) {
 		        game = this;
-		        imageCupboard.src = 'images/cupboard/central pat_ capboard.gif';
-		        imagePaydesk.src =  'images/paydesk/payDesk_90x90.gif';
+		        this.notVisit = [];
 		        this.enter = $scope.config.enter;
 		        this.canvas = canvas;
 		        this.width = conf.width;
@@ -360,15 +380,13 @@
 		            }
 		            if (this.targets.map[cell]) return '#522';
 		            if (this.way.map[cell]) return waycolor;
-		            if ($scope.paydesks.indexOf(cell) != -1){
-// image.src = 'images/paydesk/payDesk_90x90.gif';
-		            	return '#ff870d';
-		            }
+//		            if ($scope.paydesks.indexOf(cell) != -1){
+//		            	return '#ff870d';
+//		            }
 		            if ($scope.walls.indexOf(cell) != -1) return '#555';
-		            if (this.cupBoard.map[cell]){
-// imageObj.src = 'images/cupboard/central pat_ capboard.gif';
-		            	return "";
-		            }
+//		            if (this.cupBoard.map[cell]){
+//		            	return "";
+//		            }
 		            return '#eee';
 		        };
 		        this.draw = function () {
@@ -380,38 +398,47 @@
 		                    game.ctx.fillStyle = game.getCellColor(cell);
 	                        if (!(targetsCopy != undefined && targetsCopy[cell])) {
 		                        	if(game.cupBoard.map[cell]){
-			                        	game.ctx.drawImage(imageCupboard, x * game.cellSpace + game.borderWidth,
+		                        	game.ctx.drawImage(imageCupboard, x * game.cellSpace + game.borderWidth,
+				                            y * game.cellSpace + game.borderWidth,
+				                            game.cellSize, game.cellSize);	
+		                        	}else if($scope.paydesks.indexOf(cell) != -1){
+		                        		game.ctx.drawImage(imagePaydesk, x * game.cellSpace + game.borderWidth,
 					                            y * game.cellSpace + game.borderWidth,
 					                            game.cellSize, game.cellSize);	
-			                        	}else if($scope.paydesks.indexOf(cell) != -1){
-			                        		game.ctx.drawImage(imagePaydesk, x * game.cellSpace + game.borderWidth,
-						                            y * game.cellSpace + game.borderWidth,
-						                            game.cellSize, game.cellSize);	
-				                        }else{
-					                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-					                            y * game.cellSpace + game.borderWidth,
+			                        }else{
+				                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+				                            y * game.cellSpace + game.borderWidth,
+				                            game.cellSize, game.cellSize);
+				                        if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
+
+					                        game.ctx.fillStyle = '#eee';
+					                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
 					                            game.cellSize, game.cellSize);
-					                        if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
 
-						                        game.ctx.fillStyle = '#eee';
-						                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
-						                            game.cellSize, game.cellSize);
-
-						                        game.ctx.beginPath();
-						                        game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
-						                            y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
-						                        game.ctx.fillStyle = waycolor;
-						                        game.ctx.strokeStyle = waycolor;
-						                        game.ctx.fill();
-						                        game.ctx.stroke();
-						                    }
-				                        }
+					                        game.ctx.beginPath();
+					                        game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
+					                            y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
+					                        game.ctx.fillStyle = waycolor;
+					                        game.ctx.strokeStyle = waycolor;
+					                        game.ctx.fill();
+					                        game.ctx.stroke();
+					                    }
+			                        }
 		                        }else{
 		                        	var tmp1 = this.targets.map[cell];
 		                            var tmp2 = this.way.map[cell];
 		                            this.targets.map[cell] = true;
 		                            this.way.map[cell] = false;
-		                            game.ctx.fillStyle = game.getCellColor(cell);
+// game.ctx.fillStyle = game.getCellColor(cell);
+		                            if(game.notVisit.indexOf(cell) != -1){
+		                            	game.ctx.drawImage(imageTarget_off, x * game.cellSpace + game.borderWidth,
+					                            y * game.cellSpace + game.borderWidth,
+					                            game.cellSize, game.cellSize);
+		                            }else{
+			                        	game.ctx.drawImage(imageTarget, x * game.cellSpace + game.borderWidth,
+					                            y * game.cellSpace + game.borderWidth,
+					                            game.cellSize, game.cellSize);
+		                            }
 		                            this.targets.map[cell] = tmp1;
 		                            this.way.map[cell] = tmp2;
 		                        }
@@ -470,7 +497,20 @@
 		                            arrayTarget.add([cell]);
 		                        } else {
 		                        	console.log('remove target')
-		                            arrayTarget.removeUndefined([cell]);
+		                        	console.log(arrayTarget)
+		                            arrayTarget.removeOne(cell);
+		                        	console.log(arrayTarget)
+		                        	game.targets.map[cell] = false;
+		                        	
+//		                        	remEl.map(function(e, i){
+//		                            	 game.targets.map[e] = false;
+//		                            });
+//		                        	for (var i = 0; i < $scope.items.length; i++) {
+//		        						if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
+//		        							$scope.items.splice(i, 1);
+//		        							return;
+//		        						}
+//		        					}
 		                        }
 		                        console.log("Цілі ");
 		                        console.log(arrayTarget);
@@ -547,7 +587,8 @@
 		                	for(var z = 0; z < arrayTarget[f].length; z++){
 			                    this.target = arrayTarget[f][z];
 			                    _target = this.target;
-			                    console.log(_target)
+			                    console.log(_target);
+			                    game.notVisit.addInArray(_target);
 			    		        if(!game.cupBoard.map[_target + 1])
 			    		        	this.target = _target + 1;
 			    		        else if(!game.cupBoard.map[_target - 1])
@@ -564,6 +605,10 @@
 			                        _targetListToDelete = arrayTarget[f];
 			                    }
 		                	}
+		                	game.notVisit.remove(_targetToDelete);
+		                	_targetToDelete = undefined;
+		                	console.log("not visit");
+		                	console.log(game.notVisit);
 		                }
 		                buffPath.tracePath();
 		                console.log("toDelete");
@@ -712,7 +757,6 @@
 		        game.cupBoard = new Map(game.width * game.height);
 		        $scope.cupboards = obj;
 		        for (var i = 0; i < obj.length; i++) {
-		            console.log(obj[i]);
 		            obj[i].values.map(function (e, i) {
 		                game.cupBoard.map[e] = true;
 		            });
@@ -721,11 +765,37 @@
 
 		    Array.prototype.removeUndefined = function (value) {
 		    	if(value != undefined){
-			        this[this.indexOf(value)] = undefined;
-			        this.sort();
-			        if (typeof (this[this.length - 1]) == "undefined") {
-			            this.pop();
-			        }
+			        for(var i=0;i<this.length; i++)
+			        	if(this[i].indexOf(value[0]) != -1){
+			        		var delEl = this[i];
+			        		this[i] = undefined;
+			        		this.sort();
+			        		if (typeof (this[this.length - 1]) == "undefined") {
+				    			this.pop();
+				    		}
+			        		return delEl;
+			        	}
+		    	}
+		    	return undefined;
+		    }
+		    Array.prototype.removeOne = function (value) {
+	    		for(var i=0;i<this.length; i++){
+	    			var index = this[i].indexOf(value);
+	    			if(index != -1){
+	    				this[i][index] = undefined;
+	    				this[i].sort();
+	    				this[i].pop();
+	    			}
+	    		}
+	    }
+		    Array.prototype.remove = function (value) {
+		    	if(value != undefined){
+		    		var i = this.indexOf(value);
+		    		if(i != -1){
+		    			this[i] = undefined;
+		    			this.sort();
+		    			this.pop();
+		    		}
 		    	}
 		    }
 		    	
@@ -741,6 +811,11 @@
 		        if (check) {
 		            this.push(value);
 		        }
+		    }
+		    
+		    Array.prototype.addInArray = function (value) {
+		    	if(this.indexOf(value) == -1)
+		    		this.push(value);
 		    }
 
 		    function checkRange(s, e, d) {
@@ -767,8 +842,6 @@
 
 		    function checkCell(i) {
 		        return game.cupBoard.map[i];
-// return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 ||
-// game.enter == i;
 		    }
 
 
@@ -821,21 +894,6 @@
 		                }
 		            }
 		        }, function myError(response) {});
-//				
-//
-// $http({
-// method: "GET",
-// url: "/EasyShopWayNew/edit_products?type=getAllProducts"
-// }).then(function mySucces(response) {
-// console.log("all Prods")
-// $scope.allProducts = response.data;
-// console.log(response);
-// }, function myError(response) {
-//
-// });
-//
-// console.log("cupBoarards");
-// console.log($scope.cupboardCells);
 		        
 		        $scope.hide = function () {
 		            $mdDialog.hide();
@@ -845,45 +903,8 @@
 		            $mdDialog.cancel();
 		        };
 		        $scope.answer = function () {
-// $scope.cupboardCells.map(function (e, i) {
-// if (typeof (e) == "string")
-// $scope.cupboardCells[i] = JSON.parse(e)
-// })
-// console.log($scope.cupboardCells);
-// $scope.sendCupboardData();
 		            $mdDialog.hide();
 		        };
-
-// $scope.sendCupboardData = function () {
-// var config = {
-// headers: {
-// 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-// }
-// }
-// var data = [];
-// $scope.cupboardCells.map(function (e, i) {
-// if (typeof (e) != "undefined" || e != null)
-// data.push({
-// prodId: e.prodId,
-// cupboardId: item.id,
-// place: i
-// })
-// });
-//
-// var sendData = $.param({
-// type: 'setProducts',
-// data: JSON.stringify(data)
-// });
-// console.log($scope.cupboardCells);
-// console.log(data);
-// console.log(sendData);
-// $http.post('/EasyShopWayNew/edit_products', sendData, config)
-// .success(function (data, status, headers) {
-// console.log("success send products")
-// }).error(function (data, status, header, config) {
-// console.log('failed send products');
-// });
-// }
 
 		    }
 
@@ -918,7 +939,6 @@
 		    }
 		    
 		    start();
-
 		}
 		
 		

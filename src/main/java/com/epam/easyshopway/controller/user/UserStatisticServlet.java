@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,6 +62,7 @@ public class UserStatisticServlet extends HttpServlet {
 			JSONObject responseObject = new JSONObject();
 			responseObject.put("pie", pieChart);
 			responseObject.put("column", columnChart);
+			responseObject.put("lang", user.getLanguage());
 			response.getWriter().write(responseObject.toString());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -72,18 +75,19 @@ public class UserStatisticServlet extends HttpServlet {
 		boolean isEnglish = "en".equals(user.getLanguage());
 		List<ProductsTypeCount> productsType;
 		String diagramName;
+		
+		Locale locale = new Locale(user.getLanguage());
+		ResourceBundle bundle = ResourceBundle.getBundle("/diagram_i18n/diagram", locale);
 
 		if ("user".equals(user.getRole())) {
 			int id = user.getId();
 			productsType = ProductsTypeCountService.getUserProductTypesUser(id,
 					startDate, endDate);
-			diagramName = isEnglish ? "Often searched groups of food"
-					: "Групи продуктів, які Ви часто шукали";
+			diagramName = bundle.getString("pieDiagramNameUser");
 		} else {
 			productsType = ProductsTypeCountService.getUserProductTypesAdmin(
 					startDate, endDate);
-			diagramName = isEnglish ? "Often searched groups of food"
-					: "Групи продуктів, які часто шукають";
+			diagramName = bundle.getString("pieDiagramNameAdmin");
 		}
 
 		JSONObject responseObject = new JSONObject();
@@ -94,7 +98,7 @@ public class UserStatisticServlet extends HttpServlet {
 		JSONObject title = new JSONObject();
 		title.put("text", diagramName);
 		responseObject.put("title", title);
-		inSeries.put("name", isEnglish ? "Persentage" : "У відсотках");
+		inSeries.put("name", isEnglish ? "Percentage" : bundle.getString("percentage"));
 		for (int i = 0; i < productsType.size(); i++) {
 			JSONObject foodType = new JSONObject();
 			String productTypeName = isEnglish ? productsType.get(i)
@@ -121,32 +125,34 @@ public class UserStatisticServlet extends HttpServlet {
 		List<DiagramShopCount> shopsCount;
 		int count;
 		String diagramName;
+		
+		Locale locale = new Locale(user.getLanguage());
+		ResourceBundle bundle = ResourceBundle.getBundle("/diagram_i18n/diagram", locale);
+		
 		if ("user".equals(user.getRole())) {
 			int id = user.getId();
 			shopsCount = DiagramShopCountService.getShopCountByUserId(id,
 					startDate, endDate);
 			count = DiagramShopCountService.getTotalShopCountByUserId(id,
 					startDate, endDate);
-			diagramName = isEnglish ? "Shops You often searched in"
-					: "Магазини, в яких Ви часто шукаєте";
+			diagramName = bundle.getString("pieDiagramNameUser");
 		} else {
 			shopsCount = DiagramShopCountService.getShopCount(startDate,
 					endDate);
 			count = DiagramShopCountService.getTotalShopCount(startDate,
 					endDate);
-			diagramName = isEnglish ? "Most popular shops"
-					: "Найпопулярніші магазини";
+			diagramName = bundle.getString("pieDiagramNameAdmin");
 		}
 
 		JSONObject responseObject = new JSONObject();
 		JSONArray series = new JSONArray();
 		JSONObject inSeries = new JSONObject();
 		JSONObject xAxis = new JSONObject();
-		xAxis.put("type", isEnglish ? "Shops" : "Магазини");
+		xAxis.put("type", isEnglish ? "Shops" : bundle.getString("shops"));
 		responseObject.put("xAxis", xAxis);
 		JSONObject yAxis = new JSONObject();
 		JSONObject titleAxis = new JSONObject();
-		titleAxis.put("text", isEnglish ? "Popularity" : "Популярність");
+		titleAxis.put("text", isEnglish ? "Popularity" : bundle.getString("popularity"));
 		yAxis.put("title", titleAxis);
 		responseObject.put("yAxis", yAxis);
 		JSONArray data = new JSONArray();
@@ -154,7 +160,7 @@ public class UserStatisticServlet extends HttpServlet {
 		JSONObject title = new JSONObject();
 		title.put("text", diagramName);
 		responseObject.put("title", title);
-		inSeries.put("name", isEnglish ? "Shop" : "Магазин");
+		inSeries.put("name", isEnglish ? "Shop" : bundle.getString("shop"));
 		for (int i = 0; i < shopsCount.size(); i++) {
 			JSONObject shop = new JSONObject();
 			String shopName = isEnglish ? shopsCount.get(i).getNameEnglish()
