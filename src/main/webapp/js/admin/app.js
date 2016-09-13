@@ -206,6 +206,7 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', f
         });
         console.log("Finish");
         
+        
     };
     
     function showUserBlockToast(email, active){
@@ -213,6 +214,53 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', f
     		showToast($mdToast, $scope, "User " + email + " is blocked")
     	else
     		showToast($mdToast, $scope, "User " + email + " is unlocked")
+    }
+    
+    function sendSelectedValues() {
+    	var emails = ""; 
+    	$('input[name="emails"]:checked').each(function() {
+    		   a += $(this).val() + " ";
+    		});
+    	var messData = {
+				username : "Selected users",
+				email : "users emails"
+		}
+		console.log(messData);
+
+		$mdDialog.show({
+			controller : DialogCtrl,
+			templateUrl : 'mail.tmpl.html',
+			parent : angular.element(document.body),
+			clickOutsideToClose : true,
+			fullscreen : $scope.customFullscreen,
+			locals : {
+                message: messData
+            }
+		}).then(function(answer) {
+			 var config = {
+			            headers: {
+			                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+			            }
+			 }
+			 var data = $.param({
+					emails : emails,
+					header : answer.title,
+					body : answer.text
+			 });
+			 
+			 console.log(answer);
+			 console.log("Data " + data);
+			        $http
+			            .post('/EasyShopWayNew/sendmail', data,
+			                config).success(
+			                function (data, status, headers,
+			                    config) {
+			                    console.log("Send mail to " + answer.email);
+			                }).error(
+			                function (data, status, header,
+			                    config) {});
+		}, function() {
+		});
     }
 }]);
 

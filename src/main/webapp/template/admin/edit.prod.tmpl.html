@@ -2,25 +2,27 @@
 <form ng-cloak>
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Edit Product</h2>
+		<h2>{{ 'PRODUCT' | translate }}</h2>
 		<span flex></span>
-		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+		<md-button class="md-icon-button" ng-click="cancel()">&#10006;</md-button>
 	</div>
 	</md-toolbar>
 
-	<md-dialog-content>
-	<div class="md-dialog-content">
-		<md-input-container> <label>English name</label>
+	<md-dialog-content layout="column" layout-padding>
+	<div layout="row">
+		<md-input-container> <label>{{ 'ENGLISH_NAME' | translate }}</label>
 		<input name="name_en" type="text" required ng-model="item.nen"></md-input-container>
 
-		<md-input-container> <label>Ukraine name</label>
+		<md-input-container> <label>{{ 'UKRAINE_NAME' | translate }}</label>
 		<input name="name_uk" type="text" required ng-model="item.nuk"></md-input-container>
-		<br>
-		<md-select ng-model="selectedType"> <md-option
-			ng-value="type" ng-repeat="type in types">{{ type.nen }} - {{type.nuk}}</md-option>
-		</md-select>
+	</div>
+	<md-input-container> <label>{{ 'PRODUCT_TYPE' | translate }}</label> <md-select
+		ng-model="selectedType"> <md-option ng-value="type"
+		ng-repeat="type in types">{{ type.nen }} - {{type.nuk}}</md-option> </md-select> </md-input-container>
 
-		<md-dialog-actions layout="row"> <span flex></span><md-button
-			ng-click="answer(item, selectedType)"> Save </md-button> </md-dialog-actions>
+	</md-dialog-content>
+
+	<md-dialog-actions layout="row"> <span flex></span>
+	<md-button ng-click="answer(item, selectedType)"> {{ 'SAVE' | translate }} </md-button> </md-dialog-actions>
 </form>
 </md-dialog>
