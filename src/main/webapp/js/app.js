@@ -156,7 +156,7 @@ app.config(function($translateProvider) {
 		
 		ADMIN_CABINET_MAP:'Карта',
 		ADMIN_CABINET_USERS:'Користувачі',
-		ADMIN_CABINET_PRODUCTS:'Продукти',
+		ADMIN_CABINET_PRODUCTS:'Товари',
 		ADMIN_CABINET_STATISTIC:'Статистика',
 		
 		DATE:'Дата',
@@ -168,8 +168,8 @@ app.config(function($translateProvider) {
 		SMART_SEARCH:'Розумний пошук',
 		SEARCH:'Пошук',
 		OPTION:'Опції',
-		PRODUCT_TYPE:'Тип продуктів',
-		PRODUCT:'Продукти',
+		PRODUCT_TYPE:'Тип товарів',
+		PRODUCT:'Товари',
 		EDIT_TYPE:'Редагувати тип',
 		COLUMN:'Колонки',
 		
