@@ -10,24 +10,26 @@
 </md-toolbar>
 
 <div layout="row" flex="none">
-
-	<md-card flex="50" ng-controller="formCtrl" md-theme-watch> <md-card-title>
+	
+	<div flex="50" layout="column">
+	<md-card flex ng-controller="formCtrl" md-theme-watch> 
+	<md-card-title>
 	<md-card-title-text>
 	<div class="cab-category">General information</div>
-	</md-card-title-text> </md-card-title> <md-card-content>
+	</md-card-title-text> </md-card-title> <md-card-content flex>
 	<form name="userForm" data-ng-init="showInfo()">
 
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <md-icon md-svg-src="images/icons/person.svg"
 				class="name cab-icon"></md-icon> First Name
 		</label> <input ng-model="firstName"> </md-input-container>
-		
+
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/person.svg" class="name cab-icon"></md-icon></span>
 			Last Name
 		</label> <input ng-model="lastName"> </md-input-container>
-		
+
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span>
@@ -43,52 +45,70 @@
 		</md-select> </md-input-container>
 	</form>
 	</md-card-content> <md-card-actions layout="row" layout-align="end center">
-	<md-button ng-click="saveInfo()">Save</md-button> <md-button
-		ng-click="showInfo()">Cancel</md-button> </md-card-actions> </md-card>
+	<md-button class="md-raised" ng-click="saveInfo()">Save</md-button> <md-button class="md-raised"
+		ng-click="showInfo()">Cancel</md-button> </md-card-actions> 
+		</md-card>
+		</div>
+
 
 	<div flex layout="column">
-		<md-card flex ng-controller="UploadImageCtrl">
-		<form method="POST" id="formUserImg" action="cabinet/image-upload"
+	<form method="POST" id="formUserImg" action="cabinet/image-upload"
 			enctype="multipart/form-data">
-			<md-card-title> <md-card-title-text>
+		<md-card  ng-controller="UploadImageCtrl">
+		<md-card-title> <md-card-title-text>
 			<div class="cab-category">Update your photo</div>
 			</md-card-title-text> </md-card-title>
-			<md-card-content >
-			<div style="text-align: center">
-				<input  style="width: 65%;" type="file"
+		<md-card-content layout="column">
+			
+			<md-input-container  flex style=" text-align: center; margin-bottom: 0px;  margin-top: 8px;">
+				<div class="fileinputs">
+				<input type="file"
 					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
-					ng-model="file" name="file" id="file" class="md-raised" required />
-			</div>
-			</md-card-content>
-			<md-card-actions layout="row" layout-align="end center"> <md-button
-				class="md-raised" type="submit" ng-click="sendImg()">Save</md-button>
-			<md-button class="md-raised" type="reset">Cancel</md-button> </md-card-actions>
-		</form>
-		</md-card>
+					ng-model="file" name="file" id="file" class="md-raised file" required />
+					</div>
 
-<md-card flex="60" ng-controller="changePassCtrl">
-		<form id="changePassForm" ng-model="changePassForm"vname="changePassForm" action="">
-			<md-card-title> <md-card-title-text>
+
+<!-- <input type="file" class="file" /> -->
+<!--  <div class="fakefile"> -->
+<!--   <input /> -->
+<!--   <img src="images/admin.png" /> -->
+<!--  </div> -->
+<!--  </div> -->
+
+
+			</md-input-container>
+		
+		</md-card-content>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button class="md-raised" type="submit" ng-click="sendImg()">Save</md-button>
+			<md-button class="md-raised" type="reset">Cancel</md-button> </md-card-actions>
+		</md-card>
+		</form>
+
+<form id="changePassForm" ng-model="changePassForm"
+				name="changePassForm" action="">
+		<md-card  ng-controller="changePassCtrl">
+		<md-card-title> <md-card-title-text>
 			<div class="cab-category">Change password</div>
 			</md-card-title-text> </md-card-title>
-			<md-card-content> 
-				<form id="changePassForm" ng-model="changePassForm"
-					name="changePassForm" action="">
-					<md-input-container class="md-block" flex-gt-sm="">
-					<label> Old password </label> <input id="oldPass" required
-						type="password" name="oldPass" ng-model="user.oldPass" minlength="6"
-						maxlength="25" ng-model="oldPass"> </md-input-container>
-					<md-input-container class="md-block" flex-gt-sm="">
-					<label> New password </label> <input id="newPass" required
-						type="password" name="newPass" ng-model="user.newPass" minlength="6"
-						maxlength="25" ng-model="newPass"> </md-input-container>
-				</form>
-				<md-card-actions layout="row" layout-align="end center">
-					<md-button class="md-raised" ng-click="changePass()">Save</md-button>
-					<md-button class="md-raised" type="reset" ng-click="cancel()">Cancel</md-button>
-				</md-card-actions>
-			</md-card-content> 
-		</form>
+			<md-card-content>
+			
+				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px;  margin-top: 8px;">
+				<label> Old password </label> <input id="oldPass" required
+					type="password" name="oldPass" ng-model="user.oldPass"
+					minlength="6" maxlength="25" ng-model="oldPass"> </md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px; margin-top: 8px;">
+				<label> New password </label> <input id="newPass" required
+					type="password" name="newPass" ng-model="user.newPass"
+					minlength="6" maxlength="25" ng-model="newPass"> </md-input-container>
+
+			</md-card-content>
+			<md-card-actions layout="row" layout-align="end center">
+			<md-button class="md-raised" ng-click="changePass()">Save</md-button>
+			<md-button class="md-raised" type="reset" ng-click="cancel()">Cancel</md-button>
+			</md-card-actions>
+	
 		</md-card>
+		</form>
 	</div>
 </div>
