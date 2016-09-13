@@ -1,25 +1,29 @@
 <md-dialog>
-<form ng-cloak method="POST" action="/EasyShopWayNew/type" enctype="multipart/form-data">
+<form ng-cloak method="POST" action="/EasyShopWayNew/type"
+	enctype="multipart/form-data">
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Edit Product</h2>
+		<h2>{{ 'PRODUCT_TYPE' | translate }}</h2>
 		<span flex></span>
-		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+		<md-button class="md-icon-button" ng-click="cancel()">&#10006;</md-button>
 	</div>
 	</md-toolbar>
 
-	<md-dialog-content>
-	<div class="md-dialog-content">
-	<input type="text" name="id" hidden ng-model="item.id">
-		<md-input-container> <label>English name</label>
-		<input name="name_en" type="text" required ng-model="item.nen"></md-input-container>
+	<md-dialog-content layout-padding layout="column"> <input type="text" name="id"
+		hidden ng-model="item.id">
+		<div layout="row">
+		<md-input-container>
+	<label>{{ 'ENGLISH_NAME' | translate }}</label> <input name="name_en" type="text" required
+		ng-model="item.nen"></md-input-container> <md-input-container>
+	<label>{{ 'UKRAINE_NAME' | translate }}</label> <input name="name_uk" type="text" required
+		ng-model="item.nuk"></md-input-container>
+		</div>
+	<md-input-container>
+	
+	<input type="file" ng-model="item.img" name="file" id="file" /></md-input-container> 
+	</md-dialog-content>
+	<md-dialog-actions layout-padding layout="row"> <span flex></span>
 
-		<md-input-container> <label>Ukraine name</label>
-		<input name="name_uk" type="text" required ng-model="item.nuk"></md-input-container>
-		<br><md-input-container> <input type="file"
-			ng-model="item.img" name="file" id="file" /> </md-input-container>
-		<md-dialog-actions layout="row"> <span flex></span>
-
-		<md-button type="submit"> Save </md-button></md-dialog-actions>
+	<md-button type="submit"> {{ 'SAVE' | translate }} </md-button></md-dialog-actions>
 </form>
 </md-dialog>

@@ -1,10 +1,20 @@
 'use strict';
 		var serApp = angular
 				.module('SearchApp', [ 'ngMaterial', 'ngMessages' ]);
+		
+		serApp.filter('range', function () {
+		    return function (n) {
+		        var res = [];
+		        for (var i = 0; i < n; i++) {
+		            res.push(i);
+		        }
+		        return res;
+		    };
+		});
 
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
-		function DemoCtrl($timeout, $q, $log, $scope, $http) {
+		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog) {
 			var self = this;
 			self.a = 1;
 			self.simulateQuery = false;
@@ -92,7 +102,7 @@
 				var ids = [];
 
 				for (var i = 0; i < $scope.items.length; i++) {
-				ids[i] = ($scope.items[i].value);
+					ids[i] = ($scope.items[i].value);
 				}
 
 				console.log(ids);
@@ -235,18 +245,21 @@
 		    $scope.incScale = function(){
 		    	console.log("+")
 		    	$scope.config.cellSize++;
-		    	start();
-		    	start();
+		    	updateMap(game);
 		    };
 		    $scope.decScale = function(){
 		    	console.log("-")
 		    	$scope.config.cellSize--;
-		    	start();
-		    	start();
+		    	updateMap(game);
 		    }
 		    $scope.scale = function(){
-		    	start();
-		    	start();
+		    	updateMap(game);
+		    }
+		    
+		    function updateMap(oldMap){
+		    	game = new Game(document.querySelector('canvas'), $scope.config);
+		    	game.way = oldMap.way;
+		        game.draw();
 		    }
 		    
 		    function start() {
@@ -299,11 +312,13 @@
 		    var type;
 		    var waycolor = '#d80000';
 		    var targetsCopy;
-		    var imageObj = new Image();
+		    var imageCupboard = new Image();
+		    var imagePaydesk = new Image();
 
 		    var Game = function (canvas, conf) {
 		        game = this;
-		        imageObj.src = 'images/cupboard/central pat_ capboard.gif';
+		        imageCupboard.src = 'images/cupboard/central pat_ capboard.gif';
+		        imagePaydesk.src =  'images/paydesk/payDesk_90x90.gif';
 		        this.enter = $scope.config.enter;
 		        this.canvas = canvas;
 		        this.width = conf.width;
@@ -344,16 +359,15 @@
 		                return '#252';
 		            }
 		            if (this.targets.map[cell]) return '#522';
+		            if (this.way.map[cell]) return waycolor;
 		            if ($scope.paydesks.indexOf(cell) != -1){
-		            	imageObj.src = 'images/paydesk/payDesk_90x90.gif';
-		            	return;	
-//		            	return '#ff870d;
+// image.src = 'images/paydesk/payDesk_90x90.gif';
+		            	return '#ff870d';
 		            }
 		            if ($scope.walls.indexOf(cell) != -1) return '#555';
-		            if (this.way.map[cell]) return waycolor;
 		            if (this.cupBoard.map[cell]){
-		            	imageObj.src = 'images/cupboard/central pat_ capboard.gif';
-		            	return;
+// imageObj.src = 'images/cupboard/central pat_ capboard.gif';
+		            	return "";
 		            }
 		            return '#eee';
 		        };
@@ -364,38 +378,43 @@
 		            for (var y = 0; y < game.height; y++) {
 		                for (var x = 0; x < game.width; x++) {
 		                    game.ctx.fillStyle = game.getCellColor(cell);
-		                    if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
+	                        if (!(targetsCopy != undefined && targetsCopy[cell])) {
+		                        	if(game.cupBoard.map[cell]){
+			                        	game.ctx.drawImage(imageCupboard, x * game.cellSpace + game.borderWidth,
+					                            y * game.cellSpace + game.borderWidth,
+					                            game.cellSize, game.cellSize);	
+			                        	}else if($scope.paydesks.indexOf(cell) != -1){
+			                        		game.ctx.drawImage(imagePaydesk, x * game.cellSpace + game.borderWidth,
+						                            y * game.cellSpace + game.borderWidth,
+						                            game.cellSize, game.cellSize);	
+				                        }else{
+					                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+					                            y * game.cellSpace + game.borderWidth,
+					                            game.cellSize, game.cellSize);
+					                        if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
 
-		                        game.ctx.fillStyle = '#eee';
-		                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
-		                            game.cellSize, game.cellSize);
+						                        game.ctx.fillStyle = '#eee';
+						                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
+						                            game.cellSize, game.cellSize);
 
-		                        game.ctx.beginPath();
-		                        game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
-		                            y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
-		                        game.ctx.fillStyle = waycolor;
-		                        game.ctx.strokeStyle = waycolor;
-		                        game.ctx.fill();
-		                        game.ctx.stroke();
-		                    } else {
-		                        if (targetsCopy != undefined && targetsCopy[cell]) {
-		                            var tmp1 = this.targets.map[cell];
+						                        game.ctx.beginPath();
+						                        game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
+						                            y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
+						                        game.ctx.fillStyle = waycolor;
+						                        game.ctx.strokeStyle = waycolor;
+						                        game.ctx.fill();
+						                        game.ctx.stroke();
+						                    }
+				                        }
+		                        }else{
+		                        	var tmp1 = this.targets.map[cell];
 		                            var tmp2 = this.way.map[cell];
 		                            this.targets.map[cell] = true;
 		                            this.way.map[cell] = false;
 		                            game.ctx.fillStyle = game.getCellColor(cell);
 		                            this.targets.map[cell] = tmp1;
 		                            this.way.map[cell] = tmp2;
-		                        }else if(game.cupBoard.map[cell] || $scope.paydesks.indexOf(cell) != -1){
-		                        	game.ctx.drawImage(imageObj, x * game.cellSpace + game.borderWidth,
-				                            y * game.cellSpace + game.borderWidth,
-				                            game.cellSize, game.cellSize);	
-		                        }else{
-			                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-			                            y * game.cellSpace + game.borderWidth,
-			                            game.cellSize, game.cellSize);
 		                        }
-		                    }
 		                    cell++;
 		                }
 		            }
@@ -438,8 +457,8 @@
 							break;
 						case 2:
 							if(startered){
-								startered = false();
-						    	game.draw();
+								startered = false;
+								clear();
 							}
 							if (checkCell(cell) && !game.paint.active) {
 		                        game.paint.active = true;
@@ -484,29 +503,6 @@
 		        var player = this;
 		        this.target = this.cell;
 
-//		        this.findStart = function () {
-//		            for (var i = 0; i < $scope.paydesks.length; i++) {
-//		                this.cell = $scope.paydesks[i];
-//		                for (var j = 0; j < arrayTarget.length; j++) {
-//		                    this.target = arrayTarget[j];
-//		                    var _target = this.target;
-//		    		        if(!game.cupBoard.map[_target + 1])
-//		    		        	this.target = _target + 1;
-//		    		        else if(!game.cupBoard.map[_target - 1])
-//		    		        	this.target = _target - 1;
-//		    		        else if(!game.cupBoard.map[_target + game.width])
-//		    		        	this.target = _target +  game.width;
-//		    		        else if(!game.cupBoard.map[_target - game.width])
-//		    		        	this.target = _target - game.width;
-//		                    this.path = new Path(game, this.cell, this.target, this.followPath);
-//		                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-//		                        buffPath = this.path;
-//		                        curTarget = this.cell;
-//		                    }
-//		                }
-//		            }
-//		            return curTarget;
-//		        };
 		        this.findStart = function () {
 		            for (var i = 0; i < $scope.paydesks.length; i++) {
 		                this.cell = $scope.paydesks[i];
@@ -577,7 +573,7 @@
 		                _targetToDelete = undefined;
                         _targetListToDelete = undefined;
 		                this.cell = curTarget;
-//		                console.log("Targets: " + arrayTarget);
+// console.log("Targets: " + arrayTarget);
 		                this.moveTo();
 		            } else {
 		                this.path = new Path(game, this.cell, game.enter, this.followPath);
@@ -694,15 +690,11 @@
 		        if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
 		    }
 
-		    $scope.radioOnClick = function (value) {
-		        type = value;
-		        console.log(type);
-		    }
-
 		    $scope.openMap = function () {
 		            game = new Game(document.querySelector('canvas'), $scope.config);
 		            game.draw();
 		    }
+		    
 		    function wait(ms) {
 		        var d = new Date();
 		        var d2 = null;
@@ -749,9 +741,6 @@
 		        if (check) {
 		            this.push(value);
 		        }
-//		    	if (this.indexOf(value) == -1) {
-//		    		this.push(value);
-//		    	}
 		    }
 
 		    function checkRange(s, e, d) {
@@ -778,15 +767,16 @@
 
 		    function checkCell(i) {
 		        return game.cupBoard.map[i];
-//		        return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 || game.enter == i;
+// return $scope.paydesks.indexOf(i) != -1 || $scope.walls.indexOf(i) != -1 ||
+// game.enter == i;
 		    }
 
 
 		    $scope.openCupBoard = function (cupBoard) {
 		        console.log('before open');
 		        $mdDialog.show({
-		                controller: EditCupboardCtrl,
-		                templateUrl: 'template/admin/edit.cupBoard.tmpl.html',
+		                controller: OpenCupboardCtrl,
+		                templateUrl: 'template/shared/open.cupBoard.tmpl.html',
 		                parent: angular.element(document.body),
 		                resolve: {
 		                    item: function () {
@@ -804,46 +794,49 @@
 		    };
 
 
+		    function getImgByProdId(id){
+		    	for(var i=0;i<self.states.length; i++){
+		    		if(id == self.states[i].value){
+		    			return self.states[i].img;
+		    		}
+		    	}
+		    	return "";
+		    }
 
 
-		    function EditCupboardCtrl($scope, $mdDialog, item) {
-		        console.log("item ");
-		        console.log(item);
+		    function OpenCupboardCtrl($scope, $mdDialog, item) {
 		        $scope.item = item;
-
 		        $http({
 		            method: "GET",
 		            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
 		        }).then(function mySucces(response) {
-		            console.log("current Prods")
 		            $scope.currentProducts = response.data;
 		            $scope.cupboardCells = new Array(item.board_count * item.values.length);
 		            if (typeof ($scope.currentProducts) != "undefined") {
 		                for (var i = 0; i < $scope.currentProducts.length; i++) {
 		                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
 		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
-		                        console.log("prod i " + i);
-		                        console.log($scope.cupboardCells);
+		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]].img = getImgByProdId($scope.cupboardCells[$scope.currentProducts[i].place[j]].prodId);
 		                    }
 		                }
 		            }
-		            console.log($scope.currentProducts);
 		        }, function myError(response) {});
-
-
-		        $http({
-		            method: "GET",
-		            url: "/EasyShopWayNew/edit_products?type=getAllProducts"
-		        }).then(function mySucces(response) {
-		            console.log("all Prods")
-		            $scope.allProducts = response.data;
-		            console.log(response);
-		        }, function myError(response) {
-
-		        });
-
-		        console.log("cupBoarards");
-		        console.log($scope.cupboardCells);
+//				
+//
+// $http({
+// method: "GET",
+// url: "/EasyShopWayNew/edit_products?type=getAllProducts"
+// }).then(function mySucces(response) {
+// console.log("all Prods")
+// $scope.allProducts = response.data;
+// console.log(response);
+// }, function myError(response) {
+//
+// });
+//
+// console.log("cupBoarards");
+// console.log($scope.cupboardCells);
+		        
 		        $scope.hide = function () {
 		            $mdDialog.hide();
 		        };
@@ -852,45 +845,45 @@
 		            $mdDialog.cancel();
 		        };
 		        $scope.answer = function () {
-		            $scope.cupboardCells.map(function (e, i) {
-		                if (typeof (e) == "string")
-		                    $scope.cupboardCells[i] = JSON.parse(e)
-		            })
-		            console.log($scope.cupboardCells);
-		            $scope.sendCupboardData();
+// $scope.cupboardCells.map(function (e, i) {
+// if (typeof (e) == "string")
+// $scope.cupboardCells[i] = JSON.parse(e)
+// })
+// console.log($scope.cupboardCells);
+// $scope.sendCupboardData();
 		            $mdDialog.hide();
 		        };
 
-		        $scope.sendCupboardData = function () {
-		            var config = {
-		                headers: {
-		                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-		                }
-		            }
-		            var data = [];
-		            $scope.cupboardCells.map(function (e, i) {
-		                if (typeof (e) != "undefined" || e != null)
-		                    data.push({
-		                        prodId: e.prodId,
-		                        cupboardId: item.id,
-		                        place: i
-		                    })
-		            });
-
-		            var sendData = $.param({
-		                type: 'setProducts',
-		                data: JSON.stringify(data)
-		            });
-		            console.log($scope.cupboardCells);
-		            console.log(data);
-		            console.log(sendData);
-		            $http.post('/EasyShopWayNew/edit_products', sendData, config)
-		                .success(function (data, status, headers) {
-		                    console.log("success send products")
-		                }).error(function (data, status, header, config) {
-		                    console.log('failed  send products');
-		                });
-		        }
+// $scope.sendCupboardData = function () {
+// var config = {
+// headers: {
+// 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+// }
+// }
+// var data = [];
+// $scope.cupboardCells.map(function (e, i) {
+// if (typeof (e) != "undefined" || e != null)
+// data.push({
+// prodId: e.prodId,
+// cupboardId: item.id,
+// place: i
+// })
+// });
+//
+// var sendData = $.param({
+// type: 'setProducts',
+// data: JSON.stringify(data)
+// });
+// console.log($scope.cupboardCells);
+// console.log(data);
+// console.log(sendData);
+// $http.post('/EasyShopWayNew/edit_products', sendData, config)
+// .success(function (data, status, headers) {
+// console.log("success send products")
+// }).error(function (data, status, header, config) {
+// console.log('failed send products');
+// });
+// }
 
 		    }
 
@@ -1149,18 +1142,3 @@
 				$mdDialog.hide(answer);
 			};
 		}
-		
-		serApp.controller('MapCtrl', function ($mdToast, $route, $scope, $http, $mdDialog) {
-
-		    
-
-		});
-// .filter('range', function () {
-// return function (n) {
-// var res = [];
-// for (var i = 0; i < n; i++) {
-// res.push(i);
-// }
-// return res;
-// };
-// });

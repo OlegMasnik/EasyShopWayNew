@@ -2,7 +2,7 @@
 <form ng-cloak ng-cotroller="CreateDialogController">
 	<md-toolbar>
 	<div class="md-toolbar-tools">
-		<h2>Create new cupboard</h2>
+		<h2>{{ 'CREATE_NEW_CUPBOARD' | translate }}</h2>
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="cancel(values)"> x </md-button>
 	</div>
@@ -10,14 +10,14 @@
 
 	<md-dialog-content>
 	<div class="md-dialog-content">
-		<md-input-container> <label>Please enter cupboard description(English):</label>
+		<md-input-container> <label>{{ 'ENGLISH_DESCRIPTION' | translate }}</label>
 		<input name="name_en" type="text" ng-model="name_en" required></md-input-container>
-		<md-input-container> <label>Please enter cupboard description(Ukraine):</label>
+		<md-input-container> <label>{{ 'UKRAINE_DESCRIPTION' | translate }}</label>
 		<input name="name_uk" type="text" ng-model="name_uk" required></md-input-container>
-		<md-input-container> <label>Please enter board count:</label>
+		<md-input-container> <label>{{ 'BOARD_COUNT' | translate }}</label>
 		<input name="b_count" type="number" ng-model="b_count" required min=1 max=5></md-input-container>
 		<md-dialog-actions layout="row"> <span flex></span><md-button
-			ng-click="cancel(values)"> Cancel </md-button> <md-button
-			ng-click="answer(values)"> Save </md-button></md-dialog-actions>
+			ng-click="cancel(values)"> {{ 'CANCEL' | translate }} </md-button> <md-button
+			ng-click="answer(values)">{{ 'SAVE' | translate }} </md-button></md-dialog-actions>
 </form>
 </md-dialog>
