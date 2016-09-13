@@ -10,6 +10,22 @@ var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute',
 
 app.config(function($translateProvider) {
 	$translateProvider.translations('en', {
+		PROFILE:'Profile',
+		GENERAL_INFORMATION:'General Information',
+		UPDATE_YOUR_PHOTO:'Update Your Photo',
+		CHANGE_PASSWORD:'Change Password',
+		OLD_PASSWORD:'Old password',
+		NEW_PASSWORD:'New password',
+		USER_LANGUAGE:'Language',
+		
+		SELECT_MAP:'Select map',
+		SEARCH:'Search',
+		NO_MAPS_MATCHING:'No maps matching',
+		WERE_FOUND:'were found',
+		
+		
+		
+		
 		HEADLINE : 'Hello there, This is my awesome app!',
 		INTRO_TEXT : 'And it has i18n support!',
 		ERROR_PAGE_NOT_FOUND : '404 OH, TROUBLE...',
@@ -93,6 +109,19 @@ app.config(function($translateProvider) {
 	
 	
 	}).translations('ua', {
+		PROFILE:'Профіль',
+		GENERAL_INFORMATION:'Загальна інформація',
+		UPDATE_YOUR_PHOTO:'Оновити фото',
+		CHANGE_PASSWORD:'Змінити пароль',
+		OLD_PASSWORD:'Старий пароль',
+		NEW_PASSWORD:'Новий пароль',
+		USER_LANGUAGE:'Мова',
+		
+		SELECT_MAP:'Вибрати магазин',
+		SEARCH:'Пошук',
+		NO_MAPS_MATCHING:'Співпадіння з',
+		WERE_FOUND:'не знайдено',
+		
 		HEADLINE : 'Доброго вам здоров`ячка, це наша прога!',
 		INTRO_TEXT : 'І є підтримка і18н!',
 		ERROR_PAGE_NOT_FOUND : '404 ОЙ, ДІДЬКО...',
