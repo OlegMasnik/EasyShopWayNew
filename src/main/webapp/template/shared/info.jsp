@@ -15,7 +15,7 @@
 	<md-card flex ng-controller="formCtrl" md-theme-watch> 
 	<md-card-title>
 	<md-card-title-text>
-	<div class="cab-category">General information</div>
+	<div class="cab-category">{{ 'GENERAL_INFORMATION' | translate }}</div>
 	</md-card-title-text> </md-card-title> <md-card-content flex>
 	<form name="userForm" data-ng-init="showInfo()">
 
@@ -45,8 +45,8 @@
 		</md-select> </md-input-container>
 	</form>
 	</md-card-content> <md-card-actions layout="row" layout-align="end center">
-	<md-button class="md-raised" ng-click="saveInfo()">Save</md-button> <md-button class="md-raised"
-		ng-click="showInfo()">Cancel</md-button> </md-card-actions> 
+	<md-button class="md-raised" ng-click="saveInfo()">{{ 'SAVE' | translate }}</md-button> <md-button class="md-raised"
+		ng-click="showInfo()">{{ 'CANSEL' | translate }}</md-button> </md-card-actions> 
 		</md-card>
 		</div>
 
@@ -56,7 +56,7 @@
 			enctype="multipart/form-data">
 		<md-card  ng-controller="UploadImageCtrl">
 		<md-card-title> <md-card-title-text>
-			<div class="cab-category">Update your photo</div>
+			<div class="cab-category">{{ 'UPDATE_YOUR_PHOTO' | translate }}</div>
 			</md-card-title-text> </md-card-title>
 		<md-card-content layout="column">
 			
@@ -80,8 +80,8 @@
 		
 		</md-card-content>
 		<md-card-actions layout="row" layout-align="end center">
-			<md-button class="md-raised" type="submit" ng-click="sendImg()">Save</md-button>
-			<md-button class="md-raised" type="reset">Cancel</md-button> </md-card-actions>
+			<md-button class="md-raised" type="submit" ng-click="sendImg()">{{ 'SAVE' | translate }}</md-button>
+			<md-button class="md-raised" type="reset">{{ 'CANCEL' | translate }}</md-button> </md-card-actions>
 		</md-card>
 		</form>
 
@@ -89,23 +89,23 @@
 				name="changePassForm" action="">
 		<md-card  ng-controller="changePassCtrl">
 		<md-card-title> <md-card-title-text>
-			<div class="cab-category">Change password</div>
+			<div class="cab-category">{{ 'CHANGE_PASSWORD' | translate }}</div>
 			</md-card-title-text> </md-card-title>
 			<md-card-content>
 			
 				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px;  margin-top: 8px;">
-				<label> Old password </label> <input id="oldPass" required
+				<label>{{ 'OLD_PASSWORD' | translate }}</label> <input id="oldPass" required
 					type="password" name="oldPass" ng-model="user.oldPass"
 					minlength="6" maxlength="25" ng-model="oldPass"> </md-input-container>
 				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px; margin-top: 8px;">
-				<label> New password </label> <input id="newPass" required
+				<label> {{ 'NEW_PASSWORD' | translate }} </label> <input id="newPass" required
 					type="password" name="newPass" ng-model="user.newPass"
 					minlength="6" maxlength="25" ng-model="newPass"> </md-input-container>
 
 			</md-card-content>
 			<md-card-actions layout="row" layout-align="end center">
-			<md-button class="md-raised" ng-click="changePass()">Save</md-button>
-			<md-button class="md-raised" type="reset" ng-click="cancel()">Cancel</md-button>
+			<md-button class="md-raised" ng-click="changePass()">{{ 'SAVE' | translate }}</md-button>
+			<md-button class="md-raised" type="reset" ng-click="cancel()">{{ 'CANCEL' | translate }}</md-button>
 			</md-card-actions>
 	
 		</md-card>
