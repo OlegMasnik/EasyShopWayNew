@@ -35,7 +35,7 @@
 		<tbody md-body ng-controller="MailCtrl as mail">
 			<tr md-row
 				ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
-				<td md-cell><input type = "checkbox" name = "emails" value = "{{row.e}}"></td>
+				<td md-cell><input type = "checkbox" name = "emails" value = "{{row.e}} {{row.fn}} {{row.ln}}"></td>
 				<td md-cell>{{row.fn}}</td>
 				<td md-cell>{{row.ln}}</td>
 				<td md-cell>{{row.e}}</td>
@@ -53,7 +53,7 @@
 	</table>
 	</form>
 	</md-table-container> 
-		<div flex><md-button flex ng-click='sendLoginData()' md-no-ink="md-no-ink">{{ 'SPAM_SELECTED_USERS' | translate }} </md-button></div>
+		<div flex><md-button flex ng-click='sendLoginData()'>{{ 'SEND_SELECTED_USERS' | translate }} </md-button></div>
 		<div flex>
 		<md-table-pagination md-limit="query.limit"
 			md-limit-options="limitOptions" md-page="query.page"

@@ -139,6 +139,13 @@
 	<servlet>
 		<description>
 		</description>
+		<display-name>SpamEmailServlet</display-name>
+		<servlet-name>SpamEmailServlet</servlet-name>
+		<servlet-class>com.epam.easyshopway.controller.admin.SpamEmailServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
 		<display-name>ForgotPassword</display-name>
 		<servlet-name>ForgotPassword</servlet-name>
 		<servlet-class>com.epam.easyshopway.controller.ForgotPassword</servlet-class>
@@ -230,6 +237,10 @@
 	<servlet-mapping>
 		<servlet-name>SendMailControlServlet</servlet-name>
 		<url-pattern>/sendmail</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SpamEmailServlet</servlet-name>
+		<url-pattern>/spammail</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>UserHistoryServlet</servlet-name>
