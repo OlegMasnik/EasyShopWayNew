@@ -4,7 +4,7 @@
     <!--     <h3 class="cab-title">Statistic</h3> -->
 
 
-<md-toolbar class="md-hue-2" md-whiteframe="4" >
+<md-toolbar  md-whiteframe="4" >
             <div class="md-toolbar-tools">
                <h2><span>{{ 'ADMIN_CABINET_STATISTIC' | translate }}</span></h2>
             </div>

@@ -6,16 +6,33 @@
 	</div>
 	</md-toolbar>
 	<!--Toolbar-->
-	<md-card> <md-content flex="" layout-padding="">
-	<md-whiteframe layout="row" ng-repeat="single in multisearchType">
-	<md-input-container> <label>{{ 'COLUMN' | translate }}</label> <md-select
+	
+	<md-card>
+	
+	<md-card-content layout="row"  ng-repeat="single in multisearchType">
+	
+	<md-input-container>  
+	<label>{{ 'COLUMN' | translate }}</label>
+		<md-select
 		ng-model="single.column" ng-change="updateDataTableType()">
-	<md-optgroup label="Column"> <md-option
-		ng-value="column.name" ng-repeat="column in autocolumnType">{{column.display}}</md-option>
-	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>{{ 'SEARCH' | translate }}</</label>
-	<input ng-change="updateDataTableType()" ng-model="single.ident">
-	</md-input-container> </md-whiteframe> </md-content> </md-card>
-	<md-card> <md-content layout="column" flex> <md-table-container>
+					<md-optgroup> 
+						<md-option
+		ng-value="column.name" ng-repeat="column in autocolumnType">{{column.display}}
+						</md-option>
+					</md-optgroup> 
+				</md-select> 
+			</md-input-container> 
+	<md-input-container class="md-block" flex="">
+		<label>{{ 'SEARCH' | translate }}</label>
+	<input type="text" ng-change="updateDataTableType()" ng-model="single.ident">
+	</md-input-container> 
+	</md-card-content>
+	
+	
+	</md-card>
+	
+	
+	<md-card> <md-card-content layout="column" flex> <md-table-container>
 	<md-button class="md-fab md-raised" ng-click="showPromptType(empty)"> + </md-button>
 	<table md-table>
 		<thead md-head md-order="queryType.order">
@@ -45,7 +62,7 @@
 	</md-table-container> <md-table-pagination md-limit="queryType.limit"
 		md-limit-options="limitOptions" md-page="queryType.page"
 		md-total="{{datatableType.count}}"
-		md-page-select="optionsType.pageSelect"></md-table-pagination> </md-content> </md-card>
+		md-page-select="optionsType.pageSelect"></md-table-pagination> </md-card-content> </md-card>
 
 
 
@@ -55,19 +72,24 @@
 	</div>
 	</md-toolbar>
 	<!--Toolbar-->
-	<md-card> <md-content flex="" layout-padding="">
+	<md-card> 
+	<md-card-content flex="" layout-padding="">
 	<md-whiteframe layout="row" ng-repeat="single in multisearchProd">
 	<md-input-container> <label>{{ 'COLUMN' | translate }}</label> <md-select
 		ng-model="single.column" ng-change="updateDataTableProd()">
 	<md-optgroup label="Column"> <md-option
 		ng-value="column.name" ng-repeat="column in autocolumnProd">{{column.display}}</md-option>
-	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>{{ 'SEARCH' | translate }}</</label>
+	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>{{ 'SEARCH' | translate }}</label>
 	<input ng-change="updateDataTableProd()" ng-model="single.ident">
-	</md-input-container> </md-whiteframe> </md-content> </md-card>
-	<md-card> <md-content layout="column" flex> <md-button
+	</md-input-container> </md-whiteframe> </md-card-content> </md-card>
+	
+	
+	<md-card> <md-card-content layout="column" flex> 
+	<md-button
 		class="md-fab md-raised"
-		ng-click="showPromptProd(datatableType.types)"> + </md-button> <md-table-container>
-	<table md-table>
+		ng-click="showPromptProd(datatableType.types)"> + </md-button> 
+		<md-table-container>
+		<table md-table>
 		<thead md-head md-order="queryProd.order">
 			<tr md-row>
 				<th md-column ng-repeat="column in autocolumnProd"
@@ -92,8 +114,9 @@
 			</tr>
 		</tbody>
 	</table>
-	</md-table-container> <md-table-pagination md-limit="queryProd.limit"
+	</md-table-container> 
+	<md-table-pagination md-limit="queryProd.limit"
 		md-limit-options="limitOptions" md-page="queryProd.page"
 		md-total="{{datatable.count}}" md-page-select="optionsProd.pageSelect"></md-table-pagination>
-	</md-content> </md-card>
+	</md-card-content> </md-card>
 </div>
