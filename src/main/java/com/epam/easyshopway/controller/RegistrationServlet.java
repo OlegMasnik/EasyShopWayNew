@@ -66,6 +66,8 @@ public class RegistrationServlet extends HttpServlet {
 
 					}
 				}).start();
+				object.put("emailSuccMsg", "This email already exists");
+				System.out.println("Chech your email.");
 				request.getSession().setAttribute("pre_user", user);
 			}
 			response.setCharacterEncoding("UTF-8");
