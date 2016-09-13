@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/search-style.css">
-
+<link rel="shortcut icon" href="favicon.ico">
 </head>
 
 <body ng-app="SearchApp" layout="column">
@@ -44,7 +44,7 @@
 		</c:choose>
 	</div>
 	</md-toolbar> --%>
-	<jsp:in
+	<jsp:include page="parts/header.jsp"></jsp:include>
 
 	<md-content layout="row" ng-controller="ProductListCtrl as ctrl"
 		class="main-page" flex> <md-slidenav

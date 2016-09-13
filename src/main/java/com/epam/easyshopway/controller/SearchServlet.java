@@ -96,11 +96,16 @@ public class SearchServlet extends HttpServlet {
 			Integer mapId = null;
 			try {
 				jsonObject = (JSONObject) jsonParser.parse(request.getParameter("data"));
+				System.out.println("jSoObj");
+				System.out.println(jsonObject);
 				productIds = (List<Long>) jsonObject.get("productIds");
-				mapId = (Integer) jsonObject.get("mapId");
+				mapId = ((Long) jsonObject.get("mapId")).intValue();
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			
+			System.out.println("*************/************");
+			System.out.println(mapId);
 
 			ProductList productList = new ProductList(user.getId(), null, null, mapId);
 

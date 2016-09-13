@@ -8,17 +8,35 @@
 	</md-toolbar>
 	<!--Toolbar-->
 	<md-card> <md-content flex="" layout-padding="">
-	<md-whiteframe layout="row"> <md-switch
-		ng-model="smart" aria-label="Smart Search"> {{ 'SMART_SEARCH' | translate }} </md-switch> </md-whiteframe> <md-whiteframe layout="row"
-		ng-repeat="single in multisearch"> <md-input-container>
-	<label>{{ 'COLUMN' | translate }}</label> <md-select ng-model="single.column"
-		ng-change="updateDataTable()"><md-optgroup label="Column">
-	<md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
-	</md-optgroup> </md-select> </md-input-container> <md-input-container class="md-block" flex=""> <label>{{ 'SEARCH' | translate }}</label>
-	<input ng-change="updateDataTable()" ng-model="single.ident"> </md-input-container>
-	<md-button class="md-fab md-warn" ng-click="deleteRow(single.id)"
-		ng-disabled="multisearch.length == 1"> - </md-button> <md-button
-		class="md-fab md-raised" ng-click="addRow()"> + </md-button> </md-whiteframe> </md-content> </md-card>
+	<md-whiteframe layout="row"> 
+	<md-switch
+		ng-model="smart" aria-label="Smart Search"> {{ 'SMART_SEARCH' | translate }} </md-switch>
+		 
+		 </md-whiteframe> 
+		 <md-whiteframe layout="row"
+		ng-repeat="single in multisearch"> 
+		<md-input-container>
+		<label>{{ 'COLUMN' | translate }}</label> 
+		<md-select ng-model="single.column"
+			ng-change="updateDataTable()">
+			<md-optgroup label="Column">
+		<md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
+		</md-optgroup> 
+		</md-select> 
+		</md-input-container> 
+	
+	<md-input-container class="md-block" flex=""> 
+	<label>{{ 'SEARCH' | translate }}</label>
+	<input ng-change="updateDataTable()" ng-model="single.ident"> 
+	</md-input-container>
+	
+		<md-button class="md-fab md-warn" ng-click="deleteRow(single.id)"
+		ng-disabled="multisearch.length == 1"> - </md-button> 
+		
+		<md-button class="md-fab md-raised" ng-click="addRow()"> + </md-button> 
+		</md-whiteframe> 
+		</md-content> 
+	</md-card>
 	<!--AMADTS Table-->
 	<md-card> <md-content layout="column" flex> <md-table-container>
 	<form name="MailForm">
@@ -35,7 +53,7 @@
 		<tbody md-body ng-controller="MailCtrl as mail">
 			<tr md-row
 				ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
-				<td md-cell><input type = "checkbox" name = "emails" value = "{{row.e}}"></td>
+				<td md-cell><input type = "checkbox" name = "emails" value = "{{row.e}} {{row.fn}} {{row.ln}}"></td>
 				<td md-cell>{{row.fn}}</td>
 				<td md-cell>{{row.ln}}</td>
 				<td md-cell>{{row.e}}</td>
@@ -53,7 +71,7 @@
 	</table>
 	</form>
 	</md-table-container> 
-		<div flex><md-button flex ng-click='sendLoginData()' md-no-ink="md-no-ink">{{ 'SPAM_SELECTED_USERS' | translate }} </md-button></div>
+		<div flex><md-button flex ng-click='sendLoginData()'>{{ 'SEND_SELECTED_USERS' | translate }} </md-button></div>
 		<div flex>
 		<md-table-pagination md-limit="query.limit"
 			md-limit-options="limitOptions" md-page="query.page"
