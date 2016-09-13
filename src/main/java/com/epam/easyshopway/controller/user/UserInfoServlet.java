@@ -1,10 +1,13 @@
 package com.epam.easyshopway.controller.user;
 
 import java.io.IOException;
+
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
@@ -46,10 +49,13 @@ public class UserInfoServlet extends HttpServlet {
 		String birthday = request.getParameter("birthday");
 //		String email = request.getParameter("email");
 		String language = request.getParameter("language");
+		HttpSession session = request.getSession(false);
+		
 
 //		System.out.println(firstName + " " + lastName + " " + birthday + " " + email + "");
 
 		user.setLanguage(language);
+		session.setAttribute("lang", language);
 //		user.setEmail(email);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);

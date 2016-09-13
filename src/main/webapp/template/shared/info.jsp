@@ -18,31 +18,32 @@
 	<div class="cab-category">{{ 'GENERAL_INFORMATION' | translate }}</div>
 	</md-card-title-text> </md-card-title> <md-card-content flex>
 	<form name="userForm" data-ng-init="showInfo()">
-
+		<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <md-icon md-svg-src="images/icons/person.svg"
 				class="name cab-icon"></md-icon> {{ 'FIRST_NAME' | translate }}
 		</label> <input ng-model="firstName"> </md-input-container>
-
+		<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/person.svg" class="name cab-icon"></md-icon></span>
 			{{ 'LAST_NAME' | translate }}
 		</label> <input ng-model="lastName"> </md-input-container>
-
+		<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span>
 			{{ 'EMAIL' | translate }}
 		</label> <input ng-model="email" disabled> </md-input-container>
-		<md-input-container class="md-block" flex-gt-sm="">
-		<label> <span><md-icon
-					md-svg-src="images/icons/lang.svg" class="name cab-icon"></md-icon></span>
-			{{ 'LANGUAGE' | translate }}
-		</label> <md-select placeholder="{{ 'LANGUAGE' | translate }}" ng-model="language"
-			md-on-open="loadUsers()" style="min-width: 200px;"> <md-option
-			ng-value="language.sName" ng-repeat="language in languages">{{language.name}}</md-option>
-		</md-select> </md-input-container>
+<!-- 		<md-input-container class="md-block" flex-gt-sm=""> -->
+<!-- 			<label> <span> -->
+<!-- 				<md-icon md-svg-src="images/icons/lang.svg" class="name cab-icon"></md-icon></span> -->
+<!-- 				{{ 'LANGUAGE' | translate }} -->
+<!-- 			</label>  -->
+<!-- 		<md-select  ng-model="language" md-on-open="loadUsers()" style="min-width: 200px;">  -->
+<!-- 		<md-option ng-value="language.sName" ng-repeat="language in languages">{{language.name}}</md-option> -->
+<!-- 		</md-select>  -->
+<!-- 		</md-input-container> -->
 	</form>
 	</md-card-content> <md-card-actions layout="row" layout-align="end center">
 	<md-button class="md-raised" ng-click="saveInfo()">{{ 'SAVE' | translate }}</md-button> <md-button class="md-raised"

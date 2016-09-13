@@ -404,7 +404,14 @@ app
 						'$scope',
 						'$http',
 						'$mdToast',
-						function($scope, $http, $mdToast) {
+						'$route',
+						function($scope, $http, $mdToast, $route) {
+							
+							(function() {
+								lang = $('#lang').val() || 'en';
+								console.log(lang);
+							})();
+							
 							$scope.showInfo = function() {
 
 								dateBirthday = moment($scope.birthday).format(
@@ -498,6 +505,8 @@ app
 												});
 
 							}
+							
+							console.log("adad");
 						} ]);
 
 app
