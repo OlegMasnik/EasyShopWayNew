@@ -22,7 +22,7 @@
 		class="md-fab md-raised" ng-click="addRow()"> + </md-button> </md-whiteframe> </md-content> </md-card>
 	<!--AMADTS Table-->
 	<md-card> <md-content layout="column" flex> <md-table-container>
-	<form>
+	<form name="MailForm">
 	<table md-table>
 		<thead md-head md-order="query.order">
 			<tr md-row>
@@ -53,8 +53,12 @@
 		</tbody>
 	</table>
 	</form>
-	</md-table-container> <md-table-pagination md-limit="query.limit"
-		md-limit-options="limitOptions" md-page="query.page"
-		md-total="{{datatable.count}}" md-page-select="options.pageSelect"></md-table-pagination>
-	</md-content> </md-card>
+	</md-table-container> 
+		<div flex><md-button flex ng-click='sendLoginData()' md-no-ink="md-no-ink">{{ 'SPAM_SELECTED_USERS' | translate }} </md-button></div>
+		<div flex>
+		<md-table-pagination md-limit="query.limit"
+			md-limit-options="limitOptions" md-page="query.page"
+			md-total="{{datatable.count}}" md-page-select="options.pageSelect"></md-table-pagination>
+			</div>
+		</md-content> </md-card>
 </div>
