@@ -44,9 +44,10 @@
         <jsp:include page="parts/header.jsp"></jsp:include>
 
 <!--                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YZDPCiEKZOI?controls=0&autoplay=1&loop=1&playlist=YZDPCiEKZOI&showinfo=0" frameborder="0" allowfullscreen></iframe> -->
-        <div class="content" flex>
-            <div class="error-msg">
-                <div class="error-txt">{{ 'ERROR_PAGE_NOT_FOUND' | translate }}</div>
+       <div layout="column" flex> 
+            <div class="error-msg" flex layout="row" layout-align="center center"> 
+                <div class="error-txt" flex layout="row" layout-align="center center">{{ 'ERROR_PAGE_NOT_FOUND' | translate }}</div> 
+        
             </div>
         </div>
         

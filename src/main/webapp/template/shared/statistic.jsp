@@ -16,7 +16,7 @@
                 <md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="startDate" md-max-date="endDate" id="startDate" md-placeholder="start date" name="startDate"></md-datepicker>
             </div>
             <div flex>{{ 'TO' | translate }}
-                <md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="endDate" md-min-date="startDate" md-max-date="endMaxDate" id="endDate" md-placeholder="end date" name="endDate"></md-datepicker>
+                <md-datepicker md-open-on-focus="" datepicker-popup="@{{format}}" ng-model="endDate" md-min-date="startDate" md-max-date="date" id="endDate" md-placeholder="end date" name="endDate"></md-datepicker>
             </div>
             <md-button style="background-color : #E91E63; color : #fff;" ng-click="getFoodData()">{{ 'SHOW' | translate }}</md-button>
         </md-card-content>
