@@ -16,9 +16,8 @@ var cH;
 $(document).ready(function() {
 	
 	$(document).keydown(function(e) {
-		console.log(Math.abs($("#div0").offset().top) + 64);
+//		console.log(Math.abs($("#div0").offset().top) + 64);
 		var current = Math.floor((Math.abs($("#div0").offset().top) + 64) /  $('#main-content').height());
-		console.log("Current pos " + current);
 	    switch(e.which) {
 
 	        case 38: // up

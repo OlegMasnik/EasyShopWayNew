@@ -16,7 +16,7 @@ app.config(function($translateProvider) {
 		CHANGE_PASSWORD:'Change Password',
 		OLD_PASSWORD:'Old password',
 		NEW_PASSWORD:'New password',
-		USER_LANGUAGE:'Language',
+		LANGUAGE:'Language',
 		
 		SELECT_MAP:'Select map',
 		SEARCH:'Search',
@@ -103,19 +103,21 @@ app.config(function($translateProvider) {
 		CHOOSE_IMAGE:'Choose image',
 		
 		ENGLISH_NAME:'English name',
-		UKRAINE_NAME:'Ukrainian name'
+		UKRAINE_NAME:'Ukrainian name',
 		
+		EMAIL_EXIST: 'This email already exists',
+		UNCORRECT_PASSWORD: 'Ucorrect password'
 		
 	
 	
-	}).translations('ua', {
+	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
 		UPDATE_YOUR_PHOTO:'Оновити фото',
 		CHANGE_PASSWORD:'Змінити пароль',
 		OLD_PASSWORD:'Старий пароль',
 		NEW_PASSWORD:'Новий пароль',
-		USER_LANGUAGE:'Мова',
+		LANGUAGE:'Мова',
 		
 		SELECT_MAP:'Вибрати магазин',
 		SEARCH:'Пошук',
@@ -156,7 +158,7 @@ app.config(function($translateProvider) {
 		
 		ADMIN_CABINET_MAP:'Карта',
 		ADMIN_CABINET_USERS:'Користувачі',
-		ADMIN_CABINET_PRODUCTS:'Продукти',
+		ADMIN_CABINET_PRODUCTS:'Товари',
 		ADMIN_CABINET_STATISTIC:'Статистика',
 		
 		DATE:'Дата',
@@ -168,8 +170,8 @@ app.config(function($translateProvider) {
 		SMART_SEARCH:'Розумний пошук',
 		SEARCH:'Пошук',
 		OPTION:'Опції',
-		PRODUCT_TYPE:'Тип продуктів',
-		PRODUCT:'Продукти',
+		PRODUCT_TYPE:'Тип товарів',
+		PRODUCT:'Товари',
 		EDIT_TYPE:'Редагувати тип',
 		COLUMN:'Колонки',
 		
@@ -198,7 +200,10 @@ app.config(function($translateProvider) {
 		CHOOSE_IMAGE:'Обрати зображення',
 		
 		ENGLISH_NAME:'Назва англійською',
-		UKRAINE_NAME:'Назва українською'
+		UKRAINE_NAME:'Назва українською',
+		
+		EMAIL_EXIST: 'Така електрона пошта вже використовуєься',
+		UNCORRECT_PASSWORD: 'Невірний пароль'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -259,7 +264,7 @@ app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, 
     };
     $scope.language = lang;
     $scope.en = 'en';
-    $scope.ua = 'ua';
+    $scope.uk = 'uk';
     
     $scope.changeLang = function(lang){
     	$http.put('/EasyShopWayNew/home?lang=' + lang)
@@ -283,7 +288,9 @@ app
 						'$scope',
 						'$http',
 						'$window',
-						function($scope, $http, $window) {
+						'$mdToast',
+						'$translate',
+						function($scope, $http, $window, $mdToast, $translate) {
 							$scope.sendLoginData = function() {
 								console.log('hello' + $scope.email)
 								var data = $.param({
@@ -306,14 +313,15 @@ app
 											.success(
 													function(data, status,
 															headers, config) {
+														
 														if (data.emailErrMsg == undefined) {
 															if (data.passwordErrMsg == undefined) {
 																$window.location.href = 'cabinet';
 															} else {
-																$scope.error = data.passwordErrMsg;
+																showToast($mdToast, $scope, $translate.instant('UNCORRECT_PASSWORD'));
 															}
 														} else {
-															$scope.error = data.emailErrMsg;
+															showToast($mdToast, $scope, $translate.instant('EMAIL_DOES_NOT_EXIST'));
 														}
 														console
 																.log("Error: "
@@ -338,10 +346,10 @@ app
 						'$scope',
 						'$http',
 						'$mdToast',
-						function($scope, $http, $mdToast) {
+						'$translate',
+						function($scope, $http, $mdToast, $translate) {
 							$scope.sendRegData = function() {
 								console.log('hello ' + $scope.email)
-								console.log("date " + dateBirthday)
 								var data = $.param({
 									email : $scope.email,
 									password : $scope.password,
@@ -362,7 +370,6 @@ app
 										&& $('#passwordR').valid()
 										&& firstNameDefined != ""
 										&& lastNameDefined != "") {
-									console.log('Before reg');
 									$http
 											.post('/EasyShopWayNew/reg', data,
 													config)
@@ -372,10 +379,10 @@ app
 														console
 																.log("QWEER"
 																		+ data.emailErrMsg);
-														showToast($mdToast, $scope, data.emailErrMsg);
-														if (data.emailErrMsg == undefined) {
-															showToast($mdToast, $scope, "Check your email");
-														}
+														if (data.emailSuccMsg != undefined) 
+															showToast($mdToast, $scope, $translate.instant('CHECK_EMAIL'));
+														if (data.emailErrMsg != undefined) 
+																showToast($mdToast, $scope, $translate.instant('EMAIL_EXIST'));
 													}).error(
 													function(data, status,
 															header, config) {
