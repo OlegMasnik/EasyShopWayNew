@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.epam.easyshopway.model.Cupboard;
 import com.epam.easyshopway.model.CupboardInformation;
@@ -22,6 +23,7 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
+import com.epam.easyshopway.service.ProductTypeService;
 
 public class AdminMapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -80,18 +82,32 @@ public class AdminMapServlet extends HttpServlet {
 			break;
 
 		case "createMap": {
-			String height = request.getParameter("height");
-			String weight = request.getParameter("weight");
+			JSONObject message  = new JSONObject();
+			int height = Integer.valueOf(request.getParameter("height"));
+			int weight = Integer.valueOf(request.getParameter("weight"));
 			String nameEn = request.getParameter("name_en");
 			String nameUk = request.getParameter("name_uk");
 			Map map = new Map();
-			map.setHeight(Integer.valueOf(height));
-			map.setWeight(Integer.valueOf(weight));
+			map.setHeight(height);
+			map.setWeight(weight);
 			map.setNameEn(nameEn);
 			map.setNameUk(nameUk);
-			MapService.insert(map);
+			if (MapService.hasNameEn(nameEn)){
+				message.put("msg", "This english name already exists");
+				System.out.println("This english name already exists");
+			}else if(MapService.hasNameUk(nameUk)) {
+				System.out.println(nameUk);
+				message.put("msg", "This ukrainian name already exists");
+				System.out.println("This ukrainian name already exists");
+			}else if(MapService.insert(map) > 0 && height >=2 && weight >=2){
+				message.put("msg", "Map added successfully");
+				System.out.println("Map added successfully");
+			} else{
+				message.put("msg", "Map adding failed");
+			}
 			request.getSession(false).setAttribute("curMapId", MapService.getLastInserted().getId());
-			response.getWriter().write("" + MapService.getLastInserted().getId());
+//			response.getWriter().write("" + MapService.getLastInserted().getId());
+			response.getWriter().write(message.toString());
 		}
 			break;
 

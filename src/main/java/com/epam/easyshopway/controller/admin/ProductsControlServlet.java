@@ -81,10 +81,10 @@ public class ProductsControlServlet extends HttpServlet {
 				message.put("msg", "This ukrainian name already exists");
 				System.out.println("This ukrainian name already exists");
 			}else if(ProductService.insert(prod) > 0){
-				message.put("msg", "Product type added successfully");
-				System.out.println("Product type added successfully");
+				message.put("msg", "Product  added successfully");
+				System.out.println("Product added successfully");
 			}else{
-				message.put("msg", "Product type adding failed");
+				message.put("msg", "Product adding failed");
 			}
 		}
 		resp.getWriter().write(message.toString());
