@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.epam.easyshopway.dao.MapDAO;
+import com.epam.easyshopway.dao.ProductTypeDAO;
 import com.epam.easyshopway.model.Map;
 
 public class MapService {
@@ -89,5 +90,27 @@ public class MapService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static boolean hasNameEn (String nameEn){
+		try (MapDAO mapDAO = new MapDAO()) {
+			return mapDAO.hasNameEn(nameEn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static boolean hasNameUk (String nameUk){
+		try (MapDAO mapDAO = new MapDAO()) {
+			return mapDAO.hasNameUk(nameUk);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

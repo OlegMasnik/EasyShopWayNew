@@ -926,11 +926,20 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
             $http.post('/EasyShopWayNew/edit_map', data, config)
                 .success(function (data, status, headers) {
-                    console.log('create new');
                     //                    mapId = data;
                     //                    console.log("create new map with id " + mapId);
                     //                    start();
-                    $route.reload();
+                    
+                    if (data.msg.includes("success")){
+                    	$route.reload();
+                    	console.log(data.msg);
+                    	var msg = data.msg;
+                    	showToast($mdToast, $scope, msg);
+                    }else{
+                    	console.log(data.msg);
+                    	showToast($mdToast, $scope, msg);
+                    }
+                    
                 })
                 .error(function (data, status, header, config) {
                     console.log('failed');

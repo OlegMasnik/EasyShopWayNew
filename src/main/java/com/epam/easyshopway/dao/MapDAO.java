@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.Map;
+import com.epam.easyshopway.model.ProductType;
 
 public class MapDAO extends AbstractDAO<Map> {
 	private final String INSERT_MAP = "INSERT INTO map (weight, height, name_en, name_uk) VALUES (?, ?, ?, ?);";
@@ -16,6 +17,8 @@ public class MapDAO extends AbstractDAO<Map> {
 	private final String SELECT_LAST_INSERTED = "SELECT * FROM map where id = (select max(id) from map);";
 	private final String SELECT_ALL_MAPS = "SELECT * FROM map;";
 	private final String UPDATE_MAP_BY_ID = "UPDATE map SET weight = ?, height = ?, name_en=?, name_uk=? WHERE id = ?";
+	private final String CHECK_NAME_EN = "SELECT * FROM map WHERE name_en LIKE ?;";
+	private final String CHECK_NAME_UK = "SELECT * FROM map WHERE name_uk LIKE ?;";
 
 	public MapDAO() {
 		super();
@@ -115,5 +118,23 @@ public class MapDAO extends AbstractDAO<Map> {
 		} else {
 			return null;
 		}
+	}
+	
+	public boolean hasNameEn (String nameEn) throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(CHECK_NAME_EN);
+		statement.setString(1, nameEn);
+		ResultSet resultSet = statement.executeQuery();
+		List<Map> maps = new Transformer<Map>(Map.class).fromRStoCollection(resultSet);
+		statement.close();
+		return !maps.isEmpty();
+	}
+	
+	public boolean hasNameUk (String nameUk) throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(CHECK_NAME_UK);
+		statement.setString(1, nameUk);
+		ResultSet resultSet = statement.executeQuery();
+		List<Map> maps = new Transformer<Map>(Map.class).fromRStoCollection(resultSet);
+		statement.close();
+		return !maps.isEmpty();
 	}
 }
