@@ -3,26 +3,25 @@
 /* md-content { */
 /* 	background-color: white; */
 /* } */
-
 md-toolbar {
 	
 }
 
 .main-page {
-/* 	width: calc(100% - 250px); */
+	/* 	width: calc(100% - 250px); */
+	margin-left: 10px;
 }
 
 .cabinet-sidenav {
-/* 	position: fixed; */
-/* 	top: 63px; */
-/* 	height: 100%; */
+	/* 	position: fixed; */
+	/* 	top: 63px; */
+	/* 	height: 100%; */
 	width: 250px;
 }
 
 .content {
-	mar
-	background-color: transparent;
-/* 	margin-left: 250px; */
+	mar background-color: transparent;
+	/* 	margin-left: 250px; */
 	padding: 30px;
 }
 
@@ -38,27 +37,24 @@ md-toolbar {
 /*     filter: alpha(opacity=0); */
 /*     background-color: transparent; */
 /* } */
-
-
 div.fileinputs {
- position: relative;
- 
+	position: relative;
 }
 
 div.fakefile {
- position: absolute;
- top: 0px;
- left: 0px;
- z-index: 1;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
 }
 
 input.file {
- position: relative;
- text-align: right;
- -moz-opacity:0 ;
- filter:alpha(opacity: 0);
- opacity: 0;
- z-index: 2;
+	position: relative;
+	text-align: right;
+	-moz-opacity: 0;
+	filter: alpha(opacity : 0);
+	opacity: 0;
+	z-index: 2;
 }
 
 .profile-img {
@@ -88,7 +84,7 @@ input.file {
 }
 
 /*        SideNav:         ;*/
-body, .main-page {
+body{
 	background-color: #f5f5f5;
 }
 
@@ -139,7 +135,7 @@ a:hover {
 
 .product-card {
 	width: 315px;
-/* 	height: 400px; */
+	/* 	height: 400px; */
 	margin: 10px;
 	background-color: #fff;
 	display: inline-block;
@@ -163,5 +159,5 @@ a:hover {
 }
 
 .prod-card-title {
-    background-color: #BBDEFB;
+	background-color: #BBDEFB;
 }

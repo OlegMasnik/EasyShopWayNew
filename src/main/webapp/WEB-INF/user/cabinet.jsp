@@ -10,7 +10,7 @@
             </title>
             
             
-            <link rel="stylesheet" href="css/angular-material.min.css">
+            <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
           <link rel="shortcut icon" href="favicon.ico">
@@ -19,8 +19,9 @@
         <body ng-app="MyApp" layout="column">
             <jsp:include page="../parts/header.jsp"></jsp:include>
             <md-content layout="row" flex>
-            <span style="width: 250px;"></span>
-            <md-slidenav class="cabinet-sidenav" md-is-locked-open="true" layout="column" flex md-whiteframe="4">
+         
+            <md-slidenav class="cabinet-sidenav" layout="column" md-is-locked-open="true"
+		layout="column" md-whiteframe="4">
                     <md-content layout="column" flex>
                         <a href="#/">
                             <div class="cab-user-logo" layot="row" layout-padding>

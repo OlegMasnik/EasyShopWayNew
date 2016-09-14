@@ -86,7 +86,9 @@ userApp.config(function($routeProvider) {
 	}).when("/history", {
 		templateUrl : "template/shared/history.jsp",
 		controller : "UserHistoryCtrl"
-	});
+	}).otherwise({
+    	redirectTo: "/"
+    });
 });
 
 userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $http, $route) {
