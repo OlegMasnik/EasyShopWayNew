@@ -6,7 +6,7 @@
 
 <head>
 <link rel="stylesheet" href="css/icon.css">
-<link rel="stylesheet" href="css/angular-material.min.css">
+<link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="shortcut icon" href="favicon.ico">
 <title>Successful confirmation email</title>
@@ -34,6 +34,7 @@
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
+	<script src='js/angular-translate.js'></script>
 
 	<script src='js/app.js'></script>
 	<script src="js/jquery.validate.min.js"></script>

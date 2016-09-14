@@ -39,7 +39,7 @@
 	<md-button href="#products">{{ 'ADMIN_CABINET_PRODUCTS' | translate }}</md-button> 
 		<md-button href="#users">{{ 'ADMIN_CABINET_USERS' | translate }}</md-button>
 	<md-button href="#statistic">{{ 'ADMIN_CABINET_STATISTIC' | translate }}</md-button> </md-content> </md-slidenav> <md-content
-		layout="row" flex style="margin-left: 10px;">
+		layout="row" flex class="main-page">
 
 	<div flex class="content" layout="column" >
 		<div ng-view onload="getFoodData()"></div>

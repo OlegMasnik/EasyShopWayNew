@@ -17,9 +17,14 @@ adminApp.config(function ($routeProvider) {
     }).when("/statistic", {
         templateUrl: "template/shared/statistic.jsp",
         controller: "ChartCtrl",
+    }).otherwise({
+    	redirectTo: "/"
     });
 });
 
+adminApp.controller('ErrorCtrl', function($location) {
+	$location.path("/error");
+})
 
 adminApp.controller('AdminCtrl', function ($scope, $http, $mdToast) {
 	
