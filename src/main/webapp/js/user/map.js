@@ -20,6 +20,15 @@ var lang;
 		    };
 		});
 		
+		function getRandomColor() {
+		    var letters = '0123456789ABCDEF';
+		    var color = '#';
+		    for (var i = 0; i < 6; i++ ) {
+		        color += letters[Math.floor(Math.random() * 16)];
+		    }
+		    return color;
+		}
+		
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
 		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog) {
@@ -113,7 +122,7 @@ var lang;
 					ids[i] = ($scope.items[i].value);
 				}
 
-				//console.log(ids);
+				console.log(ids);
 				var send = $.param({
 				data: JSON.stringify({
 				productIds: ids,
@@ -164,25 +173,30 @@ var lang;
 			function selectedItemChange(item, text) {
 				if (item != undefined) {
 					if (find(item) == -1) {
+						item.color = getRandomColor();
 						$scope.items.push(item);
 					}
-				}
-// self.simulateQuery = false;
-				 var esc = $.Event("keydown", {
-					 keyCode: 27
-				 });
-				 $("body").trigger(esc);
-				if(item.coordinates.length > 0){
-					item.coordinates.map(function(e, i){
-						game.targets.map[e] = true;
-		                game.draw();
-		                //console.log("Цілі " + arrayTarget);
-		                targetsCopy = game.targets.map;
-					});
-					arrayTarget.add(item.coordinates);
-					//console.log(arrayTarget);
+					console.log(item);
+					self.searchText = "";
+//					$scope.myObj = {
+//						"background-color" : getRandomColor(),
+//					}
+					if(item.coordinates.length > 0){
+						item.coordinates.map(function(e, i){
+							game.targets.map[e] = true;
+			                game.draw();
+			                //console.log("Цілі " + arrayTarget);
+			                targetsCopy = game.targets.map;
+						});
+						arrayTarget.add(item.coordinates);
+						//console.log(arrayTarget);
+					}
 				}
 			}
+			
+//		    function changeColor(i){
+//		        $scope.itemColour={ 'backgroud-color': i.color};
+//		    }
 
 			function find(value) {
 				for (var i = 0; i < $scope.items.length; i++) {
@@ -745,7 +759,7 @@ var lang;
 		        //console.log("On click start " + game.player.cell);
 		        if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
 // }else
-		        	//console.log('BadWay')
+		        	// console.log('BadWay')
 		    }
 
 		    $scope.openMap = function () {

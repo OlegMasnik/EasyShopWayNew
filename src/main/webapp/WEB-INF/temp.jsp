@@ -76,7 +76,7 @@
 			<br>
 		</form>
 		<md-content flex>
-		<div class="chips" flex="none" ng-repeat="item in items">
+		<div class="chips" flex="none" ng-repeat="item in items" ng-style='{"background-color": item.color}'>
 			<div class="chip-precontext" layout="row">
 				<span class="chip-context" flex> <span>
 						{{item.display}}</span>
@@ -85,7 +85,7 @@
 					ng-click="ctrl.toggleChecked(item)">&#10006;</a>
 				</span>
 			</div>
-		</div>
+		</div >
 		</md-content> </md-content>
 	</div>
 	<md-button ng-click="ctrl.sendOnMap()"

@@ -74,7 +74,7 @@ app.config(function($translateProvider) {
 		OPTION:'Option',
 		COLUMN:'Column',
 		
-		PRODUCT_TYPE:'Product type',
+		PRODUCT_TYPE:'Products type',
 		PRODUCT:'Product',
 		EDIT_TYPE:'Edit type',
 		IMAGE:'Image',
@@ -170,7 +170,7 @@ app.config(function($translateProvider) {
 		SMART_SEARCH:'Розумний пошук',
 		SEARCH:'Пошук',
 		OPTION:'Опції',
-		PRODUCT_TYPE:'Тип товарів',
+		PRODUCT_TYPE:'Типи товарів',
 		PRODUCT:'Товари',
 		EDIT_TYPE:'Редагувати тип',
 		COLUMN:'Колонки',
