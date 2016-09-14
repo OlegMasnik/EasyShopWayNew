@@ -111,9 +111,13 @@ var lang;
 			}
 
 			self.sendOnMap = function() {
+				
+				if(startered){
+					$scope.items.map(function(e, i){
+						selectedItemChange(e, "");
+					});
+				}
 				startered = true;
-				start();
-		    	start();
 				$scope.onClick();
 				
 				var ids = [];
@@ -135,7 +139,6 @@ var lang;
 				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
 				}
 				}
-				console.log(send);
 				$http
 				.post('/EasyShopWayNew/saveProductList', send,
 				config).success(
@@ -176,21 +179,27 @@ var lang;
 						item.color = getRandomColor();
 						$scope.items.push(item);
 					}
-					console.log(item);
 					self.searchText = "";
-//					$scope.myObj = {
-//						"background-color" : getRandomColor(),
-//					}
-					if(item.coordinates.length > 0){
-						item.coordinates.map(function(e, i){
+					$scope.items.map(function(elem, idex){
+//						console.log(elem);
+						elem.coordinates.map(function(e, i){
 							game.targets.map[e] = true;
-			                game.draw();
-			                //console.log("Цілі " + arrayTarget);
-			                targetsCopy = game.targets.map;
+							game.targetColors[e] = elem.color;
+							//console.log("Цілі " + arrayTarget);
+							targetsCopy = game.targets.map;
 						});
-						arrayTarget.add(item.coordinates);
+						game.arrayTarget.add(elem.coordinates);
+					});
+//					if(item.coordinates.length > 0){
+//						item.coordinates.map(function(e, i){
+//							game.targets.map[e] = true;
+//							game.targetColors[e] = item.color;
+//			                //console.log("Цілі " + arrayTarget);
+//			                targetsCopy = game.targets.map;
+//						});
 						//console.log(arrayTarget);
-					}
+//					}
+					game.draw();
 				}
 			}
 			
@@ -208,19 +217,24 @@ var lang;
 			}
 
 			function remove(value) {
-				//console.log('remove')
+				console.log('remove')
+				
 				if(value != undefined){
-					value.coordinates.map(function(e, i){
-						game.targets.map[e] = false;
-					});
-					arrayTarget.removeUndefined(value.coordinates);
-					game.draw();
+					console.log(value)
 					for (var i = 0; i < $scope.items.length; i++) {
 						if ($scope.items[i].value == value.value) {
 							$scope.items.splice(i, 1);
-							return;
+							break;
 						}
 					}
+					value.coordinates.map(function(e, i){
+						game.targets.map[e] = false;
+						game.targetColors[e] = undefined;
+						game.notVisit.remove(e);
+						targetsCopy[e] = false;
+					});
+					game.arrayTarget.removeUndefined(value.coordinates);
+					game.draw();
 				}
 			}
 			function loadAll(data) {
@@ -292,12 +306,12 @@ var lang;
 		    	game = new Game(document.querySelector('canvas'), $scope.config);
 		    	game.way = oldMap.way;
 		    	game.notVisit = oldMap.notVisit;
+		    	game.targetColors = oldMap.targetColors;
 		        game.draw();
 		    }
 		    
 		    function start() {
 		        game = new Game(document.querySelector('canvas'), $scope.config);
-		        game.draw();
 		    };
 
 		    $scope.clickOnSelect = function (mId) {
@@ -336,7 +350,6 @@ var lang;
 
 		    var game;
 		    var tCell;
-		    var arrayTarget = new Array();
 		    var arrayCupBoard = new Array();
 		    var buffPath;
 		    var curTarget;
@@ -358,6 +371,8 @@ var lang;
 
 		    var Game = function (canvas, conf) {
 		        game = this;
+		        this.arrayTarget = new Array();
+		        this.targetColors = [];
 		        this.notVisit = [];
 		        this.enter = $scope.config.enter;
 		        this.canvas = canvas;
@@ -400,13 +415,7 @@ var lang;
 		            }
 		            if (this.targets.map[cell]) return '#522';
 		            if (this.way.map[cell]) return waycolor;
-// if ($scope.paydesks.indexOf(cell) != -1){
-// return '#ff870d';
-// }
 		            if ($scope.walls.indexOf(cell) != -1) return '#555';
-// if (this.cupBoard.map[cell]){
-// return "";
-// }
 		            return '#eee';
 		        };
 		        this.draw = function () {
@@ -430,7 +439,6 @@ var lang;
 				                            y * game.cellSpace + game.borderWidth,
 				                            game.cellSize, game.cellSize);
 				                        if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
-
 					                        game.ctx.fillStyle = '#eee';
 					                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
 					                            game.cellSize, game.cellSize);
@@ -449,16 +457,21 @@ var lang;
 		                            var tmp2 = this.way.map[cell];
 		                            this.targets.map[cell] = true;
 		                            this.way.map[cell] = false;
-// game.ctx.fillStyle = game.getCellColor(cell);
-		                            if(game.notVisit.indexOf(cell) != -1){
-		                            	game.ctx.drawImage(imageTarget_off, x * game.cellSpace + game.borderWidth,
-					                            y * game.cellSpace + game.borderWidth,
-					                            game.cellSize, game.cellSize);
-		                            }else{
-			                        	game.ctx.drawImage(imageTarget, x * game.cellSpace + game.borderWidth,
-					                            y * game.cellSpace + game.borderWidth,
-					                            game.cellSize, game.cellSize);
-		                            }
+		                            game.ctx.fillStyle = game.targetColors[cell];
+		                            game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+				                            y * game.cellSpace + game.borderWidth,
+				                            game.cellSize, game.cellSize);
+//		                            if(game.ctx.fillStyle != undefined){
+			                            if(game.notVisit.indexOf(cell) != -1){
+			                            	game.ctx.drawImage(imageTarget_off, x * game.cellSpace + game.borderWidth,
+						                            y * game.cellSpace + game.borderWidth,
+						                            game.cellSize, game.cellSize);
+			                            }else{
+				                        	game.ctx.drawImage(imageTarget, x * game.cellSpace + game.borderWidth,
+						                            y * game.cellSpace + game.borderWidth,
+						                            game.cellSize, game.cellSize);
+			                            }
+//		                            }
 		                            this.targets.map[cell] = tmp1;
 		                            this.way.map[cell] = tmp2;
 		                        }
@@ -502,25 +515,28 @@ var lang;
 	                    }
 	                    game.draw();
 							break;
-						case 2:
-							if(startered){
-								startered = false;
-								clear();
-							}
-							if (checkCell(cell) && !game.paint.active) {
-		                        game.paint.active = true;
-
-		                        game.paint.value = !game.targets.map[cell];
-		                        game.targets.map[cell] = game.paint.value;
-		                        if (game.targets.map[cell]) {
-		                        	//console.log('add target')
-		                            arrayTarget.add([cell]);
-		                        } else {
-		                        	//console.log('remove target')
-		                        	//console.log(arrayTarget)
-		                            arrayTarget.removeOne(cell);
-		                        	//console.log(arrayTarget)
-		                        	game.targets.map[cell] = false;
+						default:
+							break;
+//						case 2:
+//							if(startered){
+//								startered = false;
+//								clear();
+//							}
+//							if (checkCell(cell) && !game.paint.active) {
+//		                        game.paint.active = true;
+//
+//		                        game.paint.value = !game.targets.map[cell];
+//		                        game.targets.map[cell] = game.paint.value;
+//		                        if (game.targets.map[cell]) {
+//		                        	game.arrayTarget.add([cell]);
+//		                        	console.log('add target')
+//		                        	console.log(game.arrayTarget)
+//		                        } else {
+//		                        	game.arrayTarget.removeOne(cell);
+//		                        	console.log('remove target')
+//		                        	console.log(game.arrayTarget)
+//		                        	//console.log(arrayTarget)
+//		                        	game.targets.map[cell] = false;
 		                        	
 // remEl.map(function(e, i){
 // game.targets.map[e] = false;
@@ -531,15 +547,15 @@ var lang;
 // return;
 // }
 // }
-		                        }
-		                        //console.log("Цілі ");
-		                        //console.log(arrayTarget);
-		                        targetsCopy = game.targets.map;
-		                    } else {
-		                        //console.log("хуйня якась")
-		                    }
-							game.draw();
-							break;
+//		                        }
+//		                        //console.log("Цілі ");
+//		                        //console.log(arrayTarget);
+//		                        targetsCopy = game.targets.map;
+//		                    } else {
+//		                        //console.log("хуйня якась")
+//		                    }
+//							game.draw();
+//							break;
 						}
 		            }
 		        };
@@ -566,9 +582,9 @@ var lang;
 		        this.findStart = function () {
 		            for (var i = 0; i < $scope.paydesks.length; i++) {
 		                this.cell = $scope.paydesks[i];
-		                for (var j = 0; j < arrayTarget.length; j++) {
-		                	for(var k = 0; k < arrayTarget[j].length; k++){
-			                    this.target = arrayTarget[j][k];
+		                for (var j = 0; j < game.arrayTarget.length; j++) {
+		                	for(var k = 0; k < game.arrayTarget[j].length; k++){
+			                    this.target = game.arrayTarget[j][k];
 			                    var _target = this.target;
 			    		        if(!game.cupBoard.map[_target + 1])
 			    		        	this.target = _target + 1;
@@ -597,17 +613,17 @@ var lang;
 		            }
 		        }
 		        this.moveTo = function () {
-		        	//console.log(arrayTarget);
-		            if (arrayTarget.length > 0) {
+		        	console.log(game.arrayTarget);
+		            if (game.arrayTarget.length > 0) {
 		            	var _target;
 		            	var _targetToDelete;
 		            	var _targetListToDelete;
-		                for (var f = 0; f < arrayTarget.length; f++) {
-		                	//console.log(arrayTarget[f]);
-		                	for(var z = 0; z < arrayTarget[f].length; z++){
-			                    this.target = arrayTarget[f][z];
+		                for (var f = 0; f < game.arrayTarget.length; f++) {
+		                	console.log(game.arrayTarget[f]);
+		                	for(var z = 0; z < game.arrayTarget[f].length; z++){
+			                    this.target = game.arrayTarget[f][z];
 			                    _target = this.target;
-			                    //console.log(_target);
+//			                    console.log(_target);
 			                    game.notVisit.addInArray(_target);
 			    		        if(!game.cupBoard.map[_target + 1])
 			    		        	this.target = _target + 1;
@@ -624,7 +640,7 @@ var lang;
 			                    		buffPath = this.path;
 			                    		curTarget = this.target;
 			                    		_targetToDelete = _target;
-			                    		_targetListToDelete = arrayTarget[f];
+			                    		_targetListToDelete = game.arrayTarget[f];
 			                    	}
 		                		}
 		                	game.notVisit.remove(_targetToDelete);
@@ -635,12 +651,12 @@ var lang;
 		                buffPath.tracePath();
 		                //console.log("toDelete");
 		                //console.log(_targetListToDelete);
-		                arrayTarget.removeUndefined(_targetListToDelete);
+		                game.arrayTarget.removeUndefined(_targetListToDelete);
 		                buffPath = undefined;
 		                _targetToDelete = undefined;
                         _targetListToDelete = undefined;
 		                this.cell = curTarget;
-		                //console.log("Targets: " + arrayTarget);
+		                console.log("Targets: " + game.arrayTarget);
 		                this.moveTo();
 		            } else {
 		                this.path = new Path(game, this.cell, game.enter, this.followPath);
@@ -652,7 +668,7 @@ var lang;
 		            }
 		            if (typeof (buffPath) != 'undefined') {
 		                buffPath.tracePath();
-		                arrayTarget.removeUndefined(curTarget);
+		                game.arrayTarget.removeUndefined(curTarget);
 		                buffPath = undefined;
 		                this.cell = curTarget;
 		                this.moveTo();
@@ -764,7 +780,6 @@ var lang;
 
 		    $scope.openMap = function () {
 		            game = new Game(document.querySelector('canvas'), $scope.config);
-		            game.draw();
 		    }
 		    
 		    function wait(ms) {
@@ -964,8 +979,6 @@ var lang;
 		        };
 		        $scope.showSimpleToast();
 		    }
-		    
-		    start();
 		}
 		
 		

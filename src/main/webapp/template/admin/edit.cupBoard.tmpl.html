@@ -1,3 +1,25 @@
+<style>
+table {
+	border: none;
+}
+
+tr td {
+	background: url('images/cupboard/p2.jpg') 100% 100% no-repeat;
+	background-size: cover;
+	height:100px; 
+	weigth:150px; 
+}
+
+tr td:first-child {
+	background: url('images/cupboard/p1.jpg') 100% 100% no-repeat;
+	background-size: cover;
+}
+
+tr td:last-child {
+	background: url('images/cupboard/p3.jpg') 100% 100% no-repeat;
+	background-size: cover;
+}
+</style>
 <md-dialog id="cupboardEdit">
 <form ng-cloak>
 	<md-toolbar>
@@ -14,11 +36,17 @@
 			<md-input-container flex> <label>{{ 'ENGLISH_DESCRIPTION' | translate }}</label> <input type="text" ng-model="name_en"> </md-input-container>
 			<md-input-container flex> <label>{{ 'UKRAINE_DESCRIPTION' | translate }}</label> <input type="text" ng-model="name_uk"> </md-input-container>
 		</div>
-		<div layout="row" ng-repeat="k in item.board_count | range">
-			<md-select ng-model="cupboardCells[k * item.values.length + $index]"  ng-repeat="i in item.values" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}">
+		
+		<table border="0" cellspacing="0" cellpadding="0">
+		<tr ng-repeat="k in item.board_count | range">
+			<td ng-repeat="i in item.values">
+				<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}">
 				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option> 
 			</md-select>
-		</div>
+			</td>
+		</tr>
+	</table>
+		
 		<md-dialog-actions layout="row"> <span flex></span>
 		<div layout="row">
 			<md-button ng-click="deleteCupboard(item)"> {{ 'DELETE' | translate }}</md-button>
