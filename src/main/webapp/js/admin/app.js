@@ -368,10 +368,11 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
 // ************************************************* ProdCtrl
 // *************************************************//
 
-adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', function ($http, $scope, $location, $mdDialog, $mdToast) {
+adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', '$route', function ($http, $scope, $location, $mdDialog, $mdToast, $route) {
 
     $scope.empty = undefined;
-    $scope.showPromptProd = function (types, item) {
+  
+    $scope.showPromptProd = function (item) {
 
         console.log($scope.item);
 
@@ -380,9 +381,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
                 templateUrl: 'template/admin/edit.prod.tmpl.html',
                 parent: angular.element(document.body),
                 resolve: {
-                    types: function () {
-                        return types;
-                    },
                     item: function () {
                         return item;
                     }
@@ -411,7 +409,18 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
             });
     };
 
-    function DialogController($scope, $mdDialog, types, item) {
+    function DialogController($scope, $mdDialog, item) {
+    	
+    	  $http({
+    			method: "GET",
+    			url: "/EasyShopWayNew/type"
+    		}).then(function mySucces(response) {
+    			$scope.types = response.data.types;
+    			console.log("Get");
+    			console.log($scope.types);
+    		}, function myError(response) {
+    			console.log(response.statusText);
+    		});
 
         console.log("item " + item)
         if (item == undefined) {
@@ -421,8 +430,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
                 nuk: "",
                 ptid: 0
             };
-            $scope.types = types;
-
         } else {
             $scope.item = item;
             $scope.types = types;
@@ -476,9 +483,9 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
                     console.log('failed');
                 });
             $mdDialog.hide();
+            $route.reload();
         };
     }
-
 
     var originalProd = {};
 
@@ -523,14 +530,14 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
         ident: "",
     };
 
-    $scope.limitOptionsProd = [5, 10, 15];
+    $scope.limitOptions = [5, 10, 15];
     $scope.optionsProd = {
         pageSelect: true
     };
 
     $scope.queryProd = {
         order: 'nen',
-        limit: 5,
+        limit: 15,
         page: 1
     };
 
@@ -663,6 +670,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
 
     };
 }]);
+
 adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', function ($http, $scope, $location, $mdDialog, $mdToast) {
 	
 	$scope.empty = undefined;
