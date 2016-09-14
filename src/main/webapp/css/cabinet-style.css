@@ -7,6 +7,10 @@ md-toolbar {
 	
 }
 
+.button {
+	margin: 5px 0;
+}
+
 .main-page {
 	/* 	width: calc(100% - 250px); */
 	margin-left: 10px;

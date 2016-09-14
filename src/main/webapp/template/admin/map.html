@@ -68,21 +68,27 @@
         </md-card-content>
 
 			<md-card-actions layout="row" layout-xs="column" layout-align="end center" layout-align-xs="start start">
+			
+			<div layout="row" layout-xs="column" class="actions" >
+				<span style="margin-right: 8px;"><a class="md-button md-primary md-raised" layout-margin id="download">Download</a></span>
                 <md-button  class="md-primary md-raised" ng-click="saveMap()">{{ 'SAVE' | translate }}</md-button>
-                <md-button class="md-accent md-raised md-hue-2" ng-click="deleteMap($event)">{{ 'DELETE' | translate }}</md-button>
-                <md-button class="md-accent md-raised md-hue-2" ng-click="clearMap()">{{ 'CLEAR' | translate }}</md-button>
+                <md-button  class="md-accent md-raised md-hue-2" ng-click="deleteMap($event)">{{ 'DELETE' | translate }}</md-button>
+                <md-button  class="md-accent md-raised md-hue-2" ng-click="clearMap()">{{ 'CLEAR' | translate }}</md-button>
+                </div>          
             </md-card-actions>
-
+			
+			
     </md-card>
 
 
     <md-card>
         <md-card-content>
 
+
             <md-content style="background-color: white;">
-            	<a id="link"></a>
+            	
             
-                <canvas></canvas>
+                <canvas id="canvas"></canvas>
             </md-content>
         </md-card-content>
     </md-card>
