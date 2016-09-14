@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.epam.easyshopway.dao.ProductDAO;
+import com.epam.easyshopway.dao.ProductTypeDAO;
 import com.epam.easyshopway.model.Product;
 
 public class ProductService {
@@ -61,5 +62,27 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public static boolean hasNameEn (String nameEn){
+		try (ProductTypeDAO productDAO = new ProductTypeDAO()) {
+			return productDAO.hasNameEn(nameEn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static boolean hasNameUk (String nameUk){
+		try (ProductTypeDAO productDAO = new ProductTypeDAO()) {
+			return productDAO.hasNameUk(nameUk);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

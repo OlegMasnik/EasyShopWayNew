@@ -16,6 +16,8 @@ public class ProductTypeDAO extends AbstractDAO<ProductType>{
 	private final String UPDATE_PRODUCT_TYPET_BY_INDEX = "UPDATE product_type SET name_uk=?, name_en=?, img=?, active =? WHERE id=?";
 	private final String GET_PRODUCT_TYPE_BY_INDEX = "SELECT * FROM product_type WHERE id=?";
 	private final String GET_ALL_PRODUCTS_TYPES = "SELECT * FROM product_type WHERE active=1";
+	private final String CHECK_NAME_EN = "SELECT * FROM product_type pt WHERE pt.name_en LIKE ?;";
+	private final String CHECK_NAME_UK = "SELECT * FROM product_type pt WHERE pt.name_uk LIKE ?;";
 
 	public ProductTypeDAO() {
 		super();
@@ -78,5 +80,23 @@ public class ProductTypeDAO extends AbstractDAO<ProductType>{
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
+	}
+	
+	public boolean hasNameEn (String nameEn) throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(CHECK_NAME_EN);
+		statement.setString(1, nameEn);
+		ResultSet resultSet = statement.executeQuery();
+		List<ProductType> productTypes = new Transformer<ProductType>(ProductType.class).fromRStoCollection(resultSet);
+		statement.close();
+		return !productTypes.isEmpty();
+	}
+	
+	public boolean hasNameUk (String nameUk) throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(CHECK_NAME_UK);
+		statement.setString(1, nameUk);
+		ResultSet resultSet = statement.executeQuery();
+		List<ProductType> productTypes = new Transformer<ProductType>(ProductType.class).fromRStoCollection(resultSet);
+		statement.close();
+		return !productTypes.isEmpty();
 	}
 }

@@ -29,6 +29,7 @@ import com.epam.easyshopway.service.ProductService;
 import com.epam.easyshopway.service.ProductTypeService;
 import com.epam.easyshopway.service.UserService;
 
+
 import sun.net.www.content.image.jpeg;
 
 public class TypeProductControlServlet extends HttpServlet {
@@ -80,6 +81,8 @@ public class TypeProductControlServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
+		
+		JSONObject message = new JSONObject(); 
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(req);
 		if (!isMultipart) {
@@ -141,22 +144,28 @@ public class TypeProductControlServlet extends HttpServlet {
 				productType.setNameUk(name_uk);
 				productType.setImageUrl(fName);
 				productType.setActive(true);
-				if (ProductTypeService.insert(productType) > 0) {
-					System.out.println("OK insert");
-				} else {
-					System.out.println("Bad insert");
+				if (ProductTypeService.hasNameEn(name_en)){
+					message.put("msg", "This english name already exists");
+					System.out.println("This english name already exists");
+				}else if(ProductTypeService.hasNameUk(name_uk)) {
+					System.out.println(name_uk);
+					message.put("msg", "This ukrainian name already exists");
+					System.out.println("This ukrainian name already exists");
+				}else if(ProductTypeService.insert(productType) > 0){
+					message.put("msg", "Product type added successfully");
+					System.out.println("Product type added successfully");
+				}else{
+					message.put("msg", "Product type adding failed");
 				}
 			}
-
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("Before redirect");
+//		resp.getWriter().write(message.toString());
 		resp.sendRedirect("/EasyShopWayNew/cabinet#/products");
 	}
-	
-	
-	
+
 }
