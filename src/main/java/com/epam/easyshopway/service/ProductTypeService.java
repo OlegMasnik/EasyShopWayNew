@@ -61,4 +61,26 @@ public class ProductTypeService {
 		}
 		return 0;
 	}
+	
+	public static boolean hasNameEn (String nameEn){
+		try (ProductTypeDAO productDAO = new ProductTypeDAO()) {
+			return productDAO.hasNameEn(nameEn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static boolean hasNameUk (String nameUk){
+		try (ProductTypeDAO productDAO = new ProductTypeDAO()) {
+			return productDAO.hasNameUk(nameUk);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

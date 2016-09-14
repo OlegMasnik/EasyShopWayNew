@@ -55,6 +55,7 @@ public class ProductsControlServlet extends HttpServlet {
 		String nameUk = req.getParameter("nameUk");
 		int ptid = Integer.parseInt(req.getParameter("ptid"));
 		System.out.println("Do Put " + id + " " + nameEn + " " + nameUk + " " + ptid);
+		JSONObject message = new JSONObject();
 		if (id != 0) {
 			prod = ProductService.getById(id);
 			prod.setNameEn(nameEn);
@@ -72,13 +73,21 @@ public class ProductsControlServlet extends HttpServlet {
 			prod.setNameUk(nameUk);
 			prod.setProductTypeId(ptid);
 			prod.setActive(true);
-			String mes;
-			if (ProductService.insert(prod) > 0) {
-				System.out.println("OK insert");
-			} else {
-				System.out.println("Bad insert");
+			if (ProductService.hasNameEn(nameEn)){
+				message.put("msg", "This english name already exists");
+				System.out.println("This english name already exists");
+			}else if(ProductService.hasNameUk(nameUk)) {
+				System.out.println(nameUk);
+				message.put("msg", "This ukrainian name already exists");
+				System.out.println("This ukrainian name already exists");
+			}else if(ProductService.insert(prod) > 0){
+				message.put("msg", "Product  added successfully");
+				System.out.println("Product added successfully");
+			}else{
+				message.put("msg", "Product adding failed");
 			}
 		}
+		resp.getWriter().write(message.toString());
 	}
 
 	private JSONArray setJsonArrayProducts(Collection<Product> list) {

@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.Product;
+import com.epam.easyshopway.model.ProductType;
 
 public class ProductDAO extends AbstractDAO<Product> {
 	private Transformer<Product> transformer;
@@ -17,6 +18,8 @@ public class ProductDAO extends AbstractDAO<Product> {
 	private final String UPDATE_PRODUCT_BY_INDEX = "UPDATE product SET product_type_id=?, name_uk=?, name_en=?, active=? WHERE id=?";
 	private final String GET_PRODUCT_BY_INDEX = "SELECT * FROM product WHERE id=?";
 	private final String GET_ALL_PRODUCTS = "SELECT * FROM product WHERE active=1";
+	private final String CHECK_NAME_EN = "SELECT * FROM product p WHERE p.name_en LIKE ?;";
+	private final String CHECK_NAME_UK = "SELECT * FROM product t WHERE p.name_uk LIKE ?;";
 
 	public ProductDAO() {
 		super();
@@ -83,5 +86,23 @@ public class ProductDAO extends AbstractDAO<Product> {
 		int result = statement.executeUpdate();
 		statement.close();
 		return result;
+	}
+	
+	public boolean hasNameEn (String nameEn) throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(CHECK_NAME_EN);
+		statement.setString(1, nameEn);
+		ResultSet resultSet = statement.executeQuery();
+		List<ProductType> productTypes = new Transformer<ProductType>(ProductType.class).fromRStoCollection(resultSet);
+		statement.close();
+		return !productTypes.isEmpty();
+	}
+	
+	public boolean hasNameUk (String nameUk) throws SQLException, InstantiationException, IllegalAccessException{
+		PreparedStatement statement = connection.prepareStatement(CHECK_NAME_UK);
+		statement.setString(1, nameUk);
+		ResultSet resultSet = statement.executeQuery();
+		List<ProductType> productTypes = new Transformer<ProductType>(ProductType.class).fromRStoCollection(resultSet);
+		statement.close();
+		return !productTypes.isEmpty();
 	}
 }
