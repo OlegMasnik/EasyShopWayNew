@@ -12,7 +12,7 @@
 <title>Successful confirmation email</title>
 </head>
 
-<body ng-app="MyApp">
+<body ng-app="MyApp" ng-controller="AppCtrl">
 	<jsp:include page="/WEB-INF/parts/header.jsp"></jsp:include>
 	
 	
