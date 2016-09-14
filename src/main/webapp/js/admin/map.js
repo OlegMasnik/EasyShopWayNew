@@ -3,7 +3,24 @@
 angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope, $http, $mdDialog) {
 
     var mapId;
+    
+    function downloadCanvas(link, canvasId, filename) {
+        link.href = document.getElementById(canvasId).toDataURL();
+        link.download = filename;
+    }
+    
+    document.getElementById('download').addEventListener('click', function() {
+    	var date = new Date ();
+    	var name = "map_" + date.getFullYear() + date.getMonth() + 
+    				date.getDay() + "-" +  date.getHours() +"-" + date.getMinutes() + 
+    				"-" + date.getSeconds() + ".png";
+        downloadCanvas(this, 'canvas', name);
+    }, false);
 
+    $scope.downloadImg = function() {
+		
+	}
+    
     $scope.map = undefined;
     $scope.enter = undefined;
     $scope.paydesks = undefined;

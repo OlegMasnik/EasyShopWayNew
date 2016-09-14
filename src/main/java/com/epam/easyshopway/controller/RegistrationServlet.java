@@ -37,8 +37,22 @@ public class RegistrationServlet extends HttpServlet {
 			String firstName = request.getParameter("firstName");
 			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
-			String password = MD5Util.md5Custom(request.getParameter("password"));
+			String password = request.getParameter("password");
+			
+			if (password == null) {
+				System.out.println();
+				System.out.println("Password null");
+			}
+			
+			System.out.println("User " + firstName + " " 
+					+ lastName + " " 
+					+ email + " " 
+					+ password);
+			
+			password = MD5Util.md5Custom(request.getParameter("password"));
+			
 			User user = new User(firstName, lastName, email, password, true, "user", "en", "");
+			
 
 			System.out.println(firstName.equals(""));
 			object = new JSONObject();
