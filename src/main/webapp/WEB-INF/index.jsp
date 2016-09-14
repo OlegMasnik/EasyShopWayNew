@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/style.css">
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="images/favicon.ico">
 
 </head>
 

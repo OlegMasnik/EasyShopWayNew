@@ -11,6 +11,9 @@ adminApp.config(function ($routeProvider) {
     }).when("/products", {
         templateUrl: "template/admin/products.html",
         controller: 'ProdCtrl'
+    }).when("/types", {
+    	templateUrl: "template/admin/productsType.html",
+    	controller: 'TypeCtrl'
     }).when("/users", {
         templateUrl: "template/admin/users.html",
         controller: 'UsersCtrl1'
@@ -28,15 +31,13 @@ adminApp.controller('AdminCtrl', function ($scope, $http, $mdToast) {
 });
 
 
-// ************************************************* InfoCtrl
-// *************************************************//
+// ************************************************* InfoCtrl // *************************************************//
 
 adminApp.controller('InfoCtrl', function ($scope, $http) {
     $scope.qwer = "Hello world";
 });
 
-// ************************************************* UserCtrl
-// *************************************************//
+// ************************************************* UserCtrl // *************************************************//
 
 adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '$mdDialog', function ($http, $scope, $location, $mdToast, $mdDialog) {
 
@@ -473,90 +474,8 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
         };
     }
 
-    $scope.showPromptType = function (item) {
-
-        console.log(" Type " + item);
-
-        $mdDialog.show({
-                controller: DialogTypeController,
-                templateUrl: 'template/admin/edit.type.tmpl.html',
-                parent: angular.element(document.body),
-                resolve: {
-                    item: function () {
-                        return item;
-                    }
-                },
-                clickOutsideToClose: true,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm
-                    // breakpoints.
-            })
-            .then(function (answer) {
-                $http({
-                    method: "GET",
-                    url: "/EasyShopWayNew/type"
-                }).then(function mySucces(response) {
-                    $scope.data = response.data;
-                    originalType.types = $scope.data.types;
-                    originalType.count = $scope.data.types.length;
-                    $scope.datatableType = angular.copy(originalType);
-                    console.log("Get");
-                    console.log($scope.data);
-                }, function myError(response) {
-                    console.log(response.statusText);
-                });
-            }, function () {
-                $scope.status = 'You cancelled the dialog.';
-            });
-    };
-
-    function DialogTypeController($scope, $mdDialog, item) {
-
-        if (item == undefined) {
-            $scope.item = {
-                id: 0,
-                nen: "",
-                nuk: "",
-                img: ""
-            };
-        } else {
-            $scope.item = item;
-        }
-        console.log(item);
-
-        $scope.hide = function () {
-            $mdDialog.hide();
-        };
-
-        $scope.cancel = function () {
-            console.log("cancel");
-            $mdDialog.cancel();
-        };
-
-        $scope.answer = function (item, file_path) {
-
-            console.log('file path ' + file_path);
-
-            var data = $.param({
-                id: item.id,
-                nuk: item.nuk,
-                nen: item.nen,
-                img: item.img
-            });
-
-            $http.put('/EasyShopWayNew/type?' + data)
-                .success(function (data, status, headers) {
-                    console.log('update');
-
-                })
-                .error(function (data, status, header, config) {
-                    console.log('failed');
-                });
-            $mdDialog.hide();
-        };
-    }
 
     var originalProd = {};
-    var originalType = {};
 
     $http({
         method: "GET",
@@ -710,167 +629,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
             );
     };
 
-
-
-    $scope.deleteType = function (id) {
-
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-
-        $http.delete('/EasyShopWayNew/type?id=' + id, config)
-            .then(
-                function (response) {
-                    console.log("success delete prod " + id);
-                    $http({
-                        method: "GET",
-                        url: "/EasyShopWayNew/type"
-                    }).then(function mySucces(response) {
-                        $scope.data = response.data;
-                        originalType.types = $scope.data.types;
-                        originalType.count = $scope.data.types.length;
-                        $scope.datatableType = angular.copy(originalType);
-                        showToast($mdToast, $scope, "ProductTypes with id " + id + " is deleted");
-                        console.log("Get");
-                        console.log($scope.data);
-                    }, function myError(response) {
-                        console.log(response.statusText);
-                    });
-
-                    $http({
-                        method: "GET",
-                        url: "/EasyShopWayNew/products"
-                    }).then(function mySucces(response) {
-                        $scope.data = response.data;
-                        originalProd.prods = $scope.data.prods;
-                        originalProd.count = $scope.data.prods.length;
-                        $scope.datatable = angular.copy(originalProd);
-                        console.log("Get");
-                        console.log($scope.data);
-                    }, function myError(response) {
-                        console.log(response.statusText);
-                    });
-                },
-                function (response) {
-                    console.log("failed delete prod " + id);
-                }
-            );
-    };
-
-
-
-    $http({
-        method: "GET",
-        url: "/EasyShopWayNew/type"
-    }).then(function mySucces(response) {
-        $scope.data = response.data;
-        originalType.types = $scope.data.types;
-        originalType.count = $scope.data.types.length;
-        $scope.datatableType = angular.copy(originalType);
-        console.log("Get");
-        console.log($scope.data);
-    }, function myError(response) {
-        console.log(response.statusText);
-    });
-    $scope.smartType = true;
-
-    $scope.autocolumnType = [
-        {
-            name: "nen",
-            display: "Name EN"
-        },
-        {
-            name: "nuk",
-            display: "Name UK"
-        }];
-    $scope.multisearchType = Array();
-    $scope.multisearchType[0] = {
-        id: 0,
-        column: "",
-        ident: "",
-    };
-
-    $scope.limitOptionsType = [5, 10, 15];
-    $scope.optionsType = {
-        pageSelect: true
-    };
-
-    $scope.queryType = {
-        order: 'nen',
-        limit: 5,
-        page: 1
-    };
-
-    $scope.updateDataTableType = function () {
-        var rowdel = Array();
-        var filter = false; // set filter false
-        for (var j = 0; j < $scope.multisearchType.length; j++) {
-            if ($scope.multisearchType[j].ident && $scope.multisearchType[j].column) {
-                filter = true; // if a filter exists
-            }
-        }
-        if (filter) { // if a filter is set
-            for (var j = 0; j < $scope.multisearchType.length; j++) { // for
-                if ($scope.multisearchType[j].ident) { // check
-                    for (var i = originalType.types.length - 1; i >= 0; i--) { // for
-                        var removeRow = true; // take
-                        for (var key in originalType.types[i]) { // for
-                            if (originalType.types[i]
-                                .hasOwnProperty(key)) { // check
-                                if (key == $scope.multisearchType[j].column) { // check
-                                    var op = false; // check
-                                    for (var key in operators) {
-                                        if ($scope.multisearchType[j].ident
-                                            .split(" ")[0] == key) {
-                                            op = true; // operator
-                                            // found
-                                        }
-                                    }
-                                    if (op) { // if
-                                        var msray = $scope.multisearchType[j].ident
-                                            .split(" ");
-                                        var operator = $scope.multisearchType[j].ident
-                                            .split(" ")[0];
-                                        msray.splice(0,
-                                            1); // extract
-                                        var comp = msray
-                                            .join(" "); // and
-                                        if (operators[operator]
-                                            (
-                                                originalType.types[i][$scope.multisearchType[j].column],
-                                                comp)) {
-                                            removeRow = false; // check
-                                            break;
-                                        }
-                                    } else {
-                                        if (matchRule(
-                                                originalType.types[i][$scope.multisearchType[j].column],
-                                                $scope.multisearchType[j].ident,
-                                                $scope.smartType)) {
-                                            removeRow = false; // check
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (removeRow) {
-                            rowdel.push(i);
-                        }
-                    }
-                }
-            }
-        }
-        var dt = angular.copy(originalType);
-        for (var i = 0; i < rowdel.length; i++) {
-            dt.types.splice(rowdel[i], 1); // remove
-        }
-        dt.count = dt.types.length;
-        $scope.datatableType = angular.copy(dt);
-    };
-
     $scope.active = function (i) {
         console.log(i.e + " " + i.active);
 
@@ -883,15 +641,6 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
         }
-        $http
-            .post('/EasyShopWayNew/users', data,
-                config).success(
-                function (data, status, headers,
-                    config) {
-                    console.log("OK+");
-                }).error(
-                function (data, status, header,
-                    config) {});
         $http({
             method: "GET",
             url: "/EasyShopWayNew/products"
@@ -908,6 +657,266 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
         console.log("Finish");
 
     };
+}]);
+adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', function ($http, $scope, $location, $mdDialog, $mdToast) {
+	
+	$scope.empty = undefined;
+	$scope.showPromptType = function (item) {
+		
+		console.log(" Type " + item);
+		
+		$mdDialog.show({
+			controller: DialogTypeController,
+			templateUrl: 'template/admin/edit.type.tmpl.html',
+			parent: angular.element(document.body),
+			resolve: {
+				item: function () {
+					return item;
+				}
+			},
+			clickOutsideToClose: true,
+			fullscreen: $scope.customFullscreen // Only for -xs, -sm
+			// breakpoints.
+		})
+		.then(function (answer) {
+			$http({
+				method: "GET",
+				url: "/EasyShopWayNew/type"
+			}).then(function mySucces(response) {
+				$scope.data = response.data;
+				originalType.types = $scope.data.types;
+				originalType.count = $scope.data.types.length;
+				$scope.datatableType = angular.copy(originalType);
+				console.log("Get");
+				console.log($scope.data);
+			}, function myError(response) {
+				console.log(response.statusText);
+			});
+		}, function () {
+			$scope.status = 'You cancelled the dialog.';
+		});
+	};
+	
+	function DialogTypeController($scope, $mdDialog, item) {
+		
+		if (item == undefined) {
+			$scope.item = {
+					id: 0,
+					nen: "",
+					nuk: "",
+					img: ""
+			};
+		} else {
+			$scope.item = item;
+		}
+		console.log(item);
+		
+		$scope.hide = function () {
+			$mdDialog.hide();
+		};
+		
+		$scope.cancel = function () {
+			console.log("cancel");
+			$mdDialog.cancel();
+		};
+		
+		$scope.answer = function (item, file_path) {
+			
+			console.log('file path ' + file_path);
+			
+			var data = $.param({
+				id: item.id,
+				nuk: item.nuk,
+				nen: item.nen,
+				img: item.img
+			});
+			
+			$http.put('/EasyShopWayNew/type?' + data)
+			.success(function (data, status, headers) {
+				console.log('update');
+				
+			})
+			.error(function (data, status, header, config) {
+				console.log('failed');
+			});
+			$mdDialog.hide();
+		};
+	}
+	
+	var originalType = {};
+	
+	$scope.deleteType = function (id) {
+		
+		var config = {
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+				}
+		}
+		
+		$http.delete('/EasyShopWayNew/type?id=' + id, config)
+		.then(
+				function (response) {
+					console.log("success delete prod " + id);
+					$http({
+						method: "GET",
+						url: "/EasyShopWayNew/type"
+					}).then(function mySucces(response) {
+						$scope.data = response.data;
+						originalType.types = $scope.data.types;
+						originalType.count = $scope.data.types.length;
+						$scope.datatableType = angular.copy(originalType);
+						showToast($mdToast, $scope, "ProductTypes with id " + id + " is deleted");
+						console.log("Get");
+						console.log($scope.data);
+					}, function myError(response) {
+						console.log(response.statusText);
+					});
+					
+					$http({
+						method: "GET",
+						url: "/EasyShopWayNew/products"
+					}).then(function mySucces(response) {
+						$scope.data = response.data;
+						originalProd.prods = $scope.data.prods;
+						originalProd.count = $scope.data.prods.length;
+						$scope.datatable = angular.copy(originalProd);
+						console.log("Get");
+						console.log($scope.data);
+					}, function myError(response) {
+						console.log(response.statusText);
+					});
+				},
+				function (response) {
+					console.log("failed delete prod " + id);
+				}
+		);
+	};
+	
+	
+	
+	$http({
+		method: "GET",
+		url: "/EasyShopWayNew/type"
+	}).then(function mySucces(response) {
+		$scope.data = response.data;
+		originalType.types = $scope.data.types;
+		originalType.count = $scope.data.types.length;
+		$scope.datatableType = angular.copy(originalType);
+		console.log("Get");
+		console.log($scope.data);
+	}, function myError(response) {
+		console.log(response.statusText);
+	});
+	$scope.smartType = true;
+	
+	$scope.autocolumnType = [
+	                         {
+	                        	 name: "nen",
+	                        	 display: "Name EN"
+	                         },
+	                         {
+	                        	 name: "nuk",
+	                        	 display: "Name UK"
+	                         }];
+	$scope.multisearchType = Array();
+	$scope.multisearchType[0] = {
+			id: 0,
+			column: "",
+			ident: "",
+	};
+	
+	$scope.limitOptionsType = [5, 10, 15];
+	$scope.optionsType = {
+			pageSelect: true
+	};
+	
+	$scope.queryType = {
+			order: 'nen',
+			limit: 5,
+			page: 1
+	};
+	
+	$scope.updateDataTableType = function () {
+		var rowdel = Array();
+		var filter = false; // set filter false
+		for (var j = 0; j < $scope.multisearchType.length; j++) {
+			if ($scope.multisearchType[j].ident && $scope.multisearchType[j].column) {
+				filter = true; // if a filter exists
+			}
+		}
+		if (filter) { // if a filter is set
+			for (var j = 0; j < $scope.multisearchType.length; j++) { // for
+				if ($scope.multisearchType[j].ident) { // check
+					for (var i = originalType.types.length - 1; i >= 0; i--) { // for
+						var removeRow = true; // take
+						for (var key in originalType.types[i]) { // for
+							if (originalType.types[i]
+							.hasOwnProperty(key)) { // check
+								if (key == $scope.multisearchType[j].column) { // check
+									var op = false; // check
+									for (var key in operators) {
+										if ($scope.multisearchType[j].ident
+												.split(" ")[0] == key) {
+											op = true; // operator
+											// found
+										}
+									}
+									if (op) { // if
+										var msray = $scope.multisearchType[j].ident
+										.split(" ");
+										var operator = $scope.multisearchType[j].ident
+										.split(" ")[0];
+										msray.splice(0,
+												1); // extract
+										var comp = msray
+										.join(" "); // and
+										if (operators[operator]
+										(
+												originalType.types[i][$scope.multisearchType[j].column],
+												comp)) {
+											removeRow = false; // check
+											break;
+										}
+									} else {
+										if (matchRule(
+												originalType.types[i][$scope.multisearchType[j].column],
+												$scope.multisearchType[j].ident,
+												$scope.smartType)) {
+											removeRow = false; // check
+											break;
+										}
+									}
+								}
+							}
+						}
+						if (removeRow) {
+							rowdel.push(i);
+						}
+					}
+				}
+			}
+		}
+		var dt = angular.copy(originalType);
+		for (var i = 0; i < rowdel.length; i++) {
+			dt.types.splice(rowdel[i], 1); // remove
+		}
+		dt.count = dt.types.length;
+		$scope.datatableType = angular.copy(dt);
+	};
+	
+	$scope.active = function (i) {
+		console.log(i.e + " " + i.active);
+		
+		var data = $.param({
+			email: i.e,
+			active: !i.active
+		});
+		var config = {
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+				}
+		}
+	};
 }]);
 
 var operators = {

@@ -37,6 +37,7 @@
 		</div>
 	</a> <md-button href="#edit_map">{{ 'ADMIN_CABINET_MAP' | translate }}</md-button> 
 	<md-button href="#products">{{ 'ADMIN_CABINET_PRODUCTS' | translate }}</md-button> 
+	<md-button href="#types">{{ 'PRODUCT_TYPE' | translate }}</md-button> 
 		<md-button href="#users">{{ 'ADMIN_CABINET_USERS' | translate }}</md-button>
 	<md-button href="#statistic">{{ 'ADMIN_CABINET_STATISTIC' | translate }}</md-button> </md-content> </md-slidenav> <md-content
 		layout="row" flex style="margin-left: 10px;">
