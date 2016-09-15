@@ -9,6 +9,14 @@
         <link rel="stylesheet" href="/EasyShopWayNew/css/style.css">
         <link rel="stylesheet" href="/EasyShopWayNew/css/angular-material.min.css">
 		<link rel="shortcut icon" href="favicon.ico">
+		    <script src="/EasyShopWayNew/js/jquery-3.1.0.min.js"></script>
+	<script src='/EasyShopWayNew/js/angular.min.js'></script>
+	<script src='/EasyShopWayNew/js/angular-aria.js'></script>
+	<script src='/EasyShopWayNew/js/angular-animate.js'></script>
+	<script src='/EasyShopWayNew/js/angular-material.min.js'></script>
+	<script src='/EasyShopWayNew/js/angular-route.min.js'></script>
+	<script src='/EasyShopWayNew/js/angular-translate.js'></script>
+	<script src='/EasyShopWayNew/js/app.js'></script>
         <style>
             body {
                 background-image: url('/EasyShopWayNew/images/404.gif');
@@ -51,16 +59,6 @@
             </div>
         </div>
         
-        
-        
-    <script src="/EasyShopWayNew/js/jquery-3.1.0.min.js"></script>
-	<script src='/EasyShopWayNew/js/angular.min.js'></script>
-	<script src='/EasyShopWayNew/js/angular-aria.js'></script>
-	<script src='/EasyShopWayNew/js/angular-animate.js'></script>
-	<script src='/EasyShopWayNew/js/angular-material.min.js'></script>
-	<script src='/EasyShopWayNew/js/angular-route.min.js'></script>
-	<script src='/EasyShopWayNew/js/angular-translate.js'></script>
-	<script src='/EasyShopWayNew/js/app.js'></script>
 	<script src="/EasyShopWayNew/js/jquery.validate.min.js"></script>
 
     </body>
