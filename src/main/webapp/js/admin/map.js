@@ -1,6 +1,6 @@
 // ************************************************* MapCtrl ************************************************* 
 
-angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope, $http, $mdDialog) {
+angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope, $http, $mdDialog, $translate) {
 
     var mapId;
     
@@ -1043,12 +1043,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
         } else {
             var confirm = $mdDialog.confirm()
-                .title('Would you like to delete this map?')
-                .textContent('All of the banks have agreed to forgive you your debts.')
-                .ariaLabel('Lucky day')
+                .title($translate.instant('DELETE MAP'))
                 .targetEvent(ev)
-                .ok('Yes')
-                .cancel('No');
+                .ok($translate.instant('YES'))
+                .cancel($translate.instant('NO'));
 
             $mdDialog.show(confirm).then(function () {
                 var config = {
