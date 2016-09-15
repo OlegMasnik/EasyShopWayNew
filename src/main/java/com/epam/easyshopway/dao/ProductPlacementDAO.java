@@ -13,6 +13,8 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 	private Transformer<ProductPlacement> transformer;
 	private final String ADD_PRODUCT_PLACEMENT = "INSERT INTO product_placement "
 			+ "(cupboard_id, product_id, place) VALUES (?, ?, ?)";
+	private final String DELETE_PRODUCT_PLACEMENT_BY_PLACE_AND_C_ID = "DELETE FROM product_placement WHERE cupboard_id=? and place =?;";
+	private final String UPDATE_PRODUCT_PLACEMENT = "UPDATE product_placement SET product_id =? WHERE cupboard_id =? and place=?;";
 	private final String UPDATE_PRODUCT_PLACEMENT_BY_INDEX = "UPDATE product_placement SET cupboard_id=?, product_id = ?, place = ? WHERE id=?";
 	private final String GET_PRODUCT_PLACEMENT_BY_INDEX = "SELECT * FROM product_placement WHERE id=?";
 	private final String GET_ALL_PRODUCT_PLACEMENTS = "SELECT * FROM product_placement WHERE active=1";
@@ -36,10 +38,11 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		statement.close();
 		return result;
 	}
+	
 
 	@Deprecated
 	public int delete(Integer index) throws SQLException {
-
+		
 		return 0;
 	}
 
@@ -74,6 +77,26 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		rs.close();
 		statement.close();
 		return list;
+	}
+	
+	public int updateByCuoboardIdAndPlace(ProductPlacement productPlacement) throws SQLException {
+		PreparedStatement statement = connection
+				.prepareStatement(UPDATE_PRODUCT_PLACEMENT);
+		statement.setInt(1, productPlacement.getProductId());
+		statement.setInt(2, productPlacement.getCupboardId());
+		statement.setInt(3, productPlacement.getPlace());
+		int result = statement.executeUpdate();
+		statement.close();
+		return result;
+	}
+	public int deleteByCuoboardIdAndPlace(ProductPlacement productPlacement) throws SQLException {
+		PreparedStatement statement = connection
+				.prepareStatement(DELETE_PRODUCT_PLACEMENT_BY_PLACE_AND_C_ID);
+		statement.setInt(1, productPlacement.getCupboardId());
+		statement.setInt(2, productPlacement.getPlace());
+		int result = statement.executeUpdate();
+		statement.close();
+		return result;
 	}
 
 	@Override

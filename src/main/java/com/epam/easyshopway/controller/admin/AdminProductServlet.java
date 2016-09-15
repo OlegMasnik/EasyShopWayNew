@@ -111,6 +111,7 @@ public class AdminProductServlet extends HttpServlet {
 						productPlacement.setProductId(prodId);
 						productPlacement.setCupboardId(cupboardId);
 						productPlacement.setPlace(place);
+						ProductPlacementService.deleteByCuoboardIdAndPlace(productPlacement);
 						ProductPlacementService.insert(productPlacement);
 					}
 				

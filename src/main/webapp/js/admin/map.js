@@ -880,9 +880,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 }
                 $http.post('/EasyShopWayNew/edit_map', sendData, config)
                     .success(function (data, status, headers) {
-                        //console.log('update cupboard');
+                        console.log('update cupboard');
                         $scope.cupboards = data;
-                        //console.log($scope.cupboards);
+                        console.log($scope.cupboards);
                         initCupBoard($scope.cupboards);
                         game.draw();
                     })

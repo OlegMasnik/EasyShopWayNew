@@ -17,6 +17,26 @@ public class ProductPlacementService {
 		}
 		return 0;
 	}
+	public static int updateByCuoboardIdAndPlace(ProductPlacement productList) {
+		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
+			return productDAO.updateByCuoboardIdAndPlace(productList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public static int deleteByCuoboardIdAndPlace(ProductPlacement productList) {
+		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
+			return productDAO.deleteByCuoboardIdAndPlace(productList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 	public static ProductPlacement getById(Integer index) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
