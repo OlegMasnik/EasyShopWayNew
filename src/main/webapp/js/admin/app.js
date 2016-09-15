@@ -368,7 +368,7 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
 // ************************************************* ProdCtrl
 // *************************************************//
 
-adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', '$route', function ($http, $scope, $location, $mdDialog, $mdToast, $route) {
+adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', '$route', '$translate', function ($http, $scope, $location, $mdDialog, $mdToast, $route, $translate) {
 
     $scope.empty = undefined;
   
@@ -385,25 +385,12 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
                         return item;
                     }
                 },
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm
                     // breakpoints.
             })
             .then(function (answer) {
-                $http({
-                    method: "GET",
-                    url: "/EasyShopWayNew/products"
-                }).then(function mySucces(response) {
-                    $scope.data = response.data;
-                    showToast($mdToast, $scope, "Successful editing  " + item.nen);	
-                    originalProd.prods = $scope.data.prods;
-                    originalProd.count = $scope.data.prods.length;
-                    $scope.datatable = angular.copy(originalProd);
-                    console.log("Get");
-                    console.log($scope.data);
-                }, function myError(response) {
-                    console.log(response.statusText);
-                });
+            	$route.reload();
             }, function () {
                 $scope.status = 'You cancelled the dialog.';
             });
@@ -418,6 +405,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
     			$scope.types = response.data.types;
     			console.log("Get");
     			console.log($scope.types);
+    			$scope.selectedType = $scope.types[getIdDatatype(item.ptid)];
     		}, function myError(response) {
     			console.log(response.statusText);
     		});
@@ -432,35 +420,24 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
             };
         } else {
             $scope.item = item;
-            $scope.types = types;
-            $scope.selectedType = types[getIdDatatype(item.ptid)];
 
-            function getIdDatatype(pid) {
-                for (var i = 0; i < types.length; i++)
-                    if (types[i].id == pid)
-                        return i;
-            }
+        }
+        
+        function getIdDatatype(pid) {
+        	for (var i = 0; i < $scope.types.length; i++)
+        		if ($scope.types[i].id == pid)
+        			return i;
         }
 
         $scope.hide = function () {
+//        	$route.reload();
             $mdDialog.hide();
         };
 
         $scope.cancel = function () {
-            $http({
-                method: "GET",
-                url: "/EasyShopWayNew/products"
-            }).then(function mySucces(response) {
-                $scope.data = response.data;
-                originalProd.prods = $scope.data.prods;
-                originalProd.count = $scope.data.prods.length;
-                $scope.datatable = angular.copy(originalProd);
-                console.log("Get");
-                console.log($scope.data);
-            }, function myError(response) {
-                console.log(response.statusText);
-            });
-            $mdDialog.cancel();
+//        	$route.reload();
+//            $mdDialog.cancel();
+        	$scope.hide();
         };
 
         $scope.answer = function (item, tid) {
@@ -477,13 +454,12 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
             $http.put('/EasyShopWayNew/products?' + data)
                 .success(function (data, status, headers) {
                     console.log('update');
-
                 })
                 .error(function (data, status, header, config) {
                     console.log('failed');
                 });
             $mdDialog.hide();
-            $route.reload();
+//            $route.reload();
         };
     }
 
@@ -608,7 +584,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
         $scope.datatable = angular.copy(dt);
     };
 
-    $scope.deleteProd = function (id) {
+    $scope.deleteProd = function (row) {
 
         var config = {
             headers: {
@@ -616,11 +592,12 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
             }
         }
 
-        $http.delete('/EasyShopWayNew/products?id=' + id, config)
+        $http.delete('/EasyShopWayNew/products?id=' + row.id, config)
             .then(
                 function (response) {
-                    console.log("success delete prod " + id);
-                    showToast($mdToast, $scope, "Products with id " + id + " is deleted");
+                    console.log("success delete prod " + row.id);
+//                    showToast($mdToast, $scope, "Products with id " + id + " is deleted");
+                    showToast($mdToast, $scope, $translate.instant('PRODUCT') + " " + row.nen+ " " + $translate.instant('SUCCESS_DELETE'));
                     $http({
                         method: "GET",
                         url: "/EasyShopWayNew/products"
@@ -636,7 +613,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
                     });
                 },
                 function (response) {
-                    console.log("failed delete prod " + id);
+                    console.log("failed delete prod " + row.id);
                 }
             );
     };
@@ -671,7 +648,7 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
     };
 }]);
 
-adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', function ($http, $scope, $location, $mdDialog, $mdToast) {
+adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$mdToast', '$translate', function ($http, $scope, $location, $mdDialog, $mdToast, $translate) {
 	
 	$scope.empty = undefined;
 	$scope.showPromptType = function (item) {
@@ -758,7 +735,7 @@ adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
 	
 	var originalType = {};
 	
-	$scope.deleteType = function (id) {
+	$scope.deleteType = function (row) {
 		
 		var config = {
 				headers: {
@@ -766,10 +743,11 @@ adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
 				}
 		}
 		
-		$http.delete('/EasyShopWayNew/type?id=' + id, config)
+		$http.delete('/EasyShopWayNew/type?id=' + row.id, config)
 		.then(
 				function (response) {
-					console.log("success delete prod " + id);
+					console.log("success delete prod " + row.id);
+					showToast($mdToast, $scope, $translate.instant('PRODUCT_TYPE') + " " + row.nen + " " + $translate.instant('SUCCESS_DELETE'));
 					$http({
 						method: "GET",
 						url: "/EasyShopWayNew/type"
@@ -778,21 +756,6 @@ adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
 						originalType.types = $scope.data.types;
 						originalType.count = $scope.data.types.length;
 						$scope.datatableType = angular.copy(originalType);
-						showToast($mdToast, $scope, "ProductTypes with id " + id + " is deleted");
-						console.log("Get");
-						console.log($scope.data);
-					}, function myError(response) {
-						console.log(response.statusText);
-					});
-					
-					$http({
-						method: "GET",
-						url: "/EasyShopWayNew/products"
-					}).then(function mySucces(response) {
-						$scope.data = response.data;
-						originalProd.prods = $scope.data.prods;
-						originalProd.count = $scope.data.prods.length;
-						$scope.datatable = angular.copy(originalProd);
 						console.log("Get");
 						console.log($scope.data);
 					}, function myError(response) {
@@ -800,7 +763,7 @@ adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
 					});
 				},
 				function (response) {
-					console.log("failed delete prod " + id);
+					showToast($mdToast, $scope, $translate.instant('PRODUCT_TYPE') + " " + row.id + " " + $translate.instant('FAILED_DELETE'));
 				}
 		);
 	};
@@ -845,7 +808,7 @@ adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
 	
 	$scope.queryType = {
 			order: 'nen',
-			limit: 5,
+			limit: 15,
 			page: 1
 	};
 	

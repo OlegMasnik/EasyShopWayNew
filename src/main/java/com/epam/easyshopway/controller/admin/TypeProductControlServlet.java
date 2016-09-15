@@ -167,6 +167,12 @@ public class TypeProductControlServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		System.out.println("Before redirect");
 //		resp.getWriter().write(message.toString());
 		resp.sendRedirect("/EasyShopWayNew/cabinet#/types");

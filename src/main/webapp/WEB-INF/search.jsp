@@ -12,6 +12,13 @@
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/search-style.css">
 <link rel="shortcut icon" href="favicon.ico">
+	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src='js/angular.min.js'></script>
+	<script src='js/angular-aria.js'></script>
+	<script src='js/angular-animate.js'></script>
+	<script src='js/angular-material.min.js'></script>
+	<script src='js/angular-route.min.js'></script>
+	<script src="js/angular-messages.min.js"></script>
 </head>
 
 <body ng-app="SearchApp" layout="column">
@@ -84,13 +91,6 @@
 	</div>
 	<md-button ng-click="ctrl.sendOnMap()"
 		style="background-color : #E91E63; color : #fff;">Show</md-button> </md-slidenav></md-content>
-	<script src="js/jquery-3.1.0.min.js"></script>
-	<script src='js/angular.min.js'></script>
-	<script src='js/angular-aria.js'></script>
-	<script src='js/angular-animate.js'></script>
-	<script src='js/angular-material.min.js'></script>
-	<script src='js/angular-route.min.js'></script>
-	<script src="js/angular-messages.min.js"></script>
 
 	<!-- 	<script src='js/app.js'></script> -->
 	<!-- 	<script src='js/admin/map.js'></script> -->
