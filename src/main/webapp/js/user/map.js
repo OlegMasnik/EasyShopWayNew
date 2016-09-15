@@ -174,6 +174,8 @@ var lang;
 			}
 
 			function selectedItemChange(item, text) {
+				console.log('items');
+				console.log($scope.items);
 				if (item != undefined) {
 					if (find(item) == -1) {
 						item.color = getRandomColor();

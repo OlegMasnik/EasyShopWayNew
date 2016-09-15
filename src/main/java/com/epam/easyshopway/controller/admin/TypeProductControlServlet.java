@@ -170,8 +170,9 @@ public class TypeProductControlServlet extends HttpServlet {
 		}
 		
 		System.out.println("Before redirect");
-//		resp.getWriter().write(message.toString());
-		resp.sendRedirect("/EasyShopWayNew/cabinet#/types");
+		
+		resp.getWriter().write(message.toString());
+//		resp.sendRedirect("/EasyShopWayNew/cabinet#/types");
 	}
 
 }
