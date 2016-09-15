@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -97,9 +98,11 @@ public class TypeProductControlServlet extends HttpServlet {
 		try {
 			List items = upload.parseRequest(req);
 			int id = Integer.parseInt(((FileItem) items.get(0)).getString());
+			System.out.println(id + " id");
 			String name_en = ((FileItem) items.get(1)).getString();
+			System.out.println(name_en + " name_en");
 			String name_uk = new String(((FileItem) items.get(2)).getString().getBytes("ISO-8859-1"), "UTF-8");
-
+			System.out.println(name_uk + " name_uk");
 			FileItem fileItem = (FileItem) items.get(3);
 
 			String type = "";
@@ -109,7 +112,7 @@ public class TypeProductControlServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			if (!"".equals(type)) {
-				fName = "images/prod/" + id + "." + type;
+				fName = "images/prod/" + new Random().nextInt(Integer.MAX_VALUE) + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
 				File uploadedFile = new File(absoluteDiskPath);
 				try (InputStream input = fileItem.getInputStream()) {
@@ -143,6 +146,7 @@ public class TypeProductControlServlet extends HttpServlet {
 				productType.setNameEn(name_en);
 				productType.setNameUk(name_uk);
 				productType.setImageUrl(fName);
+				System.out.println(fName + "file name in else");
 				productType.setActive(true);
 				if (ProductTypeService.hasNameEn(name_en)){
 					message.put("msg", "This english name already exists");
@@ -163,9 +167,15 @@ public class TypeProductControlServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		System.out.println("Before redirect");
 //		resp.getWriter().write(message.toString());
-		resp.sendRedirect("/EasyShopWayNew/cabinet#/products");
+		resp.sendRedirect("/EasyShopWayNew/cabinet#/types");
 	}
 
 }

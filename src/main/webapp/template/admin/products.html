@@ -40,10 +40,10 @@
 				<td md-cell>{{row.nen}}</td>
 				<td md-cell>{{row.nuk}}</td>
 				<td><md-button
-						ng-click="showPromptProd(datatableType.types, row)"
+						ng-click="showPromptProd(row)"
 						class="md-fab md-mini md-primary"> <i
 						class="material-icons">edit</i></md-button> <md-button
-						ng-click="deleteProd(row.id)" class="md-fab md-mini red-btn">
+						ng-click="deleteProd(row)" class="md-fab md-mini red-btn">
 					<i class="material-icons">delete_forever</i> </md-button>
 			</tr>
 		</tbody>

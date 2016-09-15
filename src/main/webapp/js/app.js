@@ -74,7 +74,9 @@ app.config(function($translateProvider) {
 		OPTION:'Option',
 		COLUMN:'Column',
 		
-		PRODUCT_TYPE:'Products type',
+		PRODUCT_TYPES:'Products type',
+		PRODUCTS:'Products',
+		PRODUCT_TYPE:'Product type',
 		PRODUCT:'Product',
 		EDIT_TYPE:'Edit type',
 		IMAGE:'Image',
@@ -106,8 +108,14 @@ app.config(function($translateProvider) {
 		UKRAINE_NAME:'Ukrainian name',
 		
 		EMAIL_EXIST: 'This email already exists',
-		UNCORRECT_PASSWORD: 'Ucorrect password'
+		UNCORRECT_PASSWORD: 'Ucorrect password',
 		
+		SUCCESS_DELETE: 'successfull deleted',
+		FAILED_DELETE: 'fail deleting',
+		
+		DELETE_MAP: 'Would you like to delete this map?',
+		YES: 'Yes',
+		No: 'No'
 	
 	
 	}).translations('uk', {
@@ -170,8 +178,10 @@ app.config(function($translateProvider) {
 		SMART_SEARCH:'Розумний пошук',
 		SEARCH:'Пошук',
 		OPTION:'Опції',
-		PRODUCT_TYPE:'Типи товарів',
-		PRODUCT:'Товари',
+		PRODUCT_TYPES:'Типи товарів',
+		PRODUCTS:'Товари',
+		PRODUCT_TYPE:'Тип товару',
+		PRODUCT:'Товар',
 		EDIT_TYPE:'Редагувати тип',
 		COLUMN:'Колонки',
 		
@@ -203,7 +213,14 @@ app.config(function($translateProvider) {
 		UKRAINE_NAME:'Назва українською',
 		
 		EMAIL_EXIST: 'Така електрона пошта вже використовуєься',
-		UNCORRECT_PASSWORD: 'Невірний пароль'
+		UNCORRECT_PASSWORD: 'Невірний пароль',
+		
+		SUCCESS_DELETE: 'успішно видалений',
+		FAILED_DELETE: 'помилка видалення',
+		
+		DELETE_MAP: 'Would you like to delete this map?',
+		YES: 'Так',
+		No: 'Ні'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
