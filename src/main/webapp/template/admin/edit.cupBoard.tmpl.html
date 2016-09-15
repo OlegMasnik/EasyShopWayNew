@@ -26,7 +26,7 @@ tr td:last-child {
 	<div class="md-toolbar-tools">
 		<h2>{{ 'EDIT_CUPBOARD' | translate }} {{item.id}}</h2>
 		<span flex></span>
-		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+		<md-button class="md-icon-button" ng-click="cancel()">x</md-button>
 	</div>
 	</md-toolbar>
 
@@ -40,7 +40,8 @@ tr td:last-child {
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr ng-repeat="k in item.board_count | range">
 			<td ng-repeat="i in item.values">
-				<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}">
+			<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}">
+				<md-option value="">None</md-option> 
 				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option> 
 			</md-select>
 			</td>
