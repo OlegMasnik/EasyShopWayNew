@@ -25,35 +25,47 @@
 
         <md-card-content layout="column">
 
-            <div layout-md="column" layout-gt-md="row">
-                <md-input-container flex>
-                    <label>Select a map</label>
-                    <md-select ng-model="someModel" placeholder="Select a map">
+            <div layout-sm="column" layout-gt-sm="row">
+                <div flex="80" flex-offset-sm="10" layout-md="column" layout-gt-md="row">
+                    <md-input-container flex>
+                        <label>Select a map</label>
+                        <md-select ng-model="someModel" placeholder="Select a map">
 
-                        <md-option ng-click="createMap()">{{ 'ADD_NEW' | translate }}</md-option>
-                        <md-option ng-model="m" value="{{_m.id}}" ng-click="clickOnSelect(_m.id)" ng-repeat="_m in mapsName">{{ _m.id }} {{_m.name_en}}</md-option>
+                            <md-option ng-click="createMap()">{{ 'ADD_NEW' | translate }}</md-option>
+                            <md-option ng-model="m" value="{{_m.id}}" ng-click="clickOnSelect(_m.id)" ng-repeat="_m in mapsName">{{ _m.id }} {{_m.name_en}}</md-option>
 
-                    </md-select>
+                        </md-select>
 
-                </md-input-container>
+                    </md-input-container>
 
-                <form layout-sm="column" layout-gt-sm="row">
-                    <div layout-xs="column" layout-gt-xs="row">
-                        <md-input-container flex>
-                            <label>{{ 'WIDTH' | translate }}</label>
-                            <input type="number" ng-model="config.width" min=2 max=400> </md-input-container>
-                        <md-input-container flex>
-                            <label>{{ 'HEIGHT' | translate }}</label>
-                            <input type="number" ng-model="config.height" min=2 max=400> </md-input-container>
-                    </div>
-                    <div layout="column">
-                        <md-button flex="none" ng-click="openMap()" class="md-raised">{{ 'CHANGE_SIZE' | translate }}</md-button>
-                    </div>
-                </form>
+                    <form flex layout-sm="column" layout-gt-sm="row">
+                        <div flex layout-xs="column" layout-gt-xs="row">
+                            <md-input-container flex>
+                                <label>{{ 'WIDTH' | translate }}</label>
+                                <input type="number" ng-model="config.width" min=2 max=400> </md-input-container>
+                            <md-input-container flex>
+                                <label>{{ 'HEIGHT' | translate }}</label>
+                                <input type="number" ng-model="config.height" min=2 max=400> </md-input-container>
+                        </div>
+                    </form>
+                </div>
+                <div flex layout="column">
+                    <md-button flex="none" ng-click="openMap()" class="md-raised">{{ 'CHANGE_SIZE' | translate }}</md-button>
+                    <md-button class="md-accent md-raised md-hue-2" ng-click="deleteMap($event)">{{ 'DELETE' | translate }}</md-button>
+                    <md-button class="md-accent md-raised md-hue-2" ng-click="clearMap()">{{ 'CLEAR' | translate }}</md-button>
+                </div>
             </div>
-            <div class="md-headline">Edit map</div>
 
-            <md-radio-group name="type" layout="row" ng-model="data.group1" layout-sm="column">
+        </md-card-content>
+
+    </md-card>
+
+    <md-card hide-gt-md>
+
+        <md-card-content>
+            <div class="md-headline">{{ 'ELEMENTS' | translate }}</div>
+
+            <md-radio-group name="type" layout="column" ng-model="data.group1">
 
                 <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">{{ 'PAY_DESCK' | translate }}</md-radio-button>
                 <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">{{ 'CUP_BOARD' | translate }}</md-radio-button>
@@ -63,33 +75,51 @@
 
             </md-radio-group>
 
-            
+
+            <md-divider hide-md></md-divider>
+
+            <div flex-offset-md="40" layout-md="row" layout-gt-md="column" class="actions">
+                <a flex class="md-button md-primary md-raised" id="download">{{ 'DOWNLOAD' | translate }}</a>
+                <md-button flex class="md-primary md-raised" ng-click="saveMap()">{{ 'SAVE' | translate }}</md-button>
+            </div>
 
         </md-card-content>
 
-			<md-card-actions layout="row" layout-xs="column" layout-align="end center" layout-align-xs="start start">
-			
-			<div layout="row" layout-xs="column" class="actions" >
-				<span style="margin-right: 8px;"><a class="md-button md-primary md-raised" layout-margin id="download">Download</a></span>
-                <md-button  class="md-primary md-raised" ng-click="saveMap()">{{ 'SAVE' | translate }}</md-button>
-                <md-button  class="md-accent md-raised md-hue-2" ng-click="deleteMap($event)">{{ 'DELETE' | translate }}</md-button>
-                <md-button  class="md-accent md-raised md-hue-2" ng-click="clearMap()">{{ 'CLEAR' | translate }}</md-button>
-                </div>          
-            </md-card-actions>
-			
-			
     </md-card>
 
-
     <md-card>
-        <md-card-content>
+        <md-card-content layout="row">
 
-
-            <md-content style="background-color: white;">
-            	
-            
+            <md-content flex-order-md="1" flex-order-gt-md="-1" style="background-color: white;">
                 <canvas id="canvas"></canvas>
             </md-content>
+
+            <div hide-xs hide-sm hide-md flex-order-md="-1" flex-order-gt-md="1" flex="20" layout="column">
+
+                <div class="md-headline">{{ 'ELEMENTS' | translate }}</div>
+
+                <md-radio-group name="type" layout="column" ng-model="data.group1">
+
+                    <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">{{ 'PAY_DESCK' | translate }}</md-radio-button>
+                    <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">{{ 'CUP_BOARD' | translate }}</md-radio-button>
+                    <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">{{ 'ENTER' | translate }}</md-radio-button>
+                    <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">{{ 'WALL' | translate }}</md-radio-button>
+                    <md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">{{ 'EDIT' | translate }}</md-radio-button>
+
+                </md-radio-group>
+
+
+                <md-divider hide-md></md-divider>
+
+                <div flex-offset-md="40" layout-md="row" layout-gt-md="column" class="actions">
+                    <a flex class="md-button md-primary md-raised" id="download">{{ 'DOWNLOAD' | translate }}</a>
+                    <md-button flex class="md-primary md-raised" ng-click="saveMap()">{{ 'SAVE' | translate }}</md-button>
+                </div>
+
+            </div>
+
+
+
         </md-card-content>
     </md-card>
 
