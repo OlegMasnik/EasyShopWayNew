@@ -90,7 +90,21 @@
     <md-card>
         <md-card-content layout="row">
 
-            <md-content flex-order-md="1" flex-order-gt-md="-1" style="background-color: white;">
+            <md-content flex-order-md="1" flex-order-gt-md="-1" layout="column" style="background-color: white;">
+
+                <div layout="row">
+                <div layout="row" flex-offset="10" flex="80">
+                    <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 6">
+                        <i class="material-icons">remove</i></md-button>
+
+                    <md-slider hide-sm flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
+
+                    <md-button class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 50">
+                        <i class="material-icons">add_circle_outline</i></md-button>
+</div>
+                </div>
+
+
                 <canvas id="canvas"></canvas>
             </md-content>
 
