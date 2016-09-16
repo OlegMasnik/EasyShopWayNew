@@ -1,8 +1,13 @@
 package com.epam.easyshopway.astar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class AStar {
+	
+	
+	public List<Integer> path;
 
 	private final int DIAGONAL_COST = 14;
 	private final int V_H_COST = 10;
@@ -10,8 +15,8 @@ public class AStar {
 	private Cell[][] grid;
 	private PriorityQueue<Cell> open;
 	private boolean closed[][];
-	private Cell start;
-	private Cell end;
+	public Cell start;
+	public Cell end;
 	private int width, height;
 
 	private void setBlocked(int i, int j) {
@@ -40,7 +45,7 @@ public class AStar {
 		}
 	}
 
-	private void findPath() {		
+	public void findPath() {		
 		this.open.add(this.grid[start.x][start.y]);
 
 		Cell current;
@@ -52,6 +57,8 @@ public class AStar {
 			closed[current.x][current.y] = true;
 
 			if (current.equals(grid[end.x][end.y])) {
+				this.end = current;
+				System.out.println("Finish " + current.finalCost);
 				return;
 			}
 
@@ -99,6 +106,7 @@ public class AStar {
 	}
 
 	public AStar(int height, int width, int si, int sj, int ei, int ej, int[][] blocked) {
+		path = new ArrayList<>();
 		this.height = height;
 		this.width = width;
 		this.grid = new Cell[height][width];
@@ -161,20 +169,14 @@ public class AStar {
             System.out.println("Path: ");
             Cell current = this.grid[this.end.x][this.end.y];
             System.out.print(current);
+            path.add(current.x * this.width + current.y);
             while(current.parent!=null){
                 System.out.print(" -> "+current.parent);
+                path.add(current.parent.x * this.width + current.parent.y);
                 current = current.parent;
             } 
             System.out.println();
        }else System.out.println("No possible path");
-	}
-
-	public static void main(String[] args) throws Exception {
-		AStar aStar = new AStar(5, 5, 0, 0, 3, 2, new int[][] { { 0, 4 }, { 2, 2 }, { 3, 1 }, { 3, 3 } });
-//		aStar.printBefore();
-		aStar.findPath();
-		aStar.printPath();
-//		aStar.printAfter();
 	}
 
 }
