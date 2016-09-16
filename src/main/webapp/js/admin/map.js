@@ -9,6 +9,14 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         link.download = filename;
     }
     
+    document.getElementById('download_1').addEventListener('click', function() {
+    	var date = new Date ();
+    	var name = "map_" + date.getFullYear() + date.getMonth() + 
+    				date.getDay() + "-" +  date.getHours() +"-" + date.getMinutes() + 
+    				"-" + date.getSeconds() + ".png";
+        downloadCanvas(this, 'canvas', name);
+    }, false);
+    
     document.getElementById('download').addEventListener('click', function() {
     	var date = new Date ();
     	var name = "map_" + date.getFullYear() + date.getMonth() + 
