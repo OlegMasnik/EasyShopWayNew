@@ -640,7 +640,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     Array.prototype.removeUndefined = function (value) {
         this[this.indexOf(value)] = undefined;
         this.sort();
-        if (typeof (this[this.length - 1]) == "undefined") {
+        while (typeof (this[this.length - 1]) == "undefined") {
             this.pop();
         }
     }
@@ -748,6 +748,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $mdDialog.cancel();
         };
         $scope.answer = function () {
+        	while($scope.cupboardCells.indexOf("") != -1)
+        		$scope.cupboardCells.removeUndefined("");
             $scope.cupboardCells.map(function (e, i) {
                 if (typeof (e) == "string")
                     $scope.cupboardCells[i] = JSON.parse(e)
