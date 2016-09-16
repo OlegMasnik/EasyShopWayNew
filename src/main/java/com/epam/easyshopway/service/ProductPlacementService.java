@@ -27,9 +27,9 @@ public class ProductPlacementService {
 		}
 		return 0;
 	}
-	public static int deleteByCuoboardIdAndPlace(ProductPlacement productList) {
+	public static int deleteByCupboardId(ProductPlacement productList) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
-			return productDAO.deleteByCuoboardIdAndPlace(productList);
+			return productDAO.deleteByCupboardId(productList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
