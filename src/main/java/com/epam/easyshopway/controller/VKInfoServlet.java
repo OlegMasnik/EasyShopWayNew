@@ -58,8 +58,9 @@ public class VKInfoServlet extends HttpServlet {
 		User user = new User(vkUser.getFirst_name(), vkUser.getLast_name(), vkTokenJSON.getEmail(),
 				null, // password
 				true, // active user
-				"user", "en", ""); // native language
+				"user", "en", "","default"); // native language
 		User invokedUser = UserService.getByEmail(user.getEmail());
+		System.out.println(vkUser.getFirst_name()+" " + vkUser.getLast_name()+" " +  vkTokenJSON.getEmail());
 		if (invokedUser == null) {
 			UserService.insert(user);
 			sess.setAttribute("user", user);
