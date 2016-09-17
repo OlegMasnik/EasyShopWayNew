@@ -16,7 +16,7 @@
           <link rel="shortcut icon" href="favicon.ico">
         </head>
 
-        <body ng-app="MyApp" layout="column">
+        <body ng-app="MyApp" layout="column"  md-theme="{{ theme }}">
             <jsp:include page="../parts/header.jsp"></jsp:include>
             <md-content layout="row" flex>
          
@@ -24,7 +24,7 @@
 		layout="column" md-whiteframe="4">
                     <md-content layout="column" flex>
                         <a href="#/">
-                            <div class="cab-user-logo" layot="row" layout-padding>
+                            <div class="cab-user-logo md-primary" layot="row" layout-padding>
 
                                 <img src="${user.image }" alt="" class="profile-img">
 
@@ -38,17 +38,16 @@
                         <md-button href="#history">{{ 'USER_CABINET_HISTORY' | translate }}</md-button>
                     </md-content>
                 </md-slidenav>
-            <md-content layout="row" class="main-page" flex>
+            <md-content layout="column" class="main-page" flex>
                 
-                
-                
-
-                <div flex class="content" layout="column">
+                <div class="content" layout="column">
                     <div ng-view onload="getFoodData()"></div>
+                    
                 </div>
+                
             </md-content>
             
-            <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
+            <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page" aria-label="search">
 	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
     </md-button>
             

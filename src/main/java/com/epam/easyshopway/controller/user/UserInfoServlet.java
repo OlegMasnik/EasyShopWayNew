@@ -26,14 +26,22 @@ public class UserInfoServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		User user = (User) request.getSession().getAttribute("user");
-
 		JSONObject object = new JSONObject();
-		object.put("id", user.getId());
-		object.put("firstName", user.getFirstName());
-		object.put("lastName", user.getLastName());
-		object.put("language", user.getLanguage());
-		object.put("email", user.getEmail());
-		object.put("img", user.getImage());
+
+		if (request.getRequestURI().endsWith("info")) {
+
+			object.put("id", user.getId());
+			object.put("firstName", user.getFirstName());
+			object.put("lastName", user.getLastName());
+			object.put("language", user.getLanguage());
+			object.put("email", user.getEmail());
+			object.put("img", user.getImage());
+
+		} else if (request.getRequestURI().endsWith("info/theme")) {
+			System.out.println(user.getTheme());
+
+			object.put("theme", user.getTheme());
+		}
 
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(object.toString());
@@ -44,24 +52,32 @@ public class UserInfoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 		
+		if (request.getRequestURI().endsWith("info")) {
+
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String birthday = request.getParameter("birthday");
-//		String email = request.getParameter("email");
+		// String email = request.getParameter("email");
 		String language = request.getParameter("language");
 		HttpSession session = request.getSession(false);
-		
 
-//		System.out.println(firstName + " " + lastName + " " + birthday + " " + email + "");
+		// System.out.println(firstName + " " + lastName + " " + birthday + " "
+		// + email + "");
 
 		user.setLanguage(language);
 		session.setAttribute("lang", language);
-//		user.setEmail(email);
+		// user.setEmail(email);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
+		
+		} else if(request.getRequestURI().endsWith("info/theme")) {
+			String theme = request.getParameter("theme");
+			
+			user.setTheme(theme);
+		}
 
 		UserService.update(user.getId(), user);
-		
+
 		request.getSession().setAttribute("user", user);
 	}
 

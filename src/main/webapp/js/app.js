@@ -8,7 +8,7 @@ var lang;
 var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute',
 		'pascalprecht.translate' ]);
 
-app.config(function($mdThemingProvider) {
+app.config(function($mdThemingProvider, $provide) {
 	$mdThemingProvider.alwaysWatchTheme(true);
 	
 	  $mdThemingProvider.theme('default')
@@ -16,6 +16,9 @@ app.config(function($mdThemingProvider) {
 	  
 	  $mdThemingProvider.theme('dark')
 	    .primaryPalette('pink').dark();
+	  
+	  $provide.value('themeProvider', $mdThemingProvider);
+	  
 	});
 
 app.config(function($translateProvider) {
@@ -246,31 +249,85 @@ app.controller('PageRedirectCtrl', function($window) {
 
 });
 
-app.controller("ThemeCtrl", function($scope, $rootScope, $mdTheming) {
-	$scope.changeTheme = function() {
-		console.log("Change to alt");
-		$rootScope.theme = 'altTheme';
+app.controller("ThemeCtrl", function($scope, $rootScope, $http) {
+	
+	if ($rootScope.theme == "dark") {
+		$scope.themeSwitch = "enabled";
+		$scope.message = "enabled";
+	} else {
+		$scope.themeSwitch = "disabled";
+		$scope.message = "disabled";
 	}
 	
-	$scope.theme = false;
+	console.log($scope.themeSwitch);
 	
-	$scope.message = 'disabled';
-
 	$scope.onChange = function(cbState) {
-		
+		console.log(cbState);
 		$scope.message = cbState;
+		
+		var config = {
+				headers : {
+					'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+				}
+			}
 		
 		if (cbState == 'enabled') {
 			$rootScope.theme = 'dark';
 		} else {
 			$rootScope.theme = 'default';
 		}
+		
+		var data = $.param({
+			theme : $rootScope.theme
+		});
+		
+		$http
+		.post('/EasyShopWayNew/info/theme', data,
+				config)
+		.success(
+				function(data, status,
+						headers, config) {
+					
+				}).error(
+				function(data, status,
+						header, config) {
+					console.log('fail to set theme');
+				});
+		
 	};
 });
 
-app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate, $mdTheming) {
+app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
-	$scope.theme = 'default';
+//	$scope.theme = 'default';
+	
+	var config = {
+			headers : {
+				'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+			}
+		}
+
+		$http.get('/EasyShopWayNew/info/theme', config)
+				.success(
+				function(data, status, headers,
+						config) {
+
+					console.log(data);
+					$rootScope.theme = data.theme;
+					$scope.theme = data.theme;
+										
+//					if (data.theme == "dark") {
+//						$scope.themeSwitch = true;
+//					} else {
+//						$scope.themeSwitch = false;
+//					}
+//					
+					
+				}).error(
+				function(data, status, header,
+						config) {
+					console.log('fail');
+				});
 	
     $scope.status = '  ';
     
