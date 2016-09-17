@@ -5,14 +5,22 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="css/preloader/preloader.css">
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="shortcut icon" href="images/favicon.ico">
 
+
+
 </head>
 
 <body ng-app="MyApp" layout="column" ng-controller="AppCtrl" md-theme="{{ theme }}">
+
+<div id="loader-wrapper">
+    <div id="loader"></div>
+</div>
+
 	<jsp:include page="parts/header.jsp"></jsp:include>
 	<!-- 	<h2>{{2+2}}</h2> -->
 
@@ -85,7 +93,16 @@
 <script src='js/index.js'></script>
 
 	<script src="js/jquery.validate.min.js"></script>
-
+<script>
+$(window).on('load', function () {
+    var $preloader = $('#loader-wrapper'),
+        $spinner   = $preloader.find('#loader');
+    console.log($preloader);
+    console.log($spinner);
+    $spinner.fadeOut();
+    $preloader.delay(350).fadeOut('slow');
+});
+</script>
 </body>
 <script type='text/ng-template' id='info.html'></script>
 

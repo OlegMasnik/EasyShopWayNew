@@ -7,6 +7,7 @@
 
         <head>
             <title>Search</title>
+            <link rel="stylesheet" href="css/preloader/preloader.css">
             <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
             <link rel="stylesheet" href="css/style.css">
             <link rel="stylesheet" href="css/icon.css">
@@ -16,8 +17,13 @@
         </head>
 
         <body ng-app="SearchApp" layout="column" md-theme="${ user.theme == null ? "default" : user.theme }">
-            <script src='js/moment.js'></script>
 
+ <div id="loader-wrapper">
+    <div id="loader"></div>
+</div>
+
+            <script src='js/moment.js'></script>
+            
             <jsp:include page="parts/header.jsp"></jsp:include>
 
             <md-content layout="row" class="main-page" flex ng-controller="ProductListCtrl as ctrl">
@@ -119,6 +125,17 @@
                     downloadCanvas(this, 'canvas', name);
                 }, false);
             </script>
+            
+            	<script>
+$(window).on('load', function () {
+    var $preloader = $('#loader-wrapper'),
+        $spinner   = $preloader.find('#loader');
+    console.log($preloader);
+    console.log($spinner);
+    $spinner.fadeOut();
+    $preloader.delay(350).fadeOut('slow');
+});
+</script>
 
 
         </body>

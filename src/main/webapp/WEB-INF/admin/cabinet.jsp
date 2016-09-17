@@ -6,6 +6,8 @@
 
 <head>
 <title><c:out value="${user.firstName }"></c:out></title>
+
+<link rel="stylesheet" href="css/preloader/preloader.css">
 <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/style.css">
@@ -18,6 +20,10 @@
 </head>
 
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl" md-theme="{{ theme }}">
+
+<div id="loader-wrapper">
+    <div id="loader"></div>
+</div>
 
 	<jsp:include page="../parts/header.jsp"></jsp:include>
 	<md-content layout="row" flex> 
@@ -72,6 +78,17 @@
 	<script src="js/shared/cabinet.js"></script>
 	<script src="js/jquery.validate.min.js"></script>
 	<script src='js/admin/mail.js'></script>
+	
+	<script>
+$(window).on('load', function () {
+    var $preloader = $('#loader-wrapper'),
+        $spinner   = $preloader.find('#loader');
+    console.log($preloader);
+    console.log($spinner);
+    $spinner.fadeOut();
+    $preloader.delay(350).fadeOut('slow');
+});
+</script>
 
 </body>
 

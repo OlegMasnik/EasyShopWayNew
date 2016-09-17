@@ -233,7 +233,7 @@ footer {
 .head-profile-img {
     display: inline;
     margin: 0 auto;
-    height: 60px;
+    height: 100%;
     width: auto;
 }
 
@@ -242,4 +242,5 @@ footer {
 	width: 60px;
 	overflow: hidden;
 	border-radius: 50%;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
