@@ -128,7 +128,8 @@ app.config(function($translateProvider) {
 		
 		DELETE_MAP: 'Would you like to delete this map?',
 		YES: 'Yes',
-		No: 'No'
+		No: 'No',
+		PREUSER: "Check your email"
 	
 	
 	}).translations('uk', {
@@ -231,9 +232,10 @@ app.config(function($translateProvider) {
 		SUCCESS_DELETE: 'успішно видалений',
 		FAILED_DELETE: 'помилка видалення',
 		
-		DELETE_MAP: 'Would you like to delete this map?',
+		DELETE_MAP: 'Ви бажаєте видалити дану карту ?',
 		YES: 'Так',
-		No: 'Ні'
+		No: 'Ні',
+		PREUSER: "Перевірте електронну скриньку"
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -512,10 +514,12 @@ app
 														console
 																.log("QWEER"
 																		+ data.emailErrMsg);
-														if (data.emailSuccMsg != undefined) 
+														if (data.emailSuccMsg != undefined)
 															showToast($mdToast, $scope, $translate.instant('CHECK_EMAIL'));
 														if (data.emailErrMsg != undefined) 
-																showToast($mdToast, $scope, $translate.instant('EMAIL_EXIST'));
+															showToast($mdToast, $scope, $translate.instant('EMAIL_EXIST'));
+														if (data.preuserMsg != undefined)
+															showToast($mdToast, $scope, $translate.instant('PREUSER'));
 													}).error(
 													function(data, status,
 															header, config) {
