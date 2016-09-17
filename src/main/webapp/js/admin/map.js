@@ -521,7 +521,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
         }).then(function mySucces(response) {
             //console.log("current Prods")
-            $scope.currentProducts = response.data;
+        	$scope.name_en = response.data.name_en;
+        	$scope.name_uk = response.data.name_uk;
+            $scope.currentProducts = response.data.data;
             $scope.cupboardCells = new Array(item.board_count * item.values.length);
             if (typeof ($scope.currentProducts) != "undefined") {
                 for (var i = 0; i < $scope.currentProducts.length; i++) {
@@ -586,7 +588,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
             var sendData = $.param({
                 type: 'setProducts',
-                data: JSON.stringify(data)
+                data: JSON.stringify(data),
+                name_en: $scope.name_en,
+                name_uk: $scope.name_uk,
+                cupboardId: item.id
             });
             //console.log($scope.cupboardCells);
             //console.log(data);
