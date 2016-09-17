@@ -18,10 +18,10 @@
         </head>
 
         <body ng-app="MyApp" layout="column"  md-theme="{{ theme }}">
-        <div id="loader-wrapper">
-    <div id="loader"></div>
-</div>
-            <jsp:include page="../parts/header.jsp"></jsp:include>
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
+	<jsp:include page="../parts/header.jsp"></jsp:include>
             <md-content layout="row" flex>
          
             <md-slidenav class="cabinet-sidenav" layout="column" md-is-locked-open="true"
@@ -73,16 +73,7 @@
             <script src="js/shared/cabinet.js"></script>
             <script src="js/jquery.validate.min.js"></script>
             
-            	<script>
-$(window).on('load', function () {
-    var $preloader = $('#loader-wrapper'),
-        $spinner   = $preloader.find('#loader');
-    console.log($preloader);
-    console.log($spinner);
-    $spinner.fadeOut();
-    $preloader.delay(350).fadeOut('slow');
-});
-</script>
+            	<script src="js/preloader/preloader.js"></script>
         </body>
 
         </html>

@@ -93,16 +93,7 @@
 <script src='js/index.js'></script>
 
 	<script src="js/jquery.validate.min.js"></script>
-<script>
-$(window).on('load', function () {
-    var $preloader = $('#loader-wrapper'),
-        $spinner   = $preloader.find('#loader');
-    console.log($preloader);
-    console.log($spinner);
-    $spinner.fadeOut();
-    $preloader.delay(350).fadeOut('slow');
-});
-</script>
+<script src="js/preloader/preloader.js"></script>
 </body>
 <script type='text/ng-template' id='info.html'></script>
 

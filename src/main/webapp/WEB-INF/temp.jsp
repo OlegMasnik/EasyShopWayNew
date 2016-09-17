@@ -18,11 +18,11 @@
 
         <body ng-app="SearchApp" layout="column" md-theme="${ user.theme == null ? "default" : user.theme }">
 
- <div id="loader-wrapper">
-    <div id="loader"></div>
-</div>
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
 
-            <script src='js/moment.js'></script>
+	<script src='js/moment.js'></script>
             
             <jsp:include page="parts/header.jsp"></jsp:include>
 
@@ -125,18 +125,8 @@
                     downloadCanvas(this, 'canvas', name);
                 }, false);
             </script>
-            
-            	<script>
-$(window).on('load', function () {
-    var $preloader = $('#loader-wrapper'),
-        $spinner   = $preloader.find('#loader');
-    console.log($preloader);
-    console.log($spinner);
-    $spinner.fadeOut();
-    $preloader.delay(350).fadeOut('slow');
-});
-</script>
-
+			
+			<script src="js/preloader/preloader.js"></script>
 
         </body>
 
