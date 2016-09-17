@@ -51,7 +51,7 @@ public class RegistrationServlet extends HttpServlet {
 			
 			password = MD5Util.md5Custom(request.getParameter("password"));
 			
-			User user = new User(firstName, lastName, email, password, true, "user", "en", "");
+			User user = new User(firstName, lastName, email, password, true, "user", "en", "", "default");
 			
 
 			System.out.println(firstName.equals(""));

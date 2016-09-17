@@ -11,12 +11,12 @@ import com.epam.easyshopway.model.User;
 import com.epam.easyshopway.service.UserService;
 
 public class UserDAO extends AbstractDAO<User> {
-	private final String INSERT = "INSERT INTO user (first_name, last_name, email, password, active, role, language, image) "
-			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+	private final String INSERT = "INSERT INTO user (first_name, last_name, email, password, active, role, language, image, theme) "
+			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?,?);";
 	private final String SELECT_ALL = "SELECT * FROM user where role like 'user';";
 	private final String SELECT_BY_ID = "SELECT * FROM user WHERE id = ?;";
 	private final String SELECT_BY_EMAIL = "SELECT * FROM user WHERE email LIKE ? and active=1;";
-	private final String UPDATE = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password = ?, active = ?, role = ?, language = ?, image=? WHERE id = ?;";
+	private final String UPDATE = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password = ?, active = ?, role = ?, language = ?, image=?, theme = ? WHERE id = ?;";
 	private final String UPDATE_PICTURE = "UPDATE user SET image=? WHERE id = ?";
 	private final String DELETE = "UPDATE user SET active = 0 WHERE id = ?;";
 	private final String UPDATE_ACTIVE = "UPDATE user SET active = ? WHERE email = ?;";
@@ -44,6 +44,7 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setString(6, user.getRole());
 		statement.setString(7, user.getLanguage());
 		statement.setString(8, user.getImage());
+		statement.setString(9, user.getTheme());
 
 		System.out.println(statement.executeUpdate());
 		statement.close();
@@ -103,7 +104,8 @@ public class UserDAO extends AbstractDAO<User> {
 		statement.setString(6, user.getRole());
 		statement.setString(7, user.getLanguage());
 		statement.setString(8, user.getImage());
-		statement.setInt(9, userId);
+		statement.setString(9, user.getTheme());
+		statement.setInt(10, userId);
 		int result = statement.executeUpdate();
 		statement.close();
 		LOGGER.info("Update user for email: " + user.getEmail() + "(" + user.getFirstName() + " " + user.getLastName()

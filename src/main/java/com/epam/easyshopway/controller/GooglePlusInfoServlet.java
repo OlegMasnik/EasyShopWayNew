@@ -62,7 +62,7 @@ public class GooglePlusInfoServlet extends HttpServlet {
 		User user = new User(googlePlusUser.getGiven_name(), googlePlusUser.getFamily_name(), googlePlusUser.getEmail(),
 				null, // password
 				true, // active user
-				"user", "en", null); // native language
+				"user", "en", "","default"); // native language
 		User invokedUser = UserService.getByEmail(user.getEmail());
 		if (invokedUser == null) {
 			UserService.insert(user);
