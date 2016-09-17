@@ -62,17 +62,21 @@
 
     <md-card hide-gt-md>
 
-        <md-card-content>
+        <md-card-content layout-margin>
             <div class="md-headline">{{ 'ELEMENTS' | translate }}</div>
 
             <md-radio-group name="type" layout="column" ng-model="data.group1">
 
-                <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">{{ 'PAY_DESCK' | translate }}</md-radio-button>
-                <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">{{ 'CUP_BOARD' | translate }}</md-radio-button>
-                <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">{{ 'ENTER' | translate }}</md-radio-button>
-                <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">{{ 'WALL' | translate }}</md-radio-button>
-                <md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">{{ 'EDIT' | translate }}</md-radio-button>
-
+                <div class="md-headline" layout-margin>{{ 'ELEMENTS' | translate }}</div>
+                    <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">{{ 'PAY_DESCK' | translate }}</md-radio-button>
+                    <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">{{ 'CUP_BOARD' | translate }}</md-radio-button>
+                    <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">{{ 'ENTER' | translate }}</md-radio-button>
+                    <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">{{ 'WALL' | translate }}</md-radio-button>
+                    
+                    <md-divider hide-md></md-divider>
+                    <div class="md-headline" layout-margin>{{ 'EDIT_CUPBOARD' | translate }}</div>
+                    <md-radio-button value="edit" ng-click="radioOnClick('edit', {{ 'EDIT_CUPBOARD_MSG' | translate  }} )" class="md-primary">{{ 'FILL_CUPBOARD' | translate }}</md-radio-button>
+                    
             </md-radio-group>
 
 
@@ -108,18 +112,22 @@
                 </md-content>
             </md-content>
 
-            <div hide-xs hide-sm hide-md flex-order-md="-1" flex-order-gt-md="1" flex="20" layout="column">
+            <div hide-xs hide-sm hide-md flex-order-md="-1" layout-margin flex-order-gt-md="1" flex="20" layout="column">
 
-                <div class="md-headline">{{ 'ELEMENTS' | translate }}</div>
+                
 
                 <md-radio-group name="type" layout="column" ng-model="data.group1">
-
+					<div class="md-headline" layout-margin>{{ 'ELEMENTS' | translate }}</div>
                     <md-radio-button value="payDesk" ng-click="radioOnClick('payDesk')" class="md-primary">{{ 'PAY_DESCK' | translate }}</md-radio-button>
                     <md-radio-button value="cupBoard" ng-click="radioOnClick('cupBoard')" class="md-primary">{{ 'CUP_BOARD' | translate }}</md-radio-button>
                     <md-radio-button value="enter" ng-click="radioOnClick('enter')" class="md-primary">{{ 'ENTER' | translate }}</md-radio-button>
                     <md-radio-button value="wall" ng-click="radioOnClick('wall')" class="md-primary">{{ 'WALL' | translate }}</md-radio-button>
-                    <md-radio-button value="edit" ng-click="radioOnClick('edit')" class="md-primary">{{ 'EDIT' | translate }}</md-radio-button>
-
+                    
+                    <md-divider hide-md></md-divider>
+                    <div class="md-headline" layout-margin>{{ 'EDIT_CUPBOARD' | translate }}</div>
+                    
+                    <md-radio-button value="edit" ng-click="radioOnClick('edit', {{ 'EDIT_CUPBOARD_MSG' | translate  }} )" class="md-primary">{{ 'FILL_CUPBOARD' | translate }}</md-radio-button>
+                    
                 </md-radio-group>
 
 

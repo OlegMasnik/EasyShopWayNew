@@ -383,7 +383,11 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     $scope.radioOnClick = function (value) {
         type = value;
-        //console.log(type);
+    }
+    
+    $scope.radioOnClick = function (value, toastMsg) {
+        type = value;
+        showToast(toastMsg);
     }
 
     $scope.openMap = function () {

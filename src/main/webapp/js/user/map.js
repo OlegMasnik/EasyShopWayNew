@@ -24,6 +24,9 @@ var lang;
 			$mdThemingProvider.alwaysWatchTheme(true);
 			
 			  $mdThemingProvider.theme('default')
+			    .primaryPalette('cyan');
+			  
+			  $mdThemingProvider.theme('dark')
 			    .primaryPalette('pink').dark();
 			});
 		

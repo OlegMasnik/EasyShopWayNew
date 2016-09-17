@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-    <md-toolbar class="md-hue-2" md-whiteframe="4">
+    <md-toolbar class="md-whiteframe-1dp">
             <div class="md-toolbar-tools">
 
                 <h2>

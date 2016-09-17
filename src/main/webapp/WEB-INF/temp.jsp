@@ -15,7 +15,7 @@
 
         </head>
 
-        <body ng-app="SearchApp" layout="column">
+        <body ng-app="SearchApp" layout="column" md-theme="${ user.theme == null ? "default" : user.theme }">
             <script src='js/moment.js'></script>
 
             <jsp:include page="parts/header.jsp"></jsp:include>
@@ -25,7 +25,7 @@
 
                     <div class="autocompletedemoBasicUsage" layout="column" flex ng-cloak="">
 
-                        {{ctrl.a = ${tryToSend}}} {{ctrl.a}}
+                        
                         <md-content class="md-padding" layout="column" flex>
                             <md-input-container class="md-block" flex="none">
                                 <label>Map</label>

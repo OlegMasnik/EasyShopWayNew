@@ -105,6 +105,9 @@ app.config(function($translateProvider) {
 		UKRAINE_DESCRIPTION:'Ukrainian description',
 		BOARD_COUNT:'Board count',
 		EDIT_CUPBOARD:'Edit cupboard',
+		FILL_CUPBOARD:'Fill cupboard',
+		ELEMENTS:'Map components',
+		EDIT_CUPBOARD_MSG:'Choose cupboard on map',
 		
 		CREATE_NEW_MAP:'Create new map',
 		
@@ -204,6 +207,9 @@ app.config(function($translateProvider) {
 		UKRAINE_DESCRIPTION:'Опис українською',
 		BOARD_COUNT:'Кількість полиць',
 		EDIT_CUPBOARD:'Редагувати стелаж',
+		FILL_CUPBOARD:'Наповнити стелаж',
+		ELEMENTS:'Елементи мапи',
+		EDIT_CUPBOARD_MSG:'Виберіть стелаж на мапі',
 		
 		CREATE_NEW_MAP:'Створити нову карту',
 		
