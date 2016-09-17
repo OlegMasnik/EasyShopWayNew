@@ -1,6 +1,9 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,21 +48,18 @@ public class ChangePasswordServlet extends HttpServlet {
 		String oldPass = MD5Util.md5Custom(request.getParameter("oldPass"));
 		String newPass = MD5Util.md5Custom(request.getParameter("newPass"));
 		String curPass = user.getPassword();
-		System.out.println(request.getParameter("oldPass"));
-		System.out.println("old: " + oldPass);
-		System.out.println("olddb: " + curPass);
-
+		
+		Locale locale = new Locale("en".equals(user.getLanguage()) ? "en" : "ua");
+		ResourceBundle bundle = ResourceBundle.getBundle("/diagram_i18n/diagram", locale);
 		if (curPass.equals(oldPass)){
-			System.out.println("1");
 			user.setPassword(newPass);
 			int r = UserService.update(user.getId(), user);
 			System.out.println(r);
 			HttpSession session = request.getSession(false);
 			session.setAttribute("user", user);
-			object.put("msg", "Password is changed successfully");
+			object.put("msg", bundle.getString("successPass"));
 		}else {
-			System.out.println("2");
-			object.put("msg", "Incorrect old password");
+			object.put("msg", bundle.getString("incorrectPass"));
 		}
 		response.getWriter().write(object.toString());
 	}

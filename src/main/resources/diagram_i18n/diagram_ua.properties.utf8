@@ -6,3 +6,5 @@ percentage = У відсотках
 shops = Магазини
 popularity = Популярність
 shop = Магазин
+incorrectPass = Не правильний старий пароль
+successPass = Пароль змінено успішно 
