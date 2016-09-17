@@ -53,14 +53,17 @@ public class VKInfoServlet extends HttpServlet {
 		serivce.signRequest(token, oReq);
 		Response oResp = oReq.send();
 		String json = oResp.getBody();
-		System.out.println(json);
-		VKUserJSON vkUser = JSON.parseObject(json, VKUserJSON.class);
+		VKUserJSON vkUser = JSON.parseObject(json.substring(json.indexOf('[') + 1, json.lastIndexOf(']')), VKUserJSON.class);
+		System.out.println(vkTokenJSON.getEmail());
+		System.out.println(vkUser.getFirst_name());
+		System.out.println(vkUser.getLast_name());
 		User user = new User(vkUser.getFirst_name(), vkUser.getLast_name(), vkTokenJSON.getEmail(),
 				null, // password
 				true, // active user
 				"user", "en", ""); // native language
 		User invokedUser = UserService.getByEmail(user.getEmail());
 		if (invokedUser == null) {
+			user.setImage("images/admin.png");
 			UserService.insert(user);
 			sess.setAttribute("user", user);
 		} else {
