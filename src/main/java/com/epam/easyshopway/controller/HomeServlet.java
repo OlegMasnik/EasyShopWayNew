@@ -40,6 +40,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String lang = request.getParameter("lang");
+		System.out.println(" ************************** ****************" + lang );
 		HttpSession session = request.getSession(false);
 		User user = (User) session.getAttribute("user");
 		String prevLang = (String) session.getAttribute("lang");
@@ -48,6 +49,7 @@ public class HomeServlet extends HttpServlet {
 			UserService.update(user.getId(), user);
 			session.setAttribute("user", user);
 		}
+		System.out.println(" ************************** **************** after" + lang );
 		session.setAttribute("lang", lang);
 	}
 

@@ -9,15 +9,6 @@
 <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="shortcut icon" href="images/favicon.ico">
-<script src="js/jquery-3.1.0.min.js"></script>
-<script src='js/angular.min.js'></script>
-<script src='js/angular-aria.js'></script>
-<script src='js/angular-animate.js'></script>
-<script src='js/angular-material.min.js'></script>
-<script src='js/angular-route.min.js'></script>
-<script src='js/angular-translate.js'></script>
-<script src='js/app.js'></script>
-<script src='js/index.js'></script>
 
 </head>
 
@@ -82,6 +73,16 @@
 
 	</div>
 	</md-content>
+
+<script src="js/jquery-3.1.0.min.js"></script>
+<script src='js/angular.min.js'></script>
+<script src='js/angular-aria.js'></script>
+<script src='js/angular-animate.js'></script>
+<script src='js/angular-material.min.js'></script>
+<script src='js/angular-route.min.js'></script>
+<script src='js/angular-translate.js'></script>
+<script src='js/app.js'></script>
+<script src='js/index.js'></script>
 
 	<script src="js/jquery.validate.min.js"></script>
 

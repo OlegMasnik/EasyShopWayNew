@@ -11,20 +11,6 @@
 <link rel="stylesheet" href="css/style.css">
 <link href="css/icon.css" rel="stylesheet">
 <link rel="shortcut icon" href="favicon.ico">
-	<script src="js/jquery-3.1.0.min.js"></script>
-	<script src='js/angular.min.js'></script>
-	<script src='js/angular-route.min.js'></script>
-	<script src='js/angular-aria.js'></script>
-	<script src='js/angular-animate.js'></script>
-	<script src='js/angular-material.min.js'></script>
-	<script src="js/datatable/md-data-table.js"></script>
-	<script src='js/angular-translate.js'></script>
-	<script src="js/shared/highcharts.js"></script>
-
-	<script src='js/app.js'></script>
-	<script src='js/admin/app.js'></script>
-	<script src='js/admin/map.js'></script>
-	<script src='js/user/app.js'></script>
 
 <link rel="stylesheet" href="css/datatable/md-data-table.css">
 
@@ -64,6 +50,21 @@
 <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
 	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
     </md-button>
+    
+    <script src="js/jquery-3.1.0.min.js"></script>
+	<script src='js/angular.min.js'></script>
+	<script src='js/angular-route.min.js'></script>
+	<script src='js/angular-aria.js'></script>
+	<script src='js/angular-animate.js'></script>
+	<script src='js/angular-material.min.js'></script>
+	<script src="js/datatable/md-data-table.js"></script>
+	<script src='js/angular-translate.js'></script>
+	<script src="js/shared/highcharts.js"></script>
+
+	<script src='js/app.js'></script>
+	<script src='js/admin/app.js'></script>
+	<script src='js/admin/map.js'></script>
+	<script src='js/user/app.js'></script>
 
 	<script src="js/shared/statistic.js"></script>
 	<script src="js/shared/cabinet.js"></script>
