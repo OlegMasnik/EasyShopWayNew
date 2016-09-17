@@ -1,89 +1,76 @@
 package com.epam.easyshopway.astar;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class NearestNeighborhood {
 	
 	private List<List<Integer>> products = new ArrayList<>();	
 	private Cell start = null;
 	private Cell buffCell;
-	private List<Integer> path = new ArrayList<>();
+	private Set<Integer> path = new LinkedHashSet<>();
+	private AStar a;
 
 	private int width;
 	private int height;
 	
-	public NearestNeighborhood(int width, int height) {
+	public NearestNeighborhood(int width, int height, int[] blocked) {
 		super();
 		this.width = width;
 		this.height = height;
+		this.a = new AStar(height, width, blocked);
 	}
 
-	private Cell getStart(int start, List<List<Integer>> prod){
+	private int getBest(List<List<Integer>> prod){
+		System.out.println("Start cell: " + this.start);
+		this.buffCell = null;
 		List<Integer> l = null;
-		AStar a = new AStar(height, width, new int[][]{});
 		int index = 0;
 		for(int i = 0; i < prod.size(); i++){
 			for(int j = 0; j < prod.get(i).size(); j++){
-				a.setStart(start);
-				a.setEnd(prod.get(i).get(j));
 				a.init();
+				a.setStart(this.start.x * width + this.start.y);
+				a.setEnd(prod.get(i).get(j));
 				a.findPath();
-				if(this.start == null || a.end.finalCost < this.start.finalCost){
-					this.start = a.end;
+				if(this.buffCell == null || a.end.finalCost < this.buffCell.finalCost){
+					this.buffCell = a.end;
 					index = i;
 					l = a.path;
 				}
 			}
-			System.out.println("Iter " + i);
 		}
-		System.out.println(l);
+		l.remove(l.size() - 1);
+		this.start = buffCell.parent;
+		this.a.printBefore();
+		this.a.printAfter();
 		this.path.addAll(l);
-		System.out.println(this.start);
-		prod.remove(index);
-		return this.start;
+		System.out.println("Path = " + this.path);
+		return index;
 	}
 	
-	private Cell getNext() {
-		List<Integer> l = null;
-		AStar a = new AStar(height, width, new int[][]{});
-		int index = 0;
-		for(int i = 0; i < prod.size(); i++){
-			for(int j = 0; j < prod.get(i).size(); j++){
-				a.setStart(start);
-				a.setEnd(prod.get(i).get(j));
-				a.init();
-				a.findPath();
-				if(this.start == null || a.end.finalCost < this.start.finalCost){
-					this.start = a.end;
-					index = i;
-					l = a.path;
-				}
-			}
-			System.out.println("Iter " + i);
+	private void start(int start)  {
+		int removeIndex;
+		this.start = new Cell(start / width, start % width);
+		while(!this.products.isEmpty()){
+			System.out.println(this.products);
+			removeIndex = getBest(this.products);
+			this.products.remove(removeIndex);
 		}
-		System.out.println(l);
-		this.path.addAll(l);
-		System.out.println(this.start);
-		prod.remove(index);
-		return this.start;
-	}
-	
-	private Cell findStart(int start, List<List<Integer>> prod){
-		return getStart(start, prod);
+		System.out.println("Finish");
 	}
 	
 	public static void main(String[] args) {
 		System.out.println("Start");
 		int start = 0;
-		NearestNeighborhood n = new NearestNeighborhood(5 , 5);
-		n.products.add(new ArrayList(Arrays.asList(11, 4, 5)));
-		n.products.add(new ArrayList(Arrays.asList(1, 10, 15)));
-		n.products.add(new ArrayList(Arrays.asList(9, 13, 17)));
-		System.out.println("Srart cell: " + n.findStart(start, n.products));
+		NearestNeighborhood n = new NearestNeighborhood(5 , 5, new int[]{1, 6});
+		n.products.add(new ArrayList(Arrays.asList(3, 2)));
+		n.products.add(new ArrayList(Arrays.asList(17)));
+		n.products.add(new ArrayList(Arrays.asList(24)));
+		n.start(start);
+		n.a.printAfter();
 		System.out.println("Path: ");
 		System.out.println(n.path);
 	}

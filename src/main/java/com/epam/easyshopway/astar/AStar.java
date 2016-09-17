@@ -3,6 +3,7 @@ package com.epam.easyshopway.astar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.stream.IntStream;
 
 public class AStar {
 
@@ -10,7 +11,7 @@ public class AStar {
 	private final int DIAGONAL_COST = 14;
 	private final int V_H_COST = 10;
 	private Cell[][] grid;
-	private int[][] blocked;
+	private int[] blocked;
 	private PriorityQueue<Cell> open;
 	private boolean closed[][];
 	public Cell start;
@@ -29,6 +30,21 @@ public class AStar {
 		this.end = new Cell(i / width, i % width);
 	}
 
+	public AStar(int height, int width, int[] blocked) {
+		this.height = height;
+		this.width = width;
+		this.blocked = blocked;
+		this.grid = new Cell[height][width];
+		for (int i = 0; i < height; ++i) {
+			for (int j = 0; j < width; ++j) {
+				grid[i][j] = new Cell(i, j);
+			}
+		}
+		for (int i = 0; i < this.blocked.length; ++i) {
+			setBlocked(this.blocked[i] / width, this.blocked[i] % width);
+		}
+	}
+	
 	private void checkAndUpdateCost(Cell current, Cell t, int cost) {
 		if (t == null || closed[t.x][t.y])
 			return;
@@ -49,6 +65,9 @@ public class AStar {
 				grid[i][j] = new Cell(i, j);
 				grid[i][j].heuristicCost = Math.abs(i - end.x) + Math.abs(j - end.y);
 			}
+		}
+		for (int i = 0; i < this.blocked.length; ++i) {
+			setBlocked(this.blocked[i] / width, this.blocked[i] % width);
 		}
 		this.open.add(this.grid[start.x][start.y]);
 		grid[start.x][start.y].finalCost = 0;
@@ -109,15 +128,8 @@ public class AStar {
 		}
 	}
 
-	public AStar(int height, int width, int[][] blocked) {
-		this.height = height;
-		this.width = width;
-		this.blocked = blocked;
-	}
-
 	public void init() {
 		path = new ArrayList<>();
-		this.grid = new Cell[height][width];
 		this.closed = new boolean[height][width];
 		this.open = new PriorityQueue<>((Object o1, Object o2) -> {
 			Cell c1 = (Cell) o1;
@@ -125,9 +137,6 @@ public class AStar {
 
 			return c1.finalCost < c2.finalCost ? -1 : c1.finalCost > c2.finalCost ? 1 : 0;
 		});
-		for (int i = 0; i < this.blocked.length; ++i) {
-			setBlocked(this.blocked[i][0], this.blocked[i][1]);
-		}
 	}
 
 	public void printBefore() {
@@ -173,6 +182,10 @@ public class AStar {
        }else{
     	   System.out.println("No possible path");
        }
+	}
+	
+	private boolean cotains(int[] arr, int value){
+		return IntStream.of(arr).anyMatch(x -> x == value);
 	}
 
 }
