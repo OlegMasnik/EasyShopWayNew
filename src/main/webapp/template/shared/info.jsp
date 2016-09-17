@@ -84,7 +84,7 @@
 				<div class="fileinputs">
 				<input type="file"
 					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
-					ng-model="file" name="file" id="file" class="md-raised file" required />
+					ng-model="file" name="file" id="file" class="md-raised file" required aria-label=" "/>
 					</div>
 
 
@@ -114,7 +114,7 @@
 			<md-card-content>
 			
 				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px;  margin-top: 8px;">
-				<label>{{ 'OLD_PASSWORD' | translate }}</label> <input id="oldPass" required
+				<label>{{ 'OLD_PASSWORD' | translate }}</label> <input id="oldPass" required 
 					type="password" name="oldPass" ng-model="user.oldPass"
 					minlength="6" maxlength="25" ng-model="oldPass"> </md-input-container>
 				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px; margin-top: 8px;">

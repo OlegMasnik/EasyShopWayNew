@@ -9,13 +9,13 @@
                 <div layout="row">
                     <a flex class="logo" href="/EasyShopWayNew/home"><img alt="EasyShopWay" src="/EasyShopWayNew/images/logo/logo_big.gif"></a>
                 </div>
-                <input type="text" ng-show="true" id="lang" value="${lang}">
+                <input type="text" ng-show="false" id="lang" value="${lang}">
                 <span flex></span>
 
 
 
                 <md-input-container>
-                    <md-select style="color: white; !important " ng-model="language">
+                    <md-select style="color: white; !important " ng-model="language" aria-label=" ">
                         <md-option ng-model="uk" value="uk" ng-click='changeLang(uk)'>Українська</md-option>
                         <md-option ng-model="en" value="en" ng-click='changeLang(en)'>English</md-option>
                     </md-select>
