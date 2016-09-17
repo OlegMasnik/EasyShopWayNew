@@ -64,6 +64,7 @@ public class VKInfoServlet extends HttpServlet {
 		User invokedUser = UserService.getByEmail(user.getEmail());
 		System.out.println(vkUser.getFirst_name()+" " + vkUser.getLast_name()+" " +  vkTokenJSON.getEmail());
 		if (invokedUser == null) {
+			
 			user.setImage("images/admin.png");
 			UserService.insert(user);
 			sess.setAttribute("user", user);
