@@ -46,6 +46,7 @@
 <!-- 		</md-input-container> -->
 	</form>
 	</md-card-content> <md-card-actions layout="row" layout-align="end center">
+	
 	<md-button class="md-raised" ng-click="saveInfo()">{{ 'SAVE' | translate }}</md-button> <md-button class="md-raised"
 		ng-click="showInfo()">{{ 'CANCEL' | translate }}</md-button> </md-card-actions> 
 		</md-card>
@@ -111,5 +112,10 @@
 	
 		</md-card>
 		</form>
+		
+<!-- 		<md-button class="md-primary" ng-controller="ThemeCtrl" ng-click=changeTheme()> -->
+<!-- 		    Change theme -->
+<!-- 		</md-button> -->
+		
 	</div>
 </div>

@@ -224,3 +224,12 @@ footer {
 .down-but {
 	transform: rotate(180deg);
 }
+
+
+
+
+/*    Header content */ 
+
+.head-profile-img {
+    height:  60px;
+}
