@@ -26,31 +26,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     }, false);
 
     $scope.downloadImg = function() {
-		
-	}
-    
-    $scope.incScale = function(){
-    	$scope.config.cellSize++;
-    	updateMap(game);
-    };
-    $scope.decScale = function(){
-    	$scope.config.cellSize--;
-    	updateMap(game);
-    }
-    $scope.scale = function(){
-    	updateMap(game);
-    }
-    function updateMap(oldMap){
-    	game = new Game(document.querySelector('canvas'), $scope.config);
-    	game.way = oldMap.way;
-    	game.notVisit = oldMap.notVisit;
-    	game.targetColors = oldMap.targetColors;
-        game.draw();
-    }
+	};
     $scope.map = undefined;
-    $scope.enter = undefined;
-    $scope.paydesks = undefined;
-    $scope.walls = undefined;
 
     $scope.newMap = {};
     
@@ -104,7 +81,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     $scope.getMapByid = function (m) {
         game = undefined;
-        //console.log(game);
+        $scope.enter = undefined;
+        $scope.paydesks = undefined;
+        $scope.walls = undefined;
         $scope.m = m;
         mapId = m || mapId;
         //console.log(mapId);
@@ -141,9 +120,29 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     var startCupBoard;
     var endCupBoard;
     var type;
-    var waycolor = '#d80000';
     $scope.typeValue = undefined;
-    var targetsCopy;
+    
+    
+    $scope.incScale = function(){
+    	$scope.config.cellSize++;
+    	updateMap(game); 
+    };
+    $scope.decScale = function(){
+    	$scope.config.cellSize--;
+    	updateMap(game);
+    }
+    $scope.scale = function(){
+    	updateMap(game);
+    };
+    
+    function updateMap(oldMap){
+    	game = new Game(document.querySelector('canvas'), $scope.config);
+    	game.way = oldMap.way;
+    	game.notVisit = oldMap.notVisit;
+    	game.targetColors = oldMap.targetColors;
+    	game.cupBoard = oldMap.cupBoard;
+    	$scope.openMap();
+    }
 
     var Game = function (canvas, conf) {
         game = this;
@@ -196,24 +195,24 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             for (var y = 0; y < game.height; y++) {
                 for (var x = 0; x < game.width; x++) {
                     game.ctx.fillStyle = game.getCellColor(cell);
-                    if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
-
-                        game.ctx.fillStyle = '#eee';
-                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
-                            game.cellSize, game.cellSize);
-
-                        game.ctx.beginPath();
-                        game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
-                            y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
-                        game.ctx.fillStyle = waycolor;
-                        game.ctx.strokeStyle = waycolor;
-                        game.ctx.fill();
-                        game.ctx.stroke();
-                    } else {
-                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-                            y * game.cellSpace + game.borderWidth,
-                            game.cellSize, game.cellSize);
-                    }
+//                    if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
+//                        game.ctx.fillStyle = '#eee';
+//                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
+//                            game.cellSize, game.cellSize);
+//
+//                        game.ctx.beginPath();
+//                        game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
+//                            y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
+//                    } else {
+//                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+//                            y * game.cellSpace + game.borderWidth,
+//                            game.cellSize, game.cellSize);
+//                    }
+//                    cell++;
+                    game.ctx.fillStyle = game.getCellColor(cell);
+                    game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+                        y * game.cellSpace + game.borderWidth,
+                        game.cellSize, game.cellSize);
                     cell++;
                 }
             }
@@ -299,8 +298,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         }
                         break;
                     case 'edit':
-                        //console.log("CELL #" + cell)
-
+                        console.log("CELL #" + cell);
+                        console.log($scope.cupboards);
                         for (var q = 0; q < $scope.cupboards.length; q++) {
                             for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
                                 if (cell == $scope.cupboards[q].values[w]) {
@@ -332,7 +331,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                                     $scope.walls.removeUndefined(cell);
                             break;
                         case 'payDesk':
-                            //console.log("in mouse move")
                             if (!(game.cupBoard.map[cell]) && !($scope.walls.indexOf(cell) != -1) && !(game.enter == cell))
                                 if (game.paint.value)
                                     $scope.paydesks.add(cell);
@@ -349,7 +347,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             }
         };
         this.mouseUp = function () {
-            //console.log("in mouse up")
             game.paint.active = false;
         };
 	    this.registerEvents = function () {
@@ -414,6 +411,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             }
             game = new Game(document.querySelector('canvas'), $scope.config);
             game.draw();
+            console.log(game);
         }
     }
 
