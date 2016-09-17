@@ -12,17 +12,6 @@
             <link rel="stylesheet" href="css/icon.css">
             <link rel="stylesheet" href="css/search-style.css">
             <link rel="shortcut icon" href="favicon.ico">
-            <script src="js/jquery-3.1.0.min.js"></script>
-            <script src='js/angular.min.js'></script>
-            <script src='js/angular-aria.js'></script>
-            <script src='js/angular-animate.js'></script>
-            <script src='js/angular-material.min.js'></script>
-            <script src='js/angular-route.min.js'></script>
-            <script src="js/angular-messages.min.js"></script>
-            <script src="js/angular-translate.js"></script>
-
-            <script src='js/app.js'></script>
-            <script src='js/user/map.js'></script>
 
         </head>
 
@@ -80,7 +69,7 @@
                                 <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 6">
                                     <i class="material-icons">remove</i></md-button>
 
-                                <md-slider flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
+                                <md-slider flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()" aria-label=" "></md-slider>
 
                                 <md-button class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 50">
                                     <i class="material-icons">add_circle_outline</i></md-button>
@@ -103,6 +92,17 @@
                 </md-content>
 
             </md-content>
+            <script src="js/jquery-3.1.0.min.js"></script>
+            <script src='js/angular.min.js'></script>
+            <script src='js/angular-aria.js'></script>
+            <script src='js/angular-animate.js'></script>
+            <script src='js/angular-material.min.js'></script>
+            <script src='js/angular-route.min.js'></script>
+            <script src="js/angular-messages.min.js"></script>
+            <script src="js/angular-translate.js"></script>
+
+            <script src='js/app.js'></script>
+            <script src='js/user/map.js'></script>
             <script src="js/jquery.validate.min.js"></script>
 
             <script>

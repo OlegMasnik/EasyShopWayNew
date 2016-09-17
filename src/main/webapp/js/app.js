@@ -375,6 +375,7 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
     	$http.put('/EasyShopWayNew/home?lang=' + lang)
         .success(function (data, status, headers) {
             $scope.language = lang;
+            console.log(lang + "   chage fsfd")
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
             	$route.reload();
@@ -513,6 +514,8 @@ app
 						function($scope, $http, $mdToast, $route) {
 							
 							(function() {
+								
+								console.log(" First s" + lang);
 								lang = $('#lang').val() || 'en';
 								console.log(lang);
 							})();

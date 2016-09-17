@@ -14,17 +14,6 @@
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
           <link rel="shortcut icon" href="favicon.ico">
-			<script src="js/jquery-3.1.0.min.js"></script>
-            <script src='js/angular.min.js'></script>
-            <script src='js/angular-route.min.js'></script>
-            <script src='js/angular-aria.js'></script>
-            <script src='js/angular-animate.js'></script>
-            <script src='js/angular-material.min.js'></script>
-            <script src="js/shared/highcharts.js"></script>
-			<script src='js/angular-translate.js'></script>
-			
-            <script src='js/app.js'></script>
-            <script src='js/user/app.js'></script>
         </head>
 
         <body ng-app="MyApp" layout="column"  md-theme="{{ theme }}">
@@ -58,12 +47,22 @@
                 
             </md-content>
             
-            <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
+            <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page" aria-label="search">
 	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
     </md-button>
             
             </md-content>
-            
+            <script src="js/jquery-3.1.0.min.js"></script>
+            <script src='js/angular.min.js'></script>
+            <script src='js/angular-route.min.js'></script>
+            <script src='js/angular-aria.js'></script>
+            <script src='js/angular-animate.js'></script>
+            <script src='js/angular-material.min.js'></script>
+            <script src="js/shared/highcharts.js"></script>
+			<script src='js/angular-translate.js'></script>
+			
+            <script src='js/app.js'></script>
+            <script src='js/user/app.js'></script>
             
             <script src='js/user/user-history.js'></script>
             <script src="js/shared/statistic.js"></script>

@@ -97,7 +97,7 @@
                         <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 6">
                             <i class="material-icons">remove</i></md-button>
 
-                        <md-slider hide-sm flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
+                        <md-slider hide-sm flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()" aria-label=" "></md-slider>
 
                         <md-button class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 50">
                             <i class="material-icons">add_circle_outline</i></md-button>
