@@ -20,6 +20,13 @@ var lang;
 		    };
 		});
 		
+		serApp.config(function($mdThemingProvider) {
+			$mdThemingProvider.alwaysWatchTheme(true);
+			
+			  $mdThemingProvider.theme('default')
+			    .primaryPalette('cyan');
+			});
+		
 		function getRandomColor() {
 		    var letters = '0123456789ABCDEF';
 		    var color = '#';

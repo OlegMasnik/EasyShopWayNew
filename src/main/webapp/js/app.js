@@ -8,6 +8,16 @@ var lang;
 var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute',
 		'pascalprecht.translate' ]);
 
+app.config(function($mdThemingProvider) {
+	$mdThemingProvider.alwaysWatchTheme(true);
+	
+	  $mdThemingProvider.theme('default')
+	    .primaryPalette('cyan');
+	  
+	  $mdThemingProvider.theme('pinkDark')
+	    .primaryPalette('pink').dark();
+	});
+
 app.config(function($translateProvider) {
 	$translateProvider.translations('en', {
 		PROFILE:'Profile',
@@ -234,7 +244,17 @@ app.controller('PageRedirectCtrl', function($window) {
 
 });
 
-app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate) {
+app.controller("ThemeCtrl", function($scope, $rootScope, $mdTheming) {
+	$scope.changeTheme = function() {
+		console.log("Change to alt");
+		$rootScope.theme = 'altTheme';
+	}
+})
+
+app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate, $mdTheming) {
+	
+	$scope.theme = 'default';
+	
     $scope.status = '  ';
     
     $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
