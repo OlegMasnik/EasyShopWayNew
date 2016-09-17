@@ -124,22 +124,44 @@ var lang;
 						selectedItemChange(e, "");
 					});
 				}
-				startered = true;
-				$scope.onClick();
-				
 				var ids = [];
+				var products = [];
+				$scope.items.map(function(e, i){
+					products.push(e.coordinates);
+					ids[i] = e.value;
+				});
+//				for (var i = 0; i < $scope.items.length; i++) {
+//					ids[i] = ($scope.items[i].value);
+//					products.push($scope.items[i].coordinates);
+//				}
+				
+				console.log(game.enter); // ok
+				console.log($scope.walls) // ok
+				console.log($scope.paydesks) // ok
+				console.log(game.arrayCupboard) // no ok
+				console.log(products);
+				
+				startered = true;
+//				$scope.onClick();
+				
 
-				for (var i = 0; i < $scope.items.length; i++) {
-					ids[i] = ($scope.items[i].value);
-				}
 
 				console.log(ids);
 				var send = $.param({
-				data: JSON.stringify({
-				productIds: ids,
-				mapId: $scope.maps
-				})
+					data: JSON.stringify({
+						productIds: ids,
+						mapId: $scope.maps,
+						width: game.width,
+						height: game.height,
+						enter: game.enter,
+						walls: $scope.walls,
+						paydesks: $scope.paydesks,
+						cupboards: game.arrayCupboard,
+						products: products
+					})
 				});
+				
+				console.log(send);
 
 				var config = {
 				headers: {
@@ -404,6 +426,7 @@ var lang;
 		        this.way = new Map(this.width * this.height);
 		        this.cupBoard = new Map(this.width * this.height);
 		        this.targets = new Map(this.width * this.height);
+		        this.arrayCupboard = [];
 		        initCupBoard($scope.cupboards);
 
 		        this.paint = {
@@ -506,11 +529,11 @@ var lang;
 		        };
 		        this.mouseDown = function (e) {
 		            var cell = game.getMouseCell(e);
+		            console.log("CELL #" + cell)
 		            if (cell !== false) {
 		            	switch (e.button) {
 						case 0:
 							if(!game.paint.active){
-							//console.log("CELL #" + cell)
 							game.paint.active = true;
 	                        for (var q = 0; q < $scope.cupboards.length; q++) {
 	                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
@@ -809,6 +832,7 @@ var lang;
 		        $scope.cupboards = obj;
 		        for (var i = 0; i < obj.length; i++) {
 		            obj[i].values.map(function (e, i) {
+		            	game.arrayCupboard.push(e);
 		                game.cupBoard.map[e] = true;
 		            });
 		        }

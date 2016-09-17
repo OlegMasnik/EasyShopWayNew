@@ -6,9 +6,9 @@ public class Cell {
     int x, y;
     Cell parent; 
     
-    Cell(int i, int j){
-        this.x = i;
-        this.y = j; 
+    Cell(long i, long j){
+        this.x = (int) i;
+        this.y = (int) j; 
     }
     
     @Override

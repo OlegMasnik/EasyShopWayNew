@@ -7,30 +7,30 @@ import java.util.stream.IntStream;
 
 public class AStar {
 
-	public List<Integer> path;
+	public List<Long> path;
 	private final int DIAGONAL_COST = 14;
 	private final int V_H_COST = 10;
 	private Cell[][] grid;
-	private int[] blocked;
+	private List<Long> blocked;
 	private PriorityQueue<Cell> open;
 	private boolean closed[][];
 	public Cell start;
 	public Cell end;
 	public int width, height;
 
-	private void setBlocked(int i, int j) {
-		grid[i][j] = null;
+	private void setBlocked(long i, long j) {
+		grid[(int) i][(int) j] = null;
 	}
 
 	public void setStart(int i) {
 		this.start = new Cell(i / width, i % width);
 	}
 
-	public void setEnd(int i) {
-		this.end = new Cell(i / width, i % width);
+	public void setEnd(Long long1) {
+		this.end = new Cell(long1 / width, long1 % width);
 	}
 
-	public AStar(int height, int width, int[] blocked) {
+	public AStar(int height, int width, List<Long> blocked) {
 		this.height = height;
 		this.width = width;
 		this.blocked = blocked;
@@ -40,8 +40,8 @@ public class AStar {
 				grid[i][j] = new Cell(i, j);
 			}
 		}
-		for (int i = 0; i < this.blocked.length; ++i) {
-			setBlocked(this.blocked[i] / width, this.blocked[i] % width);
+		for (int i = 0; i < this.blocked.size(); ++i) {
+			setBlocked(this.blocked.get(i) / width, this.blocked.get(i) % width);
 		}
 	}
 	
@@ -66,8 +66,8 @@ public class AStar {
 				grid[i][j].heuristicCost = Math.abs(i - end.x) + Math.abs(j - end.y);
 			}
 		}
-		for (int i = 0; i < this.blocked.length; ++i) {
-			setBlocked(this.blocked[i] / width, this.blocked[i] % width);
+		for (int i = 0; i < this.blocked.size(); ++i) {
+			setBlocked(this.blocked.get(i) / width, this.blocked.get(i) % width);
 		}
 		this.open.add(this.grid[start.x][start.y]);
 		grid[start.x][start.y].finalCost = 0;
@@ -174,9 +174,9 @@ public class AStar {
 	public void generatePath(){
 		if(this.closed[this.end.x][this.end.y]){
             Cell current = this.grid[this.end.x][this.end.y];
-            path.add(current.x * this.width + current.y);
+            path.add((long) (current.x * this.width + current.y));
             while(current.parent!=null){
-                path.add(0, current.parent.x * this.width + current.parent.y);
+                path.add(0, (long) (current.parent.x * this.width + current.parent.y));
                 current = current.parent;
             } 
        }else{
