@@ -5,30 +5,28 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class AStar {
-	
-	
-	public List<Integer> path;
 
+	public List<Integer> path;
 	private final int DIAGONAL_COST = 14;
 	private final int V_H_COST = 10;
-
 	private Cell[][] grid;
+	private int[][] blocked;
 	private PriorityQueue<Cell> open;
 	private boolean closed[][];
 	public Cell start;
 	public Cell end;
-	private int width, height;
+	public int width, height;
 
 	private void setBlocked(int i, int j) {
 		grid[i][j] = null;
 	}
 
-	private void setStart(int i, int j) {
-		this.start = new Cell(i, j);
+	public void setStart(int i) {
+		this.start = new Cell(i / width, i % width);
 	}
 
-	private void setEnd(int i, int j) {
-		this.end = new Cell(i, j);
+	public void setEnd(int i) {
+		this.end = new Cell(i / width, i % width);
 	}
 
 	private void checkAndUpdateCost(Cell current, Cell t, int cost) {
@@ -45,9 +43,15 @@ public class AStar {
 		}
 	}
 
-	public void findPath() {		
+	public void findPath() {
+		for (int i = 0; i < height; ++i) {
+			for (int j = 0; j < width; ++j) {
+				grid[i][j] = new Cell(i, j);
+				grid[i][j].heuristicCost = Math.abs(i - end.x) + Math.abs(j - end.y);
+			}
+		}
 		this.open.add(this.grid[start.x][start.y]);
-
+		grid[start.x][start.y].finalCost = 0;
 		Cell current;
 
 		while (true) {
@@ -58,7 +62,7 @@ public class AStar {
 
 			if (current.equals(grid[end.x][end.y])) {
 				this.end = current;
-				System.out.println("Finish " + current.finalCost);
+				generatePath();
 				return;
 			}
 
@@ -105,10 +109,14 @@ public class AStar {
 		}
 	}
 
-	public AStar(int height, int width, int si, int sj, int ei, int ej, int[][] blocked) {
-		path = new ArrayList<>();
+	public AStar(int height, int width, int[][] blocked) {
 		this.height = height;
 		this.width = width;
+		this.blocked = blocked;
+	}
+
+	public void init() {
+		path = new ArrayList<>();
 		this.grid = new Cell[height][width];
 		this.closed = new boolean[height][width];
 		this.open = new PriorityQueue<>((Object o1, Object o2) -> {
@@ -117,22 +125,12 @@ public class AStar {
 
 			return c1.finalCost < c2.finalCost ? -1 : c1.finalCost > c2.finalCost ? 1 : 0;
 		});
-		setStart(si, sj);
-		setEnd(ei, ej);
-		for(int i=0;i<height;++i){
-            for(int j=0;j<width;++j){
-                grid[i][j] = new Cell(i, j);
-                grid[i][j].heuristicCost = Math.abs(i-end.x)+Math.abs(j-end.y);
-            }
-         }
-         grid[si][sj].finalCost = 0;
-         for (int i = 0; i < blocked.length; ++i) {
-        	 setBlocked(blocked[i][0], blocked[i][1]);
-         }
+		for (int i = 0; i < this.blocked.length; ++i) {
+			setBlocked(this.blocked[i][0], this.blocked[i][1]);
+		}
 	}
-	
-	
-	public void printBefore(){
+
+	public void printBefore() {
 		System.out.println("Grid: ");
 		for (int i = 0; i < height; ++i) {
 			for (int j = 0; j < width; ++j) {
@@ -149,34 +147,32 @@ public class AStar {
 		}
 		System.out.println();
 	}
-	
-	public void printAfter(){
+
+	public void printAfter() {
 		System.out.println("\nScores for cells: ");
-        for(int i=0;i< this.height;++i){
-            for(int j=0;j< this.height;++j){
-                if(this.grid[i][j]!=null)System.out.printf("%-3d ", this.grid[i][j].finalCost);
-                else System.out.print("BL  ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+		for (int i = 0; i < this.height; ++i) {
+			for (int j = 0; j < this.height; ++j) {
+				if (this.grid[i][j] != null)
+					System.out.printf("%-3d ", this.grid[i][j].finalCost);
+				else
+					System.out.print("BL  ");
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
-	
-	
-	public void printPath(){
+
+	public void generatePath(){
 		if(this.closed[this.end.x][this.end.y]){
-            //Trace back the path 
-            System.out.println("Path: ");
             Cell current = this.grid[this.end.x][this.end.y];
-            System.out.print(current);
             path.add(current.x * this.width + current.y);
             while(current.parent!=null){
-                System.out.print(" -> "+current.parent);
-                path.add(current.parent.x * this.width + current.parent.y);
+                path.add(0, current.parent.x * this.width + current.parent.y);
                 current = current.parent;
             } 
-            System.out.println();
-       }else System.out.println("No possible path");
+       }else{
+    	   System.out.println("No possible path");
+       }
 	}
 
 }
