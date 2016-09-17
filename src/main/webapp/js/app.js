@@ -252,6 +252,9 @@ app.controller("ThemeCtrl", function($scope, $rootScope, $http) {
 	if ($rootScope.theme == "dark") {
 		$scope.themeSwitch = "enabled";
 		$scope.message = "enabled";
+	} else {
+		$scope.themeSwitch = "disabled";
+		$scope.message = "disabled";
 	}
 	
 	console.log($scope.themeSwitch);
@@ -309,13 +312,14 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
 
 					console.log(data);
 					$rootScope.theme = data.theme;
+					$scope.theme = data.theme;
 										
-					if (data.theme == "dark") {
-						$scope.themeSwitch = true;
-					} else {
-						$scope.themeSwitch = false;
-					}
-					
+//					if (data.theme == "dark") {
+//						$scope.themeSwitch = true;
+//					} else {
+//						$scope.themeSwitch = false;
+//					}
+//					
 					
 				}).error(
 				function(data, status, header,

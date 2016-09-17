@@ -12,7 +12,7 @@
 
 </head>
 
-<body ng-app="MyApp" layout="column" ng-controller="AppCtrl">
+<body ng-app="MyApp" layout="column" ng-controller="AppCtrl" md-theme="{{ theme }}">
 	<jsp:include page="parts/header.jsp"></jsp:include>
 	<!-- 	<h2>{{2+2}}</h2> -->
 
