@@ -9,7 +9,7 @@
                 <div layout="row">
                     <a flex class="logo" href="/EasyShopWayNew/home"><img alt="EasyShopWay" src="/EasyShopWayNew/images/logo/logo_big.gif"></a>
                 </div>
-                <input type="text" ng-show="true" id="lang" value="${lang}">
+                <input type="text" ng-show="false" id="lang" value="${lang}">
                 <span flex></span>
 
 
