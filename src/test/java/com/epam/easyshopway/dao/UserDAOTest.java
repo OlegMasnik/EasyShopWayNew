@@ -14,9 +14,9 @@ import com.epam.easyshopway.model.User;
 public class UserDAOTest {
 	private static UserDAO userDAO;
 	private User firstUser = new User(12, "Unit", "Tester", "unittester@gmail.com", "111111", new Date(111111111), true,
-			"user", "ua", "\\test\\1.img");
+			"user", "ua", "\\test\\1.img", "default");
 	private User secondUser = new User(12, "Mock", "Tester", "mocktester@gmail.com", "222222", new Date(111111111),
-			true, "user", "ua", "\\test\\2.img");
+			true, "user", "ua", "\\test\\2.img", "default");
 
 	@BeforeClass
 	public static void runBeforeClass() {

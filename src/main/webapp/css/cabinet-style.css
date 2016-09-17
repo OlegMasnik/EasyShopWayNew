@@ -131,7 +131,7 @@ a:hover {
 }
 
 .cab-user-logo {
-	background-image: url("../images/wall-material.png");
+/* 	background-image: url("../images/wall-material.png"); */
 	/*     background-size: 100%; */
 	text-align: center;
 	text-transform: uppercase;
