@@ -24,7 +24,7 @@ var lang;
 			$mdThemingProvider.alwaysWatchTheme(true);
 			
 			  $mdThemingProvider.theme('default')
-			    .primaryPalette('cyan');
+			    .primaryPalette('pink').dark();
 			});
 		
 		function getRandomColor() {

@@ -32,13 +32,16 @@ public class User {
 	@Column("image")
 	private String image;
 
+	@Column("theme")
+	private String theme;
+
 	public User() {
 		super();
 	}
 	
 
 	public User(Integer id, String firstName, String lastName, String email, String password, Date dateOfBirth,
-			Boolean active, String role, String language, String image) {
+			Boolean active, String role, String language, String image, String theme) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -49,12 +52,13 @@ public class User {
 		this.role = role;
 		this.language = language;
 		this.image = image;
+		this.theme = theme;
 	}
 
 
 	public User(String firstName, String lastName, String email,
 			String password, Boolean active, String role,
-			String language, String image) {
+			String language, String image, String theme) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -64,6 +68,7 @@ public class User {
 		this.role = role;
 		this.language = language;
 		this.image = image;
+		this.theme = theme;
 	}
 
 	public Integer getId() {
@@ -137,5 +142,16 @@ public class User {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+
+	public String getTheme() {
+		return theme;
+	}
+
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+	
 
 }

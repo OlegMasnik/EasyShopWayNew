@@ -14,9 +14,10 @@
 		<form name="mapCreatForm" ng-controller="CreateMapDialogController">
 			<div lanyout="row">
 				<md-input-container flex> <label>{{ 'ENGLISH_NAME' | translate }}</label> <input name="name_en" type="text"
-					ng-model="name_en" required ng-pattern="/^[a-zA-Z][a-zA-Z0-9-'\s]+$/"></md-input-container>
+					ng-model="name_en" required ng-pattern="/^[a-zA-Z][a-zA-Z0-9-'\s]+$/" ng-maxlength="50"></md-input-container>
 				<md-input-container flex> <label>{{ 'UKRAINE_NAME' | translate }}</label>
-				<input name="name_uk" type="text" ng-model="name_uk" required
+<!-- THIS LONG PATTERN SHOULD BE IN ONE LINE!!!!! OTHERWISE IT MIGHT NOT WORK	-->
+				<input name="name_uk" type="text" ng-model="name_uk" required  ng-maxlength="50"
 				ng-pattern="/^[\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u049\u0404\u04541a-zA-Z][a-zA-Z\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u0491\u0404\u04541\s0-9-']+$/">
 				</md-input-container>
 			</div>

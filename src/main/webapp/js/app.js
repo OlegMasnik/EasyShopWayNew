@@ -14,7 +14,7 @@ app.config(function($mdThemingProvider) {
 	  $mdThemingProvider.theme('default')
 	    .primaryPalette('cyan');
 	  
-	  $mdThemingProvider.theme('pinkDark')
+	  $mdThemingProvider.theme('dark')
 	    .primaryPalette('pink').dark();
 	});
 
@@ -249,7 +249,22 @@ app.controller("ThemeCtrl", function($scope, $rootScope, $mdTheming) {
 		console.log("Change to alt");
 		$rootScope.theme = 'altTheme';
 	}
-})
+	
+	$scope.theme = false;
+	
+	$scope.message = 'disabled';
+
+	$scope.onChange = function(cbState) {
+		
+		$scope.message = cbState;
+		
+		if (cbState == 'enabled') {
+			$rootScope.theme = 'dark';
+		} else {
+			$rootScope.theme = 'default';
+		}
+	};
+});
 
 app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
@@ -307,6 +322,7 @@ app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, 
     	$http.put('/EasyShopWayNew/home?lang=' + lang)
         .success(function (data, status, headers) {
             $scope.language = lang;
+            console.log(lang + "   chage fsfd")
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
             	$route.reload();
@@ -445,6 +461,8 @@ app
 						function($scope, $http, $mdToast, $route) {
 							
 							(function() {
+								
+								console.log(" First s" + lang);
 								lang = $('#lang').val() || 'en';
 								console.log(lang);
 							})();
