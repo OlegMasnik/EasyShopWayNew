@@ -25,11 +25,11 @@
 	<div id="div0" layout="column">
 		<div flex layout="column" layout-align="center center">
 			<md-button style="background-color : rgba(233, 30, 99, 0.8); height: 45px; font-size: 30px; color : #fff;" ng-controller="PageRedirectCtrl as page" ng-click="page.goToPage('search')" aria-label="search">Create product list now</md-button>
-			<div>or</div>
+			<div style="color: black;">or</div>
 			<md-button class="md-accent" style="height: 45px; font-size: 25px;" id="down_1">See tutorial</md-button>
 		</div>
 		<div layout="row" class="support-container" layout-align="center center" layout-padding>
-		<div class="support" flex="none">
+		<div class="support" flex="none" style="color: black;">
 			<div layout="row" layout-align="center center" layout-margin>You can use up <img class="support-img" alt="" src="images/keys/up-button.png"> and down <img class="support-img down-but" alt="" src="images/keys/up-button.png"> keys for navigations</div>
 		</div>
 		</div>		
@@ -37,7 +37,7 @@
 	<div id="div1" layout="column" md-whiteframe="2" style="background-color: white;">
 		<md-button id="up_1"><i class="material-icons">keyboard_arrow_up</i></md-button>
 
-		<div layout="row" flex >
+		<div layout="row" flex style="color: black;">
 			<div flex layout="row" layout-align="center center" md-whiteframe="4"
 				layout-margin style="background-color: white;">Image</div>
 			<div flex layout="row" layout-align="center center">Description</div>
@@ -48,7 +48,7 @@
 	<div id="div2" layout="column"   style="background-color: rgba(255, 255, 255, 0.65);" >
 		<md-button id="up_2"> <i class="material-icons">keyboard_arrow_up</i></md-button>
 		
-		<div layout="row" flex>
+		<div layout="row" flex style="color: black;">
 			<div flex layout="row" layout-align="center center">Description</div>
 			<div flex layout="row" layout-align="center center" md-whiteframe="4"
 				layout-margin style="background-color: white;">Image</div>
@@ -59,7 +59,7 @@
 	<div id="div3" layout="column" md-whiteframe="2" style="background-color: white;">
 		<md-button id="up_3" style="font-size: 30px;"> <i
 			class="material-icons">keyboard_arrow_up</i></md-button>
-		<div layout="row" flex>
+		<div layout="row" flex style="color: black;">
 			<div flex layout="row" layout-align="center center" md-whiteframe="4"
 				layout-margin>Image</div>
 			<div flex layout="row" layout-align="center center">

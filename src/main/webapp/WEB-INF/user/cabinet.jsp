@@ -14,6 +14,7 @@
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
           <link rel="shortcut icon" href="favicon.ico">
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         </head>
 
         <body ng-app="MyApp" layout="column"  md-theme="{{ theme }}">

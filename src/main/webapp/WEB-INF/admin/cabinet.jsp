@@ -13,6 +13,7 @@
 <link rel="shortcut icon" href="favicon.ico">
 
 <link rel="stylesheet" href="css/datatable/md-data-table.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
@@ -45,9 +46,7 @@
 	<div flex class="content" layout="column" >
 		<div ng-view onload="getFoodData()"></div>
 	</div>
-	<md-toolbar>
-	
-	</md-toolbar>
+
 	</md-content> </md-content>
 
 <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page" aria-label="search">

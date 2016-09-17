@@ -295,6 +295,29 @@ app.controller("ThemeCtrl", function($scope, $rootScope, $http) {
 	};
 });
 
+app.controller('InputFileCtrl', function($scope) {})
+app.directive('chooseFile', function() {
+  return {
+    link: function (scope, elem, attrs) {
+      var button = elem.find('button');
+      var input = angular.element(elem[0].querySelector('input#fileInput'));
+      button.bind('click', function() {
+        input[0].click();
+      });
+      input.bind('change', function(e) {
+        scope.$apply(function() {
+          var files = e.target.files;
+          if (files[0]) {
+            scope.fileName = files[0].name;
+          } else {
+            scope.fileName = null;
+          }
+        });
+      });
+    }
+  };
+});
+
 app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
 //	$scope.theme = 'default';
