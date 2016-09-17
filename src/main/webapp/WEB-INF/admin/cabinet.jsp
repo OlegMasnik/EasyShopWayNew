@@ -16,7 +16,7 @@
 
 </head>
 
-<body ng-app="MyApp" layout="column" ng-controller="AdminCtrl">
+<body ng-app="MyApp" layout="column" ng-controller="AdminCtrl" md-theme="{{ theme }}">
 
 	<jsp:include page="../parts/header.jsp"></jsp:include>
 	<md-content layout="row" flex> 

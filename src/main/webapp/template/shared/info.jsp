@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
-<md-toolbar class="md-hue-2" md-whiteframe="4">
+<md-toolbar class="md-whiteframe-1dp">
 <div class="md-toolbar-tools">
 	<h2>
 		<span>{{ 'PROFILE' | translate }}</span>
@@ -9,27 +9,24 @@
 </div>
 </md-toolbar>
 
-<div layout="row" flex="none">
+<div layout="column" layout-gt-sm="row" flex="none">
 	
-	<div flex="50" layout="column">
+	<div flex layout="column">
 	<md-card flex ng-controller="formCtrl" md-theme-watch> 
 	<md-card-title>
 	<md-card-title-text>
 	<div class="cab-category">{{ 'GENERAL_INFORMATION' | translate }}</div>
 	</md-card-title-text> </md-card-title> <md-card-content flex>
 	<form name="userForm" data-ng-init="showInfo()">
-		<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <md-icon md-svg-src="images/icons/person.svg"
 				class="name cab-icon"></md-icon> {{ 'FIRST_NAME' | translate }}
 		</label> <input ng-model="firstName"> </md-input-container>
-		<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/person.svg" class="name cab-icon"></md-icon></span>
 			{{ 'LAST_NAME' | translate }}
 		</label> <input ng-model="lastName"> </md-input-container>
-		<br>
 		<md-input-container class="md-block" flex-gt-sm="">
 		<label> <span><md-icon
 					md-svg-src="images/icons/email.svg" class="name cab-icon"></md-icon></span>
@@ -50,6 +47,27 @@
 	<md-button class="md-raised" ng-click="saveInfo()">{{ 'SAVE' | translate }}</md-button> <md-button class="md-raised"
 		ng-click="showInfo()">{{ 'CANCEL' | translate }}</md-button> </md-card-actions> 
 		</md-card>
+		
+		<md-card ng-controller="ThemeCtrl">
+		
+			<md-card-title>
+			
+				<md-card-title-text>
+	<div class="cab-category">Theme</div>
+	</md-card-title-text>
+			
+			</md-card-title>
+			
+			<md-card-content>
+			
+			<md-switch ng-model="theme" ng-change="onChange(theme)" label="Dark theme: " ng-true-value="'enabled'" ng-false-value="'disabled'" aria-label="Switch 1">
+    Dark theme: {{ message }}
+  </md-switch>
+			
+			</md-card-content>
+		
+		</md-card>
+		
 		</div>
 
 

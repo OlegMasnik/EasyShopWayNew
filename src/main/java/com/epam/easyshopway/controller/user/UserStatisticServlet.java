@@ -76,7 +76,7 @@ public class UserStatisticServlet extends HttpServlet {
 		List<ProductsTypeCount> productsType;
 		String diagramName;
 		
-		Locale locale = new Locale(user.getLanguage());
+		Locale locale = new Locale("en".equals(user.getLanguage()) ? "en" : "ua");
 		ResourceBundle bundle = ResourceBundle.getBundle("/diagram_i18n/diagram", locale);
 
 		if ("user".equals(user.getRole())) {
@@ -126,7 +126,7 @@ public class UserStatisticServlet extends HttpServlet {
 		int count;
 		String diagramName;
 		
-		Locale locale = new Locale(user.getLanguage());
+		Locale locale = new Locale("en".equals(user.getLanguage()) ? "en" : "ua");
 		ResourceBundle bundle = ResourceBundle.getBundle("/diagram_i18n/diagram", locale);
 		
 		if ("user".equals(user.getRole())) {
@@ -135,13 +135,13 @@ public class UserStatisticServlet extends HttpServlet {
 					startDate, endDate);
 			count = DiagramShopCountService.getTotalShopCountByUserId(id,
 					startDate, endDate);
-			diagramName = bundle.getString("pieDiagramNameUser");
+			diagramName = bundle.getString("columnDiagramNameUser");
 		} else {
 			shopsCount = DiagramShopCountService.getShopCount(startDate,
 					endDate);
 			count = DiagramShopCountService.getTotalShopCount(startDate,
 					endDate);
-			diagramName = bundle.getString("pieDiagramNameAdmin");
+			diagramName = bundle.getString("columnDiagramNameAdmin");
 		}
 
 		JSONObject responseObject = new JSONObject();
