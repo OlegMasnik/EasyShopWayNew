@@ -32,7 +32,7 @@
                         <md-select ng-model="someModel" placeholder="Select a map">
 
                             <md-option ng-click="createMap()">{{ 'ADD_NEW' | translate }}</md-option>
-                            <md-option ng-model="m" value="{{_m.id}}" ng-click="clickOnSelect(_m.id)" ng-repeat="_m in mapsName">{{ _m.id }} {{_m.name_en}}</md-option>
+                            <md-option ng-model="m" value="{{_m.id}}" ng-click="clickOnSelect(_m.id)" ng-repeat="_m in mapsName">{{ _m.name_en }}/{{_m.name_uk}}</md-option>
 
                         </md-select>
 
