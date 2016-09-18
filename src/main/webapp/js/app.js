@@ -729,8 +729,34 @@ app
 						'$mdToast',
 						function($scope, $http, $route, $mdToast) {
 							$scope.changePass = function() {
+								console.log($('#oldPass').val());
+								if ($('#oldPass').val() == undefined) {
 
-								if ($('#newPass').valid()
+									var data = $.param({
+										newPass : $scope.user.newPass
+									});
+
+									var config = {
+										headers : {
+											'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+										}
+									}
+
+									$http.post('/EasyShopWayNew/pass', data,
+											config).success(
+											function(data, status, headers,
+													config) {
+												showToast($mdToast, $scope,
+														data.msg);
+											}).error(
+											function(data, status, header,
+													config) {
+												showToast($mdToast, $scope,
+														"Changing failed");
+											});
+								
+									
+								} else {if ($('#newPass').valid()
 										&& $('#oldPass').valid()) {
 									var data = $.param({
 										oldPass : $scope.user.oldPass,
@@ -755,7 +781,7 @@ app
 												showToast($mdToast, $scope,
 														"Changing failed");
 											});
-								}
+								}}
 							}
 
 							$scope.cancel = function() {
@@ -784,10 +810,10 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
 			
 			$scope.sendImgAj = function () {
 				var formData = new FormData();
-				
 				var fileInputElement = document.getElementById("file");
 				formData.append("userfile", fileInputElement.files[0]);
 				
+				console.log(fileInputElement.files[0]);
 				var request = new XMLHttpRequest();
 				request.open("POST", "http://localhost:8080/EasyShopWayNew/cabinet/image-upload");
 				request.send(formData);
