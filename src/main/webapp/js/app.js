@@ -99,6 +99,8 @@ app.config(function($translateProvider) {
 		CHANGE_SIZE:'Change size',
 		PAY_DESCK:'Paydesck',
 		CUP_BOARD:'Cupboard',
+		TARGET: 'Selected product',
+		TARGET_NOT_VISITED: 'Not selected product',
 		
 		CREATE_NEW_CUPBOARD:'Create new cupboard',
 		ENGLISH_DESCRIPTION:'English description',
@@ -115,6 +117,7 @@ app.config(function($translateProvider) {
 		WALL:'Wall',
 		EDIT:'Edit',
 		SAVE:'Save',
+		PATH:'Way',
 		CANCEL:'Cancel',
 		DELETE:'Delete',
 		CLEAR:'Clear',
@@ -134,11 +137,11 @@ app.config(function($translateProvider) {
 		No: 'No',
 		PREUSER: "Check your email",
 		NO_DIAGRAM: "Empty",
-		NONE: "None"
+		NONE: "None",
 			
 		CONFIRM_DELETE: "CONFIRM DELETE:",
 		NO_DIAGRAM: "Empty",
-		USER_HISTORY_EMPTY: "History is empty"
+		USER_HISTORY_EMPTY: "History is empty",
 			
 		
 		SELECTED_OPTION: 'Selected option: '
@@ -228,8 +231,13 @@ app.config(function($translateProvider) {
 		CHANGE_SIZE:'Змінити розмір',
 		PAY_DESCK:'Каса',
 		CUP_BOARD:'Стелаж',
+		
+		TARGET:'Вибранй товар',
+		TARGET_NOT_VISITED:'Не вибраний товар',
+		
 		ENTER:'Вхід',
 		WALL:'Стіна',
+		PATH:'Шлях',
 		EDIT:'Змінити',
 		SAVE:'Зберегти',
 		CANCEL:'Відмінити',
@@ -252,9 +260,8 @@ app.config(function($translateProvider) {
 		PREUSER: "Перевірте електронну скриньку",
 		CONFIRM_DELETE: "Підтвердіть видалення:",
 		NO_DIAGRAM: "Порожньо",
-		USER_HISTORY_EMPTY: "Історія порожня"
-		NONE: "Нічого"
-		
+		USER_HISTORY_EMPTY: "Історія порожня",
+		NONE: "Нічого",
 		SELECTED_OPTION: 'Вибрана опція: '
 	});
 	$translateProvider.preferredLanguage(lang);
@@ -395,7 +402,6 @@ function apsUploadFileLink(scope, element, attrs) {
   }
 
   input.on('change', function(e) {
-    alert(e.target.result);
     var files = e.target.files;
     if (files[0]) {
       scope.fileName = files[0].name;

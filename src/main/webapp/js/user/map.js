@@ -625,7 +625,7 @@ var lang;
 		    }
 		    
 		    function start() {
-		        game = new Game(document.querySelector('canvas'), $scope.config);
+		        game = new Game(document.querySelector('#canvas'), $scope.config);
 		    };
 
 		    $scope.clickOnSelect = function (mId) {
@@ -1094,7 +1094,7 @@ var lang;
 		    }
 
 		    $scope.openMap = function () {
-		            game = new Game(document.querySelector('canvas'), $scope.config);
+		            game = new Game(document.querySelector('#canvas'), $scope.config);
 		    }
 		    
 		    function wait(ms) {
