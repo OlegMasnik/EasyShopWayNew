@@ -579,10 +579,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
             var sendData = $.param({
                 type: 'setProducts',
-                data: JSON.stringify(data),
-                name_en: $scope.name_en,
-                name_uk: $scope.name_uk,
-                cupboardId: item.id
+                cupboardId: item.id,
+                name_en: $scope.item.name_en,
+                name_uk: $scope.item.name_uk,
+                data: JSON.stringify(data)
             });
             //console.log($scope.cupboardCells);
             //console.log(data);

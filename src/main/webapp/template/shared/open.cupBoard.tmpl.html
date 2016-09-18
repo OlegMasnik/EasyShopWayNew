@@ -34,12 +34,13 @@ tr td:last-child {
 </div>
 </md-toolbar> <md-dialog-content>
 <div class="md-dialog-content">
+	<h1>{{cupboardCells.length}}</h1>
 
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr ng-repeat="row in item.board_count | range">
 			<td ng-repeat="cell in item.values"><img width="100" height="100"
 				src="{{cupboardCells[row * item.values.length + $index].img}}"
-				title="{{cupboardCells[row * item.values.length + $index].name_en}}"></td>
+				title="{{cupboardCells[row * item.values.length + $index].name_en}}"><p>{{cupboardCells[row * item.values.length + $index].name_en}}</p></td>
 		</tr>
 	</table>
 

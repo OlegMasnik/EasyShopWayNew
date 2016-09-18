@@ -45,7 +45,7 @@ tr td:last-child {
 			<td ng-repeat="i in item.values">
 			<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}" aria-label="place">
 				<md-option value="">None</md-option> 
-				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option> 
+				<md-option ng-repeat="p in allProducts  | orderBy : 'name_en'" value="{{p}}">{{p.name_en}}</md-option> 
 			</md-select>
 			</td>
 		</tr>
