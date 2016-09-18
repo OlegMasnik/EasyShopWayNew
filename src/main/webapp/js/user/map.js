@@ -281,6 +281,13 @@ var lang;
 			}	
 			self.click = function() {
 			    //console.log($scope.maps);
+				
+				if($scope.items.length > 0){
+					console.log('update');
+					targetsCopy = undefined;
+					$scope.items = [];
+					update();
+				}
 			    $scope.getMapByid($scope.maps);
 			    
 			    self.isDisabled = false;

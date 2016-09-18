@@ -5,19 +5,19 @@ table {
 
 tr td {
 	background: url('images/cupboard/p2.jpg') 100% 100% no-repeat;
-	background-size: cover;
+	background-size: 100% 100%;
 	height:100px; 
 	weigth:150px; 
 }
 
 tr td:first-child {
 	background: url('images/cupboard/p1.jpg') 100% 100% no-repeat;
-	background-size: cover;
+	background-size: 100% 100%;
 }
 
 tr td:last-child {
 	background: url('images/cupboard/p3.jpg') 100% 100% no-repeat;
-	background-size: cover;
+	background-size: 100% 100%;
 }
 </style>
 <md-dialog id="cupboardEdit">
@@ -33,9 +33,9 @@ tr td:last-child {
 	<md-dialog-content>
 	<div class="md-dialog-content">
 		<div layout="row">
-			<md-input-container flex> <label>{{'ENGLISH_DESCRIPTION' | translate}}</label> <input type="text" ng-model="name_en"
+			<md-input-container flex> <label>{{'ENGLISH_DESCRIPTION' | translate}}</label> <input type="text" ng-model="item.name_en"
 			ng-pattern="/^[a-zA-Z][a-zA-Z0-9-'\s%#\\]+$/"> </md-input-container>
-			<md-input-container flex> <label>{{'UKRAINE_DESCRIPTION' | translate}}</label> <input type="text" ng-model="name_uk"
+			<md-input-container flex> <label>{{'UKRAINE_DESCRIPTION' | translate}}</label> <input type="text" ng-model="item.name_uk"
 			ng-pattern="/^[\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u049\u0404\u04541a-zA-Z][a-zA-Z\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u0491\u0404\u04541\s0-9-'%#\\]+$/">
 			</md-input-container>
 		</div>
