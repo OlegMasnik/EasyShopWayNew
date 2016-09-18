@@ -63,7 +63,7 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
-                    <md-switch ng-model="themeSwitch" ng-change="onChange(themeSwitch)" label="Dark theme: " ng-true-value="'{{ 'ENABLED' | translate }}'" ng-false-value="'{{ 'DISABLED' | translate }}'" aria-label="Switch 1">{{ 'DARK_THEME' | translate }}: {{ message }} </md-switch>
+                   {{ 'DARK_THEME' | translate }}: <md-switch ng-model="themeSwitch" ng-change="onChange(themeSwitch)" label="Dark theme: " ng-true-value="'enabled'" ng-false-value="'disabled'" aria-label="Switch 1"> </md-switch>
                 </md-card-content>
             </md-card>
 

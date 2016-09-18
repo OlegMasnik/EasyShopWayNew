@@ -157,11 +157,11 @@ app.config(function($translateProvider) {
 		SELECTED_OPTION: 'Selected option: ',
 		THEME: "Theme",
 		DARK_THEME: "Dark theme",
-		DISABLED: "disabled",
-		ENABLED: "enabled"
+		CHOOSE_FILE: "Choose file",
+		NO_FILE: "No file chosen",
 		
 		SELECTED_OPTION: 'You selected option: ',
-		SELECT_MAP: 'Select a map: '
+		SELECT_MAP: 'Select a map: ',
 		
 		CREATE_PRODUCT_LIST_NOW:'Create product list now',
 		OR:'Or',
@@ -293,6 +293,11 @@ app.config(function($translateProvider) {
 		
 		SELECTED_OPTION: 'Вибрана опція: ',
 		
+		
+		THEME: "Тема",
+		DARK_THEME: "Темна тема",
+		CHOOSE_FILE: "Вибрати файл",
+		NO_FILE: "Файл не вибрано",
 		CREATE_PRODUCT_LIST_NOW:'Створити список продуктів',
 		OR:'Або',
 		SEE_TUTORIAL:'Переглянути туторіал',
