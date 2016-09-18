@@ -1,3 +1,19 @@
+
+/* font-family: "MuseoSansMedium"; */
+@font-face {
+    font-family: "MuseoSansMedium";
+    src: url("../fonts/MuseoSansMedium/MuseoSansMedium.eot");
+    src: url("../fonts/MuseoSansMedium/MuseoSansMedium.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/MuseoSansMedium/MuseoSansMedium.woff") format("woff"),
+    url("../fonts/MuseoSansMedium/MuseoSansMedium.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+body {
+	font-family: 'MuseoSansMedium', sans-serif; !important;
+}
+
 .toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
     color: white;
 }
@@ -238,8 +254,8 @@ footer {
 }
 
 .profile-img-container {
-	height: 60px;
-	width: 60px;
+	height: 50px;
+	width: 50px;
 	overflow: hidden;
 	border-radius: 50%;
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);

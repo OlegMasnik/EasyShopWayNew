@@ -28,7 +28,7 @@ userHistoryApp.controller("UserHistoryCtrl", ['$scope', '$http',
                                     function (data, status, headers,
                                         config) {
                                         $scope.history = data.lists;
-                                        console.log(data);
+                                        console.log("Load " + $scope.history.products);
                                     }).error(
                                     function (data, status, header,
                                         config) {
@@ -51,7 +51,9 @@ userHistoryApp.controller("UserHistoryCtrl", ['$scope', '$http',
                 function (data, status, headers,
                     config) {
                     $scope.history = data.lists;
-                    console.log(data);
+                    console.log($scope.history);
+                    console.log($scope.history.length);
+                    
                 }).error(
                 function (data, status, header,
                     config) {

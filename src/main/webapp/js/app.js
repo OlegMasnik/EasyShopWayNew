@@ -137,6 +137,9 @@ app.config(function($translateProvider) {
 		NONE: "None"
 			
 		CONFIRM_DELETE: "CONFIRM DELETE:",
+		NO_DIAGRAM: "Empty",
+		USER_HISTORY_EMPTY: "History is empty"
+			
 		
 		SELECTED_OPTION: 'Selected option: '
 		
@@ -249,6 +252,7 @@ app.config(function($translateProvider) {
 		PREUSER: "Перевірте електронну скриньку",
 		CONFIRM_DELETE: "Підтвердіть видалення:",
 		NO_DIAGRAM: "Порожньо",
+		USER_HISTORY_EMPTY: "Історія порожня"
 		NONE: "Нічого"
 		
 		SELECTED_OPTION: 'Вибрана опція: '
@@ -313,33 +317,98 @@ app.controller("ThemeCtrl", function($scope, $rootScope, $http) {
 	};
 });
 
-app.controller('InputFileCtrl', function($scope) {})
-app.directive('chooseFile', function() {
-  return {
-    link: function (scope, elem, attrs) {
-      var button = elem.find('button');
-      var input = angular.element(elem[0].querySelector('input#fileInput'));
-      button.bind('click', function() {
-        input[0].click();
-      });
-      input.bind('change', function(e) {
-        scope.$apply(function() {
-          var files = e.target.files;
-          if (files[0]) {
-            scope.fileName = files[0].name;
-          } else {
-            scope.fileName = null;
-          }
-        });
-      });
-    }
+//app.controller('InputFileCtrl', function($scope) {})
+//app.directive('chooseFile', function() {
+//  return {
+//    link: function (scope, elem, attrs) {
+//      var button = elem.find('button');
+//      var input = angular.element(elem[0].querySelector('input#file'));
+//      button.bind('click', function() {
+//        input[0].click();
+//      });
+//      input.bind('change', function(e) {
+//        scope.$apply(function() {
+//          var files = e.target.files;
+//          if (files[0]) {
+//            scope.fileName = files[0].name;
+//          } else {
+//            scope.fileName = null;
+//          }
+//        });
+//      });
+//    }
+//  };
+//});
+
+//$(document).ready(function() {
+//	$('input[type="file"]').ajaxfileupload({
+//		'action' 		: 'cabinet/image-upload',
+//		'onComplete' 	: function(response) {
+//			
+//						},
+//		'onStart' 		: function() {
+//			
+//						}
+//		});
+//	});
+//
+//	function readURL() {
+//		var input = $("body").getElementById("file");
+//		
+//		if (input.files && input.files[0]) {
+//			var reader = new FileReader();
+//	
+//			reader.onload = function (e) {
+//			$('#blah')
+//				.attr('src', e.target.result)
+//				.width(150)
+//				.height(200);
+//			};
+//	
+//			reader.readAsDataURL(input.files[0]);
+//		}
+//	}
+	
+	
+app.directive('apsUploadFile', apsUploadFile);
+
+function apsUploadFile() {
+  var directive = {
+    restrict: 'E',
+    link: apsUploadFileLink
   };
-});
+  return directive;
+}
+
+function apsUploadFileLink(scope, element, attrs) {
+  var input = $(element[0].querySelector('#file'));
+  var button = $(element[0].querySelector('#uploadButton'));
+  var textInput = $(element[0].querySelector('#textInput'));
+
+  if (input.length && button.length && textInput.length) {
+    button.click(function(e) {
+      input.click();
+    });
+    textInput.click(function(e) {
+      input.click();
+    });
+  }
+
+  input.on('change', function(e) {
+    alert(e.target.result);
+    var files = e.target.files;
+    if (files[0]) {
+      scope.fileName = files[0].name;
+    } else {
+      scope.fileName = null;
+    }
+    scope.$apply();
+  });
+}
 
 app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
 //	$scope.theme = 'default';
-	
 	var config = {
 			headers : {
 				'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
@@ -675,8 +744,34 @@ app
 						'$mdToast',
 						function($scope, $http, $route, $mdToast) {
 							$scope.changePass = function() {
+								console.log($('#oldPass').val());
+								if ($('#oldPass').val() == undefined) {
 
-								if ($('#newPass').valid()
+									var data = $.param({
+										newPass : $scope.user.newPass
+									});
+
+									var config = {
+										headers : {
+											'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+										}
+									}
+
+									$http.post('/EasyShopWayNew/pass', data,
+											config).success(
+											function(data, status, headers,
+													config) {
+												showToast($mdToast, $scope,
+														data.msg);
+											}).error(
+											function(data, status, header,
+													config) {
+												showToast($mdToast, $scope,
+														"Changing failed");
+											});
+								
+									
+								} else {if ($('#newPass').valid()
 										&& $('#oldPass').valid()) {
 									var data = $.param({
 										oldPass : $scope.user.oldPass,
@@ -701,7 +796,7 @@ app
 												showToast($mdToast, $scope,
 														"Changing failed");
 											});
-								}
+								}}
 							}
 
 							$scope.cancel = function() {
@@ -727,17 +822,36 @@ function DialogController($scope, $mdDialog) {
 app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
 		function($scope, $http, $mdToast, $route) {
 			$scope.status = "Validation success";
+			
+			$scope.sendImgAj = function () {
+				var formData = new FormData();
+				var fileInputElement = document.getElementById("file");
+				formData.append("userfile", fileInputElement.files[0]);
+				
+				console.log(fileInputElement.files[0]);
+				var request = new XMLHttpRequest();
+				request.open("POST", "http://localhost:8080/EasyShopWayNew/cabinet/image-upload");
+				request.send(formData);
+			}
+
 
 			$scope.sendImg = function() {
 
 				var file = document.getElementById('file');
 
 				var ext = file.value.match(/\.([^\.]+)$/)[1];
+				
+				console.log(ext);
+				
 				switch (ext) {
 				case 'jpg':
 				case 'bmp':
 				case 'png':
 				case 'gif':
+				case 'JPG':
+				case 'BMP':
+				case 'PNG':
+				case 'GIF':
 					showToast($mdToast, $scope, "File type is allowed");
 					break;
 				default:

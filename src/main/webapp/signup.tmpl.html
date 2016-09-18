@@ -1,12 +1,11 @@
 <script src="js/jquery.validate.min.js"></script>
 <md-dialog aria-label="Registration" ng-controller="SignUpCtrl">
     <md-toolbar layout="row">
-        <div class="md-toolbar-tools">
-            <h2>{{ 'REGISTRATION' | translate }}</h2>
-            <span flex></span>
-        </div>
-        <span flex></span>
-		<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+    <h2 class="md-toolbar-tools">
+	<span>{{ 'REGISTRATION' | translate }}</span>
+	<span flex></span>
+	<md-button class="md-icon-button" ng-click="cancel()">&#10006;</md-button>
+            </h2>
     </md-toolbar>
     <md-dialog-content>
         <div layout="column" ng-cloak>

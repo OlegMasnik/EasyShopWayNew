@@ -102,9 +102,16 @@ function DemoCtrl($timeout, $q, $log, $scope, $http) {
      * remote dataservice call. 
      */
     function querySearch(query) {
+    	
+    	console.log(query);
+    	
         var results = query ? self.states
             .filter(createFilterFor(query)) : self.states,
             deferred;
+            
+            console.log(results);
+            
+            
         if (self.simulateQuery) {
             deferred = $q.defer();
             $timeout(function () {

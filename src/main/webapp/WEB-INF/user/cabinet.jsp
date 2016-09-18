@@ -30,7 +30,7 @@
                         <a href="#/">
                             <div class="cab-user-logo md-primary" layot="row" layout-padding>
 
-                                <img src="${user.image }" alt="" class="profile-img">
+                                <img src='${ user.image == "" ? "images/admin.png" : user.image}' alt="" class="profile-img">
 
                                 <div>
                                     <c:out value="${ user.firstName}"></c:out> 

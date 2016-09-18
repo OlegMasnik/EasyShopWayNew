@@ -17,7 +17,7 @@
 
 
                 <md-input-container>
-                    <md-select style="color: white; !important " ng-model="language" aria-label=" ">
+                    <md-select ng-model="language" aria-label=" ">
                         <md-option ng-model="uk" value="uk" ng-click='changeLang(uk)'>Українська</md-option>
                         <md-option ng-model="en" value="en" ng-click='changeLang(en)'>English</md-option>
                     </md-select>
@@ -32,14 +32,16 @@
                     <c:otherwise>
                         <md-menu md-position-mode="target-right target">
                         	<div class="profile-img-container">
-                            <img ng-click="$mdOpenMenu($event)" ng-src='${ user.image == "" ? "images/wall-material.png" : user.image}' class="head-profile-img" alt="Contact">
+                            <img ng-click="$mdOpenMenu($event)" ng-src='${ user.image == "" ? "images/admin.png" : user.image}' class="head-profile-img" alt="Contact">
                             </div>
-                            <md-menu-content>
+                            <md-menu-content width="3">
                                 <md-menu-item>
                                     <md-button ng-click="do()" href="/EasyShopWayNew/cabinet#/">
-                                        <c:out value="${user.firstName } ${user.lastName }"></c:out>
+<%--                                         <c:out value="${user.firstName } ${user.lastName }"></c:out> --%>
+									{{ 'PROFILE' | translate }}
                                     </md-button>
                                 </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
                                 <md-menu-item>
 
                                     <md-button ng-click="do()" href="/EasyShopWayNew/logout">
