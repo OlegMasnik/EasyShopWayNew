@@ -53,6 +53,9 @@ public class SearchServlet extends HttpServlet {
 			System.out.println(mapId);
 
 			List<ProductInformation> products = ProductInformationService.getAllProductByMapId(mapId);
+			for(int i = 0; i < products.size(); i++){
+				products.get(i).setCoordinates();
+			}
 			System.out.println("******************/******************");
 			System.out.println(products);
 
@@ -109,9 +112,14 @@ public class SearchServlet extends HttpServlet {
 				List<List<Long>> products = (List<List<Long>>)  jsonObject.get("products");
 				NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products, cupboards);
 				n.start(enter);
-				JSONArray arr = new JSONArray();
-				arr.addAll(n.path);
-				response.getWriter().write(arr.toJSONString());
+				JSONArray path = new JSONArray();
+				JSONArray visited = new JSONArray();
+				path.addAll(n.path);
+				visited.addAll(n.visited);
+				JSONObject obj = new JSONObject();
+				obj.put("path", path);
+				obj.put("visited", visited);
+				response.getWriter().write(obj.toJSONString());
 				
 			} catch (ParseException e) {
 				e.printStackTrace();

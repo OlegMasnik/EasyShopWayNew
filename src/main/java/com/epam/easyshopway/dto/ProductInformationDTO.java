@@ -9,7 +9,7 @@ import com.epam.easyshopway.dao.transformer.Transformer;
 import com.epam.easyshopway.model.ProductInformation;
 
 public class ProductInformationDTO extends SuperDTO {
-	private final String SELECT_ALL_PRODUCTS = "SELECT DISTINCT product.id, product.name_en, product.name_uk, product_type.img "
+	private final String SELECT_ALL_PRODUCTS = "SELECT DISTINCT product.id, product.name_en, product.name_uk, product_type.img, placement.map_id "
 			+ "FROM cupboard_placement INNER JOIN cupboard " + "ON cupboard_placement.cupboard_id = cupboard.id "
 			+ "INNER JOIN placement ON cupboard_placement.placement_id = placement.id "
 			+ "INNER JOIN product_placement ON product_placement.cupboard_id = cupboard.id "

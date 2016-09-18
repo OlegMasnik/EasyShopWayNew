@@ -34,7 +34,7 @@ public class ProductInformation {
 		this.productNameEn = productNameEn;
 		this.image = image;
 		this.mapId = mapId;
-		setCoordinates();
+//		setCoordinates();
 
 	}
 
