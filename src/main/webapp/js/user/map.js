@@ -4,11 +4,238 @@ var lang;
 
 (function() {
 	lang = $('#lang').val() || 'en';
-	//console.log(lang);
+	console.log(lang);
 })();
 
 		var serApp = angular
 				.module('SearchApp', [ 'ngMaterial', 'ngMessages', 'pascalprecht.translate' ]);
+		
+		
+		serApp.config(function($translateProvider) {
+			$translateProvider.translations('en', {
+				PROFILE:'Profile',
+				GENERAL_INFORMATION:'General Information',
+				UPDATE_YOUR_PHOTO:'Update Your Photo',
+				CHANGE_PASSWORD:'Change Password',
+				OLD_PASSWORD:'Old password',
+				NEW_PASSWORD:'New password',
+				LANGUAGE:'Language',
+				
+				SELECT_MAP:'Select map',
+				SEARCH:'Search',
+				NO_MAPS_MATCHING:'No maps matching',
+				WERE_FOUND:'were found',
+				
+				
+				
+				
+				HEADLINE : 'Hello there, This is my awesome app!',
+				INTRO_TEXT : 'And it has i18n support!',
+				ERROR_PAGE_NOT_FOUND : '404 OH, TROUBLE...',
+
+				REGISTRATION : 'SignUp',
+				FIRST_NAME : 'First name',
+				LAST_NAME : 'Last name',
+				EMAIL : 'Email',
+				PASSWORD : 'Password',
+				SUBMIT : 'Submit',
+				SIGN_UP_WITH_SN : 'Or sign up with',
+				LOGIN : 'LogIn',
+				LOGIN_WITH_SN : 'Or login with',
+				FOGOT_PASS : 'Forgot Password',
+				LOGOUT:'LogOut',
+				
+				ERROR_CONFIRMATION_EMAIL:'Error confirmation email',
+				SUCCESS_CONF_EMAIL:'Successful confirmation email',
+				
+				RESET_PASS:'Reset password',
+				NEW_PASS:'New password',
+				REPEAT_PASS: 'Repeat password',
+				
+				INVALID_EMAIL:'Invalid email',
+				EMAIL_DOES_NOT_EXIST:"This email does not exist",
+				PASSWORDS_DONT_MATCH:'Passwords do not match',
+				PASSWORDS_INVALID:'Passwords is invalid',
+				CHECK_EMAIL:'Please check your email',
+				
+				USER_CABINET_STATISTIC:'Statistic',
+				USER_CABINET_HISTORY:'History',
+				
+				ADMIN_CABINET_MAP:'Map',
+				ADMIN_CABINET_USERS:'Users',
+				ADMIN_CABINET_PRODUCTS:'Products',
+				ADMIN_CABINET_STATISTIC:'Statistic',
+				
+				DATE:'Date',
+				TIME:'Time',
+				FROM:'From',
+				TO:'To',
+				SHOW:'Show',
+				
+				SMART_SEARCH:'Smart search',
+				SEARCH:'Search',
+				OPTION:'Option',
+				COLUMN:'Column',
+				
+				PRODUCT_TYPES:'Products type',
+				PRODUCTS:'Products',
+				PRODUCT_TYPE:'Product type',
+				PRODUCT:'Product',
+				EDIT_TYPE:'Edit type',
+				IMAGE:'Image',
+				ADD_NEW:'Add new',
+				WIDTH:'Width',
+				HEIGHT:'Height',
+				CHANGE_SIZE:'Change size',
+				PAY_DESCK:'Paydesck',
+				CUP_BOARD:'Cupboard',
+				
+				CREATE_NEW_CUPBOARD:'Create new cupboard',
+				ENGLISH_DESCRIPTION:'English description',
+				UKRAINE_DESCRIPTION:'Ukrainian description',
+				BOARD_COUNT:'Board count',
+				EDIT_CUPBOARD:'Edit cupboard',
+				FILL_CUPBOARD:'Fill cupboard',
+				ELEMENTS:'Map components',
+				EDIT_CUPBOARD_MSG:'Choose cupboard on map',
+				
+				CREATE_NEW_MAP:'Create new map',
+				
+				ENTER:'Enter',
+				WALL:'Wall',
+				EDIT:'Edit',
+				SAVE:'Save',
+				CANCEL:'Cancel',
+				DELETE:'Delete',
+				CLEAR:'Clear',
+				CHOOSE_IMAGE:'Choose image',
+				
+				ENGLISH_NAME:'English name',
+				UKRAINE_NAME:'Ukrainian name',
+				
+				EMAIL_EXIST: 'This email already exists',
+				UNCORRECT_PASSWORD: 'Ucorrect password',
+				
+				SUCCESS_DELETE: 'successfull deleted',
+				FAILED_DELETE: 'fail deleting',
+				
+				DELETE_MAP: 'Would you like to delete this map?',
+				YES: 'Yes',
+				No: 'No',
+				PREUSER: "Check your email"
+			
+			
+			}).translations('uk', {
+				PROFILE:'Профіль',
+				GENERAL_INFORMATION:'Загальна інформація',
+				UPDATE_YOUR_PHOTO:'Оновити фото',
+				CHANGE_PASSWORD:'Змінити пароль',
+				OLD_PASSWORD:'Старий пароль',
+				NEW_PASSWORD:'Новий пароль',
+				LANGUAGE:'Мова',
+				
+				SELECT_MAP:'Вибрати магазин',
+				SEARCH:'Пошук',
+				NO_MAPS_MATCHING:'Співпадіння з',
+				WERE_FOUND:'не знайдено',
+				
+				HEADLINE : 'Доброго вам здоров`ячка, це наша прога!',
+				INTRO_TEXT : 'І є підтримка і18н!',
+				ERROR_PAGE_NOT_FOUND : '404 ОЙ, ДІДЬКО...',
+
+				REGISTRATION : 'Реєстрація',
+				FIRST_NAME : "Ім'я",
+				LAST_NAME : 'Прізвище',
+				EMAIL : 'Електронна пошта',
+				PASSWORD : 'Пароль',
+				SUBMIT : 'Відправити',
+				SIGN_UP_WITH_SN : 'Або зареєструйся з допомогою',
+				LOGIN : 'Вхід',
+				LOGIN_WITH_SN : 'Або увійти з допомогою',
+				FOGOT_PASS : 'Нагадати пароль',
+				LOGOUT:'Вихід',
+				
+				ERROR_CONFIRMATION_EMAIL:'Помилка підтвердження електронної пошти',
+				SUCCESS_CONF_EMAIL:'Успішне підтвердження через електронну пошту',
+				
+				RESET_PASS:'Відновлення паролю',
+				NEW_PASS:'Новий пароль',
+				REPEAT_PASS:'Повторіть пароль',
+				
+				INVALID_EMAIL:'Невірна електрона пошта',
+				EMAIL_DOES_NOT_EXIST:'Електронна пошта не зареєстрована в системі',
+				PASSWORDS_DONT_MATCH:'Паролі не співпадають',
+				PASSWORDS_INVALID:'Некоректний пароль',
+				CHECK_EMAIL:'Будь ласка, перевірте свою електронну пошту',
+				
+				USER_CABINET_STATISTIC:'Статистика',
+				USER_CABINET_HISTORY:'Історія',
+				
+				ADMIN_CABINET_MAP:'Карта',
+				ADMIN_CABINET_USERS:'Користувачі',
+				ADMIN_CABINET_PRODUCTS:'Товари',
+				ADMIN_CABINET_STATISTIC:'Статистика',
+				
+				DATE:'Дата',
+				TIME:'Час',
+				FROM:'Від',
+				TO:'До',
+				SHOW:'Показати',
+				
+				SMART_SEARCH:'Розумний пошук',
+				SEARCH:'Пошук',
+				OPTION:'Опції',
+				PRODUCT_TYPES:'Типи товарів',
+				PRODUCTS:'Товари',
+				PRODUCT_TYPE:'Тип товару',
+				PRODUCT:'Товар',
+				EDIT_TYPE:'Редагувати тип',
+				COLUMN:'Колонки',
+				
+				CREATE_NEW_CUPBOARD:'Створити новий стелаж',
+				ENGLISH_DESCRIPTION:'Опис англійською',
+				UKRAINE_DESCRIPTION:'Опис українською',
+				BOARD_COUNT:'Кількість полиць',
+				EDIT_CUPBOARD:'Редагувати стелаж',
+				FILL_CUPBOARD:'Наповнити стелаж',
+				ELEMENTS:'Елементи мапи',
+				EDIT_CUPBOARD_MSG:'Виберіть стелаж на мапі',
+				
+				CREATE_NEW_MAP:'Створити нову карту',
+				
+				IMAGE:'Картинка',
+				ADD_NEW:'Додати нову',
+				WIDTH:'Ширина',
+				HEIGHT:'Довжина',
+				CHANGE_SIZE:'Змінити розмір',
+				PAY_DESCK:'Каса',
+				CUP_BOARD:'Стелаж',
+				ENTER:'Вхід',
+				WALL:'Стіна',
+				EDIT:'Змінити',
+				SAVE:'Зберегти',
+				CANCEL:'Відмінити',
+				DELETE:'Видалити',
+				CLEAR:'Очистити',
+				CHOOSE_IMAGE:'Обрати зображення',
+				
+				ENGLISH_NAME:'Назва англійською',
+				UKRAINE_NAME:'Назва українською',
+				
+				EMAIL_EXIST: 'Така електрона пошта вже використовуєься',
+				UNCORRECT_PASSWORD: 'Невірний пароль',
+				
+				SUCCESS_DELETE: 'успішно видалений',
+				FAILED_DELETE: 'помилка видалення',
+				
+				DELETE_MAP: 'Ви бажаєте видалити дану карту ?',
+				YES: 'Так',
+				No: 'Ні',
+				PREUSER: "Перевірте електронну скриньку"
+			});
+			$translateProvider.preferredLanguage(lang);
+		});
+
 		
 		serApp.filter('range', function () {
 		    return function (n) {
@@ -1050,6 +1277,27 @@ var lang;
 		
 
 		serApp.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
+			
+			$scope.language = lang;
+		    $scope.en = 'en';
+		    $scope.uk = 'uk';
+		    
+		    $scope.changeLang = function(lang){
+		    	$http.put('/EasyShopWayNew/home?lang=' + lang)
+		        .success(function (data, status, headers) {
+		            $scope.language = lang;
+		            console.log(lang + "   chage fsfd")
+		            $translate.use(lang);
+		            if ((window.location.href).indexOf("statistic") !== -1){
+		            	$route.reload();
+		            }
+		        })
+		        .error(function (data, status, header, config) {
+		            console.log('failed');
+		        });
+			}
+			
+			
 			$scope.status = '  ';
 			$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 			$scope.showLogInForm = function(ev) {

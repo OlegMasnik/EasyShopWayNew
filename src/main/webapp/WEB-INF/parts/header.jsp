@@ -32,7 +32,7 @@
                     <c:otherwise>
                         <md-menu md-position-mode="target-right target">
                         	<div class="profile-img-container">
-                            <img ng-click="$mdOpenMenu($event)" ng-src="images/wall-material.png" class="head-profile-img" alt="Contact">
+                            <img ng-click="$mdOpenMenu($event)" ng-src='${ user.image == "" ? "images/wall-material.png" : user.image}' class="head-profile-img" alt="Contact">
                             </div>
                             <md-menu-content>
                                 <md-menu-item>
