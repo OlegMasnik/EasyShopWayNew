@@ -247,12 +247,14 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         break;
                     case 'payDesk':
                         game.paint.value = !($scope.paydesks.indexOf(cell) != -1);
-                        if ($scope.paydesks.indexOf(cell) == -1) {
-                            $scope.paydesks.add(cell);
-                        } else {
-                            $scope.paydesks.removeUndefined(cell);
+                        if (!(game.cupBoard.map[cell]) && !($scope.walls.indexOf(cell) != -1) && !(game.enter == cell)){
+                        	if ($scope.paydesks.indexOf(cell) == -1) {
+                        		$scope.paydesks.add(cell);
+                        	} else {
+                        		$scope.paydesks.removeUndefined(cell);
+                        	}
+                        	game.draw();
                         }
-                        game.draw();
                         break;
                     case 'cupBoard':
                         game.paint.value = true;
@@ -295,10 +297,12 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         break;
                     case 'wall':
                         game.paint.value = !($scope.walls.indexOf(cell) != -1);
-                        if ($scope.walls.indexOf(cell) == -1) {
-                            $scope.walls.add(cell);
-                        } else {
-                            $scope.walls.removeUndefined(cell);
+                        if (!(game.cupBoard.map[cell]) && !($scope.paydesks.indexOf(cell) != -1) && !(game.enter == cell)){
+	                        if ($scope.walls.indexOf(cell) == -1) {
+	                            $scope.walls.add(cell);
+	                        } else {
+	                            $scope.walls.removeUndefined(cell);
+	                        }
                         }
                         break;
                     case 'edit':
@@ -479,9 +483,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         return array;
     }
 
-
     function checkCell(i) {
-        return $scope.paydesks.indexOf(i) == -1 && $scope.walls.indexOf(i) == -1 && game.enter != i && !game.cupBoard.map[i];
+        return $scope.paydesks.indexOf(i) == -1 
+        	&& $scope.walls.indexOf(i) == -1 
+        	&& game.enter != i && !game.cupBoard.map[i];
     }
 
     $scope.openCupBoard = function (cupBoard) {
@@ -505,9 +510,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             });
     };
 
-
-
-
     function EditCupboardCtrl($scope, $mdDialog, item) {
 
         $scope.item = item;
@@ -517,6 +519,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
         }).then(function mySucces(response) {
             $scope.currentProducts = response.data.data;
+            console.log(response)
+            console.log($scope.currentProducts)
             $scope.cupboardCells = new Array(item.board_count * item.values.length);
             if ($scope.currentProducts.length > 0) {
             	console.log('not empty');
@@ -550,12 +554,14 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $mdDialog.cancel();
         };
         $scope.answer = function () {
-        	while($scope.cupboardCells.indexOf("") != -1)
-        		$scope.cupboardCells.removeUndefined("");
-            $scope.cupboardCells.map(function (e, i) {
-                if (typeof (e) == "string")
-                    $scope.cupboardCells[i] = JSON.parse(e)
-            })
+        	if ($scope.cupboardCells.length > 0){
+	        	while($scope.cupboardCells.indexOf("") != -1)
+	        		$scope.cupboardCells.removeUndefined("");
+	            $scope.cupboardCells.map(function (e, i) {
+	                if (typeof (e) == "string")
+	                    $scope.cupboardCells[i] = JSON.parse(e)
+	            })
+        	}
             console.log($scope.cupboardCells);
             $scope.sendCupboardData();
             $mdDialog.hide();
@@ -579,14 +585,12 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
             var sendData = $.param({
                 type: 'setProducts',
-                data: JSON.stringify(data),
-                name_en: $scope.name_en,
-                name_uk: $scope.name_uk,
-                cupboardId: item.id
+                cupboardId: item.id,
+                name_en: $scope.item.name_en,
+                name_uk: $scope.item.name_uk,
+                data: JSON.stringify(data)
             });
-            //console.log($scope.cupboardCells);
-            //console.log(data);
-//            console.log(sendData);
+            
             $http.post('/EasyShopWayNew/edit_products', sendData, config)
                 .success(function (data, status, headers) {
                     //console.log("success send products")
@@ -616,6 +620,20 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 );
             $mdDialog.hide();
         }
+        
+        $scope.clearCupboard = function () {
+        	$scope.cupboardCells = []
+        }
+        
+        $scope.showCustomToast = function() {
+            $mdToast.show({
+              hideDelay   : 3000,
+              position    : 'top right',
+              controller  : 'ToastCtrl',
+              templateUrl : 'toast-template.html'
+            });
+         }
+        
     }
 
     $scope.createCupBoard = function (values, b_count) {
@@ -859,6 +877,16 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
 
     }
+    
+    $scope.showCustomToast = function() {
+    	console.log("asds");
+        $mdToast.show({
+          hideDelay   : 3000,
+          position    : 'left top',
+          controller  : 'ToastCtrl',
+          templateUrl : 'toast-template.html'
+        });
+      }
 
     $scope.showConfirmDelete = function (ev) {
 
@@ -903,3 +931,24 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         return res;
     };
 });
+
+angular.module('MyApp').controller('ToastCtrl', function($scope, $mdToast, $mdDialog) {
+
+      $scope.closeToast = function() {
+        if (isDlgOpen) return;
+
+        $mdToast
+          .hide()
+          .then(function() {
+            isDlgOpen = false;
+          });
+      };
+
+      $scope.openMoreInfo = function(e) {
+        if ( isDlgOpen ) return;
+        isDlgOpen = true;
+
+     
+      };
+});
+

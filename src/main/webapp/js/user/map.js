@@ -71,6 +71,9 @@ var lang;
 				FROM:'From',
 				TO:'To',
 				SHOW:'Show',
+				DOWNLOAD: "Download",
+				WHAT_ARE_YOU_LOOKING: "What are you loking for?",
+				SELECT_MAP: "Select a map",
 				
 				SMART_SEARCH:'Smart search',
 				SEARCH:'Search',
@@ -122,9 +125,9 @@ var lang;
 				DELETE_MAP: 'Would you like to delete this map?',
 				YES: 'Yes',
 				No: 'No',
-				PREUSER: "Check your email"
+				PREUSER: "Check your email",
 			
-			
+				NO_PRODUCTS: "There are no products here"
 			}).translations('uk', {
 				PROFILE:'Профіль',
 				GENERAL_INFORMATION:'Загальна інформація',
@@ -181,6 +184,9 @@ var lang;
 				FROM:'Від',
 				TO:'До',
 				SHOW:'Показати',
+				DOWNLOAD: "Завантажити",
+				WHAT_ARE_YOU_LOOKING: "Що Ви шукаєте?",
+				SELECT_MAP: "Виберіть мапу",
 				
 				SMART_SEARCH:'Розумний пошук',
 				SEARCH:'Пошук',
@@ -231,7 +237,9 @@ var lang;
 				DELETE_MAP: 'Ви бажаєте видалити дану карту ?',
 				YES: 'Так',
 				No: 'Ні',
-				PREUSER: "Перевірте електронну скриньку"
+				PREUSER: "Перевірте електронну скриньку",
+				
+				NO_PRODUCTS: "Нажаль тут немає продуктів"
 			});
 			$translateProvider.preferredLanguage(lang);
 		});
@@ -268,7 +276,7 @@ var lang;
 		
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
-		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog, $mdToast) {
+		function DemoCtrl($timeout, $q, $log, $scope, $translate, $http, $mdDialog, $mdToast) {
 			var self = this;
 			self.a = 1;
 			self.simulateQuery = false;
@@ -278,7 +286,17 @@ var lang;
 				headers : {
 					'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 				}
-			}	
+			}
+			
+			$http.get('/EasyShopWayNew/searchMaps', config).success(
+					function(data, status, headers, config) {
+						//console.log(data);
+						self.maps = loadAllMaps(data);
+						//console.log(self.maps);
+					}).error(function(data, status, header, config) {
+				//console.log(data);
+			});
+			
 			self.click = function() {
 			    //console.log($scope.maps);
 				
@@ -291,6 +309,8 @@ var lang;
 			    $scope.getMapByid($scope.maps);
 			    
 			    self.isDisabled = false;
+			    
+			    self.states = [];
 			    
 			          var data = $.param({
 			           mapId : $scope.maps
@@ -306,12 +326,13 @@ var lang;
 			 
 			          $http.get('/EasyShopWayNew/searchProducts?' + data, config).success(
 			              function (data, status, headers, config) {
-			                  console.log(data);
+//			                  console.log(data);
+			                  
 			                  self.states = loadAll(data);
-			                  console.log(self.states);
+//			                  console.log(self.states);
 			                  
 			                  if (self.states.length == 0) {
-			                	  showToast("No products \(o_o)/");
+			                	  showToast($translate.instant('NO_PRODUCTS') + " \\(o_o)/");
 			                	  self.isDisabled = true;
 			                  } else {
 			                	  self.isDisabled = false;
@@ -326,17 +347,10 @@ var lang;
 //			    start();
 			   }
 
-			$http.get('/EasyShopWayNew/searchMaps', config).success(
-					function(data, status, headers, config) {
-						//console.log(data);
-						self.maps = loadAllMaps(data);
-						//console.log(self.maps);
-					}).error(function(data, status, header, config) {
-				//console.log(data);
-			});
-
 			function loadAllMaps(data) {
-
+				
+				console.log("Lang " + lang);
+				
 				var maps = data.maps;
 
 				return maps.map(function(it) {
@@ -344,7 +358,7 @@ var lang;
 						value : it.id,
 						name_uk : it.name_uk,
 						name_en : it.name_en,
-						display : it.name_en,
+						display : it["name_" + lang],
 					};
 				});
 			}
@@ -433,8 +447,12 @@ var lang;
 						+ state + " first!");
 			}
 			function querySearch(query) {
+				console.log(query);
 				var results = query ? self.states
 						.filter(createFilterFor(query)) : self.states, deferred;
+						
+	            console.log(results);
+						
 				if (self.simulateQuery) {
 					deferred = $q.defer();
 					$timeout(function() {
@@ -537,7 +555,7 @@ var lang;
 						value : product.id,
 						name_uk : product.name_uk,
 						name_en : product.name_en,
-						display : product.name_en,
+						display : lang == 'uk' ? angular.lowercase(product.name_uk) : angular.lowercase(product.name_en),
 						img : product.img,
 						coordinates : product.coordinates
 					};
@@ -799,7 +817,7 @@ var lang;
 	                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
 	                                if (cell == $scope.cupboards[q].values[w]) {
 	                                    //console.log("You click on: ");
-	                                    //console.log($scope.cupboards[q]);
+	                                    console.log($scope.cupboards[q]);
 	                                    $scope.openCupBoard($scope.cupboards[q]);
 	                                }
 	                            }
@@ -1214,25 +1232,26 @@ var lang;
 
 		    function OpenCupboardCtrl($scope, $mdDialog, item) {
 		        $scope.item = item;
-		        console.log($scope.item);
-//		        $http({
-//		            method: "GET",
-//		            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
-//		        }).then(function mySucces(response) {
-//		            $scope.currentProducts = response.data;
-//		            $scope.cupboardCells = new Array(item.board_count * item.values.length);
-//		            if (typeof ($scope.currentProducts) != "undefined") {
-//		                for (var i = 0; i < $scope.currentProducts.length; i++) {
-//		                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
-//		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
-//		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]].img = getImgByProdId($scope.cupboardCells[$scope.currentProducts[i].place[j]].prodId);
-//		                    }
-//		                }
-//		            }
-//		        }, function myError(response) {
-//		        	console.log('fail')
-//		        	console.log(responce)
-//		        });
+		        $http({
+		            method: "GET",
+		            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
+		        }).then(function mySucces(response) {
+		        	$scope.cupboardCells = new Array(item.board_count * item.values.length);
+		            $scope.currentProducts = response.data.data;
+		            
+		            if (typeof ($scope.currentProducts) != "undefined") {
+		                for (var i = 0; i < $scope.currentProducts.length; i++) {
+		                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
+		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
+		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]].img = getImgByProdId($scope.cupboardCells[$scope.currentProducts[i].place[j]].prodId);
+		                    }
+		                }
+		            }
+		            console.log($scope.cupboardCells);
+		        }, function myError(response) {
+		        	console.log('fail')
+		        	console.log(responce)
+		        });
 		        
 		        $scope.hide = function () {
 		            $mdDialog.hide();
@@ -1292,7 +1311,7 @@ var lang;
 		
 		
 
-		serApp.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
+		serApp.controller('AppCtrl', function($scope, $mdDialog, $translate, $mdMedia, $http) {
 			
 			$scope.language = lang;
 		    $scope.en = 'en';

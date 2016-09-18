@@ -100,19 +100,20 @@ public class AdminProductServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		
 		switch (type) {
-				
 			case "setProducts":{
 				String data = request.getParameter("data");
 				String nameUk = request.getParameter("name_uk");
 				String nameEn = request.getParameter("name_en");
+				
+				System.out.println(nameUk  + " " + nameEn);
 				int cupboardId = Integer.valueOf(request.getParameter("cupboardId"));
+				ProductPlacementService.deleteByCupboardId(cupboardId);
 				try {
 					JSONParser parser = new JSONParser();
 					JSONArray products = (JSONArray) parser.parse(data.toString());
 					System.out.println("Products size = " + products.size());
 					for (int i = 0; i < products.size(); i++){
 						JSONObject product  = (JSONObject)products.get(i);
-						System.out.println(product);
 						int prodId = ((Long) product.get("prodId")).intValue();
 						//cupboardId = ((Long) product.get("cupboardId")).intValue();
 						int place = ((Long) product.get("place")).intValue();
@@ -120,9 +121,7 @@ public class AdminProductServlet extends HttpServlet {
 						productPlacement.setProductId(prodId);
 						productPlacement.setCupboardId(cupboardId);
 						productPlacement.setPlace(place);
-						if (i == 0)
-							ProductPlacementService.deleteByCupboardId(cupboardId);
-						System.out.println(ProductPlacementService.insert(productPlacement));
+						ProductPlacementService.insert(productPlacement);
 					}
 					Cupboard cupboard = CupboardService.getById(cupboardId);
 					cupboard.setDescriptionEn(nameEn);
@@ -137,43 +136,6 @@ public class AdminProductServlet extends HttpServlet {
 	}
 	
 	
-	
-//	In this format !!!!!!!
-//	READ:
-//
-//		[
-//			{prodId: 1,
-//			name_en: asdasd, 
-//			name_uk: asda, 
-//			place: [0, 1, 2]}, 
-//			
-//			{prodId: 2,
-//			name_en: asdasd, 
-//			name_uk: asda, 
-//			place: [0, 1, 2]}, 
-//			
-//			{prodId: 3,
-//			name_en: asdasd, 
-//			name_uk: asda, 
-//			place: [0, 1, 2]}
-//		]	
-//
-//			
-//		WRITE:
-//
-//		data:
-//		[
-//			{prodId: 1,
-//			cupboardId: 1,
-//			places: 1},
-//
-//			{prodId: 2,
-//			cupboardId: 1,
-//			places: 2}
-//			
-//		]
-//	
-
 	public static void main(String[] args) throws ParseException {
 		JSONArray array = new JSONArray();
 		JSONObject object = new JSONObject();

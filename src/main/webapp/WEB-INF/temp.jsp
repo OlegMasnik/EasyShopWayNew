@@ -35,12 +35,12 @@
                         <md-content class="md-padding" layout="column" flex>
                             <md-input-container class="md-block" flex="none">
                                 <label>Map</label>
-                                <md-select ng-change="ctrl.click(map)" ng-click="" placeholder="Select map" ng-model="maps" style="min-width: 200px;">
+                                <md-select ng-change="ctrl.click(map)" md-on-open="ctrl.open()" ng-click="" placeholder='{{ "SELECT_MAP" | translate}}' ng-model="maps" style="min-width: 200px;">
                                     <md-option ng-value="map.value" ng-repeat="map in ctrl.maps">{{map.display}}</md-option>
                                 </md-select>
                             </md-input-container>
                             <form ng-submit="$event.preventDefault()">
-                                <md-autocomplete ng-model="searchModel" ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item, ctrl.searchText)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="What are You looking for?">
+                                <md-autocomplete ng-model="searchModel" ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item, ctrl.searchText)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder='{{ "WHAT_ARE_YOU_LOOKING" | translate}}'>
                                     <md-item-template>
                                         <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
                                     </md-item-template>
@@ -62,7 +62,7 @@
                             </md-content>
                         </md-content>
                     </div>
-                    <md-button ng-click="ctrl.sendOnMap()" style="background-color : #E91E63; color : #fff;">Show</md-button>
+                    <md-button ng-click="ctrl.sendOnMap()" style="background-color : #E91E63; color : #fff;">{{ 'SHOW' | translate }}</md-button>
                 </md-slidenav>
 
 
