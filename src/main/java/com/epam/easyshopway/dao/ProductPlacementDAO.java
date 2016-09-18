@@ -89,8 +89,6 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		statement.setInt(2, mapId);
 		ResultSet rs = statement.executeQuery();
 		list = transformer.fromRStoCollection(rs);
-		System.out.println("*****************************sddsd***************");
-		System.out.println(list);
 		rs.close();
 		statement.close();
 		return list;
