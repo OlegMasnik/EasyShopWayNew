@@ -16,6 +16,8 @@
 
     <div flex ng-controller="UserHistoryCtrl">
         
+        <div ng-show="history.length == 0" layout="column" layout-align="center center">{{ "USER_HISTORY_EMPTY" | translate}}</div>
+        
         <md-card class="product-card" layout="column" ng-repeat="historyItem in history">
         <md-toolbar>
             <md-card-title  layout="column">
@@ -28,10 +30,13 @@
             <md-divider></md-divider>
             <md-card-content layout="column">
                 <md-content class="product-list">
+                	
                     <md-list class="md-dense" flex="">
+               
                         <md-list-item class="md-3-line" ng-repeat="item in historyItem.products">
                             <img ng-src="{{item.img}}" class="md-avatar" alt="{{item.name}}">
                             <div class="md-list-item-text" layout="column">
+                           
                                 <h3>{{ item.name_uk }}</h3>
                                 <h4>{{ item.type_uk }}</h4>
                             </div>

@@ -132,7 +132,9 @@ app.config(function($translateProvider) {
 		DELETE_MAP: 'Would you like to delete this map?',
 		YES: 'Yes',
 		No: 'No',
-		PREUSER: "Check your email"
+		PREUSER: "Check your email",
+			
+		
 	
 	
 	}).translations('uk', {
