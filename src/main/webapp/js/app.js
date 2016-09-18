@@ -154,7 +154,7 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "History is empty",
 			
 		
-		SELECTED_OPTION: 'Selected option: '
+		SELECTED_OPTION: 'You selected option: '
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -273,7 +273,7 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "Історія порожня",
 		NONE: "Нічого",
 		
-		SELECTED_OPTION: 'Вибрана опція: '
+		SELECTED_OPTION: 'Ви вибрали опцію: '
 	});
 	$translateProvider.preferredLanguage(lang);
 });

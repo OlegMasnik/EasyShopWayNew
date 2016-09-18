@@ -300,7 +300,9 @@ var lang;
 					function(data, status, headers, config) {
 						//console.log(data);
 						self.maps = loadAllMaps(data);
-						//console.log(self.maps);
+						$scope.maps = self.maps[0].value;
+						self.click();
+						console.log(self.maps);
 					}).error(function(data, status, header, config) {
 				//console.log(data);
 			});
@@ -460,11 +462,11 @@ var lang;
 			function newState(state) {
 			}
 			function querySearch(query) {
-				console.log(query);
+//				console.log(query);
 				var results = query ? self.states
 						.filter(createFilterFor(query)) : self.states, deferred;
 						
-	            console.log(results);
+//	            console.log(results);
 						
 				if (self.simulateQuery) {
 					deferred = $q.defer();
@@ -484,8 +486,10 @@ var lang;
 			function selectedItemChange(item, text) {
 				console.log('items');
 				console.log($scope.items);
-				self.searchText = "";
-				
+			    self.searchText = "";
+			    var e = jQuery.Event("keyup"); // or keypress/keydown
+			    e.keyCode = 27; // for Esc
+			    $(document).trigger(e);
 				if (item != undefined) {
 					if (find(item) == -1) {
 						item.color = getRandomColor();
@@ -1297,10 +1301,10 @@ var lang;
 		            $rootScope.$$childTail.ctrl.maps.map(function(e, i){
 		            	e.display = e["name_" + lang];
 		            });
-		            $rootScope.$$childTail.ctrl.states.map(function(e, i){
-		            	e.display = angular.lowercase(e["name_" + lang]);
-		            });
-		            console.log($rootScope.$$childTail.ctrl)
+		            if($rootScope.$$childTail.ctrl.states != undefined)
+			            $rootScope.$$childTail.ctrl.states.map(function(e, i){
+			            	e.display = angular.lowercase(e["name_" + lang]);
+			            });
 //		            console.log($rootScope.$$childTail.ctrl.maps)
 		            $translate.use(lang);
 		            if ((window.location.href).indexOf("statistic") !== -1){
