@@ -1297,6 +1297,9 @@ var lang;
 		            $rootScope.$$childTail.ctrl.maps.map(function(e, i){
 		            	e.display = e["name_" + lang];
 		            });
+		            $rootScope.$$childTail.ctrl.states.map(function(e, i){
+		            	e.display = angular.lowercase(e["name_" + lang]);
+		            });
 		            console.log($rootScope.$$childTail.ctrl)
 //		            console.log($rootScope.$$childTail.ctrl.maps)
 		            $translate.use(lang);
