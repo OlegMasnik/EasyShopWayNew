@@ -45,13 +45,18 @@ public class ChangePasswordServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		JSONObject object = new JSONObject();
 		User user = (User) request.getSession().getAttribute("user");
-		String oldPass = MD5Util.md5Custom(request.getParameter("oldPass"));
+		String oldPass = null;
+		System.out.println(request.getParameter("oldPass"));
+		if (request.getParameter("oldPass") != null) {
+			oldPass = MD5Util.md5Custom(request.getParameter("oldPass"));
+		}
+		System.out.println(oldPass);
 		String newPass = MD5Util.md5Custom(request.getParameter("newPass"));
 		String curPass = user.getPassword();
 		
 		Locale locale = new Locale("en".equals(user.getLanguage()) ? "en" : "ua");
 		ResourceBundle bundle = ResourceBundle.getBundle("/diagram_i18n/diagram", locale);
-		if (curPass.equals(oldPass)){
+		if (oldPass == null || curPass.equals(oldPass)){
 			user.setPassword(newPass);
 			int r = UserService.update(user.getId(), user);
 			System.out.println(r);

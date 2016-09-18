@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
     <md-toolbar class="md-primary md-hue-2">
         <div class="md-toolbar-tools">
@@ -124,10 +125,13 @@
                             <div class="cab-category">{{ 'CHANGE_PASSWORD' | translate }}</div>
                         </md-card-title-text>
                     </md-card-title>
+                    
                     <md-card-content>
+                    	<c:if test="${not empty user.password }">
                         <md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px;  margin-top: 8px;">
                             <label>{{ 'OLD_PASSWORD' | translate }}</label>
                             <input id="oldPass" required type="password" name="oldPass" ng-model="user.oldPass" minlength="6" maxlength="25" ng-model="oldPass"> </md-input-container>
+                        </c:if>
                         <md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px; margin-top: 8px;">
                             <label>
                                 {{ 'NEW_PASSWORD' | translate }} </label>
