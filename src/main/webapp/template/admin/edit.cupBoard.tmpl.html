@@ -54,7 +54,7 @@ tr td:last-child {
 		<md-dialog-actions layout="row"> <span flex></span>
 		<div layout="row">
 			<md-button ng-click="clearCupboard()"> {{ 'CLEAR' | translate }}</md-button>
-			<md-button ng-click="showCustomToast()"> {{ 'DELETE' | translate }}</md-button>
+			<md-button ng-click="deleteCupboard(item)"> {{ 'DELETE' | translate }}</md-button>
 			<md-button ng-click="answer()" ng-disabled="cupboardForm.$invalid"> {{ 'SAVE' | translate }} </md-button>
 		</md-dialog-actions>
 	</div>

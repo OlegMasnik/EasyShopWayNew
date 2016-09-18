@@ -6,10 +6,8 @@ var lang;
 	lang = $('#lang').val() || 'en';
 	console.log(lang);
 })();
-
 		var serApp = angular
 				.module('SearchApp', [ 'ngMaterial', 'ngMessages', 'pascalprecht.translate' ]);
-		
 		
 		serApp.config(function($translateProvider) {
 			$translateProvider.translations('en', {
@@ -376,7 +374,7 @@ var lang;
 				console.log(game.enter); // ok
 				console.log($scope.walls) // ok
 				console.log($scope.paydesks) // ok
-				console.log(game.arrayCupboard) // no ok
+				console.log(game.arrayCupboard) // ok
 				console.log(products);
 				
 				startered = true;
@@ -409,6 +407,7 @@ var lang;
 				$http
 				.post('/EasyShopWayNew/saveProductList', send,
 				config).success(function (response, status, headers) {
+					
                     console.log(response);
                     response.path.map(function(e, i){
                     	game.way.map[e] = true;
