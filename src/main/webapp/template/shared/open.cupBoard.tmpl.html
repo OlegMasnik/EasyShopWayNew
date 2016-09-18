@@ -1,14 +1,27 @@
 <style>
 md-dialog .md-dialog-content {
-    padding: 0;
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-    padding-left: 0;
+	padding: 0;
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 0;
 }
 
 table {
 	border: none;
+}
+
+.image {
+   position: relative;
+}
+
+p {
+	color: white;
+   position: absolute;
+   top: 82px;
+   left: 20px;
+   width: 100%;
+   margin: 0 auto;
 }
 
 tr td {
@@ -16,10 +29,6 @@ tr td {
 	background-size: cover;
 }
 
-tr td p{
-	position: relative;
-	z-index: 100;
-}
 
 tr td:first-child {
 	background: url('images/cupboard/p1.jpg') 100% 100% no-repeat;
@@ -39,13 +48,14 @@ tr td:last-child {
 </div>
 </md-toolbar> <md-dialog-content>
 <div class="md-dialog-content">
-	<h1>{{cupboardCells.length}}</h1>
-
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr ng-repeat="row in item.board_count | range">
-			<td ng-repeat="cell in item.values"><img width="100" height="100"
-				src="{{cupboardCells[row * item.values.length + $index].img}}"
-				title="{{cupboardCells[row * item.values.length + $index].name_en}}"><p>{{cupboardCells[row * item.values.length + $index].name_en}}</p></td>
+			<td ng-repeat="cell in item.values"><div class="image">
+					<img width="100" height="100"
+						src="{{cupboardCells[row * item.values.length + $index].img}}"
+						title="{{cupboardCells[row * item.values.length + $index].name_en}}">
+					<p>{{cupboardCells[row * item.values.length + $index].name_en}}</p>
+				</div></td>
 		</tr>
 	</table>
 
