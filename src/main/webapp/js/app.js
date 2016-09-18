@@ -134,11 +134,11 @@ app.config(function($translateProvider) {
 		No: 'No',
 		PREUSER: "Check your email",
 		NO_DIAGRAM: "Empty",
-		NONE: "None"
+		NONE: "None",
 			
 		CONFIRM_DELETE: "CONFIRM DELETE:",
 		NO_DIAGRAM: "Empty",
-		USER_HISTORY_EMPTY: "History is empty"
+		USER_HISTORY_EMPTY: "History is empty",
 			
 		
 		SELECTED_OPTION: 'Selected option: '
@@ -252,8 +252,8 @@ app.config(function($translateProvider) {
 		PREUSER: "Перевірте електронну скриньку",
 		CONFIRM_DELETE: "Підтвердіть видалення:",
 		NO_DIAGRAM: "Порожньо",
-		USER_HISTORY_EMPTY: "Історія порожня"
-		NONE: "Нічого"
+		USER_HISTORY_EMPTY: "Історія порожня",
+		NONE: "Нічого",
 		
 		SELECTED_OPTION: 'Вибрана опція: '
 	});
@@ -395,7 +395,6 @@ function apsUploadFileLink(scope, element, attrs) {
   }
 
   input.on('change', function(e) {
-    alert(e.target.result);
     var files = e.target.files;
     if (files[0]) {
       scope.fileName = files[0].name;
