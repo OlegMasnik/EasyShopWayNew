@@ -47,13 +47,13 @@ public class SearchServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/temp.jsp").forward(request, response);
 		} else if (uri.endsWith("searchProducts")) {
 
-			System.out.println(request.getParameter("mapId"));
 
 			Integer mapId = Integer.valueOf(request.getParameter("mapId"));
 
 			System.out.println(mapId);
 
 			List<ProductInformation> products = ProductInformationService.getAllProductByMapId(mapId);
+			System.out.println("******************/******************");
 			System.out.println(products);
 
 			JSONObject object = new JSONObject();
@@ -96,8 +96,7 @@ public class SearchServlet extends HttpServlet {
 			Integer mapId = null;
 			try {
 				jsonObject = (JSONObject) jsonParser.parse(request.getParameter("data"));
-				System.out.println("jSoObj");
-				System.out.println(jsonObject);
+//				System.out.println(jsonObject);
 				productIds = (List<Long>) jsonObject.get("productIds");
 				mapId = ((Long) jsonObject.get("mapId")).intValue();
 				Integer width = ((Long) jsonObject.get("width")).intValue();
@@ -108,16 +107,6 @@ public class SearchServlet extends HttpServlet {
 				List<Long> paydesks = (List<Long>)  jsonObject.get("paydesks");
 				List<Long> cupboards = (List<Long>)  jsonObject.get("cupboards");
 				List<List<Long>> products = (List<List<Long>>)  jsonObject.get("products");
-				
-//				System.out.println("new");
-//				System.out.println(width);
-//				System.out.println(height);
-//				System.out.println(enter);
-//				System.out.println(walls);
-//				System.out.println(paydesks);
-//				System.out.println(cupboards);
-//				System.out.println(products);
-				
 				NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products, cupboards);
 				n.start(enter);
 				JSONArray arr = new JSONArray();

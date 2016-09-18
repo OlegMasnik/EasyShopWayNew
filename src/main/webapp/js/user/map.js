@@ -72,9 +72,9 @@ var lang;
 			 
 			          $http.get('/EasyShopWayNew/searchProducts?' + data, config).success(
 			              function (data, status, headers, config) {
-			                  //console.log(data);
+			                  console.log(data);
 			                  self.states = loadAll(data);
-			                  //console.log(self.states);
+			                  console.log(self.states);
 			                  
 			                  self.isDisabled = false;
 			                  
@@ -84,7 +84,7 @@ var lang;
 			              self.isDisabled = true;
 			          });
 			    
-			    start();
+//			    start();
 			   }
 
 			$http.get('/EasyShopWayNew/searchMaps', config).success(

@@ -15,7 +15,7 @@ public class ProductInformationDTO extends SuperDTO {
 			+ "INNER JOIN product_placement ON product_placement.cupboard_id = cupboard.id "
 			+ "INNER JOIN product ON product_placement.product_id = product.id "
 			+ "INNER JOIN product_type ON product.product_type_id = product_type.id ";
-	private final String SELECT_ALL_PRODUCTS_BY_MAP_ID = "SELECT DISTINCT product.id, product.name_en, product.name_uk, product_type.img "
+	private final String SELECT_ALL_PRODUCTS_BY_MAP_ID = "SELECT DISTINCT product.id, product.name_en, product.name_uk, product_type.img, placement.map_id "
 			+ "FROM cupboard_placement INNER JOIN cupboard " + "ON cupboard_placement.cupboard_id = cupboard.id "
 			+ "INNER JOIN placement ON cupboard_placement.placement_id = placement.id "
 			+ "INNER JOIN product_placement ON product_placement.cupboard_id = cupboard.id "
