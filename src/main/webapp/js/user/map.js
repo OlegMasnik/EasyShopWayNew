@@ -458,7 +458,7 @@ var lang;
 						item.color = getRandomColor();
 						$scope.items.push(item);
 					}
-					self.searchText = "";
+//					self.searchText = "";
 					$scope.items.map(function(elem, idex){
 //						console.log(elem);
 						elem.coordinates.map(function(e, i){
