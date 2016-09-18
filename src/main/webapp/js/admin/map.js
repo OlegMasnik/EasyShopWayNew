@@ -1,8 +1,9 @@
 // ************************************************* MapCtrl ************************************************* 
+var delCupboard;
+var mapId;
 
 angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope, $http, $mdDialog, $translate) {
 
-    var mapId;
     
     function downloadCanvas(link, canvasId, filename) {
         link.href = document.getElementById(canvasId).toDataURL();
@@ -389,7 +390,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     
     $scope.radioOnClick = function (value, toastMsg) {
         type = value;
-        showToast(toastMsg);
+        showToast($mdToast, $scope, toastMsg);
     }
 
     $scope.openMap = function () {
@@ -398,12 +399,12 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         } else {
             if ($scope.map.weight != $scope.config.width || $scope.map.height != $scope.config.height) {
                 var data = $.param({
-                    type: 'changeSize',
-                    mapId: $scope.map.id,
-                    name_en: $scope.map.name_en,
-                    name_uk: $scope.map.name_uk,
-                    weight: $scope.config.width,
-                    height: $scope.config.height
+	                type: 'changeSize',
+	                mapId: $scope.map.id,
+	                name_en: $scope.map.name_en,
+	                name_uk: $scope.map.name_uk,
+	                weight: $scope.config.width,
+	                height: $scope.config.height
                 });
 
                 var config = {
@@ -491,6 +492,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     $scope.openCupBoard = function (cupBoard) {
         //console.log('before open');
+    	
         $mdDialog.show({
                 controller: EditCupboardCtrl,
                 templateUrl: 'template/admin/edit.cupBoard.tmpl.html',
@@ -512,6 +514,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     function EditCupboardCtrl($scope, $mdDialog, item) {
 
+    	$scope.lang = lang;
+    	
+    	
         $scope.item = item;
 
         $http({
@@ -560,6 +565,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 	            $scope.cupboardCells.map(function (e, i) {
 	                if (typeof (e) == "string")
 	                    $scope.cupboardCells[i] = JSON.parse(e)
+	                    
 	            })
         	}
             console.log($scope.cupboardCells);
@@ -600,7 +606,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
 
         $scope.deleteCupboard = function (item) {
-            //console.log('delete cupboard');
+            console.log('delete cupboard');
             var config = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
@@ -625,20 +631,56 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         	$scope.cupboardCells = []
         }
         
-        $scope.showCustomToast = function() {
-            $mdToast.show({
-              hideDelay   : 3000,
-              position    : 'top right',
-              controller  : 'ToastCtrl',
-              templateUrl : 'toast-template.html'
-            });
-         }
-        
     }
+    
+//    $scope.showCustomToast = function(item) {  //******************
+//    	delCupboard = item;
+//    	console.log(delCupboard);
+//    	$mdToast.show({
+//    		hideDelay   : 6000,
+//    		position    : 'bottom right',
+//    		controller  : 'ToastCtrl',
+//    		templateUrl : 'toast-template.html'
+//    	});
+//    }
+//    
+//    function ToastCtrl($scope, $mdToast, $mdDialog, $http) {
+//
+//   	 var isDlgOpen;
+//   	
+//         $scope.closeToast = function() {
+//           if (isDlgOpen) return;
+//
+//           $mdToast
+//             .hide()
+//             .then(function() {
+//               isDlgOpen = false;
+//             });
+//         };
+//
+//         $scope.openMoreInfo = function(e) {
+//       	  var config = {
+//                     headers: {
+//                         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+//                     }
+//                 }
+//                 $http.delete('/EasyShopWayNew/edit_map?type=cupboard&id=' + delCupboard.id + '&mapId=' + mapId, config)
+//                     .then(
+//                         function (response) {
+//                             initCupBoard(response.data);
+//                             game.draw();
+//                         },
+//                         function (response) {
+//                         }
+//                     );
+//           if ( isDlgOpen ) return;
+//           isDlgOpen = true;
+//
+//        
+//         };
+//   }
 
     $scope.createCupBoard = function (values, b_count) {
-
-        //console.log('before create');
         $mdDialog.show({
                 controller: CreateDialogController,
                 templateUrl: 'template/admin/create.cupBoard.tmpl.html',
@@ -877,51 +919,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
 
     }
-    
-    $scope.showCustomToast = function() {
-    	console.log("asds");
-        $mdToast.show({
-          hideDelay   : 3000,
-          position    : 'left top',
-          controller  : 'ToastCtrl',
-          templateUrl : 'toast-template.html'
-        });
-      }
-
-    $scope.showConfirmDelete = function (ev) {
-
-    };
-
-    function showToast(msg) {
-        var last = {
-            bottom: true,
-            top: false,
-            left: false,
-            right: true
-        };
-        $scope.toastPosition = angular.extend({}, last);
-
-        $scope.getToastPosition = function () {
-            return Object.keys($scope.toastPosition)
-                .filter(function (pos) {
-                    return $scope.toastPosition[pos];
-                })
-                .join(' ');
-        };
-
-        $scope.showSimpleToast = function () {
-            var pinTo = $scope.getToastPosition();
-
-            $mdToast.show(
-                $mdToast.simple()
-                .textContent(msg)
-                .position(pinTo)
-                .hideDelay(4000)
-            );
-        };
-        $scope.showSimpleToast();
-    }
-
 }).filter('range', function () {
     return function (n) {
         var res = [];
@@ -930,25 +927,5 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
         return res;
     };
-});
-
-angular.module('MyApp').controller('ToastCtrl', function($scope, $mdToast, $mdDialog) {
-
-      $scope.closeToast = function() {
-        if (isDlgOpen) return;
-
-        $mdToast
-          .hide()
-          .then(function() {
-            isDlgOpen = false;
-          });
-      };
-
-      $scope.openMoreInfo = function(e) {
-        if ( isDlgOpen ) return;
-        isDlgOpen = true;
-
-     
-      };
 });
 

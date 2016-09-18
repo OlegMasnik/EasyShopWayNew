@@ -133,10 +133,16 @@ app.config(function($translateProvider) {
 		YES: 'Yes',
 		No: 'No',
 		PREUSER: "Check your email",
+		NO_DIAGRAM: "Empty",
+		NONE: "None"
+			
 		CONFIRM_DELETE: "CONFIRM DELETE:",
 		NO_DIAGRAM: "Empty",
 		USER_HISTORY_EMPTY: "History is empty"
 			
+		
+		SELECTED_OPTION: 'Selected option: '
+		
 	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
@@ -247,6 +253,9 @@ app.config(function($translateProvider) {
 		CONFIRM_DELETE: "Підтвердіть видалення:",
 		NO_DIAGRAM: "Порожньо",
 		USER_HISTORY_EMPTY: "Історія порожня"
+		NONE: "Нічого"
+		
+		SELECTED_OPTION: 'Вибрана опція: '
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -476,10 +485,11 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
     $scope.en = 'en';
     $scope.uk = 'uk';
     
-    $scope.changeLang = function(lang){
-    	$http.put('/EasyShopWayNew/home?lang=' + lang)
+    $scope.changeLang = function(l){
+    	$http.put('/EasyShopWayNew/home?lang=' + l)
         .success(function (data, status, headers) {
-            $scope.language = lang;
+            $scope.language = l;
+            lang = l;
             console.log(lang + "   chage fsfd")
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
@@ -852,12 +862,13 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
 			}
 
 		} ]);
+
 function showToast($mdToast, $scope, msg) {
 	var last = {
 		bottom : true,
 		top : false,
-		left : true,
-		right : false
+		left : false,
+		right : true
 	};
 	$scope.toastPosition = angular.extend({}, last);
 
