@@ -56,6 +56,9 @@
 	</md-content> </md-content>
 
 <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page" aria-label="search">
+	<md-tooltip md-direction="top">
+       {{ 'SEARCH' | translate }}   
+    </md-tooltip>
 	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
     </md-button>
     
