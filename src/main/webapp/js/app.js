@@ -134,7 +134,8 @@ app.config(function($translateProvider) {
 		No: 'No',
 		PREUSER: "Check your email",
 		CONFIRM_DELETE: "CONFIRM DELETE:",
-		NO_DIAGRAM: "Empty"
+		NO_DIAGRAM: "Empty",
+		USER_HISTORY_EMPTY: "History is empty"
 			
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -244,7 +245,8 @@ app.config(function($translateProvider) {
 		No: 'Ні',
 		PREUSER: "Перевірте електронну скриньку",
 		CONFIRM_DELETE: "Підтвердіть видалення:",
-		NO_DIAGRAM: "Порожньо"
+		NO_DIAGRAM: "Порожньо",
+		USER_HISTORY_EMPTY: "Історія порожня"
 	});
 	$translateProvider.preferredLanguage(lang);
 });

@@ -16,7 +16,9 @@
 
     <div flex ng-controller="UserHistoryCtrl">
         
-        <div ng-show="history.length == 0" layout="column" layout-align="center center">{{ "USER_HISTORY_EMPTY" | translate}}</div>
+        <md-card ng-show="history.length == 0" layout="column" layout-align="center center">
+        	<md-card-content>{{ "USER_HISTORY_EMPTY" | translate}}</md-card-content>
+        </md-card>
         
         <md-card class="product-card" layout="column" ng-repeat="historyItem in history">
         <md-toolbar>

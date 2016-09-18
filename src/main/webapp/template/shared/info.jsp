@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
-    <md-toolbar class="md-whiteframe-1dp">
+    <md-toolbar class="md-primary md-hue-2">
         <div class="md-toolbar-tools">
             <h2>
 		<span>{{ 'PROFILE' | translate }}</span>
