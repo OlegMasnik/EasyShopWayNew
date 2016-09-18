@@ -26,12 +26,14 @@
     <div layout="column" flex="none">
         <md-card flex md-theme-watch layout-align="center center">
             <md-card-content>
+            	<div>{{noPieDiagram ? ('NO_DIAGRAM' | translate) : "" }}</div>
                 <div flex="100" id="pieContainer"></div>
             </md-card-content>
         </md-card>
         
         <md-card flex md-theme-watch layout-align="center center">
             <md-card-content>
+            	<div>{{noColumnDiagram ? ('NO_DIAGRAM' | translate) : "" }}</div>
                 <div flex="100" id="columnContainer"></div>
             </md-card-content>
         </md-card>

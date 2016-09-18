@@ -133,6 +133,9 @@ app.config(function($translateProvider) {
 		YES: 'Yes',
 		No: 'No',
 		PREUSER: "Check your email",
+		NO_DIAGRAM: "Empty",
+		NONE: "None"
+			
 		CONFIRM_DELETE: "CONFIRM DELETE:",
 		
 		SELECTED_OPTION: 'Selected option: '
@@ -245,6 +248,8 @@ app.config(function($translateProvider) {
 		No: 'Ні',
 		PREUSER: "Перевірте електронну скриньку",
 		CONFIRM_DELETE: "Підтвердіть видалення:",
+		NO_DIAGRAM: "Порожньо",
+		NONE: "Нічого"
 		
 		SELECTED_OPTION: 'Вибрана опція: '
 	});
@@ -411,10 +416,11 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
     $scope.en = 'en';
     $scope.uk = 'uk';
     
-    $scope.changeLang = function(lang){
-    	$http.put('/EasyShopWayNew/home?lang=' + lang)
+    $scope.changeLang = function(l){
+    	$http.put('/EasyShopWayNew/home?lang=' + l)
         .success(function (data, status, headers) {
-            $scope.language = lang;
+            $scope.language = l;
+            lang = l;
             console.log(lang + "   chage fsfd")
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){

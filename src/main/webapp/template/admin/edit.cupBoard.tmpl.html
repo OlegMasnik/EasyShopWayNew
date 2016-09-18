@@ -1,4 +1,4 @@
-<style>
+ <style>
 table {
 	border: none;
 }
@@ -43,9 +43,9 @@ tr td:last-child {
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr ng-repeat="k in item.board_count | range">
 			<td ng-repeat="i in item.values">
-			<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}" aria-label="place">
-				<md-option value="">None</md-option> 
-				<md-option ng-repeat="p in allProducts  | orderBy : 'name_en'" value="{{p}}">{{p.name_en}}</md-option> 
+			<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{lang == 'en' ? cupboardCells[k * item.values.length + $index].name_en : cupboardCells[k * item.values.length + $index].name_uk}}" aria-label="place">
+				<md-option value="">{{'NONE' | translate}}</md-option> 
+				<md-option ng-repeat="p in allProducts  | orderBy : (lang == 'en' ? 'name_en' : 'name_uk')" value="{{p}}">{{lang == 'en' ? p.name_en : p.name_uk}}</md-option> 
 			</md-select>
 			</td>
 		</tr>
