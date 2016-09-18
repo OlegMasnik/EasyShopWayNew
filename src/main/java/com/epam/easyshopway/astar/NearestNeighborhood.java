@@ -11,24 +11,27 @@ public class NearestNeighborhood {
 	private List<Long> cupboards;
 	private Cell start = null;
 	private Cell buffCell;
-	private Set<Long> path = new LinkedHashSet<>();
+	public Set<Long> path = new LinkedHashSet<>();
 	private AStar a;
 
 	private int width;
 	private int height;
 
 	public NearestNeighborhood(int width, int height, List<Long> blocked, List<Long> paydesks,
-			List<List<Long>> products) {
+			List<List<Long>> products, List<Long> cupboards) {
 		super();
 		this.width = width;
 		this.height = height;
 		this.paydesks = paydesks;
 		this.products = products;
+		this.cupboards = cupboards;
+		blocked.addAll(cupboards);
+		blocked.addAll(paydesks);
 		this.a = new AStar(height, width, blocked);
 	}
 
 	private int getBest(List<List<Long>> prod) {
-		System.out.println("Start cell: " + this.start);
+//		System.out.println("Start cell: " + this.start);
 		this.buffCell = null;
 		List<Long> l = null;
 		int index = 0;
@@ -47,10 +50,10 @@ public class NearestNeighborhood {
 		}
 		l.remove(l.size() - 1);
 		this.start = buffCell.parent;
-		this.a.printBefore();
-		this.a.printAfter();
+//		this.a.printBefore();
+//		this.a.printAfter();
 		this.path.addAll(l);
-		System.out.println("Path = " + this.path);
+//		System.out.println("Path = " + this.path);
 		return index;
 	}
 
@@ -58,7 +61,7 @@ public class NearestNeighborhood {
 		int removeIndex;
 		this.start = new Cell(start / width, start % width);
 		while (!this.products.isEmpty()) {
-			System.out.println(this.products);
+//			System.out.println(this.products);
 			removeIndex = getBest(this.products);
 			this.products.remove(removeIndex);
 		}
@@ -67,7 +70,6 @@ public class NearestNeighborhood {
 	}
 
 	private void getBestPaydesk() {
-		System.out.println("");
 		this.buffCell = null;
 		List<Long> l = null;
 		for (int i = 0; i < paydesks.size(); i++) {
@@ -82,8 +84,6 @@ public class NearestNeighborhood {
 		}
 		l.remove(l.size() - 1);
 		this.start = buffCell.parent;
-		this.a.printBefore();
-		this.a.printAfter();
 		this.path.addAll(l);
 		System.out.println("Path = " + this.path);
 	}

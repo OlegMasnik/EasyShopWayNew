@@ -120,6 +120,7 @@ var lang;
 			self.sendOnMap = function() {
 				
 				if(startered){
+					game.way = new Map(game.width * game.height);
 					$scope.items.map(function(e, i){
 						selectedItemChange(e, "");
 					});
@@ -161,7 +162,7 @@ var lang;
 					})
 				});
 				
-				console.log(send);
+//				console.log(send);
 
 				var config = {
 				headers: {
@@ -170,12 +171,16 @@ var lang;
 				}
 				$http
 				.post('/EasyShopWayNew/saveProductList', send,
-				config).success(
-				function (send, status, headers, config) {
-				console.log("Save to db");
-				}).error(
-				function (send, status, header,
-				config) {});
+				config).success(function (response, status, headers) {
+                    console.log(response);
+                    response.map(function(e, i){
+                    	game.way.map[e] = true;
+                    });
+                    console.log("Save to db");
+                    game.draw();
+                })
+                .error(function (data, status, header, config) {
+                });
 			}
 
 			$scope.items = [];

@@ -19,7 +19,11 @@ public class AStar {
 	public int width, height;
 
 	private void setBlocked(long i, long j) {
-		grid[(int) i][(int) j] = null;
+		if (i == end.x && j == end.y) {
+			
+		} else {
+			grid[(int) i][(int) j] = null;
+		}
 	}
 
 	public void setStart(int i) {
@@ -40,11 +44,11 @@ public class AStar {
 				grid[i][j] = new Cell(i, j);
 			}
 		}
-		for (int i = 0; i < this.blocked.size(); ++i) {
-			setBlocked(this.blocked.get(i) / width, this.blocked.get(i) % width);
-		}
+//		for (int i = 0; i < this.blocked.size(); ++i) {
+//			setBlocked(this.blocked.get(i) / width, this.blocked.get(i) % width);
+//		}
 	}
-	
+
 	private void checkAndUpdateCost(Cell current, Cell t, int cost) {
 		if (t == null || closed[t.x][t.y])
 			return;
@@ -160,7 +164,7 @@ public class AStar {
 	public void printAfter() {
 		System.out.println("\nScores for cells: ");
 		for (int i = 0; i < this.height; ++i) {
-			for (int j = 0; j < this.height; ++j) {
+			for (int j = 0; j < this.width; ++j) {
 				if (this.grid[i][j] != null)
 					System.out.printf("%-3d ", this.grid[i][j].finalCost);
 				else
@@ -171,20 +175,20 @@ public class AStar {
 		System.out.println();
 	}
 
-	public void generatePath(){
-		if(this.closed[this.end.x][this.end.y]){
-            Cell current = this.grid[this.end.x][this.end.y];
-            path.add((long) (current.x * this.width + current.y));
-            while(current.parent!=null){
-                path.add(0, (long) (current.parent.x * this.width + current.parent.y));
-                current = current.parent;
-            } 
-       }else{
-    	   System.out.println("No possible path");
-       }
+	public void generatePath() {
+		if (this.closed[this.end.x][this.end.y]) {
+			Cell current = this.grid[this.end.x][this.end.y];
+			path.add((long) (current.x * this.width + current.y));
+			while (current.parent != null) {
+				path.add(0, (long) (current.parent.x * this.width + current.parent.y));
+				current = current.parent;
+			}
+		} else {
+			System.out.println("No possible path");
+		}
 	}
-	
-	private boolean cotains(int[] arr, int value){
+
+	private boolean cotains(int[] arr, int value) {
 		return IntStream.of(arr).anyMatch(x -> x == value);
 	}
 

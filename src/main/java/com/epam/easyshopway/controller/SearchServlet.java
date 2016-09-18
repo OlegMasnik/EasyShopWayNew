@@ -109,34 +109,24 @@ public class SearchServlet extends HttpServlet {
 				List<Long> cupboards = (List<Long>)  jsonObject.get("cupboards");
 				List<List<Long>> products = (List<List<Long>>)  jsonObject.get("products");
 				
-				System.out.println("new");
-				System.out.println(width);
-				System.out.println(height);
-				System.out.println(enter);
-				System.out.println(walls);
-				System.out.println(paydesks);
-				System.out.println(cupboards);
-				System.out.println(products);
+//				System.out.println("new");
+//				System.out.println(width);
+//				System.out.println(height);
+//				System.out.println(enter);
+//				System.out.println(walls);
+//				System.out.println(paydesks);
+//				System.out.println(cupboards);
+//				System.out.println(products);
 				
-				NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products);
+				NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products, cupboards);
 				n.start(enter);
+				JSONArray arr = new JSONArray();
+				arr.addAll(n.path);
+				response.getWriter().write(arr.toJSONString());
 				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			
-			System.out.println("*************/************");
-			System.out.println(mapId);
-			System.out.println(productIds);
-			
-//			width: JSON.stringify(game.weigth),
-//			height: JSON.stringify(game.height),
-//			enter: JSON.stringify(game.enter),
-//			walls: JSON.stringify($scope.walls),
-//			paydesks: JSON.stringify($scope.paydesks),
-//			cupboards: JSON.stringify(game.arrayCupboard),
-//			products: JSON.stringify(products)
-			
 			
 		if (user != null) {
 			ProductList productList = new ProductList(user.getId(), null, null, mapId);
