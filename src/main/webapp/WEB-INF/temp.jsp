@@ -85,8 +85,11 @@
                         </md-card-content>
                     </md-card>
                     
-                    <md-card>
-    					<label layout-align="center center">Умовні позначення:</label>
+                    <md-card layout="column">
+                    	<div layout="row"  layout-align="center center">
+    					<p>{{ 'LEGEND' | translate }}</p>
+    					</div>
+                    	<div layout="row"  layout-align="center center">
     					<ul>
     						<li><img height="20" alt="cupboard" src="images/cupboard/central pat_ capboard.gif"> - {{ 'CUP_BOARD' | translate }}</li>
     						<li><canvas width="20" height="20" style="background-color: #555"></canvas> - {{ 'WALL' | translate }}</li>
@@ -96,6 +99,7 @@
     						<li><img height="20" alt="cupboard" src="images/elements/target_off.png"> - {{ 'TARGET_NOT_VISITED' | translate }}</li>
     						<li><img height="20" alt="cupboard" src="images/path.png"> - {{ 'PATH' | translate }}</li>
     					</ul>
+    					</div>
     				</md-card>
 
                     <md-card flex="none">
