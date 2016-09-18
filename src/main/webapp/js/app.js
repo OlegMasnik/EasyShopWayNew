@@ -381,7 +381,7 @@ function apsUploadFileLink(scope, element, attrs) {
   }
 
   input.on('change', function(e) {
-    alert(e.target.files[0].name);
+    alert(e.target.result);
     var files = e.target.files;
     if (files[0]) {
       scope.fileName = files[0].name;

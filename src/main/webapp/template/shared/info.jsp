@@ -78,13 +78,13 @@
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content layout="column">
-                        			<md-input-container  flex style=" text-align: center; margin-bottom: 0px;  margin-top: 8px;">
-                        				<div class="fileinputs">
-                        				<input type="file"
-                        					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
-                        					ng-model="file" name="file" id="file" class="md-raised file" required aria-label=" "/>
-                        					</div>
-                        			</md-input-container>
+<!--                         			<md-input-container  flex style=" text-align: center; margin-bottom: 0px;  margin-top: 8px;"> -->
+<!--                         				<div class="fileinputs"> -->
+<!--                         				<input type="file" -->
+<!--                         					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp" -->
+<!--                         					ng-model="file" name="file" id="file" class="md-raised file" required aria-label=" "/> -->
+<!--                         					</div> -->
+<!--                         			</md-input-container> -->
                         			
 <!--                           <choose-file layout="row" flex style="margin: 0; padding: 0;"> -->
 <!--                             <input accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp" id="file" type="file" class="ng-hide"> -->
@@ -99,14 +99,14 @@
 <!--                             </div> -->
 <!--                           </choose-file>       -->
 
-<!--                         <aps-upload-file> -->
-<!--                             <input id="file" type="file" class="ng-hide"> -->
-<!--                             <md-button id="uploadButton" class="md-raised md-primary" aria-label="attach_file"> -->
-<!--                                 Choose file </md-button> -->
-<!--                             <md-input-container md-no-float> -->
-<!--                                 <input id="textInput" ng-model="fileName" type="text" placeholder="No file chosen" ng-readonly="true"> -->
-<!--                             </md-input-container> -->
-<!--                         </aps-upload-file> -->
+                        <aps-upload-file>
+                            <input id="file" type="file" class="ng-hide">
+                            <md-button id="uploadButton" class="md-raised md-primary" aria-label="attach_file">
+                                Choose file </md-button>
+                            <md-input-container md-no-float>
+                                <input id="textInput" ng-model="fileName" type="text" placeholder="No file chosen" ng-readonly="true">
+                            </md-input-container>
+                        </aps-upload-file>
 
 
                     </md-card-content>
