@@ -46,38 +46,37 @@
                 </div>
             </div>
             <div id="div1" layout="column" md-whiteframe="2" style="background-color: white;">
-                <md-button id="up_1"><i class="material-icons">keyboard_arrow_up</i></md-button>
+                <md-button id="up_1" style="color: black;"><i class="material-icons">keyboard_arrow_up</i></md-button>
 
                 <div layout="row" flex style="color: black;">
                     <div layout-padding style="font-size: 35px;"  flex layout="row" layout-align="center center">{{ 'STEP_1' | translate }}</div>
                     <div flex layout="row" layout-align="center center">
-                        <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tutorial" src="images/tutorial/1.png"></div>
+                        <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tootorial" src="images/tootorial/1.png"></div>
                     </div>
                 </div>
 
-                <md-button id="down_2"> <i class="material-icons">keyboard_arrow_down</i></md-button>
+                <md-button id="down_2" style="color: black;"> <i class="material-icons">keyboard_arrow_down</i></md-button>
             </div>
             <div id="div2" layout="column" style="background-color: rgba(255, 255, 255, 0.65);">
-                <md-button id="up_2"> <i class="material-icons">keyboard_arrow_up</i></md-button>
+                <md-button id="up_2" style="color: black;"> <i class="material-icons">keyboard_arrow_up</i></md-button>
 
                 <div layout="row" flex style="color: black;">
                 	<div flex layout="row" layout-align="center center">
-                        <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tutorial" src="images/tutorial/2.png"></div>
+                        <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tootorial" src="images/tootorial/2.png"></div>
                     </div>
                     <div layout-padding style="font-size: 35px;"  flex layout="row" layout-align="center center">{{ 'STEP_2' | translate }}</div>
 
                 </div>
-                <md-button id="down_3"> <i class="material-icons">keyboard_arrow_down</i></md-button>
+                <md-button id="down_3" style="color: black;"> <i class="material-icons">keyboard_arrow_down</i></md-button>
             </div>
             <div id="div3" layout="column" md-whiteframe="2" style="background-color: white;">
-                <md-button id="up_3" style="font-size: 30px;"> <i class="material-icons">keyboard_arrow_up</i></md-button>
+                <md-button id="up_3" style="color: black;" style="font-size: 30px;"> <i class="material-icons">keyboard_arrow_up</i></md-button>
                 <div layout="row" flex style="color: black;">
                     <div layout-padding style="font-size: 35px;" flex layout="row" layout-align="center center">
                         {{ 'STEP_3' | translate }}
                     </div>
                     <div flex layout="column" layout-align="center center">
-                        <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tutorial" src="images/tutorial/3.png"></div>
-                    
+                        <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tootorial" src="images/tootorial/3.png"></div>
                     </div>
                    
                 </div>
