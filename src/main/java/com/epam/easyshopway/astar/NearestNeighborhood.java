@@ -1,5 +1,6 @@
 package com.epam.easyshopway.astar;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,10 +9,10 @@ public class NearestNeighborhood {
 
 	private List<List<Long>> products;
 	private List<Long> paydesks;
-	private List<Long> cupboards;
 	private Cell start = null;
 	private Cell buffCell;
 	public Set<Long> path = new LinkedHashSet<>();
+	public List<Integer> visited = new ArrayList<>();
 	private AStar a;
 
 	private int width;
@@ -24,7 +25,6 @@ public class NearestNeighborhood {
 		this.height = height;
 		this.paydesks = paydesks;
 		this.products = products;
-		this.cupboards = cupboards;
 		blocked.addAll(cupboards);
 		blocked.addAll(paydesks);
 		this.a = new AStar(height, width, blocked);
@@ -50,6 +50,7 @@ public class NearestNeighborhood {
 		}
 		l.remove(l.size() - 1);
 		this.start = buffCell.parent;
+		this.visited.add(buffCell.x * width + buffCell.y);
 //		this.a.printBefore();
 //		this.a.printAfter();
 		this.path.addAll(l);
