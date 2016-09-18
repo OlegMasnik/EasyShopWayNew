@@ -54,6 +54,7 @@ public class AdminMapServlet extends HttpServlet {
 		case "map": {
 			Integer mapId = Integer.valueOf(request.getParameter("id"));
 			JSONObject responseJSON = getMap(mapId);
+			System.out.println(responseJSON);
 			response.getWriter().write(responseJSON.toString());
 			request.getSession(false).setAttribute("curMapId", mapId);
 		}
