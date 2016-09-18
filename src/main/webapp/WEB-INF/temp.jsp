@@ -68,7 +68,6 @@
 
                 <md-content layout-margin flex>
 
-                    <md-card>
 
                         <md-card-content layout="row">
                             <div flex="70" layout="row" flex-offset="15">
@@ -85,6 +84,23 @@
                             <a layout="row" layout-align="start start" class="md-button md-primary md-raised" id="download_1">{{ 'DOWNLOAD' | translate }}</a>
                         </md-card-content>
                     </md-card>
+                    
+                    <md-card layout="column">
+                    	<div layout="row"  layout-align="center center">
+    					<p>{{ 'LEGEND' | translate }}</p>
+    					</div>
+                    	<div layout="row"  layout-align="center center">
+    					<ul>
+    						<li><img height="20" alt="cupboard" src="images/cupboard/central pat_ capboard.gif"> - {{ 'CUP_BOARD' | translate }}</li>
+    						<li><canvas width="20" height="20" style="background-color: #555"></canvas> - {{ 'WALL' | translate }}</li>
+    						<li><canvas width="20" height="20" style="background-color: #252"></canvas> - {{ 'ENTER' | translate }}</li>
+    						<li><img height="20" alt="cupboard" src="images/paydesk/payDesk_90x90.gif"> - {{ 'PAY_DESCK' | translate }}</li>
+    						<li><img height="20" alt="cupboard" src="images/elements/target.png"> - {{ 'TARGET' | translate }}</li>
+    						<li><img height="20" alt="cupboard" src="images/elements/target_off.png"> - {{ 'TARGET_NOT_VISITED' | translate }}</li>
+    						<li><img height="20" alt="cupboard" src="images/path.png"> - {{ 'PATH' | translate }}</li>
+    					</ul>
+    					</div>
+    				</md-card>
 
                     <md-card flex="none">
                         <md-card-content>

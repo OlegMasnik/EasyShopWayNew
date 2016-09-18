@@ -101,15 +101,19 @@ var lang;
 				EDIT_CUPBOARD_MSG:'Choose cupboard on map',
 				
 				CREATE_NEW_MAP:'Create new map',
+				LEGEND: "Legend:",
 				
 				ENTER:'Enter',
 				WALL:'Wall',
+				PATH:'Way',
 				EDIT:'Edit',
 				SAVE:'Save',
 				CANCEL:'Cancel',
 				DELETE:'Delete',
 				CLEAR:'Clear',
 				CHOOSE_IMAGE:'Choose image',
+				TARGET: 'Selected product',
+				TARGET_NOT_VISITED: 'Not selected product',
 				
 				ENGLISH_NAME:'English name',
 				UKRAINE_NAME:'Ukrainian name',
@@ -155,6 +159,8 @@ var lang;
 				LOGIN_WITH_SN : 'Або увійти з допомогою',
 				FOGOT_PASS : 'Нагадати пароль',
 				LOGOUT:'Вихід',
+				
+				LEGEND: 'Умовні позначення:',
 				
 				ERROR_CONFIRMATION_EMAIL:'Помилка підтвердження електронної пошти',
 				SUCCESS_CONF_EMAIL:'Успішне підтвердження через електронну пошту',
@@ -222,6 +228,10 @@ var lang;
 				DELETE:'Видалити',
 				CLEAR:'Очистити',
 				CHOOSE_IMAGE:'Обрати зображення',
+				
+				TARGET:'Вибранй товар',
+				TARGET_NOT_VISITED:'Не вибраний товар',
+				PATH:'Шлях',
 				
 				ENGLISH_NAME:'Назва англійською',
 				UKRAINE_NAME:'Назва українською',
@@ -625,7 +635,7 @@ var lang;
 		    }
 		    
 		    function start() {
-		        game = new Game(document.querySelector('canvas'), $scope.config);
+		        game = new Game(document.querySelector('#canvas'), $scope.config);
 		    };
 
 		    $scope.clickOnSelect = function (mId) {
@@ -1094,7 +1104,7 @@ var lang;
 		    }
 
 		    $scope.openMap = function () {
-		            game = new Game(document.querySelector('canvas'), $scope.config);
+		            game = new Game(document.querySelector('#canvas'), $scope.config);
 		    }
 		    
 		    function wait(ms) {
