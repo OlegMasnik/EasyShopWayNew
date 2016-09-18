@@ -90,7 +90,7 @@
     					<p>{{ 'LEGEND' | translate }}</p>
     					</div>
                     	<div layout="row"  layout-align="center center">
-    					<ul>
+    					<ul id="legend">
     						<li><img height="20" alt="cupboard" src="images/cupboard/central pat_ capboard.gif"> - {{ 'CUP_BOARD' | translate }}</li>
     						<li><canvas width="20" height="20" style="background-color: #555"></canvas> - {{ 'WALL' | translate }}</li>
     						<li><canvas width="20" height="20" style="background-color: #252"></canvas> - {{ 'ENTER' | translate }}</li>

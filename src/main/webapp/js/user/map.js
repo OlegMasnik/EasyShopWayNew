@@ -284,7 +284,7 @@ var lang;
 		
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
-		function DemoCtrl($timeout, $q, $log, $scope, $translate, $http, $mdDialog, $mdToast) {
+		function DemoCtrl($timeout, $q, $log, $scope, $rootScope, $translate, $http, $mdDialog, $mdToast) {
 			var self = this;
 			self.a = 1;
 			self.simulateQuery = false;
@@ -400,11 +400,11 @@ var lang;
 //					products.push($scope.items[i].coordinates);
 //				}
 				
-				console.log(game.enter); // ok
-				console.log($scope.walls) // ok
-				console.log($scope.paydesks) // ok
-				console.log(game.arrayCupboard) // ok
-				console.log(products);
+//				console.log(game.enter); // ok
+//				console.log($scope.walls) // ok
+//				console.log($scope.paydesks) // ok
+//				console.log(game.arrayCupboard) // ok
+//				console.log(products);
 				
 				startered = true;
 //				$scope.onClick();
@@ -458,8 +458,6 @@ var lang;
 			$scope.items = [];
 
 			function newState(state) {
-				alert("Sorry! You'll need to create a Constitution for "
-						+ state + " first!");
 			}
 			function querySearch(query) {
 				console.log(query);
@@ -486,6 +484,8 @@ var lang;
 			function selectedItemChange(item, text) {
 				console.log('items');
 				console.log($scope.items);
+				self.searchText = "";
+				
 				if (item != undefined) {
 					if (find(item) == -1) {
 						item.color = getRandomColor();
@@ -1283,7 +1283,7 @@ var lang;
 
 		}
 
-		serApp.controller('AppCtrl', function($scope, $mdDialog, $translate, $mdMedia, $http) {
+		serApp.controller('AppCtrl', function($scope, $rootScope, $mdDialog, $translate, $mdMedia, $http) {
 			
 			$scope.language = lang;
 		    $scope.en = 'en';
@@ -1294,6 +1294,11 @@ var lang;
 		        .success(function (data, status, headers) {
 		            $scope.language = lang;
 		            console.log(lang + "   chage fsfd")
+		            $rootScope.$$childTail.ctrl.maps.map(function(e, i){
+		            	e.display = e["name_" + lang];
+		            });
+		            console.log($rootScope.$$childTail.ctrl)
+//		            console.log($rootScope.$$childTail.ctrl.maps)
 		            $translate.use(lang);
 		            if ((window.location.href).indexOf("statistic") !== -1){
 		            	$route.reload();
