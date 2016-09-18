@@ -8,6 +8,9 @@ public class ProductInformation {
 
 	@Column("product.id")
 	private Integer id;
+	
+	@Column("placement.map_id")
+	private Integer mapId;
 
 	@Column("product.name_uk")
 	private String productNameUk;
@@ -19,18 +22,19 @@ public class ProductInformation {
 	private String image;
 
 	private List<Integer> coordinatesOnMap;
-
+	
 	public ProductInformation() {
 		super();
 	}
 
 	public ProductInformation(String productNameUk, String productNameEn,
-			String image) {
+			String image, Integer mapId) {
 		super();
 		this.productNameUk = productNameUk;
 		this.productNameEn = productNameEn;
 		this.image = image;
-		setCoordinates();
+		this.mapId = mapId;
+//		setCoordinates();
 
 	}
 
@@ -71,11 +75,27 @@ public class ProductInformation {
 		return coordinatesOnMap;
 	}
 
+	public Integer getMapId() {
+		return mapId;
+	}
+
+	public void setMapId(Integer mapId) {
+		this.mapId = mapId;
+	}
+
 	public void setCoordinates() {
 		if (id != null) {
 			this.coordinatesOnMap = ProductCoordinate
-					.getProductCoordinatesOnMap(id);
+					.getProductCoordinatesOnMap(id, mapId);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "ProductInformation [id=" + id + ", productNameUk=" + productNameUk + ", productNameEn=" + productNameEn
+				+ ", image=" + image + ", coordinatesOnMap=" + coordinatesOnMap +  ", mapId " + mapId + "]";
+	}
+	
+	
 
 }

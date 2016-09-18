@@ -1,9 +1,6 @@
 package com.epam.easyshopway.controller;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,12 +17,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.epam.easyshopway.model.FullProductList;
+import com.epam.easyshopway.astar.NearestNeighborhood;
+import com.epam.easyshopway.model.CupboardInformation;
 import com.epam.easyshopway.model.Map;
+import com.epam.easyshopway.model.Placement;
 import com.epam.easyshopway.model.ProductInformation;
 import com.epam.easyshopway.model.ProductList;
 import com.epam.easyshopway.model.User;
+import com.epam.easyshopway.service.CupboardInformationService;
 import com.epam.easyshopway.service.MapService;
+import com.epam.easyshopway.service.PlacementService;
 import com.epam.easyshopway.service.ProductInformationService;
 import com.epam.easyshopway.service.ProductListService;
 
@@ -46,13 +47,16 @@ public class SearchServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/temp.jsp").forward(request, response);
 		} else if (uri.endsWith("searchProducts")) {
 
-			System.out.println(request.getParameter("mapId"));
 
 			Integer mapId = Integer.valueOf(request.getParameter("mapId"));
 
 			System.out.println(mapId);
 
 			List<ProductInformation> products = ProductInformationService.getAllProductByMapId(mapId);
+			for(int i = 0; i < products.size(); i++){
+				products.get(i).setCoordinates();
+			}
+			System.out.println("******************/******************");
 			System.out.println(products);
 
 			JSONObject object = new JSONObject();
@@ -88,25 +92,40 @@ public class SearchServlet extends HttpServlet {
 			throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 
-		if (user != null) {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject;
 			List<Long> productIds = new ArrayList<Long>();
-
+			
 			Integer mapId = null;
 			try {
 				jsonObject = (JSONObject) jsonParser.parse(request.getParameter("data"));
-				System.out.println("jSoObj");
-				System.out.println(jsonObject);
+//				System.out.println(jsonObject);
 				productIds = (List<Long>) jsonObject.get("productIds");
 				mapId = ((Long) jsonObject.get("mapId")).intValue();
+				Integer width = ((Long) jsonObject.get("width")).intValue();
+				Integer height = ((Long) jsonObject.get("height")).intValue();
+				Integer enter = ((Long) jsonObject.get("enter")).intValue();
+				
+				List<Long> walls = (List<Long>)  jsonObject.get("walls");
+				List<Long> paydesks = (List<Long>)  jsonObject.get("paydesks");
+				List<Long> cupboards = (List<Long>)  jsonObject.get("cupboards");
+				List<List<Long>> products = (List<List<Long>>)  jsonObject.get("products");
+				NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products, cupboards);
+				n.start(enter);
+				JSONArray path = new JSONArray();
+				JSONArray visited = new JSONArray();
+				path.addAll(n.path);
+				visited.addAll(n.visited);
+				JSONObject obj = new JSONObject();
+				obj.put("path", path);
+				obj.put("visited", visited);
+				response.getWriter().write(obj.toJSONString());
+				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 			
-			System.out.println("*************/************");
-			System.out.println(mapId);
-
+		if (user != null) {
 			ProductList productList = new ProductList(user.getId(), null, null, mapId);
 
 			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());

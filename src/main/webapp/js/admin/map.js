@@ -550,7 +550,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         });
 
         //console.log("cupBoarards");
-        //console.log($scope.cupboardCells);
+        console.log($scope.cupboardCells);
         $scope.hide = function () {
             $mdDialog.hide();
         };
@@ -565,7 +565,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 if (typeof (e) == "string")
                     $scope.cupboardCells[i] = JSON.parse(e)
             })
-            //console.log($scope.cupboardCells);
+            console.log($scope.cupboardCells);
             $scope.sendCupboardData();
             $mdDialog.hide();
         };
@@ -595,7 +595,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             });
             //console.log($scope.cupboardCells);
             //console.log(data);
-            //console.log(sendData);
+            console.log(sendData);
             $http.post('/EasyShopWayNew/edit_products', sendData, config)
                 .success(function (data, status, headers) {
                     //console.log("success send products")
@@ -742,7 +742,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 weight: $scope.weight,
                 height: $scope.height
             });
-s
             var config = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'

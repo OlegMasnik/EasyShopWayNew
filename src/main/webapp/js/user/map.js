@@ -299,9 +299,9 @@ var lang;
 			 
 			          $http.get('/EasyShopWayNew/searchProducts?' + data, config).success(
 			              function (data, status, headers, config) {
-			                  //console.log(data);
+			                  console.log(data);
 			                  self.states = loadAll(data);
-			                  //console.log(self.states);
+			                  console.log(self.states);
 			                  
 			                  self.isDisabled = false;
 			                  
@@ -311,7 +311,7 @@ var lang;
 			              self.isDisabled = true;
 			          });
 			    
-			    start();
+//			    start();
 			   }
 
 			$http.get('/EasyShopWayNew/searchMaps', config).success(
@@ -350,26 +350,49 @@ var lang;
 			self.sendOnMap = function() {
 				
 				if(startered){
+					game.way = new Map(game.width * game.height);
 					$scope.items.map(function(e, i){
 						selectedItemChange(e, "");
 					});
 				}
-				startered = true;
-				$scope.onClick();
-				
 				var ids = [];
+				var products = [];
+				$scope.items.map(function(e, i){
+					products.push(e.coordinates);
+					ids[i] = e.value;
+				});
+//				for (var i = 0; i < $scope.items.length; i++) {
+//					ids[i] = ($scope.items[i].value);
+//					products.push($scope.items[i].coordinates);
+//				}
+				
+				console.log(game.enter); // ok
+				console.log($scope.walls) // ok
+				console.log($scope.paydesks) // ok
+				console.log(game.arrayCupboard) // no ok
+				console.log(products);
+				
+				startered = true;
+//				$scope.onClick();
+				
 
-				for (var i = 0; i < $scope.items.length; i++) {
-					ids[i] = ($scope.items[i].value);
-				}
 
 				console.log(ids);
 				var send = $.param({
-				data: JSON.stringify({
-				productIds: ids,
-				mapId: $scope.maps
-				})
+					data: JSON.stringify({
+						productIds: ids,
+						mapId: $scope.maps,
+						width: game.width,
+						height: game.height,
+						enter: game.enter,
+						walls: $scope.walls,
+						paydesks: $scope.paydesks,
+						cupboards: game.arrayCupboard,
+						products: products
+					})
 				});
+				
+//				console.log(send);
 
 				var config = {
 				headers: {
@@ -378,12 +401,17 @@ var lang;
 				}
 				$http
 				.post('/EasyShopWayNew/saveProductList', send,
-				config).success(
-				function (send, status, headers, config) {
-				console.log("Save to db");
-				}).error(
-				function (send, status, header,
-				config) {});
+				config).success(function (response, status, headers) {
+                    console.log(response);
+                    response.path.map(function(e, i){
+                    	game.way.map[e] = true;
+                    });
+                    game.visit = response.visited;
+                    console.log("Save to db");
+                    game.draw();
+                })
+                .error(function (data, status, header, config) {
+                });
 			}
 
 			$scope.items = [];
@@ -542,11 +570,11 @@ var lang;
 		    }
 		    
 		    function updateMap(oldMap){
-		    	game = new Game(document.querySelector('canvas'), $scope.config);
-		    	game.way = oldMap.way;
-		    	game.notVisit = oldMap.notVisit;
-		    	game.targetColors = oldMap.targetColors;
-		        game.draw();
+		    	game.cellSize = $scope.config.cellSize;
+		    	game.cellSpace = game.cellSize + game.borderWidth;
+		    	game.canvas.width = game.width * game.cellSpace + game.borderWidth;
+		        game.canvas.height = game.height * game.cellSpace + game.borderWidth;
+		    	game.draw();
 		    }
 		    
 		    function start() {
@@ -612,7 +640,7 @@ var lang;
 		        game = this;
 		        this.arrayTarget = new Array();
 		        this.targetColors = [];
-		        this.notVisit = [];
+		        this.visit = [];
 		        this.enter = $scope.config.enter;
 		        this.canvas = canvas;
 		        this.width = conf.width;
@@ -634,6 +662,7 @@ var lang;
 		        this.way = new Map(this.width * this.height);
 		        this.cupBoard = new Map(this.width * this.height);
 		        this.targets = new Map(this.width * this.height);
+		        this.arrayCupboard = [];
 		        initCupBoard($scope.cupboards);
 
 		        this.paint = {
@@ -701,7 +730,7 @@ var lang;
 				                            y * game.cellSpace + game.borderWidth,
 				                            game.cellSize, game.cellSize);
 //		                            if(game.ctx.fillStyle != undefined){
-			                            if(game.notVisit.indexOf(cell) != -1){
+			                            if(game.visit.length > 0 && game.visit.indexOf(cell) == -1){
 			                            	game.ctx.drawImage(imageTarget_off, x * game.cellSpace + game.borderWidth,
 						                            y * game.cellSpace + game.borderWidth,
 						                            game.cellSize, game.cellSize);
@@ -736,11 +765,11 @@ var lang;
 		        };
 		        this.mouseDown = function (e) {
 		            var cell = game.getMouseCell(e);
+		            console.log("CELL #" + cell)
 		            if (cell !== false) {
 		            	switch (e.button) {
 						case 0:
 							if(!game.paint.active){
-							//console.log("CELL #" + cell)
 							game.paint.active = true;
 	                        for (var q = 0; q < $scope.cupboards.length; q++) {
 	                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
@@ -852,66 +881,66 @@ var lang;
 		            }
 		        }
 		        this.moveTo = function () {
-		        	console.log(game.arrayTarget);
-		            if (game.arrayTarget.length > 0) {
-		            	var _target;
-		            	var _targetToDelete;
-		            	var _targetListToDelete;
-		                for (var f = 0; f < game.arrayTarget.length; f++) {
-		                	console.log(game.arrayTarget[f]);
-		                	for(var z = 0; z < game.arrayTarget[f].length; z++){
-			                    this.target = game.arrayTarget[f][z];
-			                    _target = this.target;
-//			                    console.log(_target);
-			                    game.notVisit.addInArray(_target);
-			    		        if(!game.cupBoard.map[_target + 1])
-			    		        	this.target = _target + 1;
-			    		        else if(!game.cupBoard.map[_target - 1])
-			    		        	this.target = _target - 1;
-			    		        else if(!game.cupBoard.map[_target + game.width])
-			    		        	this.target = _target +  game.width;
-			    		        else if(!game.cupBoard.map[_target - game.width])
-			    		        	this.target = _target - game.width;
-			                    this.path = new Path(game, this.cell, this.target, this.followPath);
-			                    	//console.log(this.path.found);
-			                    	//console.log(this.path.fmin);
-			                    	if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-			                    		buffPath = this.path;
-			                    		curTarget = this.target;
-			                    		_targetToDelete = _target;
-			                    		_targetListToDelete = game.arrayTarget[f];
-			                    	}
-		                		}
-		                	game.notVisit.remove(_targetToDelete);
-		                	_targetToDelete = undefined;
-		                	//console.log("not visit");
-		                	//console.log(game.notVisit);
-		                }
-		                buffPath.tracePath();
-		                //console.log("toDelete");
-		                //console.log(_targetListToDelete);
-		                game.arrayTarget.removeUndefined(_targetListToDelete);
-		                buffPath = undefined;
-		                _targetToDelete = undefined;
-                        _targetListToDelete = undefined;
-		                this.cell = curTarget;
-		                console.log("Targets: " + game.arrayTarget);
-		                this.moveTo();
-		            } else {
-		                this.path = new Path(game, this.cell, game.enter, this.followPath);
-		                this.path.tracePath();
-		                //console.log("Finish");
-		                this.cell = undefined;
-		                curTarget = undefined;
-		                this.target = undefined;
-		            }
-		            if (typeof (buffPath) != 'undefined') {
-		                buffPath.tracePath();
-		                game.arrayTarget.removeUndefined(curTarget);
-		                buffPath = undefined;
-		                this.cell = curTarget;
-		                this.moveTo();
-		            }
+//		        	console.log(game.arrayTarget);
+//		            if (game.arrayTarget.length > 0) {
+//		            	var _target;
+//		            	var _targetToDelete;
+//		            	var _targetListToDelete;
+//		                for (var f = 0; f < game.arrayTarget.length; f++) {
+//		                	console.log(game.arrayTarget[f]);
+//		                	for(var z = 0; z < game.arrayTarget[f].length; z++){
+//			                    this.target = game.arrayTarget[f][z];
+//			                    _target = this.target;
+////			                    console.log(_target);
+//			                    game.notVisit.addInArray(_target);
+//			    		        if(!game.cupBoard.map[_target + 1])
+//			    		        	this.target = _target + 1;
+//			    		        else if(!game.cupBoard.map[_target - 1])
+//			    		        	this.target = _target - 1;
+//			    		        else if(!game.cupBoard.map[_target + game.width])
+//			    		        	this.target = _target +  game.width;
+//			    		        else if(!game.cupBoard.map[_target - game.width])
+//			    		        	this.target = _target - game.width;
+//			                    this.path = new Path(game, this.cell, this.target, this.followPath);
+//			                    	//console.log(this.path.found);
+//			                    	//console.log(this.path.fmin);
+//			                    	if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
+//			                    		buffPath = this.path;
+//			                    		curTarget = this.target;
+//			                    		_targetToDelete = _target;
+//			                    		_targetListToDelete = game.arrayTarget[f];
+//			                    	}
+//		                		}
+//		                	game.notVisit.remove(_targetToDelete);
+//		                	_targetToDelete = undefined;
+//		                	//console.log("not visit");
+//		                	//console.log(game.notVisit);
+//		                }
+//		                buffPath.tracePath();
+//		                //console.log("toDelete");
+//		                //console.log(_targetListToDelete);
+//		                game.arrayTarget.removeUndefined(_targetListToDelete);
+//		                buffPath = undefined;
+//		                _targetToDelete = undefined;
+//                        _targetListToDelete = undefined;
+//		                this.cell = curTarget;
+//		                console.log("Targets: " + game.arrayTarget);
+//		                this.moveTo();
+//		            } else {
+//		                this.path = new Path(game, this.cell, game.enter, this.followPath);
+//		                this.path.tracePath();
+//		                //console.log("Finish");
+//		                this.cell = undefined;
+//		                curTarget = undefined;
+//		                this.target = undefined;
+//		            }
+//		            if (typeof (buffPath) != 'undefined') {
+//		                buffPath.tracePath();
+//		                game.arrayTarget.removeUndefined(curTarget);
+//		                buffPath = undefined;
+//		                this.cell = curTarget;
+//		                this.moveTo();
+//		            }
 		        }
 		    }
 
@@ -1039,6 +1068,7 @@ var lang;
 		        $scope.cupboards = obj;
 		        for (var i = 0; i < obj.length; i++) {
 		            obj[i].values.map(function (e, i) {
+		            	game.arrayCupboard.push(e);
 		                game.cupBoard.map[e] = true;
 		            });
 		        }

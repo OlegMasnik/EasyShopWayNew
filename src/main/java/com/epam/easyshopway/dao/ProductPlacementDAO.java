@@ -19,6 +19,7 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 	private final String GET_PRODUCT_PLACEMENT_BY_INDEX = "SELECT * FROM product_placement WHERE id=?";
 	private final String GET_ALL_PRODUCT_PLACEMENTS = "SELECT * FROM product_placement WHERE active=1";
 	private final String GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID = "select product_placement.* from product_placement join product on product.id = product_placement.product_id where product.id like ? and product.active = 1";
+	private final String GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID_AND_MAP_ID = "select product_placement.* from product_placement join product on product.id = product_placement.product_id where product.id like ? and product.active = 1 and cupboard_id in (SELECT c.id FROM cupboard c JOIN cupboard_placement cp ON c.id = cp.cupboard_id join placement p ON cp.placement_id = p.id WHERE p.map_id = ?)";
 	private final String GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID_AND_CUPBOARD_ID = "select product_placement.* "
 			+ "from product_placement join product on product.id = product_placement.product_id "
 			+ "where product.id like ? and product_placement.cupboard_id = ? and product.active = 1";
@@ -74,6 +75,22 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		statement.setInt(1, id);
 		ResultSet rs = statement.executeQuery();
 		list = transformer.fromRStoCollection(rs);
+		rs.close();
+		statement.close();
+		return list;
+	}
+	public List<ProductPlacement> getByProductIdAndMapId(Integer id, Integer mapId)
+			throws SQLException, InstantiationException, IllegalAccessException {
+		transformer = new Transformer<>(ProductPlacement.class);
+		List<ProductPlacement> list = new ArrayList<>();
+		PreparedStatement statement = connection
+				.prepareStatement(GET_PRODUCT_PLACEMENY_BY_PRODUCT_ID_AND_MAP_ID);
+		statement.setInt(1, id);
+		statement.setInt(2, mapId);
+		ResultSet rs = statement.executeQuery();
+		list = transformer.fromRStoCollection(rs);
+		System.out.println("*****************************sddsd***************");
+		System.out.println(list);
 		rs.close();
 		statement.close();
 		return list;
