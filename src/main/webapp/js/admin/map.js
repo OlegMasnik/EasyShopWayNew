@@ -390,7 +390,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     
     $scope.radioOnClick = function (value, toastMsg) {
         type = value;
-        showToast(toastMsg);
+        showToast($mdToast, $scope, toastMsg);
     }
 
     $scope.openMap = function () {
@@ -914,37 +914,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
 
     }
-    
-    function showToast(msg) {
-        var last = {
-            bottom: true,
-            top: false,
-            left: false,
-            right: true
-        };
-        $scope.toastPosition = angular.extend({}, last);
-
-        $scope.getToastPosition = function () {
-            return Object.keys($scope.toastPosition)
-                .filter(function (pos) {
-                    return $scope.toastPosition[pos];
-                })
-                .join(' ');
-        };
-
-        $scope.showSimpleToast = function () {
-            var pinTo = $scope.getToastPosition();
-
-            $mdToast.show(
-                $mdToast.simple()
-                .textContent(msg)
-                .position(pinTo)
-                .hideDelay(4000)
-            );
-        };
-        $scope.showSimpleToast();
-    }
-
 }).filter('range', function () {
     return function (n) {
         var res = [];

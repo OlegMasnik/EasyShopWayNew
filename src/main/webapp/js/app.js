@@ -133,7 +133,9 @@ app.config(function($translateProvider) {
 		YES: 'Yes',
 		No: 'No',
 		PREUSER: "Check your email",
-		CONFIRM_DELETE: "CONFIRM DELETE:"
+		CONFIRM_DELETE: "CONFIRM DELETE:",
+		
+		SELECTED_OPTION: 'Selected option: '
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -242,7 +244,9 @@ app.config(function($translateProvider) {
 		YES: 'Так',
 		No: 'Ні',
 		PREUSER: "Перевірте електронну скриньку",
-		CONFIRM_DELETE: "Підтвердіть видалення:"
+		CONFIRM_DELETE: "Підтвердіть видалення:",
+		
+		SELECTED_OPTION: 'Вибрана опція: '
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -738,12 +742,13 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
 			}
 
 		} ]);
+
 function showToast($mdToast, $scope, msg) {
 	var last = {
 		bottom : true,
 		top : false,
-		left : true,
-		right : false
+		left : false,
+		right : true
 	};
 	$scope.toastPosition = angular.extend({}, last);
 

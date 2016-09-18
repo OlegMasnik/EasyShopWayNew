@@ -31,30 +31,37 @@ public class NearestNeighborhood {
 	}
 
 	private int getBest(List<List<Long>> prod) {
-//		System.out.println("Start cell: " + this.start);
+		// System.out.println("Start cell: " + this.start);
 		this.buffCell = null;
 		List<Long> l = null;
 		int index = 0;
 		for (int i = 0; i < prod.size(); i++) {
+			System.out.println(prod);
 			for (int j = 0; j < prod.get(i).size(); j++) {
 				a.init();
 				a.setStart(this.start.x * width + this.start.y);
 				a.setEnd(prod.get(i).get(j));
+				System.out.println("target " + prod.get(i).get(j));
 				a.findPath();
-				if (this.buffCell == null || a.end.finalCost < this.buffCell.finalCost) {
+				System.out.println("Path: " + a.path);
+				if (a.path.size() > 0 && (this.buffCell == null || a.end.finalCost < this.buffCell.finalCost)) {
 					this.buffCell = a.end;
 					index = i;
 					l = a.path;
 				}
 			}
 		}
-		l.remove(l.size() - 1);
-		this.start = buffCell.parent;
-		this.visited.add(buffCell.x * width + buffCell.y);
-//		this.a.printBefore();
-//		this.a.printAfter();
-		this.path.addAll(l);
-//		System.out.println("Path = " + this.path);
+		if(buffCell != null){
+			this.start = buffCell.parent;
+			this.visited.add(buffCell.x * width + buffCell.y);
+		}
+		// this.a.printBefore();
+		// this.a.printAfter();
+		if (l != null && l.size() > 0) {
+			l.remove(l.size() - 1);
+			this.path.addAll(l);
+		}
+		// System.out.println("Path = " + this.path);
 		return index;
 	}
 
@@ -62,11 +69,16 @@ public class NearestNeighborhood {
 		int removeIndex;
 		this.start = new Cell(start / width, start % width);
 		while (!this.products.isEmpty()) {
-//			System.out.println(this.products);
+			// System.out.println(this.products);
 			removeIndex = getBest(this.products);
+			System.out.println(removeIndex);
 			this.products.remove(removeIndex);
 		}
-		getBestPaydesk();
+		if (path.size() > 0) {
+			getBestPaydesk();
+		} else {
+			System.out.println("Not path");
+		}
 		System.out.println("Finish");
 	}
 
@@ -83,9 +95,11 @@ public class NearestNeighborhood {
 				l = a.path;
 			}
 		}
-		l.remove(l.size() - 1);
+		if (l.size() > 0) {
+			l.remove(l.size() - 1);
+			this.path.addAll(l);
+		}
 		this.start = buffCell.parent;
-		this.path.addAll(l);
 		System.out.println("Path = " + this.path);
 	}
 }

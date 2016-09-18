@@ -266,7 +266,7 @@ var lang;
 		
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
-		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog) {
+		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog, $mdToast) {
 			var self = this;
 			self.a = 1;
 			self.simulateQuery = false;
@@ -409,12 +409,18 @@ var lang;
 				config).success(function (response, status, headers) {
 					
                     console.log(response);
-                    response.path.map(function(e, i){
-                    	game.way.map[e] = true;
-                    });
-                    game.visit = response.visited;
+                    var path = response.path;
+                    if(path.length > 0 && response.visited.length == products.length){
+                    	path.map(function(e, i){
+                    		game.way.map[e] = true;
+                    	});
+                    	game.visit = response.visited;
+                    	game.draw();
+                    }else {
+                    	console.log("Bad way :(");
+                    	showToast($mdToast, $scope, "Bad way :(");
+                    }
                     console.log("Save to db");
-                    game.draw();
                 })
                 .error(function (data, status, header, config) {
                 });
@@ -1242,50 +1248,7 @@ var lang;
 
 		    }
 
-		    function showToast(msg) {
-		        var last = {
-		            bottom: true,
-		            top: false,
-		            left: false,
-		            right: true
-		        };
-		        $scope.toastPosition = angular.extend({}, last);
-
-		        $scope.getToastPosition = function () {
-		            return Object.keys($scope.toastPosition)
-		                .filter(function (pos) {
-		                    return $scope.toastPosition[pos];
-		                })
-		                .join(' ');
-		        };
-
-		        $scope.showSimpleToast = function () {
-		            var pinTo = $scope.getToastPosition();
-
-		            $mdToast.show(
-		                $mdToast.simple()
-		                .textContent(msg)
-		                .position(pinTo)
-		                .hideDelay(4000)
-		            );
-		        };
-		        $scope.showSimpleToast();
-		    }
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		serApp.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
 			
