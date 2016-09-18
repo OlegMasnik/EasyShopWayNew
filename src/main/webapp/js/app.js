@@ -154,7 +154,8 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "History is empty",
 			
 		
-		SELECTED_OPTION: 'Selected option: '
+		SELECTED_OPTION: 'Selected option: ',
+		ZERO_USERS_SELECTED: "You have selected 0 users. Select some users first."
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -273,7 +274,8 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "Історія порожня",
 		NONE: "Нічого",
 		
-		SELECTED_OPTION: 'Вибрана опція: '
+		SELECTED_OPTION: 'Вибрана опція: ',
+		ZERO_USERS_SELECTED: "Виберіть користувачів"
 	});
 	$translateProvider.preferredLanguage(lang);
 });

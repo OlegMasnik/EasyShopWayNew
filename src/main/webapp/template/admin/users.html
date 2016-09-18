@@ -43,7 +43,8 @@
 	<table md-table>
 		<thead md-head md-order="query.order">
 			<tr md-row>
-				<th><md-button ng-click="selectAll()">Select all</md-button></th>
+<!-- 				<th><md-button ng-click="selectAll()">Select all</md-button></th> -->
+				<th><input input type="checkbox" id="select_all"> Select all</md-button></th>
 				<th md-column ng-repeat="column in autocolumn"
 					md-order-by="{{column.name}}"><span>{{column.display}}</span>
 				</th>
@@ -53,7 +54,7 @@
 		<tbody md-body ng-controller="MailCtrl as mail">
 			<tr md-row
 				ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
-				<td md-cell><input type = "checkbox" name = "emails" value = "{{row.e}} {{row.fn}} {{row.ln}}"></td>
+				<td md-cell><input class="checkbox" type = "checkbox" name = "emails" value = "{{row.e}} {{row.fn}} {{row.ln}}"></td>
 				<td md-cell>{{row.fn}}</td>
 				<td md-cell>{{row.ln}}</td>
 				<td md-cell>{{row.e}}</td>
