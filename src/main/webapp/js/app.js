@@ -45,7 +45,7 @@ app.config(function($translateProvider) {
 		SEARCH:'Search',
 		NO_MAPS_MATCHING:'No maps matching',
 		WERE_FOUND:'were found',
-		
+		DOWNLOAD: "Download",
 		
 		
 		
@@ -157,6 +157,16 @@ app.config(function($translateProvider) {
 		SELECTED_OPTION: 'You selected option: ',
 		SELECT_MAP: 'Select a map: '
 		
+		CREATE_PRODUCT_LIST_NOW:'Create product list now',
+		OR:'Or',
+		SEE_TUTORIAL:'See tutorial',
+		YOU_CAN_USE_UP:'You can use up ',
+		AND_DOWN:' and down ',
+		KEYS_FO_NAVIGATION:'keys for navigations',
+		STEP_1:'STEP 1. Select shop which map you want to view.',
+		STEP_2:'STEP 2. Select goods from the list of proposed products.',
+		STEP_3:'STEP 3. Click "search" to build the recommended way.'
+		
 	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
@@ -165,6 +175,7 @@ app.config(function($translateProvider) {
 		OLD_PASSWORD:'Старий пароль',
 		NEW_PASSWORD:'Новий пароль',
 		LANGUAGE:'Мова',
+		DOWNLOAD: "Завантажити",
 		
 		SELECT_MAP:'Вибрати магазин',
 		SEARCH:'Пошук',
@@ -274,8 +285,17 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "Історія порожня",
 		NONE: "Нічого",
 		
-		SELECTED_OPTION: 'Ви вибрали опцію: ',
-		SELECT_MAP: 'Виберіть карту:'
+		SELECTED_OPTION: 'Вибрана опція: ',
+		
+		CREATE_PRODUCT_LIST_NOW:'Створити список продуктів',
+		OR:'Або',
+		SEE_TUTORIAL:'Переглянути туторіал',
+		YOU_CAN_USE_UP:'Ви можете використовувати вгору ',
+		AND_DOWN:' і вниз ',
+		KEYS_FO_NAVIGATION:'клавіші для навігації',
+		STEP_1:'Крок 1. Оберіть магазин, якого мапу  бажаєте переглянути.',
+		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
+		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.'
 	});
 	$translateProvider.preferredLanguage(lang);
 });
