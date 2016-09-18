@@ -621,6 +621,15 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         	$scope.cupboardCells = []
         }
         
+        $scope.showCustomToast = function() {
+            $mdToast.show({
+              hideDelay   : 3000,
+              position    : 'top right',
+              controller  : 'ToastCtrl',
+              templateUrl : 'toast-template.html'
+            });
+         }
+        
     }
 
     $scope.createCupBoard = function (values, b_count) {
@@ -864,6 +873,16 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
 
     }
+    
+    $scope.showCustomToast = function() {
+    	console.log("asds");
+        $mdToast.show({
+          hideDelay   : 3000,
+          position    : 'left top',
+          controller  : 'ToastCtrl',
+          templateUrl : 'toast-template.html'
+        });
+      }
 
     $scope.showConfirmDelete = function (ev) {
 
@@ -908,3 +927,24 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         return res;
     };
 });
+
+angular.module('MyApp').controller('ToastCtrl', function($scope, $mdToast, $mdDialog) {
+
+      $scope.closeToast = function() {
+        if (isDlgOpen) return;
+
+        $mdToast
+          .hide()
+          .then(function() {
+            isDlgOpen = false;
+          });
+      };
+
+      $scope.openMoreInfo = function(e) {
+        if ( isDlgOpen ) return;
+        isDlgOpen = true;
+
+     
+      };
+});
+
