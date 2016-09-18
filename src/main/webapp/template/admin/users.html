@@ -19,7 +19,7 @@
 		<label>{{ 'COLUMN' | translate }}</label> 
 		<md-select ng-model="single.column"
 			ng-change="updateDataTable()">
-			<md-optgroup label="Column">
+			<md-optgroup label="{{ 'COLUMN' | translate }}">
 		<md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
 		</md-optgroup> 
 		</md-select> 
