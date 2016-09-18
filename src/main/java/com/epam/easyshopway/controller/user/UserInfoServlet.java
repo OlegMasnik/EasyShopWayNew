@@ -72,9 +72,10 @@ public class UserInfoServlet extends HttpServlet {
 		user.setLastName(lastName);
 		
 		} else if(request.getRequestURI().endsWith("info/theme")) {
-			String theme = request.getParameter("theme");
-			
-			user.setTheme(theme);
+			if (user != null){
+				String theme = request.getParameter("theme");
+				user.setTheme(theme);
+			}
 		}
 
 		UserService.update(user.getId(), user);

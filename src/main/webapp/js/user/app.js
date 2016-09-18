@@ -119,62 +119,74 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		 
 		 $http.post('/EasyShopWayNew/stat', data, config)
 		 		.success(function (data, status, headers, config) {
-		 			   response = data;
-		 			   
-    	    exportScript(response.lang);
-			$('#pieContainer').highcharts({
-			    chart: {
-			        plotBackgroundColor: null,
-			        plotBorderWidth: null,
-			        plotShadow: false,
-			        type: 'pie'
-			    },
-			    title: response.pie.title,
-			    tooltip: {
-			        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-			    },
-			    plotOptions: {
-			        pie: {
-			            allowPointSelect: true,
-			            cursor: 'pointer',
-			            dataLabels: {
-			                enabled: false
-			                
-			            },
-			            showInLegend: true
-			        }
-			    },
-			    series: response.pie.series
-			});
-			    
-		 exportScript(response.lang);
-    	   $('#columnContainer').highcharts({
-    	        chart: {
-    	            type: 'column'
-    	        },
-    	        title: response.column.title,
-    	        xAxis: response.column.xAxis,
-    	        yAxis: response.column.yAxis,
-    	        legend: {
-    	            enabled: false
-    	        },
-    	        plotOptions: {
-    	            series: {
-    	                borderWidth: 0,
-    	                dataLabels: {
-    	                    enabled: true,
-    	                    format: '{point.y:.1f}%'
-    	                }
-    	            }
-    	        },
-
-    	        tooltip: {
-    	            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-    	            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b><br/>'
-    	        },
-
-    	        series: response.column.series
-    	    });
+		 			response = data;
+		 			theme = response.theme;
+		 			
+		 	if (response.pie.series[0].data.length != 0){   
+		 		$scope.noPieDiagram = false;
+		 		exportScript(response.lang);
+				$('#pieContainer').highcharts({
+				    chart: {
+				        plotBackgroundColor: theme == 'dark' ? '#303030' : null,
+				        plotBorderWidth: null,
+				        plotShadow: false,
+				        type: 'pie'
+				    },
+				    title: response.pie.title,
+				    tooltip: {
+				        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				    },
+				    plotOptions: {
+				        pie: {
+				            allowPointSelect: true,
+				            cursor: 'pointer',
+				            dataLabels: {
+				                enabled: false
+				                
+				            },
+				            showInLegend: true
+				        }
+				    },
+				    series: response.pie.series
+				});
+		 	}else{
+		 		$scope.noPieDiagram = true; 
+		 	}
+		 	
+		 	if (response.pie.series[0].data.length != 0){  
+		 		   $scope.noColumnDiagram = false;
+				   exportScript(response.lang);
+		    	   $('#columnContainer').highcharts({
+		    	        chart: {
+		    	        	plotBackgroundColor: theme == 'dark' ? '#303030' : null,
+		    	            type: 'column'
+		    	        },
+		    	        title: response.column.title,
+		    	        xAxis: response.column.xAxis,
+		    	        yAxis: response.column.yAxis,
+		    	        legend: {
+		    	            enabled: false
+		    	        },
+		    	        plotOptions: {
+		    	            series: {
+		    	                borderWidth: 0,
+		    	                dataLabels: {
+		    	                    enabled: true,
+		    	                    format: '{point.y:.1f}%'
+		    	                }
+		    	            }
+		    	        },
+		
+		    	        tooltip: {
+		    	            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		    	            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b><br/>'
+		    	        },
+		
+		    	        series: response.column.series
+		    	    });
+		 		}else{
+			 		$scope.noColumnDiagram = true; 
+			 	}
 		        //$route.reload();
 		       }).error(
 	             function (data, status, header, config) {
