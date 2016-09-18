@@ -491,6 +491,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     $scope.openCupBoard = function (cupBoard) {
         //console.log('before open');
+    	
         $mdDialog.show({
                 controller: EditCupboardCtrl,
                 templateUrl: 'template/admin/edit.cupBoard.tmpl.html',
@@ -512,6 +513,9 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     function EditCupboardCtrl($scope, $mdDialog, item) {
 
+    	$scope.lang = lang;
+    	
+    	
         $scope.item = item;
 
         $http({
@@ -560,6 +564,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 	            $scope.cupboardCells.map(function (e, i) {
 	                if (typeof (e) == "string")
 	                    $scope.cupboardCells[i] = JSON.parse(e)
+	                    
 	            })
         	}
             console.log($scope.cupboardCells);

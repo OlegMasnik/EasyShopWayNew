@@ -134,7 +134,8 @@ app.config(function($translateProvider) {
 		No: 'No',
 		PREUSER: "Check your email",
 		CONFIRM_DELETE: "CONFIRM DELETE:",
-		NO_DIAGRAM: "Empty"
+		NO_DIAGRAM: "Empty",
+		NONE: "None"
 			
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -244,7 +245,8 @@ app.config(function($translateProvider) {
 		No: 'Ні',
 		PREUSER: "Перевірте електронну скриньку",
 		CONFIRM_DELETE: "Підтвердіть видалення:",
-		NO_DIAGRAM: "Порожньо"
+		NO_DIAGRAM: "Порожньо",
+		NONE: "Нічого"
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -409,10 +411,11 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
     $scope.en = 'en';
     $scope.uk = 'uk';
     
-    $scope.changeLang = function(lang){
-    	$http.put('/EasyShopWayNew/home?lang=' + lang)
+    $scope.changeLang = function(l){
+    	$http.put('/EasyShopWayNew/home?lang=' + l)
         .success(function (data, status, headers) {
-            $scope.language = lang;
+            $scope.language = l;
+            lang = l;
             console.log(lang + "   chage fsfd")
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
