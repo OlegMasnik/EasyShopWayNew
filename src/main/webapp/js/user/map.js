@@ -268,7 +268,7 @@ var lang;
 		
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
-		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog) {
+		function DemoCtrl($timeout, $q, $log, $scope, $http, $mdDialog, $mdToast) {
 			var self = this;
 			self.a = 1;
 			self.simulateQuery = false;
@@ -303,7 +303,12 @@ var lang;
 			                  self.states = loadAll(data);
 			                  console.log(self.states);
 			                  
-			                  self.isDisabled = false;
+			                  if (self.states.length == 0) {
+			                	  showToast("No products \(o_o)/");
+			                	  self.isDisabled = true;
+			                  } else {
+			                	  self.isDisabled = false;
+			                  }
 			                  
 			              }).error(function (data, status, header, config) {
 			              //console.log(data);

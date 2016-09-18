@@ -5,6 +5,9 @@
 <html>
 
 <head>
+
+<title>EasyShopWay</title>
+
 <link rel="stylesheet" href="css/preloader/preloader.css">
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.v1.1.css">

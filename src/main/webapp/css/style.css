@@ -1,3 +1,19 @@
+
+/* font-family: "MuseoSansMedium"; */
+@font-face {
+    font-family: "MuseoSansMedium";
+    src: url("../fonts/MuseoSansMedium/MuseoSansMedium.eot");
+    src: url("../fonts/MuseoSansMedium/MuseoSansMedium.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/MuseoSansMedium/MuseoSansMedium.woff") format("woff"),
+    url("../fonts/MuseoSansMedium/MuseoSansMedium.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+body {
+	font-family: 'MuseoSansMedium', sans-serif; !important;
+}
+
 .toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
     color: white;
 }
