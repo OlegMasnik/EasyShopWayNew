@@ -56,9 +56,6 @@ public class SearchServlet extends HttpServlet {
 			for(int i = 0; i < products.size(); i++){
 				products.get(i).setCoordinates();
 			}
-			System.out.println("******************/******************");
-			System.out.println(products);
-
 			JSONObject object = new JSONObject();
 			object.put("products", setJsonArrayType(products));
 

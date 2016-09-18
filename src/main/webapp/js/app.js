@@ -329,7 +329,6 @@ app.directive('chooseFile', function() {
 app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
 //	$scope.theme = 'default';
-	
 	var config = {
 			headers : {
 				'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'

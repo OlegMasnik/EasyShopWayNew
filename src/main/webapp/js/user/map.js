@@ -281,6 +281,13 @@ var lang;
 			}	
 			self.click = function() {
 			    //console.log($scope.maps);
+				
+				if($scope.items.length > 0){
+					console.log('update');
+					targetsCopy = undefined;
+					$scope.items = [];
+					update();
+				}
 			    $scope.getMapByid($scope.maps);
 			    
 			    self.isDisabled = false;
@@ -471,6 +478,7 @@ var lang;
 //						});
 						//console.log(arrayTarget);
 //					}
+					update();
 					game.draw();
 				}
 			}
@@ -501,14 +509,25 @@ var lang;
 					}
 					value.coordinates.map(function(e, i){
 						game.targets.map[e] = false;
-						game.targetColors[e] = undefined;
-						game.notVisit.remove(e);
-						targetsCopy[e] = false;
 					});
 					game.arrayTarget.removeUndefined(value.coordinates);
-					game.draw();
 				}
+				update();
+				console.log($scope.items);
+				game.draw();
 			}
+			
+			function update(){
+				game.way = new Map(game.width * game.height);
+				game.visit = [];
+				$scope.items.map(function(el, index){
+					el.coordinates.map(function(e, i){
+						game.targets.map[e] = true;
+						game.targetColors[e] = el.color;
+					});
+				});
+			}
+			
 			function loadAll(data) {
 
 				var products = data.products;

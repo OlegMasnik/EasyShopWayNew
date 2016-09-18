@@ -303,12 +303,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         break;
                     case 'edit':
                         console.log("CELL #" + cell);
-                        console.log($scope.cupboards);
+//                        console.log($scope.cupboards);
                         for (var q = 0; q < $scope.cupboards.length; q++) {
                             for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
                                 if (cell == $scope.cupboards[q].values[w]) {
-                                    //console.log("You click on: ");
-                                    //console.log($scope.cupboards[q]);
                                     $scope.openCupBoard($scope.cupboards[q]);
                                 }
                             }
@@ -512,29 +510,21 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     function EditCupboardCtrl($scope, $mdDialog, item) {
 
-        //console.log("item ");
-        //console.log(item);
         $scope.item = item;
 
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
         }).then(function mySucces(response) {
-            //console.log("current Prods")
-        	$scope.name_en = response.data.name_en;
-        	$scope.name_uk = response.data.name_uk;
             $scope.currentProducts = response.data.data;
             $scope.cupboardCells = new Array(item.board_count * item.values.length);
-            if (typeof ($scope.currentProducts) != "undefined") {
+            if ($scope.currentProducts.length > 0) {
                 for (var i = 0; i < $scope.currentProducts.length; i++) {
                     for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
                         $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
-                        //console.log("prod i " + i);
-                        //console.log($scope.cupboardCells);
                     }
                 }
             }
-            //console.log($scope.currentProducts);
         }, function myError(response) {});
 
 
@@ -550,7 +540,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         });
 
         //console.log("cupBoarards");
-        console.log($scope.cupboardCells);
+//        console.log($scope.cupboardCells);
         $scope.hide = function () {
             $mdDialog.hide();
         };
