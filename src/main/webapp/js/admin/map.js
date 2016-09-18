@@ -517,6 +517,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
         }).then(function mySucces(response) {
             $scope.currentProducts = response.data.data;
+            console.log(response)
+            console.log($scope.currentProducts)
             $scope.cupboardCells = new Array(item.board_count * item.values.length);
             if ($scope.currentProducts.length > 0) {
             	console.log('not empty');
