@@ -12,10 +12,20 @@ app.config(function($mdThemingProvider, $provide) {
 	$mdThemingProvider.alwaysWatchTheme(true);
 	
 	  $mdThemingProvider.theme('default')
-	    .primaryPalette('cyan');
+	    .primaryPalette('cyan', {
+	        'default': '600',
+	        'hue-1': '800',
+	        'hue-2': '700',
+	        'hue-3': 'A700'
+	      });
 	  
 	  $mdThemingProvider.theme('dark')
-	    .primaryPalette('pink').dark();
+	    .primaryPalette('pink', {
+	        'default': '600',
+	        'hue-1': '900',
+	        'hue-2': '800',
+	        'hue-3': 'A700'
+	      }).dark();
 	  
 	  $provide.value('themeProvider', $mdThemingProvider);
 	  
@@ -35,7 +45,7 @@ app.config(function($translateProvider) {
 		SEARCH:'Search',
 		NO_MAPS_MATCHING:'No maps matching',
 		WERE_FOUND:'were found',
-		
+		DOWNLOAD: "Download",
 		
 		
 		
@@ -99,6 +109,8 @@ app.config(function($translateProvider) {
 		CHANGE_SIZE:'Change size',
 		PAY_DESCK:'Paydesck',
 		CUP_BOARD:'Cupboard',
+		TARGET: 'Selected product',
+		TARGET_NOT_VISITED: 'Not selected product',
 		
 		CREATE_NEW_CUPBOARD:'Create new cupboard',
 		ENGLISH_DESCRIPTION:'English description',
@@ -115,6 +127,7 @@ app.config(function($translateProvider) {
 		WALL:'Wall',
 		EDIT:'Edit',
 		SAVE:'Save',
+		PATH:'Way',
 		CANCEL:'Cancel',
 		DELETE:'Delete',
 		CLEAR:'Clear',
@@ -147,6 +160,19 @@ app.config(function($translateProvider) {
 		DISABLED: "disabled",
 		ENABLED: "enabled"
 		
+		SELECTED_OPTION: 'You selected option: ',
+		SELECT_MAP: 'Select a map: '
+		
+		CREATE_PRODUCT_LIST_NOW:'Create product list now',
+		OR:'Or',
+		SEE_TUTORIAL:'See tutorial',
+		YOU_CAN_USE_UP:'You can use up ',
+		AND_DOWN:' and down ',
+		KEYS_FO_NAVIGATION:'keys for navigations',
+		STEP_1:'STEP 1. Select shop which map you want to view.',
+		STEP_2:'STEP 2. Select goods from the list of proposed products.',
+		STEP_3:'STEP 3. Click "search" to build the recommended way.'
+		
 	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
@@ -155,6 +181,7 @@ app.config(function($translateProvider) {
 		OLD_PASSWORD:'Старий пароль',
 		NEW_PASSWORD:'Новий пароль',
 		LANGUAGE:'Мова',
+		DOWNLOAD: "Завантажити",
 		
 		SELECT_MAP:'Вибрати магазин',
 		SEARCH:'Пошук',
@@ -232,8 +259,13 @@ app.config(function($translateProvider) {
 		CHANGE_SIZE:'Змінити розмір',
 		PAY_DESCK:'Каса',
 		CUP_BOARD:'Стелаж',
+		
+		TARGET:'Вибранй товар',
+		TARGET_NOT_VISITED:'Не вибраний товар',
+		
 		ENTER:'Вхід',
 		WALL:'Стіна',
+		PATH:'Шлях',
 		EDIT:'Змінити',
 		SAVE:'Зберегти',
 		CANCEL:'Відмінити',
@@ -258,13 +290,18 @@ app.config(function($translateProvider) {
 		NO_DIAGRAM: "Порожньо",
 		USER_HISTORY_EMPTY: "Історія порожня",
 		NONE: "Нічого",
-		CHOOSE_FILE: "Вибрати файл",	
-		NO_FILE: "Файл не вибрано",
-		THEME: "Тема",
-		DARK_THEME: "Темна тема",
-		DISABLED: "виключено",
-		ENABLED: "включено",
-		SELECTED_OPTION: 'Вибрана опція: '
+		
+		SELECTED_OPTION: 'Вибрана опція: ',
+		
+		CREATE_PRODUCT_LIST_NOW:'Створити список продуктів',
+		OR:'Або',
+		SEE_TUTORIAL:'Переглянути туторіал',
+		YOU_CAN_USE_UP:'Ви можете використовувати вгору ',
+		AND_DOWN:' і вниз ',
+		KEYS_FO_NAVIGATION:'клавіші для навігації',
+		STEP_1:'Крок 1. Оберіть магазин, якого мапу  бажаєте переглянути.',
+		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
+		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.'
 	});
 	$translateProvider.preferredLanguage(lang);
 });

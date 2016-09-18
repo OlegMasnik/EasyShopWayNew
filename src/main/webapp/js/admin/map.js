@@ -137,16 +137,11 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     };
     
     function updateMap(oldMap){
-//    	game = new Game(document.querySelector('canvas'), $scope.config);
     	game.cellSize = $scope.config.cellSize;
     	game.cellSpace = game.cellSize + game.borderWidth;
     	game.canvas.width = game.width * game.cellSpace + game.borderWidth;
         game.canvas.height = game.height * game.cellSpace + game.borderWidth;
     	game.draw();
-//    	game.notVisit = oldMap.notVisit;
-//    	game.targetColors = oldMap.targetColors;
-//    	game.cupBoard = oldMap.cupBoard;
-//    	$scope.openMap();
     }
 
     var Game = function (canvas, conf) {
@@ -384,10 +379,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
     }
 
-    $scope.radioOnClick = function (value) {
-        type = value;
-    }
-    
     $scope.radioOnClick = function (value, toastMsg) {
         type = value;
         showToast($mdToast, $scope, toastMsg);

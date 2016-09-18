@@ -101,15 +101,19 @@ var lang;
 				EDIT_CUPBOARD_MSG:'Choose cupboard on map',
 				
 				CREATE_NEW_MAP:'Create new map',
+				LEGEND: "Legend:",
 				
 				ENTER:'Enter',
 				WALL:'Wall',
+				PATH:'Way',
 				EDIT:'Edit',
 				SAVE:'Save',
 				CANCEL:'Cancel',
 				DELETE:'Delete',
 				CLEAR:'Clear',
 				CHOOSE_IMAGE:'Choose image',
+				TARGET: 'Selected product',
+				TARGET_NOT_VISITED: 'Not selected product',
 				
 				ENGLISH_NAME:'English name',
 				UKRAINE_NAME:'Ukrainian name',
@@ -155,6 +159,8 @@ var lang;
 				LOGIN_WITH_SN : 'Або увійти з допомогою',
 				FOGOT_PASS : 'Нагадати пароль',
 				LOGOUT:'Вихід',
+				
+				LEGEND: 'Умовні позначення:',
 				
 				ERROR_CONFIRMATION_EMAIL:'Помилка підтвердження електронної пошти',
 				SUCCESS_CONF_EMAIL:'Успішне підтвердження через електронну пошту',
@@ -223,6 +229,10 @@ var lang;
 				CLEAR:'Очистити',
 				CHOOSE_IMAGE:'Обрати зображення',
 				
+				TARGET:'Вибранй товар',
+				TARGET_NOT_VISITED:'Не вибраний товар',
+				PATH:'Шлях',
+				
 				ENGLISH_NAME:'Назва англійською',
 				UKRAINE_NAME:'Назва українською',
 				
@@ -274,7 +284,7 @@ var lang;
 		
 		serApp.controller('ProductListCtrl', DemoCtrl);
 
-		function DemoCtrl($timeout, $q, $log, $scope, $translate, $http, $mdDialog, $mdToast) {
+		function DemoCtrl($timeout, $q, $log, $scope, $rootScope, $translate, $http, $mdDialog, $mdToast) {
 			var self = this;
 			self.a = 1;
 			self.simulateQuery = false;
@@ -290,7 +300,9 @@ var lang;
 					function(data, status, headers, config) {
 						//console.log(data);
 						self.maps = loadAllMaps(data);
-						//console.log(self.maps);
+						$scope.maps = self.maps[0].value;
+						self.click();
+						console.log(self.maps);	
 					}).error(function(data, status, header, config) {
 				//console.log(data);
 			});
@@ -390,11 +402,11 @@ var lang;
 //					products.push($scope.items[i].coordinates);
 //				}
 				
-				console.log(game.enter); // ok
-				console.log($scope.walls) // ok
-				console.log($scope.paydesks) // ok
-				console.log(game.arrayCupboard) // ok
-				console.log(products);
+//				console.log(game.enter); // ok
+//				console.log($scope.walls) // ok
+//				console.log($scope.paydesks) // ok
+//				console.log(game.arrayCupboard) // ok
+//				console.log(products);
 				
 				startered = true;
 //				$scope.onClick();
@@ -448,15 +460,13 @@ var lang;
 			$scope.items = [];
 
 			function newState(state) {
-				alert("Sorry! You'll need to create a Constitution for "
-						+ state + " first!");
 			}
 			function querySearch(query) {
-				console.log(query);
+//				console.log(query);
 				var results = query ? self.states
 						.filter(createFilterFor(query)) : self.states, deferred;
 						
-	            console.log(results);
+//	            console.log(results);
 						
 				if (self.simulateQuery) {
 					deferred = $q.defer();
@@ -476,6 +486,10 @@ var lang;
 			function selectedItemChange(item, text) {
 				console.log('items');
 				console.log($scope.items);
+			    self.searchText = "";
+			    var e = jQuery.Event("keyup"); // or keypress/keydown
+			    e.keyCode = 27; // for Esc
+			    $(document).trigger(e);
 				if (item != undefined) {
 					if (find(item) == -1) {
 						item.color = getRandomColor();
@@ -625,7 +639,7 @@ var lang;
 		    }
 		    
 		    function start() {
-		        game = new Game(document.querySelector('canvas'), $scope.config);
+		        game = new Game(document.querySelector('#canvas'), $scope.config);
 		    };
 
 		    $scope.clickOnSelect = function (mId) {
@@ -1094,7 +1108,7 @@ var lang;
 		    }
 
 		    $scope.openMap = function () {
-		            game = new Game(document.querySelector('canvas'), $scope.config);
+		            game = new Game(document.querySelector('#canvas'), $scope.config);
 		    }
 		    
 		    function wait(ms) {
@@ -1273,7 +1287,7 @@ var lang;
 
 		}
 
-		serApp.controller('AppCtrl', function($scope, $mdDialog, $translate, $mdMedia, $http) {
+		serApp.controller('AppCtrl', function($scope, $rootScope, $mdDialog, $translate, $mdMedia, $http) {
 			
 			$scope.language = lang;
 		    $scope.en = 'en';
@@ -1284,6 +1298,14 @@ var lang;
 		        .success(function (data, status, headers) {
 		            $scope.language = lang;
 		            console.log(lang + "   chage fsfd")
+		            $rootScope.$$childTail.ctrl.maps.map(function(e, i){
+		            	e.display = e["name_" + lang];
+		            });
+		            if($rootScope.$$childTail.ctrl.states != undefined)
+			            $rootScope.$$childTail.ctrl.states.map(function(e, i){
+			            	e.display = angular.lowercase(e["name_" + lang]);
+			            });
+//		            console.log($rootScope.$$childTail.ctrl.maps)
 		            $translate.use(lang);
 		            if ((window.location.href).indexOf("statistic") !== -1){
 		            	$route.reload();
