@@ -154,7 +154,8 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "History is empty",
 			
 		
-		SELECTED_OPTION: 'You selected option: '
+		SELECTED_OPTION: 'You selected option: ',
+		SELECT_MAP: 'Select a map: '
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -273,7 +274,8 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "Історія порожня",
 		NONE: "Нічого",
 		
-		SELECTED_OPTION: 'Ви вибрали опцію: '
+		SELECTED_OPTION: 'Ви вибрали опцію: ',
+		SELECT_MAP: 'Виберіть карту:'
 	});
 	$translateProvider.preferredLanguage(lang);
 });

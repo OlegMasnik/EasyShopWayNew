@@ -302,7 +302,7 @@ var lang;
 						self.maps = loadAllMaps(data);
 						$scope.maps = self.maps[0].value;
 						self.click();
-						console.log(self.maps);
+						console.log(self.maps);	
 					}).error(function(data, status, header, config) {
 				//console.log(data);
 			});

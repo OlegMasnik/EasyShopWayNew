@@ -19,7 +19,7 @@
 
         <md-card-title>
             <md-card-title-text>
-                <span class="md-headline">Options</span>
+                <span class="md-headline">{{ 'OPTION' | translate }}</span>
             </md-card-title-text>
         </md-card-title>
 
@@ -29,7 +29,7 @@
                 <div flex="80" flex-offset-sm="10" layout-md="column" layout-gt-md="row">
                     <md-input-container flex>
                         <label>Select a map</label>
-                        <md-select ng-model="someModel" placeholder="Select a map">
+                        <md-select ng-model="someModel" placeholder="{{ 'SELECT_MAP' | translate }}">
 
                             <md-option ng-click="createMap()">{{ 'ADD_NEW' | translate }}</md-option>
                             <md-option ng-model="m" value="{{_m.id}}" ng-click="clickOnSelect(_m.id)" ng-repeat="_m in mapsName">{{ _m.name_en }}/{{_m.name_uk}}</md-option>
