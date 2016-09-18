@@ -25,8 +25,6 @@ public class ProductCoordinate {
 				}
 			}
 		}
-		System.out.println("*8*8*8*8*8*8*");
-		System.out.println(coordinates.toString());
 		return coordinates;
 
 	}
