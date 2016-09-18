@@ -21,7 +21,7 @@ tr td:last-child {
 }
 </style>
 <md-dialog id="cupboardEdit">
-<form ng-cloak>
+<form ng-cloak name="cupboardForm">
 	<md-toolbar>
 	<div class="md-toolbar-tools">
 		<h2>{{ 'EDIT_CUPBOARD' | translate }} {{item.id}}</h2>
@@ -33,14 +33,17 @@ tr td:last-child {
 	<md-dialog-content>
 	<div class="md-dialog-content">
 		<div layout="row">
-			<md-input-container flex> <label>{{ 'ENGLISH_DESCRIPTION' | translate }}</label> <input type="text" ng-model="name_en"> </md-input-container>
-			<md-input-container flex> <label>{{ 'UKRAINE_DESCRIPTION' | translate }}</label> <input type="text" ng-model="name_uk"> </md-input-container>
+			<md-input-container flex> <label>{{'ENGLISH_DESCRIPTION' | translate}}</label> <input type="text" ng-model="name_en"
+			ng-pattern="/^[a-zA-Z][a-zA-Z0-9-'\s%#\\]+$/"> </md-input-container>
+			<md-input-container flex> <label>{{'UKRAINE_DESCRIPTION' | translate}}</label> <input type="text" ng-model="name_uk"
+			ng-pattern="/^[\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u049\u0404\u04541a-zA-Z][a-zA-Z\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u0491\u0404\u04541\s0-9-'%#\\]+$/">
+			</md-input-container>
 		</div>
 		
 		<table border="0" cellspacing="0" cellpadding="0">
 		<tr ng-repeat="k in item.board_count | range">
 			<td ng-repeat="i in item.values">
-			<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}">
+			<md-select ng-model="cupboardCells[k * item.values.length + $index]" flex placeholder="{{cupboardCells[k * item.values.length + $index].name_en}}" aria-label="place">
 				<md-option value="">None</md-option> 
 				<md-option ng-repeat="p in allProducts" value="{{p}}">{{p.name_en}}</md-option> 
 			</md-select>
@@ -52,7 +55,7 @@ tr td:last-child {
 		<div layout="row">
 			<md-button ng-click="deleteCupboard(item)"> {{ 'DELETE' | translate }}</md-button>
 		</md-dialog-actions>
-		<md-button ng-click="answer(item)"> {{ 'SAVE' | translate }} </md-button>
+		<md-button ng-click="answer()" ng-disabled="cupboardForm.$invalid"> {{ 'SAVE' | translate }} </md-button>
 		</md-dialog-actions>
 	</div>
 	</md-dialog-content>

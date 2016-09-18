@@ -60,7 +60,7 @@
 			
 			<md-card-content>
 			
-			<md-switch ng-model="theme" ng-change="onChange(theme)" label="Dark theme: " ng-true-value="'enabled'" ng-false-value="'disabled'" aria-label="Switch 1">
+			<md-switch ng-model="themeSwitch" ng-change="onChange(themeSwitch)" label="Dark theme: " ng-true-value="'enabled'" ng-false-value="'disabled'" aria-label="Switch 1">
     Dark theme: {{ message }}
   </md-switch>
 			
@@ -80,12 +80,12 @@
 			</md-card-title-text> </md-card-title>
 		<md-card-content layout="column">
 			
-			<md-input-container  flex style=" text-align: center; margin-bottom: 0px;  margin-top: 8px;">
-				<div class="fileinputs">
-				<input type="file"
-					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp"
-					ng-model="file" name="file" id="file" class="md-raised file" required />
-					</div>
+<!-- 			<md-input-container  flex style=" text-align: center; margin-bottom: 0px;  margin-top: 8px;"> -->
+<!-- 				<div class="fileinputs"> -->
+<!-- 				<input type="file" -->
+<!-- 					accept=".jpg,.png,.gif,.bmp, image/vnd.sealedmedia.softseal-jpg,image/vnd.sealed-png,image/vnd.sealedmedia.softseal-gif,image/bmp" -->
+<!-- 					ng-model="file" name="file" id="file" class="md-raised file" required aria-label=" "/> -->
+<!-- 					</div> -->
 
 
 <!-- <input type="file" class="file" /> -->
@@ -96,7 +96,24 @@
 <!--  </div> -->
 
 
-			</md-input-container>
+<!-- 			</md-input-container> -->
+
+<div ng-app="myApp" ng-controller="InputFileCtrl" >
+  
+  <choose-file layout="row" flex style="margin: 0; padding: 0;">
+    <input id="fileInput" type="file" class="ng-hide">
+    <md-input-container flex class="md-block">
+      <input type="text" ng-model="fileName" disabled>
+      <div class="hint">Select your file</div>
+    </md-input-container>
+    <div>
+      <md-button id="uploadButton" class="md-fab md-mini">
+        <md-icon class="material-icons">attach_file</md-icon>
+      </md-button>
+    </div>
+  </choose-file>      
+   
+</div>
 		
 		</md-card-content>
 		<md-card-actions layout="row" layout-align="end center">
@@ -114,7 +131,7 @@
 			<md-card-content>
 			
 				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px;  margin-top: 8px;">
-				<label>{{ 'OLD_PASSWORD' | translate }}</label> <input id="oldPass" required
+				<label>{{ 'OLD_PASSWORD' | translate }}</label> <input id="oldPass" required 
 					type="password" name="oldPass" ng-model="user.oldPass"
 					minlength="6" maxlength="25" ng-model="oldPass"> </md-input-container>
 				<md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px; margin-top: 8px;">

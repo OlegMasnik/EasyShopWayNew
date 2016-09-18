@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
     <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+
+    
         <script src='/EasyShopWayNew/js/moment.js'></script>
 
         <md-toolbar id="header" class="md-hue-2">
@@ -15,7 +17,7 @@
 
 
                 <md-input-container>
-                    <md-select style="color: white; !important " ng-model="language">
+                    <md-select style="color: white; !important " ng-model="language" aria-label=" ">
                         <md-option ng-model="uk" value="uk" ng-click='changeLang(uk)'>Українська</md-option>
                         <md-option ng-model="en" value="en" ng-click='changeLang(en)'>English</md-option>
                     </md-select>
@@ -29,7 +31,9 @@
                     </c:when>
                     <c:otherwise>
                         <md-menu md-position-mode="target-right target">
+                        	<div class="profile-img-container">
                             <img ng-click="$mdOpenMenu($event)" ng-src="images/wall-material.png" class="head-profile-img" alt="Contact">
+                            </div>
                             <md-menu-content>
                                 <md-menu-item>
                                     <md-button ng-click="do()" href="/EasyShopWayNew/cabinet#/">

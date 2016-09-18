@@ -48,15 +48,11 @@ public class RegistrationServlet extends HttpServlet {
 					+ lastName + " " 
 					+ email + " " 
 					+ password);
+			String cryptedPassword = MD5Util.md5Custom(password);
 			
-			password = MD5Util.md5Custom(request.getParameter("password"));
-			
-			User user = new User(firstName, lastName, email, password, true, "user", "en", "", "default");
-			
-
-			System.out.println(firstName.equals(""));
+			User user = new User(firstName, lastName, email, cryptedPassword, true, "user", "en", "", "default");
 			object = new JSONObject();
-			if (firstName == "" || lastName == "" || email == "" || password == "") {
+			if (firstName == "" || lastName == "" || email == "" || cryptedPassword == "") {
 				object.put("emailErrMsg", "Please, fill all fields");
 				System.out.println("empty form");
 			}
@@ -65,15 +61,23 @@ public class RegistrationServlet extends HttpServlet {
 				object.put("emailErrMsg", "This email already exists");
 				System.out.println("This email has already exists.");
 			} else {
+				User preUser = (User) request.getSession().getAttribute("pre_user");
+				if (preUser != null && (user.getEmail().equals(preUser.getEmail()) && user.getLastName().equals(preUser.getLastName()) && user.getFirstName().equals(preUser.getFirstName()))) {
+					object.put("preuserMsg", "Check your email.");
+				} else {
 				// new Thread(new ThreadMail(request, user)).start();
 				new Thread(new Runnable() {
 
 					@Override
 					public void run() {
+						System.out.println(user.getEmail());
+						System.out.println(user.getFirstName());
+						System.out.println(user.getLastName());
+						System.out.println(user.getPassword());
 						try {
 							MailUtil.sendEmailRegistrationLink(user.getEmail(),
 									user.getFirstName() + " " + user.getLastName(),
-									MD5Util.md5Custom(request.getParameter("password")));
+									cryptedPassword);
 						} catch (MessagingException e) {
 							e.printStackTrace();
 						}
@@ -83,6 +87,7 @@ public class RegistrationServlet extends HttpServlet {
 				object.put("emailSuccMsg", "This email already exists");
 				System.out.println("Chech your email.");
 				request.getSession().setAttribute("pre_user", user);
+				}
 			}
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(object.toString());

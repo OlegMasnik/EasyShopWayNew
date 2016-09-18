@@ -9,22 +9,26 @@
                 EasyShopWay
             </title>
             
-            
+            <link rel="stylesheet" href="css/preloader/preloader.css">
             <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
           <link rel="stylesheet" href="css/cabinet-style.css">
           <link rel="stylesheet" href="css/style.css">
           <link rel="shortcut icon" href="favicon.ico">
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         </head>
 
-        <body ng-app="MyApp" layout="column">
-            <jsp:include page="../parts/header.jsp"></jsp:include>
+        <body ng-app="MyApp" layout="column"  md-theme="{{ theme }}">
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
+	<jsp:include page="../parts/header.jsp"></jsp:include>
             <md-content layout="row" flex>
          
             <md-slidenav class="cabinet-sidenav" layout="column" md-is-locked-open="true"
 		layout="column" md-whiteframe="4">
                     <md-content layout="column" flex>
                         <a href="#/">
-                            <div class="cab-user-logo" layot="row" layout-padding>
+                            <div class="cab-user-logo md-primary" layot="row" layout-padding>
 
                                 <img src="${user.image }" alt="" class="profile-img">
 
@@ -38,17 +42,16 @@
                         <md-button href="#history">{{ 'USER_CABINET_HISTORY' | translate }}</md-button>
                     </md-content>
                 </md-slidenav>
-            <md-content layout="row" class="main-page" flex>
+            <md-content layout="column" class="main-page" flex>
                 
-                
-                
-
-                <div flex class="content" layout="column">
+                <div class="content" layout="column">
                     <div ng-view onload="getFoodData()"></div>
+                    
                 </div>
+                
             </md-content>
             
-            <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
+            <md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page" aria-label="search">
 	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
     </md-button>
             
@@ -69,6 +72,8 @@
             <script src="js/shared/statistic.js"></script>
             <script src="js/shared/cabinet.js"></script>
             <script src="js/jquery.validate.min.js"></script>
+            
+            	<script src="js/preloader/preloader.js"></script>
         </body>
 
         </html>

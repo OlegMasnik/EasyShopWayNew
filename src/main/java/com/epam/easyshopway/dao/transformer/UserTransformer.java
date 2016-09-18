@@ -27,6 +27,7 @@ public class UserTransformer {
 			user.setRole(rs.getString("role"));
 			user.setLanguage(rs.getString("language"));
 			user.setActive(active);
+			user.setTheme(rs.getString("theme"));
 			if (rs.getString("image") != null) {
 				user.setImage(rs.getString("image"));
 			}

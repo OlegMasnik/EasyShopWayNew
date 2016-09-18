@@ -48,7 +48,7 @@
 
 	<md-button ng-click="page.goToPage('search')"
 		class="md-fab md-fab-bottom-right"
-		ng-controller="PageRedirectCtrl as page"> <md-icon
+		ng-controller="PageRedirectCtrl as page" aria-label="search"> <md-icon
 		md-svg-src="images/svg/vectorpaint.svg"></md-icon> </md-button>
 		
 	<script src="js/jquery-3.1.0.min.js"></script>

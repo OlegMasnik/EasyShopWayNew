@@ -7,6 +7,7 @@
 
         <head>
             <title>Search</title>
+            <link rel="stylesheet" href="css/preloader/preloader.css">
             <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
             <link rel="stylesheet" href="css/style.css">
             <link rel="stylesheet" href="css/icon.css">
@@ -15,9 +16,14 @@
 
         </head>
 
-        <body ng-app="SearchApp" layout="column">
-            <script src='js/moment.js'></script>
+        <body ng-app="SearchApp" layout="column" md-theme="${ user.theme == null ? "default" : user.theme }">
 
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
+
+	<script src='js/moment.js'></script>
+            
             <jsp:include page="parts/header.jsp"></jsp:include>
 
             <md-content layout="row" class="main-page" flex ng-controller="ProductListCtrl as ctrl">
@@ -25,7 +31,7 @@
 
                     <div class="autocompletedemoBasicUsage" layout="column" flex ng-cloak="">
 
-                        {{ctrl.a = ${tryToSend}}} {{ctrl.a}}
+                        
                         <md-content class="md-padding" layout="column" flex>
                             <md-input-container class="md-block" flex="none">
                                 <label>Map</label>
@@ -69,7 +75,7 @@
                                 <md-button class="md-fab md-mini md-primary" ng-click="decScale()" ng-disabled="config.cellSize < 6">
                                     <i class="material-icons">remove</i></md-button>
 
-                                <md-slider flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()"></md-slider>
+                                <md-slider flex="" min="5" max="51" step="1" ng-model="config.cellSize" ng-change="scale()" aria-label=" "></md-slider>
 
                                 <md-button class="md-fab md-mini md-primary" ng-click="incScale()" ng-disabled="config.cellSize > 50">
                                     <i class="material-icons">add_circle_outline</i></md-button>
@@ -119,7 +125,8 @@
                     downloadCanvas(this, 'canvas', name);
                 }, false);
             </script>
-
+			
+			<script src="js/preloader/preloader.js"></script>
 
         </body>
 

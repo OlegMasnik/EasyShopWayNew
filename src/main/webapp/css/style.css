@@ -231,7 +231,16 @@ footer {
 /*    Header content */ 
 
 .head-profile-img {
-    height:  60px;
-    
-/*     border-radius: 200%; */
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+
+.profile-img-container {
+	height: 60px;
+	width: 60px;
+	overflow: hidden;
+	border-radius: 50%;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }

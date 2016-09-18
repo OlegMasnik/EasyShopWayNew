@@ -6,6 +6,8 @@
 
 <head>
 <title><c:out value="${user.firstName }"></c:out></title>
+
+<link rel="stylesheet" href="css/preloader/preloader.css">
 <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/cabinet-style.css">
 <link rel="stylesheet" href="css/style.css">
@@ -13,10 +15,15 @@
 <link rel="shortcut icon" href="favicon.ico">
 
 <link rel="stylesheet" href="css/datatable/md-data-table.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
 <body ng-app="MyApp" layout="column" ng-controller="AdminCtrl" md-theme="{{ theme }}">
+
+<div id="loader-wrapper">
+    <div id="loader"></div>
+</div>
 
 	<jsp:include page="../parts/header.jsp"></jsp:include>
 	<md-content layout="row" flex> 
@@ -45,9 +52,10 @@
 	<div flex class="content" layout="column" >
 		<div ng-view onload="getFoodData()"></div>
 	</div>
+
 	</md-content> </md-content>
 
-<md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page">
+<md-button ng-click="page.goToPage('search')" class="md-fab md-fab-bottom-right" ng-controller="PageRedirectCtrl as page" aria-label="search">
 	<md-icon md-svg-src="images/svg/vectorpaint.svg"></md-icon>
     </md-button>
     
@@ -70,6 +78,8 @@
 	<script src="js/shared/cabinet.js"></script>
 	<script src="js/jquery.validate.min.js"></script>
 	<script src='js/admin/mail.js'></script>
+	
+	<script src="js/preloader/preloader.js"></script>
 
 </body>
 

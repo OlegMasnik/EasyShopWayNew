@@ -97,6 +97,15 @@ public class ProductPlacementDAO extends AbstractDAO<ProductPlacement> {
 		statement.close();
 		return result;
 	}
+	
+	public int deleteByCupboardId(Integer cupboardId) throws SQLException {
+		PreparedStatement statement = connection
+				.prepareStatement(DELETE_PRODUCT_PLACEMENT_C_ID);
+		statement.setInt(1, cupboardId);
+		int result = statement.executeUpdate();
+		statement.close();
+		return result;
+	}
 
 	@Override
 	public List<ProductPlacement> getAll() throws SQLException,

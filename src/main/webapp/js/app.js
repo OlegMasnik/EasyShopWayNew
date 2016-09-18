@@ -8,7 +8,7 @@ var lang;
 var app = angular.module('MyApp', [ 'ngMaterial', 'ngRoute',
 		'pascalprecht.translate' ]);
 
-app.config(function($mdThemingProvider) {
+app.config(function($mdThemingProvider, $provide) {
 	$mdThemingProvider.alwaysWatchTheme(true);
 	
 	  $mdThemingProvider.theme('default')
@@ -16,6 +16,9 @@ app.config(function($mdThemingProvider) {
 	  
 	  $mdThemingProvider.theme('dark')
 	    .primaryPalette('pink').dark();
+	  
+	  $provide.value('themeProvider', $mdThemingProvider);
+	  
 	});
 
 app.config(function($translateProvider) {
@@ -102,6 +105,9 @@ app.config(function($translateProvider) {
 		UKRAINE_DESCRIPTION:'Ukrainian description',
 		BOARD_COUNT:'Board count',
 		EDIT_CUPBOARD:'Edit cupboard',
+		FILL_CUPBOARD:'Fill cupboard',
+		ELEMENTS:'Map components',
+		EDIT_CUPBOARD_MSG:'Choose cupboard on map',
 		
 		CREATE_NEW_MAP:'Create new map',
 		
@@ -125,7 +131,8 @@ app.config(function($translateProvider) {
 		
 		DELETE_MAP: 'Would you like to delete this map?',
 		YES: 'Yes',
-		No: 'No'
+		No: 'No',
+		PREUSER: "Check your email"
 	
 	
 	}).translations('uk', {
@@ -200,6 +207,9 @@ app.config(function($translateProvider) {
 		UKRAINE_DESCRIPTION:'Опис українською',
 		BOARD_COUNT:'Кількість полиць',
 		EDIT_CUPBOARD:'Редагувати стелаж',
+		FILL_CUPBOARD:'Наповнити стелаж',
+		ELEMENTS:'Елементи мапи',
+		EDIT_CUPBOARD_MSG:'Виберіть стелаж на мапі',
 		
 		CREATE_NEW_MAP:'Створити нову карту',
 		
@@ -228,9 +238,10 @@ app.config(function($translateProvider) {
 		SUCCESS_DELETE: 'успішно видалений',
 		FAILED_DELETE: 'помилка видалення',
 		
-		DELETE_MAP: 'Would you like to delete this map?',
+		DELETE_MAP: 'Ви бажаєте видалити дану карту ?',
 		YES: 'Так',
-		No: 'Ні'
+		No: 'Ні',
+		PREUSER: "Перевірте електронну скриньку"
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -244,31 +255,108 @@ app.controller('PageRedirectCtrl', function($window) {
 
 });
 
-app.controller("ThemeCtrl", function($scope, $rootScope, $mdTheming) {
-	$scope.changeTheme = function() {
-		console.log("Change to alt");
-		$rootScope.theme = 'altTheme';
+app.controller("ThemeCtrl", function($scope, $rootScope, $http) {
+	
+	if ($rootScope.theme == "dark") {
+		$scope.themeSwitch = "enabled";
+		$scope.message = "enabled";
+	} else {
+		$scope.themeSwitch = "disabled";
+		$scope.message = "disabled";
 	}
 	
-	$scope.theme = false;
+	console.log($scope.themeSwitch);
 	
-	$scope.message = 'disabled';
-
 	$scope.onChange = function(cbState) {
-		
+		console.log(cbState);
 		$scope.message = cbState;
+		
+		var config = {
+				headers : {
+					'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+				}
+			}
 		
 		if (cbState == 'enabled') {
 			$rootScope.theme = 'dark';
 		} else {
 			$rootScope.theme = 'default';
 		}
+		
+		var data = $.param({
+			theme : $rootScope.theme
+		});
+		
+		$http
+		.post('/EasyShopWayNew/info/theme', data,
+				config)
+		.success(
+				function(data, status,
+						headers, config) {
+					
+				}).error(
+				function(data, status,
+						header, config) {
+					console.log('fail to set theme');
+				});
+		
 	};
 });
 
-app.controller('AppCtrl', function ($http, $route, $scope, $mdDialog, $mdMedia, $translate, $mdTheming) {
+app.controller('InputFileCtrl', function($scope) {})
+app.directive('chooseFile', function() {
+  return {
+    link: function (scope, elem, attrs) {
+      var button = elem.find('button');
+      var input = angular.element(elem[0].querySelector('input#fileInput'));
+      button.bind('click', function() {
+        input[0].click();
+      });
+      input.bind('change', function(e) {
+        scope.$apply(function() {
+          var files = e.target.files;
+          if (files[0]) {
+            scope.fileName = files[0].name;
+          } else {
+            scope.fileName = null;
+          }
+        });
+      });
+    }
+  };
+});
+
+app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
-	$scope.theme = 'default';
+//	$scope.theme = 'default';
+	
+	var config = {
+			headers : {
+				'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
+			}
+		}
+
+		$http.get('/EasyShopWayNew/info/theme', config)
+				.success(
+				function(data, status, headers,
+						config) {
+
+					console.log(data);
+					$rootScope.theme = data.theme;
+					$scope.theme = data.theme;
+										
+//					if (data.theme == "dark") {
+//						$scope.themeSwitch = true;
+//					} else {
+//						$scope.themeSwitch = false;
+//					}
+//					
+					
+				}).error(
+				function(data, status, header,
+						config) {
+					console.log('fail');
+				});
 	
     $scope.status = '  ';
     
@@ -432,10 +520,12 @@ app
 														console
 																.log("QWEER"
 																		+ data.emailErrMsg);
-														if (data.emailSuccMsg != undefined) 
+														if (data.emailSuccMsg != undefined)
 															showToast($mdToast, $scope, $translate.instant('CHECK_EMAIL'));
 														if (data.emailErrMsg != undefined) 
-																showToast($mdToast, $scope, $translate.instant('EMAIL_EXIST'));
+															showToast($mdToast, $scope, $translate.instant('EMAIL_EXIST'));
+														if (data.preuserMsg != undefined)
+															showToast($mdToast, $scope, $translate.instant('PREUSER'));
 													}).error(
 													function(data, status,
 															header, config) {

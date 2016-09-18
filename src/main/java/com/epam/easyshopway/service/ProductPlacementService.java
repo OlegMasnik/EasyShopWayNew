@@ -37,6 +37,17 @@ public class ProductPlacementService {
 		}
 		return 0;
 	}
+	
+	public static int deleteByCupboardId(Integer cupboarId) {
+		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
+			return productDAO.deleteByCupboardId(cupboarId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 	public static ProductPlacement getById(Integer index) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {

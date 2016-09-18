@@ -65,6 +65,10 @@ public class AdminProductServlet extends HttpServlet {
 				
 			case "getCupboardsProducts":{
 				Integer cupboardId = Integer.valueOf(request.getParameter("cupboardId"));
+				Cupboard cupboard = CupboardService.getById(cupboardId);
+				JSONObject responseObject = new JSONObject();
+				responseObject.put("name_uk", cupboard.getDescriptionUk());
+				responseObject.put("name_en", cupboard.getDescriptionEn());
 				List<CupboardProductInformation> productsOnCupboard = 
 						CupboardProductsInformationService.getAllProductbyCupdoardId(cupboardId);
 				JSONArray resultArray = new JSONArray();
@@ -80,7 +84,9 @@ public class AdminProductServlet extends HttpServlet {
 					product.put("place", places);
 					resultArray.add(product);
 				}
-				response.getWriter().write(resultArray.toString());
+				responseObject.put("data", resultArray);
+				System.out.println(responseObject.toString());
+				response.getWriter().write(responseObject.toString());
 			}
 			break;
 		}
@@ -97,6 +103,9 @@ public class AdminProductServlet extends HttpServlet {
 				
 			case "setProducts":{
 				String data = request.getParameter("data");
+				String nameUk = request.getParameter("name_uk");
+				String nameEn = request.getParameter("name_en");
+				int cupboardId = Integer.valueOf(request.getParameter("cupboardId"));
 				try {
 					JSONParser parser = new JSONParser();
 					JSONArray products = (JSONArray) parser.parse(data.toString());
@@ -105,16 +114,20 @@ public class AdminProductServlet extends HttpServlet {
 						JSONObject product  = (JSONObject)products.get(i);
 						System.out.println(product);
 						int prodId = ((Long) product.get("prodId")).intValue();
-						int cupboardId = ((Long) product.get("cupboardId")).intValue();
+						//cupboardId = ((Long) product.get("cupboardId")).intValue();
 						int place = ((Long) product.get("place")).intValue();
 						ProductPlacement productPlacement = new ProductPlacement();
 						productPlacement.setProductId(prodId);
 						productPlacement.setCupboardId(cupboardId);
 						productPlacement.setPlace(place);
-						ProductPlacementService.deleteByCupboardId(productPlacement);
-						ProductPlacementService.insert(productPlacement);
+						if (i == 0)
+							ProductPlacementService.deleteByCupboardId(cupboardId);
+						System.out.println(ProductPlacementService.insert(productPlacement));
 					}
-				
+					Cupboard cupboard = CupboardService.getById(cupboardId);
+					cupboard.setDescriptionEn(nameEn);
+					cupboard.setDescriptionUk(nameUk);
+					CupboardService.update(cupboardId, cupboard);
 				} catch (org.json.simple.parser.ParseException e) {
 					e.printStackTrace();
 				}	

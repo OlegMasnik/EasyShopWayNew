@@ -41,9 +41,9 @@ public class SearchServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String uri = request.getRequestURI();
-
+		
 		if (uri.endsWith("search")) {
-			request.getSession().setAttribute("tryToSend", "Lalalalala");
+			
 			request.getRequestDispatcher("/WEB-INF/temp.jsp").forward(request, response);
 		} else if (uri.endsWith("searchProducts")) {
 
