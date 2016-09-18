@@ -133,10 +133,8 @@ app.config(function($translateProvider) {
 		YES: 'Yes',
 		No: 'No',
 		PREUSER: "Check your email",
-			
+		CONFIRM_DELETE: "CONFIRM DELETE:"
 		
-	
-	
 	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
@@ -243,7 +241,8 @@ app.config(function($translateProvider) {
 		DELETE_MAP: 'Ви бажаєте видалити дану карту ?',
 		YES: 'Так',
 		No: 'Ні',
-		PREUSER: "Перевірте електронну скриньку"
+		PREUSER: "Перевірте електронну скриньку",
+		CONFIRM_DELETE: "Підтвердіть видалення:"
 	});
 	$translateProvider.preferredLanguage(lang);
 });

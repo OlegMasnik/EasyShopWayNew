@@ -23,6 +23,7 @@ import com.epam.easyshopway.service.CupboardPlacementService;
 import com.epam.easyshopway.service.CupboardService;
 import com.epam.easyshopway.service.MapService;
 import com.epam.easyshopway.service.PlacementService;
+import com.epam.easyshopway.service.ProductPlacementService;
 import com.epam.easyshopway.service.ProductTypeService;
 
 public class AdminMapServlet extends HttpServlet {
@@ -161,8 +162,6 @@ public class AdminMapServlet extends HttpServlet {
 		case "map": {
 			Integer mapId = Integer.valueOf(req.getParameter("id"));
 			List<Cupboard> cupboards = CupboardService.getByMapId(mapId);
-			System.out.println(mapId);
-			System.out.println(cupboards);
 			for (Cupboard cupboard : cupboards) {
 				CupboardService.delete(cupboard.getId());
 			}

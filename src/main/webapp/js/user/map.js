@@ -817,7 +817,7 @@ var lang;
 	                            for (var w = 0; w < $scope.cupboards[q].values.length; w++) {
 	                                if (cell == $scope.cupboards[q].values[w]) {
 	                                    //console.log("You click on: ");
-	                                    //console.log($scope.cupboards[q]);
+	                                    console.log($scope.cupboards[q]);
 	                                    $scope.openCupBoard($scope.cupboards[q]);
 	                                }
 	                            }
@@ -1232,25 +1232,26 @@ var lang;
 
 		    function OpenCupboardCtrl($scope, $mdDialog, item) {
 		        $scope.item = item;
-		        console.log($scope.item);
-//		        $http({
-//		            method: "GET",
-//		            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
-//		        }).then(function mySucces(response) {
-//		            $scope.currentProducts = response.data;
-//		            $scope.cupboardCells = new Array(item.board_count * item.values.length);
-//		            if (typeof ($scope.currentProducts) != "undefined") {
-//		                for (var i = 0; i < $scope.currentProducts.length; i++) {
-//		                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
-//		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
-//		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]].img = getImgByProdId($scope.cupboardCells[$scope.currentProducts[i].place[j]].prodId);
-//		                    }
-//		                }
-//		            }
-//		        }, function myError(response) {
-//		        	console.log('fail')
-//		        	console.log(responce)
-//		        });
+		        $http({
+		            method: "GET",
+		            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
+		        }).then(function mySucces(response) {
+		        	$scope.cupboardCells = new Array(item.board_count * item.values.length);
+		            $scope.currentProducts = response.data.data;
+		            
+		            if (typeof ($scope.currentProducts) != "undefined") {
+		                for (var i = 0; i < $scope.currentProducts.length; i++) {
+		                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
+		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
+		                        $scope.cupboardCells[$scope.currentProducts[i].place[j]].img = getImgByProdId($scope.cupboardCells[$scope.currentProducts[i].place[j]].prodId);
+		                    }
+		                }
+		            }
+		            console.log($scope.cupboardCells);
+		        }, function myError(response) {
+		        	console.log('fail')
+		        	console.log(responce)
+		        });
 		        
 		        $scope.hide = function () {
 		            $mdDialog.hide();
