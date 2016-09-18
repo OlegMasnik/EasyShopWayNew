@@ -8,10 +8,10 @@ import com.epam.easyshopway.service.ProductPlacementService;
 
 public class ProductCoordinate {
 
-	public static List<Integer> getProductCoordinatesOnMap(int productId) {
+	public static List<Integer> getProductCoordinatesOnMap(int productId, int mapId) {
 		List<Integer> coordinates = new ArrayList<Integer>();
 		List<ProductPlacement> productPlacements = ProductPlacementService
-				.getByProductId(productId);
+				.getByProductIdAndMapId(productId, mapId);
 		if (!productPlacements.isEmpty()) {
 			for (ProductPlacement productPlacement : productPlacements) {
 				List<Placement> cupboardPlacements = PlacementService
@@ -25,7 +25,8 @@ public class ProductCoordinate {
 				}
 			}
 		}
-
+		System.out.println("*8*8*8*8*8*8*");
+		System.out.println(coordinates.toString());
 		return coordinates;
 
 	}

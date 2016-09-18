@@ -70,6 +70,16 @@ public class ProductPlacementService {
 		}
 		return null;
 	}
+	public static List<ProductPlacement> getByProductIdAndMapId(Integer id, Integer mapId) {
+		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
+			return productDAO.getByProductIdAndMapId(id, mapId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static List<ProductPlacement> getByProductIdAndCupboardId(Integer productId, Integer cupboarId) {
 		try (ProductPlacementDAO productDAO = new ProductPlacementDAO()) {
