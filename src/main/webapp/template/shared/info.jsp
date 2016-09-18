@@ -59,11 +59,11 @@
                 <md-card-title>
 
                     <md-card-title-text>
-                        <div class="cab-category">Theme</div>
+                        <div class="cab-category">{{ 'THEME' | translate }}</div>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
-                    <md-switch ng-model="themeSwitch" ng-change="onChange(themeSwitch)" label="Dark theme: " ng-true-value="'enabled'" ng-false-value="'disabled'" aria-label="Switch 1"> Dark theme: {{ message }} </md-switch>
+                    <md-switch ng-model="themeSwitch" ng-change="onChange(themeSwitch)" label="Dark theme: " ng-true-value="'{{ 'ENABLED' | translate }}'" ng-false-value="'{{ 'DISABLED' | translate }}'" aria-label="Switch 1">{{ 'DARK_THEME' | translate }}: {{ message }} </md-switch>
                 </md-card-content>
             </md-card>
 
@@ -103,9 +103,9 @@
                         <aps-upload-file>
                             <input id="file" type="file" class="ng-hide">
                             <md-button id="uploadButton" class="md-raised md-primary" aria-label="attach_file">
-                                Choose file </md-button>
+                                {{ 'CHOOSE_FILE' | translate }} </md-button>
                             <md-input-container md-no-float>
-                                <input id="textInput" ng-model="fileName" type="text" placeholder="No file chosen" ng-readonly="true">
+                                <input id="textInput" ng-model="fileName" type="text" placeholder="{{ 'NO_FILE' | translate }}" ng-readonly="true">
                             </md-input-container>
                         </aps-upload-file>
 

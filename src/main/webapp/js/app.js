@@ -139,9 +139,13 @@ app.config(function($translateProvider) {
 		CONFIRM_DELETE: "CONFIRM DELETE:",
 		NO_DIAGRAM: "Empty",
 		USER_HISTORY_EMPTY: "History is empty",
-			
-		
-		SELECTED_OPTION: 'Selected option: '
+		CHOOSE_FILE: "Choose file",	
+		NO_FILE: "No file chosen",
+		SELECTED_OPTION: 'Selected option: ',
+		THEME: "Theme",
+		DARK_THEME: "Dark theme",
+		DISABLED: "disabled",
+		ENABLED: "enabled"
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -254,7 +258,12 @@ app.config(function($translateProvider) {
 		NO_DIAGRAM: "Порожньо",
 		USER_HISTORY_EMPTY: "Історія порожня",
 		NONE: "Нічого",
-		
+		CHOOSE_FILE: "Вибрати файл",	
+		NO_FILE: "Файл не вибрано",
+		THEME: "Тема",
+		DARK_THEME: "Темна тема",
+		DISABLED: "виключено",
+		ENABLED: "включено",
 		SELECTED_OPTION: 'Вибрана опція: '
 	});
 	$translateProvider.preferredLanguage(lang);
@@ -291,7 +300,7 @@ app.controller("ThemeCtrl", function($scope, $rootScope, $http) {
 				}
 			}
 		
-		if (cbState == 'enabled') {
+		if (cbState == 'enabled' || cbState == 'включено') {
 			$rootScope.theme = 'dark';
 		} else {
 			$rootScope.theme = 'default';
