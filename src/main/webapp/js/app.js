@@ -109,6 +109,8 @@ app.config(function($translateProvider) {
 		CHANGE_SIZE:'Change size',
 		PAY_DESCK:'Paydesck',
 		CUP_BOARD:'Cupboard',
+		TARGET: 'Selected product',
+		TARGET_NOT_VISITED: 'Not selected product',
 		
 		CREATE_NEW_CUPBOARD:'Create new cupboard',
 		ENGLISH_DESCRIPTION:'English description',
@@ -125,6 +127,7 @@ app.config(function($translateProvider) {
 		WALL:'Wall',
 		EDIT:'Edit',
 		SAVE:'Save',
+		PATH:'Way',
 		CANCEL:'Cancel',
 		DELETE:'Delete',
 		CLEAR:'Clear',
@@ -143,10 +146,16 @@ app.config(function($translateProvider) {
 		YES: 'Yes',
 		No: 'No',
 		PREUSER: "Check your email",
+		NO_DIAGRAM: "Empty",
+		NONE: "None",
+			
 		CONFIRM_DELETE: "CONFIRM DELETE:",
 		NO_DIAGRAM: "Empty",
-		USER_HISTORY_EMPTY: "History is empty"
+		USER_HISTORY_EMPTY: "History is empty",
 			
+		
+		SELECTED_OPTION: 'Selected option: '
+		
 	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
@@ -232,8 +241,13 @@ app.config(function($translateProvider) {
 		CHANGE_SIZE:'Змінити розмір',
 		PAY_DESCK:'Каса',
 		CUP_BOARD:'Стелаж',
+		
+		TARGET:'Вибранй товар',
+		TARGET_NOT_VISITED:'Не вибраний товар',
+		
 		ENTER:'Вхід',
 		WALL:'Стіна',
+		PATH:'Шлях',
 		EDIT:'Змінити',
 		SAVE:'Зберегти',
 		CANCEL:'Відмінити',
@@ -256,7 +270,10 @@ app.config(function($translateProvider) {
 		PREUSER: "Перевірте електронну скриньку",
 		CONFIRM_DELETE: "Підтвердіть видалення:",
 		NO_DIAGRAM: "Порожньо",
-		USER_HISTORY_EMPTY: "Історія порожня"
+		USER_HISTORY_EMPTY: "Історія порожня",
+		NONE: "Нічого",
+		
+		SELECTED_OPTION: 'Вибрана опція: '
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -485,10 +502,11 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
     $scope.en = 'en';
     $scope.uk = 'uk';
     
-    $scope.changeLang = function(lang){
-    	$http.put('/EasyShopWayNew/home?lang=' + lang)
+    $scope.changeLang = function(l){
+    	$http.put('/EasyShopWayNew/home?lang=' + l)
         .success(function (data, status, headers) {
-            $scope.language = lang;
+            $scope.language = l;
+            lang = l;
             console.log(lang + "   chage fsfd")
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
@@ -861,12 +879,13 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
 			}
 
 		} ]);
+
 function showToast($mdToast, $scope, msg) {
 	var last = {
 		bottom : true,
 		top : false,
-		left : true,
-		right : false
+		left : false,
+		right : true
 	};
 	$scope.toastPosition = angular.extend({}, last);
 
