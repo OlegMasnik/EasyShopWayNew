@@ -60,6 +60,7 @@ public class UserStatisticServlet extends HttpServlet {
 			System.out.println(pieChart);
 			System.out.println(columnChart);
 			JSONObject responseObject = new JSONObject();
+			responseObject.put("theme", user.getTheme());
 			responseObject.put("pie", pieChart);
 			responseObject.put("column", columnChart);
 			responseObject.put("lang", user.getLanguage());

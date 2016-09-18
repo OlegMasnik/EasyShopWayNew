@@ -133,8 +133,9 @@ app.config(function($translateProvider) {
 		YES: 'Yes',
 		No: 'No',
 		PREUSER: "Check your email",
-		CONFIRM_DELETE: "CONFIRM DELETE:"
-		
+		CONFIRM_DELETE: "CONFIRM DELETE:",
+		NO_DIAGRAM: "Empty"
+			
 	}).translations('uk', {
 		PROFILE:'Профіль',
 		GENERAL_INFORMATION:'Загальна інформація',
@@ -242,7 +243,8 @@ app.config(function($translateProvider) {
 		YES: 'Так',
 		No: 'Ні',
 		PREUSER: "Перевірте електронну скриньку",
-		CONFIRM_DELETE: "Підтвердіть видалення:"
+		CONFIRM_DELETE: "Підтвердіть видалення:",
+		NO_DIAGRAM: "Порожньо"
 	});
 	$translateProvider.preferredLanguage(lang);
 });
