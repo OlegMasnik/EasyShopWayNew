@@ -262,6 +262,7 @@ app.config(function($translateProvider) {
 		NO_DIAGRAM: "Порожньо",
 		USER_HISTORY_EMPTY: "Історія порожня",
 		NONE: "Нічого",
+		
 		SELECTED_OPTION: 'Вибрана опція: '
 	});
 	$translateProvider.preferredLanguage(lang);
