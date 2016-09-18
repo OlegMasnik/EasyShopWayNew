@@ -371,7 +371,8 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
     $("#select_all").change(function(){  //"select all" change 
         $(".checkbox").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
     });
-    ".checkbox" change 
+
+
     $('.checkbox').change(function(){ 
         //uncheck "select all", if one of the listed checkbox item is unchecked
     	console.log("inside uncheck 'select all'");

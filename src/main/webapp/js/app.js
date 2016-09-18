@@ -155,8 +155,8 @@ app.config(function($translateProvider) {
 			
 		
 		SELECTED_OPTION: 'You selected option: ',
-		SELECT_MAP: 'Select a map: '
-		ZERO_USERS_SELECTED: "You have selected 0 users. Select some users first."
+		SELECT_MAP: 'Select a map: ',
+		ZERO_USERS_SELECTED: "You have selected 0 users. Select some users first.",
 		
 		CREATE_PRODUCT_LIST_NOW:'Create product list now',
 		OR:'Or',
@@ -296,7 +296,7 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'клавіші для навігації',
 		STEP_1:'Крок 1. Оберіть магазин, якого мапу  бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
-		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.'
+		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
 		ZERO_USERS_SELECTED: "Виберіть користувачів"
 	});
 	$translateProvider.preferredLanguage(lang);
