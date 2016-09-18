@@ -12,10 +12,20 @@ app.config(function($mdThemingProvider, $provide) {
 	$mdThemingProvider.alwaysWatchTheme(true);
 	
 	  $mdThemingProvider.theme('default')
-	    .primaryPalette('cyan');
+	    .primaryPalette('cyan', {
+	        'default': '600',
+	        'hue-1': '800',
+	        'hue-2': '700',
+	        'hue-3': 'A700'
+	      });
 	  
 	  $mdThemingProvider.theme('dark')
-	    .primaryPalette('pink').dark();
+	    .primaryPalette('pink', {
+	        'default': '600',
+	        'hue-1': '900',
+	        'hue-2': '800',
+	        'hue-3': 'A700'
+	      }).dark();
 	  
 	  $provide.value('themeProvider', $mdThemingProvider);
 	  
@@ -386,7 +396,6 @@ function apsUploadFileLink(scope, element, attrs) {
   }
 
   input.on('change', function(e) {
-    alert(e.target.result);
     var files = e.target.files;
     if (files[0]) {
       scope.fileName = files[0].name;
