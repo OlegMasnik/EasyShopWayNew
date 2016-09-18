@@ -550,12 +550,14 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $mdDialog.cancel();
         };
         $scope.answer = function () {
-        	while($scope.cupboardCells.indexOf("") != -1)
-        		$scope.cupboardCells.removeUndefined("");
-            $scope.cupboardCells.map(function (e, i) {
-                if (typeof (e) == "string")
-                    $scope.cupboardCells[i] = JSON.parse(e)
-            })
+        	if ($scope.cupboardCells.length > 0){
+	        	while($scope.cupboardCells.indexOf("") != -1)
+	        		$scope.cupboardCells.removeUndefined("");
+	            $scope.cupboardCells.map(function (e, i) {
+	                if (typeof (e) == "string")
+	                    $scope.cupboardCells[i] = JSON.parse(e)
+	            })
+        	}
             console.log($scope.cupboardCells);
             $scope.sendCupboardData();
             $mdDialog.hide();
@@ -584,9 +586,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 name_uk: $scope.item.name_uk,
                 data: JSON.stringify(data)
             });
-            //console.log($scope.cupboardCells);
-            //console.log(data);
-//            console.log(sendData);
+            
             $http.post('/EasyShopWayNew/edit_products', sendData, config)
                 .success(function (data, status, headers) {
                     //console.log("success send products")
@@ -616,6 +616,11 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 );
             $mdDialog.hide();
         }
+        
+        $scope.clearCupboard = function () {
+        	$scope.cupboardCells = []
+        }
+        
     }
 
     $scope.createCupBoard = function (values, b_count) {
