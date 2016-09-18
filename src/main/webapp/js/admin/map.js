@@ -519,6 +519,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             $scope.currentProducts = response.data.data;
             $scope.cupboardCells = new Array(item.board_count * item.values.length);
             if ($scope.currentProducts.length > 0) {
+            	console.log('not empty');
                 for (var i = 0; i < $scope.currentProducts.length; i++) {
                     for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
                         $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
@@ -585,7 +586,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             });
             //console.log($scope.cupboardCells);
             //console.log(data);
-            console.log(sendData);
+//            console.log(sendData);
             $http.post('/EasyShopWayNew/edit_products', sendData, config)
                 .success(function (data, status, headers) {
                     //console.log("success send products")
