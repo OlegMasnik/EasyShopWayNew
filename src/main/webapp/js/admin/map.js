@@ -247,12 +247,14 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         break;
                     case 'payDesk':
                         game.paint.value = !($scope.paydesks.indexOf(cell) != -1);
-                        if ($scope.paydesks.indexOf(cell) == -1) {
-                            $scope.paydesks.add(cell);
-                        } else {
-                            $scope.paydesks.removeUndefined(cell);
+                        if (!(game.cupBoard.map[cell]) && !($scope.walls.indexOf(cell) != -1) && !(game.enter == cell)){
+                        	if ($scope.paydesks.indexOf(cell) == -1) {
+                        		$scope.paydesks.add(cell);
+                        	} else {
+                        		$scope.paydesks.removeUndefined(cell);
+                        	}
+                        	game.draw();
                         }
-                        game.draw();
                         break;
                     case 'cupBoard':
                         game.paint.value = true;
@@ -295,10 +297,12 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         break;
                     case 'wall':
                         game.paint.value = !($scope.walls.indexOf(cell) != -1);
-                        if ($scope.walls.indexOf(cell) == -1) {
-                            $scope.walls.add(cell);
-                        } else {
-                            $scope.walls.removeUndefined(cell);
+                        if (!(game.cupBoard.map[cell]) && !($scope.paydesks.indexOf(cell) != -1) && !(game.enter == cell)){
+	                        if ($scope.walls.indexOf(cell) == -1) {
+	                            $scope.walls.add(cell);
+	                        } else {
+	                            $scope.walls.removeUndefined(cell);
+	                        }
                         }
                         break;
                     case 'edit':
@@ -479,9 +483,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         return array;
     }
 
-
     function checkCell(i) {
-        return $scope.paydesks.indexOf(i) == -1 && $scope.walls.indexOf(i) == -1 && game.enter != i && !game.cupBoard.map[i];
+        return $scope.paydesks.indexOf(i) == -1 
+        	&& $scope.walls.indexOf(i) == -1 
+        	&& game.enter != i && !game.cupBoard.map[i];
     }
 
     $scope.openCupBoard = function (cupBoard) {
@@ -504,9 +509,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 //console.log("cancel");
             });
     };
-
-
-
 
     function EditCupboardCtrl($scope, $mdDialog, item) {
 
