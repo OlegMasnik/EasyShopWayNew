@@ -92,10 +92,10 @@
 	margin: 0;
 }
 
-ul {
+#legend {
 	list-style: none;
 }
-ul li{
+#legend li{
 	display: inline-block;
 	padding: 2px 10px;
 }
