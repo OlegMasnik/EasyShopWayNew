@@ -379,10 +379,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
     }
 
-    $scope.radioOnClick = function (value) {
-        type = value;
-    }
-    
     $scope.radioOnClick = function (value, toastMsg) {
         type = value;
         showToast($mdToast, $scope, toastMsg);

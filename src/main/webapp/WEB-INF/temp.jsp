@@ -40,7 +40,7 @@
                                 </md-select>
                             </md-input-container>
                             <form ng-submit="$event.preventDefault()">
-                                <md-autocomplete ng-model="searchModel" ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item, ctrl.searchText)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder='{{ "WHAT_ARE_YOU_LOOKING" | translate}}'>
+                                <md-autocomplete id="auto" ng-model="searchModel" ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item, ctrl.searchText)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder='{{ "WHAT_ARE_YOU_LOOKING" | translate}}'>
                                     <md-item-template>
                                         <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
                                     </md-item-template>

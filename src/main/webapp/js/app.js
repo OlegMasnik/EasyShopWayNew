@@ -154,7 +154,8 @@ app.config(function($translateProvider) {
 		USER_HISTORY_EMPTY: "History is empty",
 			
 		
-		SELECTED_OPTION: 'Selected option: ',
+		SELECTED_OPTION: 'You selected option: ',
+		SELECT_MAP: 'Select a map: '
 		
 		CREATE_PRODUCT_LIST_NOW:'Create product list now',
 		OR:'Or',
