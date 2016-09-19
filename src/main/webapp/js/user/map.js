@@ -349,8 +349,6 @@ var lang;
 			                  }
 			                  
 			              }).error(function (data, status, header, config) {
-			              //console.log(data);
-			              //console.log('no products');
 			              self.isDisabled = true;
 			          });
 			    
@@ -719,7 +717,7 @@ var lang;
 		        this.cellSpace = this.cellSize + this.borderWidth;
 		        this.canvas.width = this.width * this.cellSpace + this.borderWidth;
 		        this.canvas.height = this.height * this.cellSpace + this.borderWidth;
-		        this.player = new Player(this);
+//		        this.player = new Player(this);
 		        this.way = new Map(this.width * this.height);
 		        this.cupBoard = new Map(this.width * this.height);
 		        this.targets = new Map(this.width * this.height);
@@ -736,9 +734,6 @@ var lang;
 		        }
 		        this.getCellColor = function (cell) {
 		            switch (cell) {
-		            case this.player.cell:
-		                return '#252';
-		                break;
 		            case this.enter:
 		                return '#252';
 		            }
@@ -846,45 +841,6 @@ var lang;
 							break;
 						default:
 							break;
-//						case 2:
-//							if(startered){
-//								startered = false;
-//								clear();
-//							}
-//							if (checkCell(cell) && !game.paint.active) {
-//		                        game.paint.active = true;
-//
-//		                        game.paint.value = !game.targets.map[cell];
-//		                        game.targets.map[cell] = game.paint.value;
-//		                        if (game.targets.map[cell]) {
-//		                        	game.arrayTarget.add([cell]);
-//		                        	console.log('add target')
-//		                        	console.log(game.arrayTarget)
-//		                        } else {
-//		                        	game.arrayTarget.removeOne(cell);
-//		                        	console.log('remove target')
-//		                        	console.log(game.arrayTarget)
-//		                        	//console.log(arrayTarget)
-//		                        	game.targets.map[cell] = false;
-		                        	
-// remEl.map(function(e, i){
-// game.targets.map[e] = false;
-// });
-// for (var i = 0; i < $scope.items.length; i++) {
-// if ($scope.items[i].coordinates.indexOf(remEl[0]) != 1) {
-// $scope.items.splice(i, 1);
-// return;
-// }
-// }
-//		                        }
-//		                        //console.log("Цілі ");
-//		                        //console.log(arrayTarget);
-//		                        targetsCopy = game.targets.map;
-//		                    } else {
-//		                        //console.log("хуйня якась")
-//		                    }
-//							game.draw();
-//							break;
 						}
 		            }
 		        };
@@ -904,208 +860,12 @@ var lang;
 		        this.draw();
 		    };
 
-		    var Player = function (game) {
-		        var player = this;
-		        this.target = this.cell;
-
-		        this.findStart = function () {
-		            for (var i = 0; i < $scope.paydesks.length; i++) {
-		                this.cell = $scope.paydesks[i];
-		                for (var j = 0; j < game.arrayTarget.length; j++) {
-		                	for(var k = 0; k < game.arrayTarget[j].length; k++){
-			                    this.target = game.arrayTarget[j][k];
-			                    var _target = this.target;
-			    		        if(!game.cupBoard.map[_target + 1])
-			    		        	this.target = _target + 1;
-			    		        else if(!game.cupBoard.map[_target - 1])
-			    		        	this.target = _target - 1;
-			    		        else if(!game.cupBoard.map[_target + game.width])
-			    		        	this.target = _target +  game.width;
-			    		        else if(!game.cupBoard.map[_target - game.width])
-			    		        	this.target = _target - game.width;
-			                    this.path = new Path(game, this.cell, this.target, this.followPath);
-			                    if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-			                        buffPath = this.path;
-			                        curTarget = this.cell;
-			                    }
-		                	}
-		                }
-		            }
-		            //console.log("Start " + curTarget);
-		            return curTarget;
-		        };
-
-		        this.followPath = function () {
-		            player.cell = player.path.cells.pop();
-		            if (player.path.cells.length > 0) {
-		                game.step(player.followPath);
-		            }
-		        }
-		        this.moveTo = function () {
-//		        	console.log(game.arrayTarget);
-//		            if (game.arrayTarget.length > 0) {
-//		            	var _target;
-//		            	var _targetToDelete;
-//		            	var _targetListToDelete;
-//		                for (var f = 0; f < game.arrayTarget.length; f++) {
-//		                	console.log(game.arrayTarget[f]);
-//		                	for(var z = 0; z < game.arrayTarget[f].length; z++){
-//			                    this.target = game.arrayTarget[f][z];
-//			                    _target = this.target;
-////			                    console.log(_target);
-//			                    game.notVisit.addInArray(_target);
-//			    		        if(!game.cupBoard.map[_target + 1])
-//			    		        	this.target = _target + 1;
-//			    		        else if(!game.cupBoard.map[_target - 1])
-//			    		        	this.target = _target - 1;
-//			    		        else if(!game.cupBoard.map[_target + game.width])
-//			    		        	this.target = _target +  game.width;
-//			    		        else if(!game.cupBoard.map[_target - game.width])
-//			    		        	this.target = _target - game.width;
-//			                    this.path = new Path(game, this.cell, this.target, this.followPath);
-//			                    	//console.log(this.path.found);
-//			                    	//console.log(this.path.fmin);
-//			                    	if ((typeof (buffPath) == "undefined") || (buffPath.fmin > this.path.fmin)) {
-//			                    		buffPath = this.path;
-//			                    		curTarget = this.target;
-//			                    		_targetToDelete = _target;
-//			                    		_targetListToDelete = game.arrayTarget[f];
-//			                    	}
-//		                		}
-//		                	game.notVisit.remove(_targetToDelete);
-//		                	_targetToDelete = undefined;
-//		                	//console.log("not visit");
-//		                	//console.log(game.notVisit);
-//		                }
-//		                buffPath.tracePath();
-//		                //console.log("toDelete");
-//		                //console.log(_targetListToDelete);
-//		                game.arrayTarget.removeUndefined(_targetListToDelete);
-//		                buffPath = undefined;
-//		                _targetToDelete = undefined;
-//                        _targetListToDelete = undefined;
-//		                this.cell = curTarget;
-//		                console.log("Targets: " + game.arrayTarget);
-//		                this.moveTo();
-//		            } else {
-//		                this.path = new Path(game, this.cell, game.enter, this.followPath);
-//		                this.path.tracePath();
-//		                //console.log("Finish");
-//		                this.cell = undefined;
-//		                curTarget = undefined;
-//		                this.target = undefined;
-//		            }
-//		            if (typeof (buffPath) != 'undefined') {
-//		                buffPath.tracePath();
-//		                game.arrayTarget.removeUndefined(curTarget);
-//		                buffPath = undefined;
-//		                this.cell = curTarget;
-//		                this.moveTo();
-//		            }
-		        }
-		    }
-
 		    var Map = function (length) {
 		        this.map = new Array(length);
 		        for (var cell = 0; cell < length; cell++) {
 		            this.map[cell] = false;
 		        }
 		    };
-
-		    var Path = function (game, start, target, callback) {
-		        var path = this;
-		        this.cells = [];
-		        this.pathCells = new Map($scope.config.width * $scope.config.height);
-		        this.found = false;
-		        this.closed = new Map($scope.config.width * $scope.config.height);
-		        this.open = new Map($scope.config.width * $scope.config.height);
-		        this.h = new Uint16Array($scope.config.width * $scope.config.height);
-		        this.g = new Uint16Array($scope.config.width * $scope.config.height);
-		        this.parents = new Uint16Array($scope.config.width * $scope.config.height);
-		        this.fmin = undefined;
-		        for (var i = 0; i < this.g.length; i++) {
-		            this.g[i]--;
-		        }
-		        var targetX = target % game.width,
-		            targetY = Math.floor(target / game.width),
-		            cell = 0;
-		        for (var y = 0; y < game.height; y++) {
-		            for (var x = 0; x < game.width; x++) {
-		                this.h[cell] = (Math.abs(x - targetX) + Math.abs(y - targetY)) * 10;
-		                cell++;
-		            }
-		        }
-		        var pos = start;
-
-		        this.g[pos] = 0;
-		        this.search = function () {
-		            path.closed.map[pos] = true;
-		            path.open.map[pos] = false;
-		            var adjacent = [pos - 1 - game.width, pos - game.width, pos + 1 - game.width,
-		                pos - 1, pos + 1,
-		                pos - 1 + game.width, pos + game.width, pos + 1 + game.width],
-		                blocked = [false, false, false, false, false, false, false, false],
-		                distance = [14, 10, 14, 10, 10, 14, 10, 14],
-		                row = Math.floor(pos / game.width);
-		            if (pos - game.width < 0) blocked[0] = blocked[1] = blocked[2] = true;
-		            if (pos + game.width > this.closed.map.length) blocked[5] = blocked[6] = blocked[7] = true;
-		            if (Math.floor((pos - 1) / game.width) < row) blocked[0] = blocked[3] = blocked[5] = true;
-		            if (Math.floor((pos + 1) / game.width) > row) blocked[2] = blocked[4] = blocked[7] = true;
-		            if (($scope.walls.indexOf(pos - 1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[0] = true;
-		            if (($scope.walls.indexOf(pos - 1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[5] = true;
-		            if (($scope.walls.indexOf(pos + 1) != -1) && ($scope.walls.indexOf(pos - game.width) != -1)) blocked[2] = true;
-		            if (($scope.walls.indexOf(pos + 1) != -1) && ($scope.walls.indexOf(pos + game.width) != -1)) blocked[7] = true;
-		            for (var i = 0; i < adjacent.length; i++) {
-		                if (path.closed.map[adjacent[i]] || ($scope.walls.indexOf(adjacent[i]) != -1) || game.cupBoard.map[adjacent[i]] || blocked[i]) continue;
-		                path.open.map[adjacent[i]] = true;
-		                var g = path.g[pos] + distance[i];
-		                if (g < path.g[adjacent[i]]) {
-		                    path.g[adjacent[i]] = g;
-		                    path.parents[adjacent[i]] = pos;
-		                }
-		            }
-		            this.fmin = 131071;
-		            for (var i = 0; i < path.g.length; i++) {
-		                var f = path.g[i] + path.h[i];
-		                if (path.open.map[i] && f < this.fmin) {
-		                    this.fmin = f;
-		                    pos = i;
-		                }
-		            }
-		            if (this.fmin < 131071) {
-		                if (pos === target) {
-		                    return this;
-		                } else {
-		                    path.search();
-		                }
-		            }  else {
-		            	//console.log('BAD WAY ******************************')
-		            }
-		        };
-		        this.tracePath = function () {
-		            path.cells.push(pos);
-		            path.pathCells.map[pos] = true;
-		            game.way.map[pos] = true;
-
-		            if (pos !== start) {
-		                pos = path.parents[pos];
-		                game.step(path.tracePath);
-		            } else {
-		                callback();
-		            };
-		        }
-		        this.search();
-		    }
-		    $scope.onClick = function () {
-		        clear();
-		        game.draw();
-		        game.player.cell = game.player.findStart();
-// if(typeof(game.player.cell) != "undefied"){
-		        //console.log("On click start " + game.player.cell);
-		        if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
-// }else
-		        	// console.log('BadWay')
-		    }
 
 		    $scope.openMap = function () {
 		            game = new Game(document.querySelector('#canvas'), $scope.config);
@@ -1447,13 +1207,6 @@ var lang;
 											}
 										}
 
-										//console.log($('#fName1').val());
-										//console.log($('#lName1').val());
-
-//										console.log($('#emailR').valid() + " "
-//												+ $('#fName1').valid() + " "
-//												+ $('#lName1').valid() + " "
-//												+ $('#passwordR').valid())
 										if ($('#emailR').valid()
 												&& $('#passwordR').valid()
 												&& $('#fName1').valid()
@@ -1473,12 +1226,12 @@ var lang;
 																if (data.emailErrMsg == undefined) {
 																	$scope.success = "Check your email";
 																}
-																// var esc = $
-																// .Event(
-																// "keydown", {
-																// keyCode: 27
-																// });
-																// $("body").trigger(esc);
+																 var esc = $
+																 .Event(
+																 "keydown", {
+																 keyCode: 27
+																 });
+																 $("body").trigger(esc);
 
 															})
 													.error(
