@@ -155,7 +155,7 @@ app.config(function($translateProvider) {
 		CHOOSE_FILE: "Choose file",	
 		NO_FILE: "No file chosen",
 		SELECTED_OPTION: 'Selected option: ',
-		THEME: "Theme",
+		THEME: "Interface",
 		DARK_THEME: "Dark theme",
 		CHOOSE_FILE: "Choose file",
 		NO_FILE: "No file chosen",
@@ -295,7 +295,7 @@ app.config(function($translateProvider) {
 		SELECTED_OPTION: 'Вибрана опція: ',
 		
 		
-		THEME: "Тема",
+		THEME: "Інтерфейс",
 		DARK_THEME: "Темна тема",
 		CHOOSE_FILE: "Вибрати файл",
 		NO_FILE: "Файл не вибрано",
