@@ -42,7 +42,7 @@ tr td:last-child {
 </style>
 <md-dialog id="cupboardEdit"> <md-toolbar>
 <div class="md-toolbar-tools">
-	<h2>{{item.name_en}}/{{item.name_uk}}</h2>
+	<h2>{{lang == 'en' ? item.name_en : item.name_uk}}</h2>
 	<span flex></span>
 	<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
 </div>
@@ -54,7 +54,7 @@ tr td:last-child {
 					<img width="100" height="100"
 						src="{{cupboardCells[row * item.values.length + $index].img}}"
 						title="{{cupboardCells[row * item.values.length + $index].name_en}}">
-					<p>{{cupboardCells[row * item.values.length + $index].name_en}}</p>
+					<p>{{lang == 'en' ? cupboardCells[row * item.values.length + $index].name_en : cupboardCells[row * item.values.length + $index].name_uk}}</p>
 				</div></td>
 		</tr>
 	</table>
