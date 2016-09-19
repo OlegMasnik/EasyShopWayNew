@@ -57,8 +57,8 @@ public class UserStatisticServlet extends HttpServlet {
 		try {
 			JSONObject pieChart = drawPieChart(user, startDate, endDate);
 			JSONObject columnChart = drawColumnChart(user, startDate, endDate);
-			System.out.println(pieChart);
-			System.out.println(columnChart);
+//			System.out.println(pieChart);
+//			System.out.println(columnChart);
 			JSONObject responseObject = new JSONObject();
 			responseObject.put("theme", user.getTheme());
 			responseObject.put("pie", pieChart);
