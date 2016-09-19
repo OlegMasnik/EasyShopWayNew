@@ -122,6 +122,12 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     var endCupBoard;
     var type;
     $scope.typeValue = undefined;
+    var imageCupboard = new Image();
+    var imagePaydesk = new Image();
+    var imageEnter = new Image();
+    imageCupboard.src = 'images/cupboard/central pat_ capboard.gif';
+    imagePaydesk.src =  'images/paydesk/payDesk_90x90.gif';
+    imageEnter.src =  'images/elements/enter.svg';
     
     
     $scope.incScale = function(){
@@ -176,14 +182,14 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
 
         this.getCellColor = function (cell) {
-            switch (cell) {
-            case this.enter:
-                return '#252';
-                break;
-            }
-            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
+//            switch (cell) {
+//            case this.enter:
+//                return '#252';
+//                break;
+//            }
+//            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
-            if (this.cupBoard.map[cell]) return '#038ef0';
+//            if (this.cupBoard.map[cell]) return '#038ef0';
             return '#eee';
         };
 
@@ -194,11 +200,30 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             var cell = 0;
             for (var y = 0; y < game.height; y++) {
                 for (var x = 0; x < game.width; x++) {
-                    game.ctx.fillStyle = game.getCellColor(cell);
-                    game.ctx.fillStyle = game.getCellColor(cell);
-                    game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-                        y * game.cellSpace + game.borderWidth,
-                        game.cellSize, game.cellSize);
+//                    game.ctx.fillStyle = game.getCellColor(cell);
+//                    game.ctx.fillStyle = game.getCellColor(cell);
+//                    game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+//                        y * game.cellSpace + game.borderWidth,
+//                        game.cellSize, game.cellSize);
+                	if(game.cupBoard.map[cell]){
+                    	game.ctx.drawImage(imageCupboard, x * game.cellSpace + game.borderWidth,
+	                            y * game.cellSpace + game.borderWidth,
+	                            game.cellSize, game.cellSize);	
+                    	}else if($scope.paydesks.indexOf(cell) != -1){
+                    		game.ctx.drawImage(imagePaydesk, x * game.cellSpace + game.borderWidth,
+		                            y * game.cellSpace + game.borderWidth,
+		                            game.cellSize, game.cellSize);	
+                    	}else if(cell == game.enter){
+                    		game.ctx.drawImage(imageEnter, x * game.cellSpace + game.borderWidth,
+                    				y * game.cellSpace + game.borderWidth,
+                    				game.cellSize, game.cellSize);	
+                        }else{
+                        	game.ctx.fillStyle = game.getCellColor(cell);
+                            game.ctx.fillStyle = game.getCellColor(cell);
+                            game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+                                y * game.cellSpace + game.borderWidth,
+                                game.cellSize, game.cellSize);
+                        }
                     cell++;
                 }
             }
@@ -661,6 +686,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 controller: CreateDialogController,
                 templateUrl: 'template/admin/create.cupBoard.tmpl.html',
                 parent: angular.element(document.body),
+                keyboard  : false,
                 resolve: {
                     values: function () {
                         return values;

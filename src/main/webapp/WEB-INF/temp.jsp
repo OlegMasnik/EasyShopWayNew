@@ -93,7 +93,7 @@
     					<ul id="legend">
     						<li><img height="20" alt="cupboard" src="images/cupboard/central pat_ capboard.gif"> - {{ 'CUP_BOARD' | translate }}</li>
     						<li><canvas width="20" height="20" style="background-color: #555"></canvas> - {{ 'WALL' | translate }}</li>
-    						<li><canvas width="20" height="20" style="background-color: #252"></canvas> - {{ 'ENTER' | translate }}</li>
+    						<li><img height="20" alt="cupboard" src="images/elements/enter.svg"> - {{ 'ENTER' | translate }}</li>
     						<li><img height="20" alt="cupboard" src="images/paydesk/payDesk_90x90.gif"> - {{ 'PAY_DESCK' | translate }}</li>
     						<li><img height="20" alt="cupboard" src="images/elements/target.png"> - {{ 'TARGET' | translate }}</li>
     						<li><img height="20" alt="cupboard" src="images/elements/target_off.png"> - {{ 'TARGET_NOT_VISITED' | translate }}</li>

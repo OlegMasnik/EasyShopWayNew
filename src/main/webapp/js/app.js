@@ -892,7 +892,7 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast','$window', '$i
 				request.send(formData);
 				setTimeout(function() {
 					$window.location.reload();
-				}, 3000)
+				}, 5000)
 
 			}
 			

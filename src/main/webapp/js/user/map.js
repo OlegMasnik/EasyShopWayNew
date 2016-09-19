@@ -693,7 +693,7 @@ var lang;
 		    imagePaydesk.src =  'images/paydesk/payDesk_90x90.gif';
 		    imageTarget.src =  'images/elements/target.png';
 		    imageTarget_off.src =  'images/elements/target_off.png';
-		    imageEnter.src =  'images/elements/enter.png';
+		    imageEnter.src =  'images/elements/enter.svg';
 
 		    var Game = function (canvas, conf) {
 		        game = this;
@@ -733,10 +733,10 @@ var lang;
 		            game.draw();
 		        }
 		        this.getCellColor = function (cell) {
-		            switch (cell) {
-		            case this.enter:
-		                return '#252';
-		            }
+//		            switch (cell) {
+//		            case this.enter:
+//		                return '#252';
+//		            }
 		            if (this.targets.map[cell]) return '#522';
 		            if (this.way.map[cell]) return waycolor;
 		            if ($scope.walls.indexOf(cell) != -1) return '#555';
@@ -758,6 +758,10 @@ var lang;
 		                        		game.ctx.drawImage(imagePaydesk, x * game.cellSpace + game.borderWidth,
 					                            y * game.cellSpace + game.borderWidth,
 					                            game.cellSize, game.cellSize);	
+		                        	}else if(cell == game.enter){
+		                        		game.ctx.drawImage(imageEnter, x * game.cellSpace + game.borderWidth,
+		                        				y * game.cellSpace + game.borderWidth,
+		                        				game.cellSize, game.cellSize);	
 			                        }else{
 				                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
 				                            y * game.cellSpace + game.borderWidth,
@@ -814,9 +818,9 @@ var lang;
 		            var x = Math.floor(xCord / this.cellSpace),
 		                y = Math.floor(yCord / this.cellSpace),
 		                cell = x + y * this.width;
-		            if (cell === this.player.cell || cell === this.player.target) {
-		                return false;
-		            }
+//		            if (cell === this.player.cell || cell === this.player.target) {
+//		                return false;
+//		            }
 		            return cell;
 		        };
 		        this.mouseDown = function (e) {
