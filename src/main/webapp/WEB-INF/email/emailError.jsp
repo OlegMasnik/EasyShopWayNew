@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="shortcut icon" href="favicon.ico">
 
-	<script src='js/app.js'></script>
+	
 <title>Error confirmation email</title>
 </head>
 
@@ -39,7 +39,7 @@
 	<script src='js/angular-route.min.js'></script>
 	<script src='js/angular-translate.js'></script>
 	<script src="js/jquery.validate.min.js"></script>
-
+	<script src='js/app.js'></script>
 
 
 </body>
