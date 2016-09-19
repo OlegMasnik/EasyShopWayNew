@@ -172,7 +172,9 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.'
+		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		
+		THEME: 'Theme'
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -878,11 +880,15 @@ function DialogController($scope, $mdDialog) {
 	};
 }
 
-app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
-		function($scope, $http, $mdToast, $route) {
+app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast','$window', '$interval',
+		function($scope, $http, $mdToast, $window, $interval) {
 			$scope.status = "Validation success";
 			
 			$scope.sendImgAj = function () {
+				function reload(){
+				}
+				$scope.visible = true;
+				
 				var formData = new FormData();
 				var fileInputElement = document.getElementById("file");
 				formData.append("userfile", fileInputElement.files[0]);
@@ -891,7 +897,64 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast', '$route',
 				var request = new XMLHttpRequest();
 				request.open("POST", "http://localhost:8080/EasyShopWayNew/cabinet/image-upload");
 				request.send(formData);
+				setTimeout(function() {
+					$window.location.reload();
+				}, 5000)
+
 			}
+			
+				    var self = this, j= 0, counter = 0;
+
+				    self.mode = 'query';
+				    self.activated = true;
+				    self.determinateValue = 30;
+				    self.determinateValue2 = 30;
+
+				    self.showList = [ ];
+
+				    /**
+				     * Turn off or on the 5 themed loaders
+				     */
+				    self.toggleActivation = function() {
+				        if ( !self.activated ) self.showList = [ ];
+				        if (  self.activated ) {
+				          j = counter = 0;
+				          self.determinateValue = 30;
+				          self.determinateValue2 = 30;
+				        }
+				    };
+
+			    $interval(function() {
+			      self.determinateValue += 1;
+			      self.determinateValue2 += 1.5;
+
+			      if (self.determinateValue > 100) self.determinateValue = 30;
+			      if (self.determinateValue2 > 100) self.determinateValue2 = 30;
+
+			        // Incrementally start animation the five (5) Indeterminate,
+			        // themed progress circular bars
+
+			        if ( (j < 2) && !self.showList[j] && self.activated ) {
+			          self.showList[j] = true;
+			        }
+			        if ( counter++ % 4 == 0 ) j++;
+
+			        // Show the indicator in the "Used within Containers" after 200ms delay
+			        if ( j == 2 ) self.contained = "indeterminate";
+
+			    }, 100, 0, true);
+
+			    $interval(function() {
+			      self.mode = (self.mode == 'query' ? 'determinate' : 'query');
+			    }, 7200, 0, true);
+			
+			function wait(ms) {
+		        var d = new Date();
+		        var d2 = null;
+		        do {
+		            d2 = new Date();
+		        } while (d2 - d < ms);
+		    }
 
 
 			$scope.sendImg = function() {

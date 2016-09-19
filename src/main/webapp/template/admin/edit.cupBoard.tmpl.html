@@ -19,6 +19,9 @@ tr td:last-child {
 	background: url('images/cupboard/p3.jpg') 100% 100% no-repeat;
 	background-size: 100% 100%;
 }
+md-select md-option{
+	color: black  !important;
+}
 </style>
 <md-dialog id="cupboardEdit">
 <form ng-cloak name="cupboardForm">
@@ -26,7 +29,7 @@ tr td:last-child {
 	<div class="md-toolbar-tools">
 		<h2>{{ 'EDIT_CUPBOARD' | translate }} {{item.id}}</h2>
 		<span flex></span>
-		<md-button class="md-icon-button" ng-click="cancel()">x</md-button>
+		<md-button class="md-icon-button" ng-click="cancel()">&#10006;</md-button>
 	</div>
 	</md-toolbar>
 
@@ -54,6 +57,7 @@ tr td:last-child {
 		<md-dialog-actions layout="row"> <span flex></span>
 		<div layout="row">
 			<md-button ng-click="clearCupboard()"> {{ 'CLEAR' | translate }}</md-button>
+<!-- 			<md-button ng-click="deleteCupboard(item)"> {{ 'DELETE' | translate }}</md-button> -->
 			<md-button ng-click="deleteCupboard(item)"> {{ 'DELETE' | translate }}</md-button>
 			<md-button ng-click="answer()" ng-disabled="cupboardForm.$invalid"> {{ 'SAVE' | translate }} </md-button>
 		</md-dialog-actions>

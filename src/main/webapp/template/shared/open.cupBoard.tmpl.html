@@ -44,13 +44,13 @@ tr td:last-child {
 <div class="md-toolbar-tools">
 	<h2>{{lang == 'en' ? item.name_en : item.name_uk}}</h2>
 	<span flex></span>
-	<md-button class="md-icon-button" ng-click="cancel()"> x </md-button>
+	<md-button class="md-icon-button" ng-click="cancel()"> &#10006 </md-button>
 </div>
 </md-toolbar> <md-dialog-content>
 <div class="md-dialog-content">
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr ng-repeat="row in item.board_count | range">
-			<td ng-repeat="cell in item.values"><div class="image">
+			<td ng-repeat="cell in item.values" style="background-color: 3px solid {{cupboardCells[row * item.values.length + $index].color}}"><div class="image">
 					<img width="100" height="100"
 						src="{{cupboardCells[row * item.values.length + $index].img}}"
 						title="{{cupboardCells[row * item.values.length + $index].name_en}}">

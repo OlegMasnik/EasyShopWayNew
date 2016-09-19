@@ -2,7 +2,7 @@
 var delCupboard;
 var mapId;
 
-angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope, $http, $mdDialog, $translate) {
+angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope, $rootScope, $http, $mdDialog, $translate) {
 
     
     function downloadCanvas(link, canvasId, filename) {
@@ -122,6 +122,12 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     var endCupBoard;
     var type;
     $scope.typeValue = undefined;
+    var imageCupboard = new Image();
+    var imagePaydesk = new Image();
+    var imageEnter = new Image();
+    imageCupboard.src = 'images/cupboard/central pat_ capboard.gif';
+    imagePaydesk.src =  'images/paydesk/payDesk_90x90.gif';
+    imageEnter.src =  'images/elements/enter.svg';
     
     
     $scope.incScale = function(){
@@ -176,14 +182,14 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }
 
         this.getCellColor = function (cell) {
-            switch (cell) {
-            case this.enter:
-                return '#252';
-                break;
-            }
-            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
+//            switch (cell) {
+//            case this.enter:
+//                return '#252';
+//                break;
+//            }
+//            if ($scope.paydesks.indexOf(cell) != -1) return '#ff870d';
             if ($scope.walls.indexOf(cell) != -1) return '#555';
-            if (this.cupBoard.map[cell]) return '#038ef0';
+//            if (this.cupBoard.map[cell]) return '#038ef0';
             return '#eee';
         };
 
@@ -194,25 +200,30 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             var cell = 0;
             for (var y = 0; y < game.height; y++) {
                 for (var x = 0; x < game.width; x++) {
-                    game.ctx.fillStyle = game.getCellColor(cell);
-//                    if (game.ctx.fillStyle == waycolor && targetsCopy != undefined && !targetsCopy[cell]) {
-//                        game.ctx.fillStyle = '#eee';
-//                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth, y * game.cellSpace + game.borderWidth,
-//                            game.cellSize, game.cellSize);
-//
-//                        game.ctx.beginPath();
-//                        game.ctx.arc(x * game.cellSpace + game.borderWidth + game.cellSize / 2,
-//                            y * game.cellSpace + game.borderWidth + game.cellSize / 2, game.cellSize / 4, 0, 2 * Math.PI);
-//                    } else {
-//                        game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-//                            y * game.cellSpace + game.borderWidth,
-//                            game.cellSize, game.cellSize);
-//                    }
-//                    cell++;
-                    game.ctx.fillStyle = game.getCellColor(cell);
-                    game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
-                        y * game.cellSpace + game.borderWidth,
-                        game.cellSize, game.cellSize);
+//                    game.ctx.fillStyle = game.getCellColor(cell);
+//                    game.ctx.fillStyle = game.getCellColor(cell);
+//                    game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+//                        y * game.cellSpace + game.borderWidth,
+//                        game.cellSize, game.cellSize);
+                	if(game.cupBoard.map[cell]){
+                    	game.ctx.drawImage(imageCupboard, x * game.cellSpace + game.borderWidth,
+	                            y * game.cellSpace + game.borderWidth,
+	                            game.cellSize, game.cellSize);	
+                    	}else if($scope.paydesks.indexOf(cell) != -1){
+                    		game.ctx.drawImage(imagePaydesk, x * game.cellSpace + game.borderWidth,
+		                            y * game.cellSpace + game.borderWidth,
+		                            game.cellSize, game.cellSize);	
+                    	}else if(cell == game.enter){
+                    		game.ctx.drawImage(imageEnter, x * game.cellSpace + game.borderWidth,
+                    				y * game.cellSpace + game.borderWidth,
+                    				game.cellSize, game.cellSize);	
+                        }else{
+                        	game.ctx.fillStyle = game.getCellColor(cell);
+                            game.ctx.fillStyle = game.getCellColor(cell);
+                            game.ctx.fillRect(x * game.cellSpace + game.borderWidth,
+                                y * game.cellSpace + game.borderWidth,
+                                game.cellSize, game.cellSize);
+                        }
                     cell++;
                 }
             }
@@ -249,6 +260,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                         	} else {
                         		$scope.paydesks.removeUndefined(cell);
                         	}
+                        	console.log($scope.paydesks);
                         	game.draw();
                         }
                         break;
@@ -338,6 +350,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                                     $scope.paydesks.add(cell);
                                 else
                                     $scope.paydesks.removeUndefined(cell);
+                            console.log($scope.paydesks);
                             break;
                         default:
                             break;
@@ -370,14 +383,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             this.map[cell] = false;
         }
     };
-
-    $scope.onClick = function () {
-        clear();
-        game.draw();
-        game.player.cell = game.player.findStart();
-        //console.log("On click start " + game.player.cell);
-        if (!($scope.walls.indexOf(tCell) != -1)) game.player.moveTo();
-    }
 
     $scope.radioOnClick = function (value, toastMsg) {
         type = value;
@@ -442,11 +447,13 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     }
 
     Array.prototype.removeUndefined = function (value) {
-        this[this.indexOf(value)] = undefined;
-        this.sort();
-        while (typeof (this[this.length - 1]) == "undefined") {
-            this.pop();
-        }
+    	if(this.indexOf(value) != -1){
+	        this[this.indexOf(value)] = undefined;
+	        this.sort();
+	        if (this[this.length - 1] == undefined) {
+	            this.pop();
+	        }
+    	}
     }
     Array.prototype.add = function (value) {
         if (this.indexOf(value) == -1) {
@@ -458,7 +465,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         var arr = range(s, e, d);
         for (var k = 1; k < arr.length - 1; k++) {
             var i = arr[k];
-            if ($scope.walls.indexOf(i) != -1 || $scope.paydesks.indexOf(i) != -1 || game.cupBoard.map[i] == true || game.enter == i) {
+            while ($scope.walls.indexOf(i) != -1 || $scope.paydesks.indexOf(i) != -1 || game.cupBoard.map[i] == true || game.enter == i) {
                 return false;
             }
         }
@@ -506,38 +513,37 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     function EditCupboardCtrl($scope, $mdDialog, item) {
 
     	$scope.lang = lang;
-    	
-    	
         $scope.item = item;
 
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
         }).then(function mySucces(response) {
+        	console.log("1 -start");
             $scope.currentProducts = response.data.data;
-            console.log(response)
-            console.log($scope.currentProducts)
             $scope.cupboardCells = new Array(item.board_count * item.values.length);
             if ($scope.currentProducts.length > 0) {
             	console.log('not empty');
-                for (var i = 0; i < $scope.currentProducts.length; i++) {
-                    for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
-                        $scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
-                    }
-                }
+            	for (var i = 0; i < $scope.currentProducts.length; i++) {
+            		for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
+            			$scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
+            		}
+            	}
             }
+            console.log("1 -fiish");
         }, function myError(response) {});
-
-
+        $scope.allProducts = undefined;
         $http({
             method: "GET",
             url: "/EasyShopWayNew/edit_products?type=getAllProducts"
         }).then(function mySucces(response) {
+        	console.log("2 - start");
             //console.log("all Prods")
             $scope.allProducts = response.data;
             //console.log(response);
+            console.log("2 -fiish");
         }, function myError(response) {
-
+        	
         });
 
         //console.log("cupBoarards");
@@ -622,11 +628,15 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         	$scope.cupboardCells = []
         }
         
+//        $scope.showCustomToast = function(item){
+//        	console.log($rootScope);
+////        	console.log($rootScope.$$childTail.deleteCupboardToast(item));
+//        };
     }
     
-//    $scope.showCustomToast = function(item) {  //******************
-//    	delCupboard = item;
-//    	console.log(delCupboard);
+//    $scope.deleteCupboardToast = function(item) {  //******************
+//    	$scope.delCupboard = item;
+//    	console.log($scope.delCupboard);
 //    	$mdToast.show({
 //    		hideDelay   : 6000,
 //    		position    : 'bottom right',
@@ -676,6 +686,7 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                 controller: CreateDialogController,
                 templateUrl: 'template/admin/create.cupBoard.tmpl.html',
                 parent: angular.element(document.body),
+                keyboard  : false,
                 resolve: {
                     values: function () {
                         return values;
