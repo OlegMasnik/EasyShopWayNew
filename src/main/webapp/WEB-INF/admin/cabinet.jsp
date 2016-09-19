@@ -36,8 +36,7 @@
 		<div class="cab-user-logo" layot="row" layout-padding>
 
 			<img src='${ user.image == "" ? "images/admin.png" : user.image}' alt="" class="profile-img">
-
-			<div>
+			<div >
 				<c:out value="${ user.firstName}"></c:out>
 				<c:out value="${ user.lastName}"></c:out>
 			</div>

@@ -302,10 +302,10 @@ app.config(function($translateProvider) {
 		CREATE_PRODUCT_LIST_NOW:'Створити список продуктів',
 		OR:'Або',
 		SEE_TUTORIAL:'Переглянути туторіал',
-		YOU_CAN_USE_UP:'Ви можете використовувати вгору ',
+		YOU_CAN_USE_UP:'Ви можете використовувати клавіші вгору ',
 		AND_DOWN:' і вниз ',
-		KEYS_FO_NAVIGATION:'клавіші для навігації',
-		STEP_1:'Крок 1. Оберіть магазин, якого мапу  бажаєте переглянути.',
+		KEYS_FO_NAVIGATION:' для навігації',
+		STEP_1:'Крок 1. Оберіть магазин, мапу якого бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
 		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
 		ZERO_USERS_SELECTED: "Виберіть користувачів"
@@ -458,7 +458,7 @@ function apsUploadFileLink(scope, element, attrs) {
   });
 }
 
-app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
+app.controller('AppCtrl', function ($http, $route, $window, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
 //	$scope.theme = 'default';
 	var config = {
@@ -537,12 +537,19 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
     $scope.en = 'en';
     $scope.uk = 'uk';
     
+    $scope.showUk = lang == $scope.uk;
+    
+    $scope.isUk = function () {
+    	return lang == $scope.uk;
+    }
+    
     $scope.changeLang = function(l){
     	$http.put('/EasyShopWayNew/home?lang=' + l)
         .success(function (data, status, headers) {
             $scope.language = l;
             lang = l;
-            console.log(lang + "   chage fsfd")
+            
+            console.log(lang + "   chage fsfd ")
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
             	$route.reload();

@@ -35,13 +35,13 @@
         <md-content id="main-content" style="background-image: url('images/index.jpg')" flex>
             <div id="div0" layout="column">
                 <div flex layout="column" layout-align="center center">
-                    <md-button style="background-color : rgba(233, 30, 99, 0.8); height: 45px; font-size: 30px; color : #fff;" ng-controller="PageRedirectCtrl as page" ng-click="page.goToPage('search')" aria-label="search">Create product list now</md-button>
-                    <div style="color: black;">or</div>
-                    <md-button class="md-accent" style="height: 45px; font-size: 25px;" id="down_1">See tutorial</md-button>
+                    <md-button style="background-color : rgba(233, 30, 99, 0.8); height: 45px; font-size: 30px; color : #fff;" ng-controller="PageRedirectCtrl as page" ng-click="page.goToPage('search')" aria-label="search">{{'CREATE_PRODUCT_LIST_NOW' | translate }}</md-button>
+                    <div style="color: black;">{{'OR' | translate }}</div>
+                    <md-button class="md-accent" style="height: 45px; font-size: 25px;" id="down_1">{{'SEE_TUTORIAL' | translate }}</md-button>
                 </div>
                 <div layout="row" class="support-container" layout-align="center center" layout-padding>
                     <div class="support" flex="none" style="color: black;">
-                        <div layout="row" layout-align="center center" layout-margin>You can use up <img class="support-img" alt="" src="images/keys/up-button.png"> and down <img class="support-img down-but" alt="" src="images/keys/up-button.png"> keys for navigations</div>
+                        <div layout="row" layout-align="center center" layout-margin>{{'YOU_CAN_USE_UP' | translate }}<img class="support-img" alt="" src="images/keys/up-button.png">{{'AND_DOWN' | translate }}<img class="support-img down-but" alt="" src="images/keys/up-button.png">{{'KEYS_FO_NAVIGATION' | translate }}</div>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,8 @@
 
                 <div layout="row" flex style="color: black;">
                     <div layout-padding style="font-size: 35px;"  flex layout="row" layout-align="center center">{{ 'STEP_1' | translate }}</div>
-                    <div flex layout="row" layout-align="center center">
+                    
+                    <div ng-show="isUk()" flex layout="row" layout-align="center center">
                         <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tootorial" src="images/tootorial/1.png"></div>
                     </div>
                 </div>
