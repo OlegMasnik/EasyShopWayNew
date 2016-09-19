@@ -1,4 +1,8 @@
-
+.errorTxt{
+	color: red;
+	text-align: center;
+	font-size: 12px;
+}
 /* font-family: "MuseoSansMedium"; */
 @font-face {
     font-family: "MuseoSansMedium";
