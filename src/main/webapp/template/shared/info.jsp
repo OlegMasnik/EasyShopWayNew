@@ -62,8 +62,8 @@
                         <div class="cab-category">{{ 'THEME' | translate }}</div>
                     </md-card-title-text>
                 </md-card-title>
-                <md-card-content>
-                   {{ 'DARK_THEME' | translate }}: <md-switch ng-model="themeSwitch" ng-change="onChange(themeSwitch)" label="Dark theme: " ng-true-value="'enabled'" ng-false-value="'disabled'" aria-label="Switch 1"> </md-switch>
+                <md-card-content layout="row">
+                   <div flex layout="row"><div layout="column" layout-align="center start" flex>{{ 'DARK_THEME' | translate }}: </div><md-switch ng-model="themeSwitch" ng-change="onChange(themeSwitch)" label="Dark theme: " ng-true-value="'enabled'" ng-false-value="'disabled'" aria-label="Switch 1"> </md-switch></div>
                 </md-card-content>
             </md-card>
 
