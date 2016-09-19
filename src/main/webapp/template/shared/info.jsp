@@ -131,12 +131,16 @@
                     	<c:if test="${not empty user.password }">
                         <md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px;  margin-top: 8px;">
                             <label>{{ 'OLD_PASSWORD' | translate }}</label>
-                            <input id="oldPass" required type="password" name="oldPass" ng-model="user.oldPass" minlength="6" maxlength="25" ng-model="oldPass"> </md-input-container>
+                            <input id="oldPass" required type="password" name="oldPass" ng-model="user.oldPass" minlength="6" maxlength="25" ng-model="oldPass"> 
+                            <div class="errorTxt"></div>
+                            </md-input-container>
                         </c:if>
                         <md-input-container class="md-block" flex-gt-sm="" style="margin-bottom: 0px; margin-top: 8px;">
                             <label>
                                 {{ 'NEW_PASSWORD' | translate }} </label>
-                            <input id="newPass" required type="password" name="newPass" ng-model="user.newPass" minlength="6" maxlength="25" ng-model="newPass"> </md-input-container>
+                            <input id="newPass" required type="password" name="newPass" ng-model="user.newPass" minlength="6" maxlength="25" ng-model="newPass"> 
+                            <div class="errorTxt"></div>
+                            </md-input-container>
                     </md-card-content>
                     <md-card-actions layout="row" layout-align="end center">
                         <md-button class="md-raised" ng-click="changePass()">{{ 'SAVE' | translate }}</md-button>

@@ -16,20 +16,24 @@
 <!-- THIS LONG PATTERN SHOULD BE IN ONE LINE!!!!! OTHERWISE IT MIGHT NOT WORK	-->
                         <input type="name" id="fName1" required name="firstName" ng-model="firstName" ng-maxlength="50"
                         ng-pattern="/^[\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u049\u0404\u04541a-zA-Z][a-zA-Z\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u0491\u0404\u04541\s-']+$/">
+                        <div class="errorTxt"></div>
                     </md-input-container>
                     <md-input-container class="md-block" style="margin-top: 0; margin-bottom: 0;">
                         <label>{{ 'LAST_NAME' | translate }}</label>
                         <input id="lName1" required name="lastName" ng-model="lastName" ng-maxlength="50"
                          ng-pattern="/^[\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u049\u0404\u04541a-zA-Z][a-zA-Z\u0410-\u042F\u0430-\u044F\u0406\u0456\u0407\u0457\u0490\u0491\u0404\u04541\s-']+$/">
+                    	<div class="errorTxt"></div>
                     </md-input-container>
                     <md-input-container class="md-block" style="margin-top: 0; margin-bottom: 0;">
                         <label>{{ 'EMAIL' | translate }}</label>
                         <input id="emailR" required type="email" name="email" ng-model="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+                    	<div class="errorTxt"></div>
                     </md-input-container>
 
                     <md-input-container class="md-block" style="margin-top: 0; margin-bottom: 0;">
                         <label>{{ 'PASSWORD' | translate }}</label>
                         <input id="passwordR" required type="password" name="password" ng-model="password" minlength="6" maxlength="25">
+                    	<div class="errorTxt"></div>
                     </md-input-container>
                         <md-button type="submit" flex class="md-raised md-primary" ng-click="sendRegData()">{{ 'SUBMIT' | translate }}</md-button>
 
