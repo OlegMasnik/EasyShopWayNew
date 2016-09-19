@@ -1218,7 +1218,8 @@ var lang;
 
 
 		    $scope.openCupBoard = function (cupBoard) {
-		        //console.log('before open');
+		       // console.log('before open');
+		       
 		        $mdDialog.show({
 		                controller: OpenCupboardCtrl,
 		                templateUrl: 'template/shared/open.cupBoard.tmpl.html',
@@ -1251,6 +1252,7 @@ var lang;
 
 		    function OpenCupboardCtrl($scope, $mdDialog, item) {
 		        $scope.item = item;
+		        $scope.lang = $rootScope.$$childHead.language;
 		        $http({
 		            method: "GET",
 		            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id

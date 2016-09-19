@@ -155,13 +155,14 @@ app.config(function($translateProvider) {
 		CHOOSE_FILE: "Choose file",	
 		NO_FILE: "No file chosen",
 		SELECTED_OPTION: 'Selected option: ',
-		THEME: "Theme",
+		THEME: "Interface",
 		DARK_THEME: "Dark theme",
 		CHOOSE_FILE: "Choose file",
 		NO_FILE: "No file chosen",
 		
 		SELECTED_OPTION: 'You selected option: ',
 		SELECT_MAP: 'Select a map: ',
+		ZERO_USERS_SELECTED: "You have selected 0 users. Select some users first.",
 		
 		CREATE_PRODUCT_LIST_NOW:'Create product list now',
 		OR:'Or',
@@ -296,7 +297,7 @@ app.config(function($translateProvider) {
 		SELECTED_OPTION: 'Вибрана опція: ',
 		
 		
-		THEME: "Тема",
+		THEME: "Інтерфейс",
 		DARK_THEME: "Темна тема",
 		CHOOSE_FILE: "Вибрати файл",
 		NO_FILE: "Файл не вибрано",
@@ -309,7 +310,7 @@ app.config(function($translateProvider) {
 		STEP_1:'Крок 1. Оберіть магазин, якого мапу  бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
 		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
-		THEME: 'Тема'
+		ZERO_USERS_SELECTED: "Виберіть користувачів"
 	});
 	$translateProvider.preferredLanguage(lang);
 });

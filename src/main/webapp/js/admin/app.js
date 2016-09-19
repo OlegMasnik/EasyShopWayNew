@@ -44,7 +44,7 @@ adminApp.controller('InfoCtrl', function ($scope, $http) {
 
 // ************************************************* UserCtrl // *************************************************//
 
-adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '$mdDialog', function ($http, $scope, $location, $mdToast, $mdDialog) {
+adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '$mdDialog', '$translate', function ($http, $scope, $location, $mdToast, $mdDialog, $translate) {
 
     var original = {};
 
@@ -224,7 +224,11 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
     	for (i = 0; i < emails.length; i++) {
     		console.log(emails[i]);
     	}
-    	$scope.showMailDialog1(emails);
+    	if (emails.length == 0) {
+    		showToast($mdToast, $scope, $translate.instant('ZERO_USERS_SELECTED'));
+    	} else {
+    		$scope.showMailDialog1(emails);
+    	}
     }
     
     $scope.showMailDialog1 = function(item) {
@@ -363,6 +367,24 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
 		}, function() {
 		});
     }
+    
+    $("#select_all").change(function(){  //"select all" change 
+        $(".checkbox").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
+    });
+
+
+    $('.checkbox').change(function(){ 
+        //uncheck "select all", if one of the listed checkbox item is unchecked
+    	console.log("inside uncheck 'select all'");
+        if(false == $(this).prop("checked")){ //if this item is unchecked
+            $("#select_all").prop('checked', false); //change "select all" checked status to false
+        }
+        
+        //check "select all" if all checkbox items are checked
+        if ($('.checkbox:checked').length == $('.checkbox').length ){
+            $("#select_all").prop('checked', true);
+        }
+    });
 }]);
 
 // ************************************************* ProdCtrl
