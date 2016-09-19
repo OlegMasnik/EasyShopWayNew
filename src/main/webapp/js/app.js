@@ -155,7 +155,7 @@ app.config(function($translateProvider) {
 			
 		
 		SELECTED_OPTION: 'You selected option: ',
-		SELECT_MAP: 'Select a map: '
+		SELECT_MAP: 'Select a map: ',
 		
 		CREATE_PRODUCT_LIST_NOW:'Create product list now',
 		OR:'Or',
@@ -165,7 +165,9 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.'
+		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		
+		THEME: 'Theme'
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -295,7 +297,8 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'клавіші для навігації',
 		STEP_1:'Крок 1. Оберіть магазин, якого мапу  бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
-		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.'
+		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
+		THEME: 'Тема'
 	});
 	$translateProvider.preferredLanguage(lang);
 });

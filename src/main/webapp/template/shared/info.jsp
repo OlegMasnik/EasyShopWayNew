@@ -59,7 +59,7 @@
                 <md-card-title>
 
                     <md-card-title-text>
-                        <div class="cab-category">Theme</div>
+                        <div class="cab-category">{{ 'THEME' | translate }}</div>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
