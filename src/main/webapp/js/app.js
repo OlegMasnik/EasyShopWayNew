@@ -172,7 +172,9 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.'
+		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		
+		THEME: 'Theme'
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
