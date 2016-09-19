@@ -117,7 +117,8 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
 		            }
 		        }
-		 
+		 $scope.noPieDiagram = false;
+		 $scope.noColumnDiagram = false;
 		 $http.post('/EasyShopWayNew/stat', data, config)
 		 		.success(function (data, status, headers, config) {
 		 			response = data;
@@ -151,7 +152,8 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 				});
 		 	}else{
 		 		$scope.noPieDiagram = true; 
-				$('#pieContainer').highcharts().destroy();
+		 		if ($('#pieContainer').highcharts() != undefined)
+		 			$('#pieContainer').highcharts().destroy();
 		 	}
 		 	
 		 	if (response.pie.series[0].data.length != 0){  
@@ -187,7 +189,8 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		    	    });
 		 		}else{
 			 		$scope.noColumnDiagram = true; 
-			 		$('#columnContainer').highcharts().destroy();
+			 		if ($('#columnContainer').highcharts() != undefined)
+			 			$('#columnContainer').highcharts().destroy();
 			 	}
 //		 	$route.reload();
 		       }).error(
