@@ -108,7 +108,8 @@
                                 <input id="textInput" ng-model="fileName" type="text" placeholder="{{ 'NO_FILE' | translate }}" ng-readonly="true">
                             </md-input-container>
                         </aps-upload-file>
-
+                        
+					  <md-progress-linear ng-show="visible" md-mode="indeterminate"></md-progress-linear>
 
                     </md-card-content>
                     <md-card-actions layout="row" layout-align="end center">
