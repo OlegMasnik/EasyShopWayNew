@@ -152,7 +152,13 @@ app.config(function($translateProvider) {
 		CONFIRM_DELETE: "CONFIRM DELETE:",
 		NO_DIAGRAM: "Empty",
 		USER_HISTORY_EMPTY: "History is empty",
-			
+		CHOOSE_FILE: "Choose file",	
+		NO_FILE: "No file chosen",
+		SELECTED_OPTION: 'Selected option: ',
+		THEME: "Theme",
+		DARK_THEME: "Dark theme",
+		CHOOSE_FILE: "Choose file",
+		NO_FILE: "No file chosen",
 		
 		SELECTED_OPTION: 'You selected option: ',
 		SELECT_MAP: 'Select a map: ',
@@ -288,6 +294,11 @@ app.config(function($translateProvider) {
 		
 		SELECTED_OPTION: 'Вибрана опція: ',
 		
+		
+		THEME: "Тема",
+		DARK_THEME: "Темна тема",
+		CHOOSE_FILE: "Вибрати файл",
+		NO_FILE: "Файл не вибрано",
 		CREATE_PRODUCT_LIST_NOW:'Створити список продуктів',
 		OR:'Або',
 		SEE_TUTORIAL:'Переглянути туторіал',
@@ -333,7 +344,7 @@ app.controller("ThemeCtrl", function($scope, $rootScope, $http) {
 				}
 			}
 		
-		if (cbState == 'enabled') {
+		if (cbState == 'enabled' || cbState == 'включено') {
 			$rootScope.theme = 'dark';
 		} else {
 			$rootScope.theme = 'default';
