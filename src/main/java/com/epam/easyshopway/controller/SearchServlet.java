@@ -41,19 +41,18 @@ public class SearchServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String uri = request.getRequestURI();
-		
+
 		if (uri.endsWith("search")) {
-			
+
 			request.getRequestDispatcher("/WEB-INF/temp.jsp").forward(request, response);
 		} else if (uri.endsWith("searchProducts")) {
-
 
 			Integer mapId = Integer.valueOf(request.getParameter("mapId"));
 
 			System.out.println(mapId);
 
 			List<ProductInformation> products = ProductInformationService.getAllProductByMapId(mapId);
-			for(int i = 0; i < products.size(); i++){
+			for (int i = 0; i < products.size(); i++) {
 				products.get(i).setCoordinates();
 			}
 			JSONObject object = new JSONObject();
@@ -89,47 +88,61 @@ public class SearchServlet extends HttpServlet {
 			throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObject;
-			List<Long> productIds = new ArrayList<Long>();
-			
-			Integer mapId = null;
-			try {
-				jsonObject = (JSONObject) jsonParser.parse(request.getParameter("data"));
-//				System.out.println(jsonObject);
-				productIds = (List<Long>) jsonObject.get("productIds");
-				mapId = ((Long) jsonObject.get("mapId")).intValue();
-				Integer width = ((Long) jsonObject.get("width")).intValue();
-				Integer height = ((Long) jsonObject.get("height")).intValue();
-				Integer enter = ((Long) jsonObject.get("enter")).intValue();
-				
-				List<Long> walls = (List<Long>)  jsonObject.get("walls");
-				List<Long> paydesks = (List<Long>)  jsonObject.get("paydesks");
-				List<Long> cupboards = (List<Long>)  jsonObject.get("cupboards");
-				List<List<Long>> products = (List<List<Long>>)  jsonObject.get("products");
-				NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products, cupboards);
-				n.start(enter);
-				JSONArray path = new JSONArray();
-				JSONArray visited = new JSONArray();
-				path.addAll(n.path);
-				visited.addAll(n.visited);
-				JSONObject obj = new JSONObject();
-				obj.put("path", path);
-				obj.put("visited", visited);
-				response.getWriter().write(obj.toJSONString());
-				
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			
-		if (user != null) {
-			ProductList productList = new ProductList(user.getId(), null, null, mapId);
+//		new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
 
-			System.out.println(productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
-			ProductListService.insertListAndProduct(productList, productIds);
-		} else {
-			System.out.println("No user");
-		}
+				JSONParser jsonParser = new JSONParser();
+				JSONObject jsonObject;
+				List<Long> productIds = new ArrayList<Long>();
+
+				Integer mapId = null;
+				try {
+
+					jsonObject = (JSONObject) jsonParser.parse(request.getParameter("data"));
+					// System.out.println(jsonObject);
+					productIds = (List<Long>) jsonObject.get("productIds");
+					mapId = ((Long) jsonObject.get("mapId")).intValue();
+					Integer width = ((Long) jsonObject.get("width")).intValue();
+					Integer height = ((Long) jsonObject.get("height")).intValue();
+					Integer enter = ((Long) jsonObject.get("enter")).intValue();
+
+					List<Long> walls = (List<Long>) jsonObject.get("walls");
+					List<Long> paydesks = (List<Long>) jsonObject.get("paydesks");
+					List<Long> cupboards = (List<Long>) jsonObject.get("cupboards");
+					List<List<Long>> products = (List<List<Long>>) jsonObject.get("products");
+					NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products,
+							cupboards);
+					n.start(enter);
+					JSONArray path = new JSONArray();
+					JSONArray visited = new JSONArray();
+					path.addAll(n.path);
+					visited.addAll(n.visited);
+					JSONObject obj = new JSONObject();
+					obj.put("path", path);
+					obj.put("visited", visited);
+					try {
+						response.getWriter().write(obj.toJSONString());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				if (user != null) {
+					ProductList productList = new ProductList(user.getId(), null, null, mapId);
+
+					System.out.println(
+							productList.getDate() + " " + productList.getTime() + " " + productList.getUserId());
+					ProductListService.insertListAndProduct(productList, productIds);
+				} else {
+					System.out.println("No user");
+				}
+//			}
+//		}).start();
 	}
 
 	private JSONArray setJsonArrayType(Collection<ProductInformation> list) {
@@ -137,7 +150,7 @@ public class SearchServlet extends HttpServlet {
 		JSONObject object;
 		for (ProductInformation p : list) {
 			if (p.getCoordinates().size() > 0) {
-				Set<Integer> setCoard = new HashSet<>(p.getCoordinates()); 
+				Set<Integer> setCoard = new HashSet<>(p.getCoordinates());
 				object = new JSONObject();
 				object.put("img", p.getImage());
 				object.put("name_uk", p.getProductNameUk());

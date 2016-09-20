@@ -172,9 +172,8 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		STEP_3:'STEP 3. Click "search" to build the recommended way.'
 		
-		THEME: 'Theme'
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -310,7 +309,8 @@ app.config(function($translateProvider) {
 		STEP_1:'Крок 1. Оберіть магазин, мапу якого бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
 		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
-		ZERO_USERS_SELECTED: "Виберіть користувачів"
+		ZERO_USERS_SELECTED: "Виберіть користувачів",
+		
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -550,8 +550,11 @@ app.controller('AppCtrl', function ($http, $route, $window, $scope, $rootScope, 
         .success(function (data, status, headers) {
             $scope.language = l;
             lang = l;
-            
-            console.log(lang + "   chage fsfd ")
+            console.log(lang + "   chage fsfd")
+//            console.log($rootScope.$$childTail.$$childTail.autocolumn);
+            if(!$rootScope.$$childTail.$$childTail.autocolumn|| !$rootScope.$$childTail.$$childTail.autocolumnType || !$rootScope.$$childTail.$$childTail.autocolumnProd){
+            	$route.reload();
+            }
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
             	$route.reload();
@@ -885,21 +888,22 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast','$window', '$i
 			$scope.status = "Validation success";
 			
 			$scope.sendImgAj = function () {
-				function reload(){
-				}
-				$scope.visible = true;
 				
 				var formData = new FormData();
 				var fileInputElement = document.getElementById("file");
 				formData.append("userfile", fileInputElement.files[0]);
 				
-				console.log(fileInputElement.files[0]);
-				var request = new XMLHttpRequest();
-				request.open("POST", "http://localhost:8080/EasyShopWayNew/cabinet/image-upload");
-				request.send(formData);
-				setTimeout(function() {
-					$window.location.reload();
-				}, 5000)
+				if(fileInputElement.value != ""){
+					$scope.visible = true;
+					
+					console.log(fileInputElement.files[0]);
+					var request = new XMLHttpRequest();
+					request.open("POST", "http://localhost:8080/EasyShopWayNew/cabinet/image-upload");
+					request.send(formData);
+					setTimeout(function() {
+						$window.location.reload();
+					}, 5000)
+				}
 
 			}
 			

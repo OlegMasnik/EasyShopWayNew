@@ -73,7 +73,6 @@
 	<script src="js/datatable/md-data-table.js"></script>
 	<script src='js/angular-translate.js'></script>
 	<script src="js/shared/highcharts.js"></script>
-
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
 	<script src='js/admin/map.js'></script>
