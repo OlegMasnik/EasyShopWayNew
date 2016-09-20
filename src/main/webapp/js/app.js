@@ -68,6 +68,9 @@ app.config(function($translateProvider) {
 		ERROR_CONFIRMATION_EMAIL:'Error confirmation email',
 		SUCCESS_CONF_EMAIL:'Successful confirmation email',
 		
+		ERROR_CONFIRMATION_PASS:'Failed to change password',
+		SUCCESS_CONF_PASS:'Password changed successfully',
+		
 		RESET_PASS:'Reset password',
 		NEW_PASS:'New password',
 		REPEAT_PASS: 'Repeat password',
@@ -214,6 +217,8 @@ app.config(function($translateProvider) {
 		
 		ERROR_CONFIRMATION_EMAIL:'Помилка підтвердження електронної пошти',
 		SUCCESS_CONF_EMAIL:'Успішне підтвердження через електронну пошту',
+		ERROR_CONFIRMATION_PASS:'Помилка зміни паролю',
+		SUCCESS_CONF_PASS:'Успішна зміна паролю',
 		
 		RESET_PASS:'Відновлення паролю',
 		NEW_PASS:'Новий пароль',

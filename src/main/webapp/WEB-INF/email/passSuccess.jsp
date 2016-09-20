@@ -25,7 +25,7 @@
 	
 	<div flex="30"></div>
 	
-	<h2 flex>Password changed successfully</h2>
+	<h2 flex>{{ 'SUCCESS_CONF_EMAIL' | translate }}</h2>
 	
 	</div>
 	
@@ -42,6 +42,7 @@
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
+	<script src='js/angular-translate.js'></script>
 
 	<script src='js/app.js'></script>
 	<script src="js/jquery.validate.min.js"></script>

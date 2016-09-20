@@ -24,7 +24,7 @@
 	
 	<div flex="30"></div>
 	
-	<h2 flex>Failed to change password</h2>
+	<h2 flex>{{ 'ERROR_CONFIRMATION_PASS' | translate }}</h2>
 	
 	</div>
 	
@@ -41,6 +41,7 @@
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
+	<script src='js/angular-translate.js'></script>
 
 	<script src='js/app.js'></script>
 	<script src="js/jquery.validate.min.js"></script>
