@@ -106,7 +106,8 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		
 		var startDate = moment($scope.startDate).format('YYYY-MM-DD');
 		var endDate = moment($scope.endDate).format('YYYY-MM-DD');
-		 var data = $.param({
+		
+		var data = $.param({
 	            startDate: startDate,
 	            endDate: endDate  
 	     });
@@ -121,7 +122,6 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		 		.success(function (data, status, headers, config) {
 		 			response = data;
 		 			theme = response.theme;
-		 			
 		 	if (response.pie.series[0].data.length != 0){   
 		 		$scope.noPieDiagram = false;
 		 		exportScript(response.lang);
@@ -151,6 +151,7 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 				});
 		 	}else{
 		 		$scope.noPieDiagram = true; 
+				$('#pieContainer').highcharts().destroy();
 		 	}
 		 	
 		 	if (response.pie.series[0].data.length != 0){  
@@ -186,8 +187,9 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		    	    });
 		 		}else{
 			 		$scope.noColumnDiagram = true; 
+			 		$('#columnContainer').highcharts().destroy();
 			 	}
-		        //$route.reload();
+//		 	$route.reload();
 		       }).error(
 	             function (data, status, header, config) {
 	                 console.log('fail');
