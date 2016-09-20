@@ -33,6 +33,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     $scope.newMap = {};
     
     $scope.cupboards = undefined;
+    
+    var allProds;
 
     $scope.config = {
         width: 0,
@@ -66,6 +68,16 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }, function myError(response) {
             //console.log(response.statusText);
         });
+        $http({
+    		method: "GET",
+    		url: "/EasyShopWayNew/edit_products?type=getAllProducts"
+    	}).then(function mySucces(response) {
+    		console.log("2 - start");
+    		allProds = response.data;
+    		
+    		
+    	}, function myError(response) {
+    	});
         //console.log("ROOT SCOPE");
     };
 
@@ -516,37 +528,28 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     	$scope.lang = lang;
         $scope.item = item;
+        
+        $scope.allProducts = allProds;
 
         $http({
-            method: "GET",
-            url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
+        	method: "GET",
+        	url: "/EasyShopWayNew/edit_products?type=getCupboardsProducts&cupboardId=" + item.id
         }).then(function mySucces(response) {
         	console.log("1 -start");
-            $scope.currentProducts = response.data.data;
-            $scope.cupboardCells = new Array(item.board_count * item.values.length);
-            if ($scope.currentProducts.length > 0) {
-            	console.log('not empty');
-            	for (var i = 0; i < $scope.currentProducts.length; i++) {
-            		for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
-            			$scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
-            		}
-            	}
-            }
-            console.log("1 -fiish");
+        	$scope.currentProducts = response.data.data;
+        	$scope.cupboardCells = new Array(item.board_count * item.values.length);
+        	if ($scope.currentProducts.length > 0) {
+        		console.log('not empty');
+        		for (var i = 0; i < $scope.currentProducts.length; i++) {
+        			for (var j = 0; j < $scope.currentProducts[i].place.length; j++) {
+        				$scope.cupboardCells[$scope.currentProducts[i].place[j]] = $scope.currentProducts[i];
+        			}
+        		}
+        	}
+        	console.log("1 -fiish");
         }, function myError(response) {});
-        $scope.allProducts = undefined;
-        $http({
-            method: "GET",
-            url: "/EasyShopWayNew/edit_products?type=getAllProducts"
-        }).then(function mySucces(response) {
-        	console.log("2 - start");
-            //console.log("all Prods")
-            $scope.allProducts = response.data;
-            //console.log(response);
-            console.log("2 -fiish");
-        }, function myError(response) {
-        	
-        });
+//        setTimeout(function() {
+//        }, 0)
 
         //console.log("cupBoarards");
 //        console.log($scope.cupboardCells);
