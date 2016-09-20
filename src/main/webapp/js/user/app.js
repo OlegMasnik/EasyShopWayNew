@@ -106,7 +106,8 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		
 		var startDate = moment($scope.startDate).format('YYYY-MM-DD');
 		var endDate = moment($scope.endDate).format('YYYY-MM-DD');
-		 var data = $.param({
+		
+		var data = $.param({
 	            startDate: startDate,
 	            endDate: endDate  
 	     });
@@ -116,12 +117,12 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
 		            }
 		        }
-		 
+		 $scope.noPieDiagram = false;
+		 $scope.noColumnDiagram = false;
 		 $http.post('/EasyShopWayNew/stat', data, config)
 		 		.success(function (data, status, headers, config) {
 		 			response = data;
 		 			theme = response.theme;
-		 			
 		 	if (response.pie.series[0].data.length != 0){   
 		 		$scope.noPieDiagram = false;
 		 		exportScript(response.lang);
@@ -151,6 +152,8 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 				});
 		 	}else{
 		 		$scope.noPieDiagram = true; 
+		 		if ($('#pieContainer').highcharts() != undefined)
+		 			$('#pieContainer').highcharts().destroy();
 		 	}
 		 	
 		 	if (response.pie.series[0].data.length != 0){  
@@ -186,8 +189,10 @@ userApp.controller('ChartCtrl', ['$scope', '$http', '$route', function($scope, $
 		    	    });
 		 		}else{
 			 		$scope.noColumnDiagram = true; 
+			 		if ($('#columnContainer').highcharts() != undefined)
+			 			$('#columnContainer').highcharts().destroy();
 			 	}
-		        //$route.reload();
+//		 	$route.reload();
 		       }).error(
 	             function (data, status, header, config) {
 	                 console.log('fail');
