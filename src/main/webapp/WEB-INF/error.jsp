@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         
         <title>404 - Page not found</title>
-         <link rel="stylesheet" href="css/preloader/preloader.css">
+         <link rel="stylesheet" href="/EasyShopWayNew/css/preloader/preloader.css">
         <link rel="stylesheet" href="/EasyShopWayNew/css/style.css">
         <link rel="stylesheet" href="/EasyShopWayNew/css/angular-material.min.css">
 		<link rel="shortcut icon" href="favicon.ico">
@@ -43,7 +43,7 @@
 
     </head>
 
-    <body ng-app="MyApp" layout="column">
+    <body ng-app="MyApp" layout="column" md-theme="{{ theme }}">
     <div id="loader-wrapper">
 		<div id="loader"></div>
 	</div>
@@ -65,7 +65,7 @@
 	<script src='/EasyShopWayNew/js/angular-translate.js'></script>
 	<script src='/EasyShopWayNew/js/app.js'></script>
 	<script src="/EasyShopWayNew/js/jquery.validate.min.js"></script>
-<script src="js/preloader/preloader.js"></script>
+<script src="/EasyShopWayNew/js/preloader/preloader.js"></script>
     </body>
 
     </html>
