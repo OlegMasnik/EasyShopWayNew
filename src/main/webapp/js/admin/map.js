@@ -249,8 +249,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     game.paint.active = true;
                     switch (type) {
                     case 'enter':
-                        game.enter = cell;
-                        game.draw();
+                    	if (!(game.cupBoard.map[cell]) && !($scope.walls.indexOf(cell) != -1) && !($scope.paydesks.indexOf(cell) != -1)){
+	                        game.enter = cell;
+	                        game.draw();
+                    	}
                         break;
                     case 'payDesk':
                         game.paint.value = !($scope.paydesks.indexOf(cell) != -1);

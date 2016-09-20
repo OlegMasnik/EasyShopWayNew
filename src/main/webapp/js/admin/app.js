@@ -64,14 +64,14 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
     $scope.smart = true;
 
     $scope.autocolumn = [{
-        name: "fn",
-        display: "First Name"
+    	name: "fn",
+        display: lang == 'en' ? "First Name" : "Ім'я"
 							}, {
         name: "ln",
-        display: "Last Name"
+        display: lang == 'en' ? "Last Name" : 'Прізвище'
 							}, {
         name: "e",
-        display: "Email"
+        display: lang == 'en' ? "Email" : 'Пошта'
 							}];
     $scope.multisearch = Array();
     $scope.multisearch[0] = {
@@ -368,6 +368,40 @@ adminApp.controller('UsersCtrl1', ['$http', '$scope', '$location', '$mdToast', '
 		});
     }
     
+//    $scope.items = [1,2,3,4,5];
+//    $scope.selected = [1];
+//    $scope.toggle = function (item, list) {
+//      var idx = list.indexOf(item);
+//      if (idx > -1) {
+//        list.splice(idx, 1);
+//      }
+//      else {
+//        list.push(item);
+//      }
+//    };
+//
+//    $scope.exists = function (item, list) {
+//      return list.indexOf(item) > -1;
+//    };
+//
+//    $scope.isIndeterminate = function() {
+//      return ($scope.selected.length !== 0 &&
+//          $scope.selected.length !== $scope.items.length);
+//    };
+//
+//    $scope.isChecked = function() {
+//      return $scope.selected.length === $scope.items.length;
+//    };
+//
+//    $scope.toggleAll = function() {
+//      if ($scope.selected.length === $scope.items.length) {
+//        $scope.selected = [];
+//      } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
+//        $scope.selected = $scope.items.slice(0);
+//      }
+//    };
+    
+    
     $("#select_all").change(function(){  //"select all" change 
         $(".checkbox").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
     });
@@ -507,19 +541,19 @@ adminApp.controller('ProdCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
     $scope.autocolumnProd = [
         {
             name: "tnen",
-            display: "Product Type EN"
+            display: lang == 'en' ? "Product Type" : "Тип продуку"
         },
         {
             name: "tnuk",
-            display: "Product Type UK"
+            display:  lang == 'en' ? "Product Type" : "Тип продуку"
         },
         {
             name: "nen",
-            display: "Name EN"
+            display: lang == 'en' ? "Name" : "Назва"
 		},
         {
             name: "nuk",
-            display: "Name UK"
+            display: lang == 'en' ? "Name" : "Назва"
 		}];
     $scope.multisearchProd = Array();
     $scope.multisearchProd[0] = {
@@ -810,11 +844,11 @@ adminApp.controller('TypeCtrl', ['$http', '$scope', '$location', '$mdDialog', '$
 	$scope.autocolumnType = [
 	                         {
 	                        	 name: "nen",
-	                        	 display: "Name EN"
+	                        	 display: lang == 'en' ? "Eglish name" : "Англійська назва"
 	                         },
 	                         {
 	                        	 name: "nuk",
-	                        	 display: "Name UK"
+	                        	 display: lang == 'en' ? "Ukraine name" : "Українська назва"
 	                         }];
 	$scope.multisearchType = Array();
 	$scope.multisearchType[0] = {

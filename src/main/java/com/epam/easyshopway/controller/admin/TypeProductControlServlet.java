@@ -114,6 +114,7 @@ public class TypeProductControlServlet extends HttpServlet {
 			if (!"".equals(type)) {
 				fName = "images/prod/" + new Random().nextInt(Integer.MAX_VALUE) + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);
+				System.out.println(absoluteDiskPath);
 				File uploadedFile = new File(absoluteDiskPath);
 				try (InputStream input = fileItem.getInputStream()) {
 				    // It's an image (only BMP, GIF, JPG and PNG are recognized).
