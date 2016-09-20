@@ -6,10 +6,11 @@
 	</div>
 	</md-toolbar>
 	<!--Toolbar-->
-	<md-card> 
-	<md-card-content flex="" layout-padding="">
-	<md-whiteframe layout="row" ng-repeat="single in multisearchProd">
-	<md-input-container> <label>{{ 'COLUMN' | translate }}</label> <md-select
+	<md-card  md-theme='default'> 
+	<md-card-content layout="row" ng-repeat="single in multisearchProd">
+	<md-input-container> 
+	<label>{{ 'COLUMN' | translate }}</label> 
+	<md-select
 		ng-model="single.column" ng-change="updateDataTableProd()">
 	<md-optgroup label="Column"> <md-option
 		ng-value="column.name" ng-repeat="column in autocolumnProd">{{column.display}}</md-option>
@@ -18,7 +19,7 @@
 	</md-input-container> </md-whiteframe> </md-card-content> </md-card>
 	
 	
-	<md-card> <md-card-content layout="column" flex> 
+	<md-card  md-theme='default'> <md-card-content layout="column" flex> 
 	<md-button
 		class="md-fab md-mini md-raised"
 		ng-click="showPromptProd(datatableType.types)"> + </md-button> 

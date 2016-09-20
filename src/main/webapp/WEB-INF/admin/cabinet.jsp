@@ -36,7 +36,8 @@
 		<div class="cab-user-logo" layot="row" layout-padding>
 
 			<img src='${ user.image == "" ? "images/admin.png" : user.image}' alt="" class="profile-img">
-			<div >
+
+			<div ng-style="theme === 'dark' ? { 'color':'white' } : { 'color': 'black' }">
 				<c:out value="${ user.firstName}"></c:out>
 				<c:out value="${ user.lastName}"></c:out>
 			</div>
@@ -70,7 +71,6 @@
 	<script src="js/datatable/md-data-table.js"></script>
 	<script src='js/angular-translate.js'></script>
 	<script src="js/shared/highcharts.js"></script>
-
 	<script src='js/app.js'></script>
 	<script src='js/admin/app.js'></script>
 	<script src='js/admin/map.js'></script>

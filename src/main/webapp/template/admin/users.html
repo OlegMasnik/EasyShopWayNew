@@ -7,7 +7,7 @@
 	</div>
 	</md-toolbar>
 	<!--Toolbar-->
-	<md-card> <md-content flex="" layout-padding="">
+	<md-card  md-theme='default'> <md-content flex="" layout-padding="">
 	<md-whiteframe layout="row"> 
 	<md-switch
 		ng-model="smart" aria-label="Smart Search"> {{ 'SMART_SEARCH' | translate }} </md-switch>
@@ -23,7 +23,7 @@
 		<md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
 		</md-optgroup> 
 		</md-select> 
-		</md-input-container> 
+		</md-input-container> 	
 	
 	<md-input-container class="md-block" flex=""> 
 	<label>{{ 'SEARCH' | translate }}</label>
@@ -38,30 +38,33 @@
 		</md-content> 
 	</md-card>
 	<!--AMADTS Table-->
-	<md-card> <md-content layout="column" flex> <md-table-container>
+	<md-card md-theme='default'> <md-content layout="column" flex> <md-table-container>
 	<form name="MailForm">
 	<table md-table>
 		<thead md-head md-order="query.order">
 			<tr md-row>
 <!-- 				<th><md-button ng-click="selectAll()">Select all</md-button></th> -->
-				<th><input input type="checkbox" id="select_all"> Select all</md-button></th>
+				<th><label><input input type="checkbox" id="select_all"> Select all</label></md-button></th>
 				<th md-column ng-repeat="column in autocolumn"
 					md-order-by="{{column.name}}"><span>{{column.display}}</span>
 				</th>
+<!-- 				<th md-order-by="{{datatable.users.fn}}"><span>{{'FIRST_NAME' | translate }}</span></th> -->
+<!-- 				<th md-order-by="{{datatable.users.ln}}"><span>{{'LAST_NAME' | translate }}</span></th> -->
+<!-- 				<th md-order-by="{{datatable.users.e}}"><span>{{'EMAIL' | translate }}</span></th> -->
 				<th>{{ 'OPTION' | translate }}</th>
 			</tr>
 		</thead>
 		<tbody md-body ng-controller="MailCtrl as mail">
 			<tr md-row
 				ng-repeat="row in datatable.users | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
-				<td md-cell><input class="checkbox" type = "checkbox" name = "emails" value = "{{row.e}} {{row.fn}} {{row.ln}}"></td>
+				<td md-cell><input class="checkbox" type = "checkbox"name ="emails" value = "{{row.e}} {{row.fn}} {{row.ln}}"></td>
 				<td md-cell>{{row.fn}}</td>
 				<td md-cell>{{row.ln}}</td>
 				<td md-cell>{{row.e}}</td>
 				<td>
 <!-- 					<md-button ng-click="mail.showMailDialog(row)" class="md-fab md-mini md-primary" -->
 <!-- 						aria-label="Modal1111"><i class="material-icons">mail</i> -->
-<!-- 					</md-button> -->
+<!-- 					</md-button> -->	
 					<md-button ng-show="{{!row.active}}" ng-model="row.e" ng-click="active(row, $index)" class="md-fab md-mini red-btn"
 						><i class="material-icons">not_interested</i>
 					</md-button>
