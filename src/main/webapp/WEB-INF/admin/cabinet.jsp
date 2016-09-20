@@ -33,7 +33,7 @@
 	<md-slidenav class="cabinet-sidenav" layout="column" md-is-locked-open="true"
 		layout="column" md-whiteframe="4"> <md-content  md-whiteframe="4"
 		layout="column" flex> <a href="#/">
-		<div class="cab-user-logo" layot="row" layout-padding>
+		<div class="cab-user-logo" layot="row">
 			<div class="profile-img-container-new">
 									<img src='${ user.image == "" ? "images/admin.png" : user.image}' alt="" class="new-profile-img">
 								</div>
