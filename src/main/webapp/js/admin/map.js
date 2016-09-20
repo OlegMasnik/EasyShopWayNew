@@ -33,6 +33,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     $scope.newMap = {};
     
     $scope.cupboards = undefined;
+    
+    var allProds;
 
     $scope.config = {
         width: 0,
@@ -66,6 +68,16 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         }, function myError(response) {
             //console.log(response.statusText);
         });
+        $http({
+    		method: "GET",
+    		url: "/EasyShopWayNew/edit_products?type=getAllProducts"
+    	}).then(function mySucces(response) {
+    		console.log("2 - start");
+    		allProds = response.data;
+    		
+    		
+    	}, function myError(response) {
+    	});
         //console.log("ROOT SCOPE");
     };
 
@@ -516,6 +528,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 
     	$scope.lang = lang;
         $scope.item = item;
+        
+        $scope.allProducts = allProds;
 
         $http({
         	method: "GET",
@@ -534,18 +548,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
         	}
         	console.log("1 -fiish");
         }, function myError(response) {});
-        setTimeout(function() {
-        	$http({
-        		method: "GET",
-        		url: "/EasyShopWayNew/edit_products?type=getAllProducts"
-        	}).then(function mySucces(response) {
-        		console.log("2 - start");
-        		$scope.allProducts = response.data;
-        		console.log("2 -fiish");
-        	}, function myError(response) {
-        		
-        	});
-        }, 0)
+//        setTimeout(function() {
+//        }, 0)
 
         //console.log("cupBoarards");
 //        console.log($scope.cupboardCells);
