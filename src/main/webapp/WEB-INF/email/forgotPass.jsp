@@ -5,6 +5,7 @@
 <html>
 
 <head>
+ <link rel="stylesheet" href="css/preloader/preloader.css">
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
 <link rel="stylesheet" href="css/style.css">
@@ -14,6 +15,9 @@
 </head>
 
 <body ng-app="MyApp">
+<div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
 	<jsp:include page="/WEB-INF/parts/header.jsp"></jsp:include>
 
 	<div layout="row">
@@ -166,7 +170,7 @@
 		}
 	</script>
 
-
+<script src="js/preloader/preloader.js"></script>
 
 </body>
 <script type='text/ng-template' id='info.html'>

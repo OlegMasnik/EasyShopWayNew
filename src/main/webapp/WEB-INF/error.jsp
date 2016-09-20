@@ -5,7 +5,9 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        
         <title>404 - Page not found</title>
+         <link rel="stylesheet" href="css/preloader/preloader.css">
         <link rel="stylesheet" href="/EasyShopWayNew/css/style.css">
         <link rel="stylesheet" href="/EasyShopWayNew/css/angular-material.min.css">
 		<link rel="shortcut icon" href="favicon.ico">
@@ -42,6 +44,9 @@
     </head>
 
     <body ng-app="MyApp" layout="column">
+    <div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
         <jsp:include page="parts/header.jsp"></jsp:include>
 
 <!--                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YZDPCiEKZOI?controls=0&autoplay=1&loop=1&playlist=YZDPCiEKZOI&showinfo=0" frameborder="0" allowfullscreen></iframe> -->
@@ -60,7 +65,7 @@
 	<script src='/EasyShopWayNew/js/angular-translate.js'></script>
 	<script src='/EasyShopWayNew/js/app.js'></script>
 	<script src="/EasyShopWayNew/js/jquery.validate.min.js"></script>
-
+<script src="js/preloader/preloader.js"></script>
     </body>
 
     </html>

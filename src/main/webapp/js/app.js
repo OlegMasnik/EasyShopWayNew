@@ -172,7 +172,7 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		STEP_3:'STEP 3. Click "Show" to build the recommended way.',
 		
 		SEND_TO: 'Send to: ',
 		TITLE: 'Title',
@@ -314,7 +314,7 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:' для навігації',
 		STEP_1:'Крок 1. Оберіть магазин, мапу якого бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
-		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
+		STEP_3:'Крок 3. Натисніть кнопку "Показати" для побудови рекомендованого шляху.',
 		ZERO_USERS_SELECTED: "Виберіть користувачів",
 		SEND_TO: 'Оримувач: ',
 		TITLE: 'Заголовок',
