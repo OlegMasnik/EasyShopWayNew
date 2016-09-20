@@ -2,17 +2,16 @@
 <md-toolbar>
 <div class="dialog-title">
 	<div>
-		<md-input-container> <span class="dlg-title">Send
-			to: </span> <span>{{message.username}}</span> </md-input-container>
+		<md-input-container> <span class="dlg-title">{{'SEND_TO' | translate}}</span> <span>{{message.username}}</span> </md-input-container>
 	</div>
 </div>
 <span flex></span> </md-toolbar> <md-dialog-content layout="column"
 	style="max-width:600px;max-height:810px; min-height:300px; ">
 <md-content layout-padding layout="column" flex> <md-input-container
-	style="margin: 0;"> <label>Title</label> <input
+	style="margin: 0;"> <label>{{'TITLE' | translate}}</label> <input
 	type="text" ng-model="message.title" flex /> </md-input-container> <md-input-container
-	style="margin: 0;" layout="column" flex> <label>Message</label>
+	style="margin: 0;" layout="column" flex> <label>{{'MESSAGE' | translate}}</label>
 <textarea type="text" ng-model="message.text" flex /> </md-input-container> </md-content> </md-dialog-content> <md-dialog-actions
 	layout="row"> <span flex></span> <md-button
-	ng-click="answer(message)"> Send </md-button> <md-button
-	ng-click="cancel()" style="margin-right:20px;"> Cancel </md-button> </md-dialog-actions> </md-dialog>
+	ng-click="answer(message)"> {{'SEND' | translate}} </md-button> <md-button
+	ng-click="cancel()" style="margin-right:20px;"> {{'CANCEL' | translate}} </md-button> </md-dialog-actions> </md-dialog>

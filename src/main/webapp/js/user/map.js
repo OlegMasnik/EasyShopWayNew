@@ -129,7 +129,11 @@ var lang;
 				No: 'No',
 				PREUSER: "Check your email",
 			
-				NO_PRODUCTS: "There are no products here"
+				NO_PRODUCTS: "There are no products here",
+
+				BAD_WAY: "Failed to build route :(",
+				BAD_WAY_NOT_PRODUCT: "Please select a product from the list!",
+				PRODUCTS_LIMIT: "Your list has reached the maximum size"
 			}).translations('uk', {
 				PROFILE:'Профіль',
 				GENERAL_INFORMATION:'Загальна інформація',
@@ -229,7 +233,7 @@ var lang;
 				CLEAR:'Очистити',
 				CHOOSE_IMAGE:'Обрати зображення',
 				
-				TARGET:'Вибранй товар',
+				TARGET:'Вибраний товар',
 				TARGET_NOT_VISITED:'Не вибраний товар',
 				PATH:'Шлях',
 				
@@ -247,7 +251,12 @@ var lang;
 				No: 'Ні',
 				PREUSER: "Перевірте електронну скриньку",
 				
-				NO_PRODUCTS: "Нажаль тут немає продуктів"
+				NO_PRODUCTS: "Нажаль тут немає продуктів",
+
+				BAD_WAY: "Не вдалось побудувати маршрут :(",
+				BAD_WAY_NOT_PRODUCT: "Будь ласка, виберіть товар з списку!",
+				
+				PRODUCTS_LIMIT: "Ваш список товарів досяг максимального розміру."
 			});
 			$translateProvider.preferredLanguage(lang);
 		});
@@ -446,8 +455,11 @@ var lang;
                     	game.visit = response.visited;
                     	game.draw();
                     }else {
-                    	console.log("Bad way :(");
-                    	showToast($mdToast, $scope, "Bad way :(");
+                    	if(products.length > 0)
+                    		showToast($mdToast, $scope, $translate.instant('BAD_WAY'));
+                    	else
+                    		showToast($mdToast, $scope, $translate.instant('BAD_WAY_NOT_PRODUCT'));
+                    		
                     }
                     console.log("Save to db");
                 })
@@ -472,7 +484,7 @@ var lang;
 						deferred.resolve(results);
 					}, Math.random() * 1000, false);
 					return deferred.promise;
-				} else {
+				} else {	
 					return results;
 				}
 			}
@@ -484,37 +496,41 @@ var lang;
 			function selectedItemChange(item, text) {
 				console.log('items');
 				console.log($scope.items);
-			    self.searchText = "";
-			    var e = jQuery.Event("keyup"); // or keypress/keydown
-			    e.keyCode = 27; // for Esc
-			    $(document).trigger(e);
-				if (item != undefined) {
-					if (find(item) == -1) {
-						item.color = getRandomColor();
-						$scope.items.push(item);
-					}
-//					self.searchText = "";
-					$scope.items.map(function(elem, idex){
-//						console.log(elem);
-						elem.coordinates.map(function(e, i){
-							game.targets.map[e] = true;
-							game.targetColors[e] = elem.color;
-							//console.log("Цілі " + arrayTarget);
-							targetsCopy = game.targets.map;
+				if($scope.items.length < 133){
+				    self.searchText = "";
+				    var e = jQuery.Event("keyup"); // or keypress/keydown
+				    e.keyCode = 27; // for Esc
+				    $(document).trigger(e);
+					if (item != undefined) {
+						if (find(item) == -1) {
+							item.color = getRandomColor();
+							$scope.items.push(item);
+						}
+	//					self.searchText = "";
+						$scope.items.map(function(elem, idex){
+	//						console.log(elem);
+							elem.coordinates.map(function(e, i){
+								game.targets.map[e] = true;
+								game.targetColors[e] = elem.color;
+								//console.log("Цілі " + arrayTarget);
+								targetsCopy = game.targets.map;
+							});
+							game.arrayTarget.add(elem.coordinates);
 						});
-						game.arrayTarget.add(elem.coordinates);
-					});
-//					if(item.coordinates.length > 0){
-//						item.coordinates.map(function(e, i){
-//							game.targets.map[e] = true;
-//							game.targetColors[e] = item.color;
-//			                //console.log("Цілі " + arrayTarget);
-//			                targetsCopy = game.targets.map;
-//						});
-						//console.log(arrayTarget);
-//					}
-					update();
-					game.draw();
+	//					if(item.coordinates.length > 0){
+	//						item.coordinates.map(function(e, i){
+	//							game.targets.map[e] = true;
+	//							game.targetColors[e] = item.color;
+	//			                //console.log("Цілі " + arrayTarget);
+	//			                targetsCopy = game.targets.map;
+	//						});
+							//console.log(arrayTarget);
+	//					}
+						update();
+						game.draw();
+					}
+				}else{
+					showToast($mdToast, $scope, $translate.instant('PRODUCTS_LIMIT'));
 				}
 			}
 			

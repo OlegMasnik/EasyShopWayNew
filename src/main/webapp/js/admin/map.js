@@ -249,8 +249,10 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     game.paint.active = true;
                     switch (type) {
                     case 'enter':
-                        game.enter = cell;
-                        game.draw();
+                    	if (!(game.cupBoard.map[cell]) && !($scope.walls.indexOf(cell) != -1) && !($scope.paydesks.indexOf(cell) != -1)){
+	                        game.enter = cell;
+	                        game.draw();
+                    	}
                         break;
                     case 'payDesk':
                         game.paint.value = !($scope.paydesks.indexOf(cell) != -1);
@@ -826,7 +828,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
     }
 
     $scope.saveMap = function () {
-        if (typeof ($scope.map) == 'undefined') {
+    	console.log('save');
+    	if (typeof ($scope.map) == 'undefined') {
             //console.log('map undefined')
             showToast('Please, firstl select map');
         } else {
@@ -852,6 +855,8 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                 }
             }
+            
+            console.log(sendData);
 
             $http.post('/EasyShopWayNew/edit_map', sendData, config)
                 .success(function (data, status, headers) {

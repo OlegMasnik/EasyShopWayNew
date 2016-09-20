@@ -1,4 +1,5 @@
 var cH;
+var h;
 
 //function goToElement(cur, taget) {
 //	console.log("Header " + $("#header").height());
@@ -23,14 +24,16 @@ $(document).ready(function() {
 	        case 38: // up
 	        	console.log("up");
 	        	$('html, #main-content').animate({
-	    			scrollTop : $('#main-content').height() * (current - 1)
+//	    			scrollTop : $('#main-content').height() * (current - 1)
+	        		scrollTop : cH * (current - 1)
 	    		}, 1000);
 	        break;
 
 	        case 40: // down
 	        	console.log("down");
 	        	$('html, #main-content').animate({
-	    			scrollTop : $('#main-content').height() * (current + 1)
+//	    			scrollTop : $('#main-content').height() * (current + 1)
+	        		scrollTop : cH * (current + 1)
 	    		}, 1000);
 	        break;
 

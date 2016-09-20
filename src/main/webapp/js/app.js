@@ -172,9 +172,14 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		STEP_3:'STEP 3. Click "Show" to build the recommended way.',
 		
-		THEME: 'Theme'
+		SEND_TO: 'Send to: ',
+		TITLE: 'Title',
+		MESSAGE: 'Message',
+		SEND: 'Send',
+		SELECT_ALL: 'Select all'
+		
 		
 	}).translations('uk', {
 		PROFILE:'Профіль',
@@ -304,13 +309,19 @@ app.config(function($translateProvider) {
 		CREATE_PRODUCT_LIST_NOW:'Створити список продуктів',
 		OR:'Або',
 		SEE_TUTORIAL:'Переглянути туторіал',
-		YOU_CAN_USE_UP:'Ви можете використовувати вгору ',
+		YOU_CAN_USE_UP:'Ви можете використовувати клавіші вгору ',
 		AND_DOWN:' і вниз ',
-		KEYS_FO_NAVIGATION:'клавіші для навігації',
-		STEP_1:'Крок 1. Оберіть магазин, якого мапу  бажаєте переглянути.',
+		KEYS_FO_NAVIGATION:' для навігації',
+		STEP_1:'Крок 1. Оберіть магазин, мапу якого бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
-		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
-		ZERO_USERS_SELECTED: "Виберіть користувачів"
+		STEP_3:'Крок 3. Натисніть кнопку "Показати" для побудови рекомендованого шляху.',
+		ZERO_USERS_SELECTED: "Виберіть користувачів",
+		SEND_TO: 'Оримувач: ',
+		TITLE: 'Заголовок',
+		MESSAGE: 'Текст повідомлення',
+		SEND: 'Відправити',
+		SELECT_ALL: 'Вибрати всіх'
+		
 	});
 	$translateProvider.preferredLanguage(lang);
 });
@@ -460,7 +471,7 @@ function apsUploadFileLink(scope, element, attrs) {
   });
 }
 
-app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
+app.controller('AppCtrl', function ($http, $route, $window, $scope, $rootScope, $mdDialog, $mdMedia, $translate, $mdTheming) {
 	
 //	$scope.theme = 'default';
 	var config = {
@@ -539,12 +550,22 @@ app.controller('AppCtrl', function ($http, $route, $scope, $rootScope, $mdDialog
     $scope.en = 'en';
     $scope.uk = 'uk';
     
+    $scope.showUk = lang == $scope.uk;
+    
+    $scope.isUk = function () {
+    	return lang == $scope.uk;
+    }
+    
     $scope.changeLang = function(l){
     	$http.put('/EasyShopWayNew/home?lang=' + l)
         .success(function (data, status, headers) {
             $scope.language = l;
             lang = l;
             console.log(lang + "   chage fsfd")
+//            console.log($rootScope.$$childTail.$$childTail.autocolumn);
+            if(!$rootScope.$$childTail.$$childTail.autocolumn|| !$rootScope.$$childTail.$$childTail.autocolumnType || !$rootScope.$$childTail.$$childTail.autocolumnProd){
+            	$route.reload();
+            }
             $translate.use(lang);
             if ((window.location.href).indexOf("statistic") !== -1){
             	$route.reload();
@@ -878,21 +899,22 @@ app.controller('UploadImageCtrl', [ '$scope', '$http', '$mdToast','$window', '$i
 			$scope.status = "Validation success";
 			
 			$scope.sendImgAj = function () {
-				function reload(){
-				}
-				$scope.visible = true;
 				
 				var formData = new FormData();
 				var fileInputElement = document.getElementById("file");
 				formData.append("userfile", fileInputElement.files[0]);
 				
-				console.log(fileInputElement.files[0]);
-				var request = new XMLHttpRequest();
-				request.open("POST", "http://localhost:8080/EasyShopWayNew/cabinet/image-upload");
-				request.send(formData);
-				setTimeout(function() {
-					$window.location.reload();
-				}, 5000)
+				if(fileInputElement.value != ""){
+					$scope.visible = true;
+					
+					console.log(fileInputElement.files[0]);
+					var request = new XMLHttpRequest();
+					request.open("POST", "http://localhost:8080/EasyShopWayNew/cabinet/image-upload");
+					request.send(formData);
+					setTimeout(function() {
+						$window.location.reload();
+					}, 5000)
+				}
 
 			}
 			

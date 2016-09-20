@@ -31,8 +31,11 @@
                     </c:when>
                     <c:otherwise>
                         <md-menu md-position-mode="target-right target">
-                        	<div class="profile-img-container">
-                            <img ng-click="$mdOpenMenu($event)" ng-src='${ user.image == "" ? "images/admin.png" : user.image}' class="head-profile-img" alt="Contact">
+<!--                         	<div class="profile-img-container"> -->
+<%--                             <img ng-click="$mdOpenMenu($event)" ng-src='${ user.image == "" ? "images/admin.png" : user.image}' class="head-profile-img" alt="Contact"> --%>
+<!--                             </div> -->
+
+							<div class="profile-img-container" ng-click="$mdOpenMenu($event)" style="background-image: url(${ user.image == '' ? 'images/admin.png' : user.image});">
                             </div>
                             <md-menu-content width="3">
                                 <md-menu-item>

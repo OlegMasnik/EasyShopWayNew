@@ -18,8 +18,8 @@ table {
 p {
 	color: white;
    position: absolute;
-   top: 82px;
-   left: 20px;
+   top: 92px;
+   left: 0;
    width: 100%;
    margin: 0 auto;
 }
@@ -50,7 +50,7 @@ tr td:last-child {
 <div class="md-dialog-content">
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr ng-repeat="row in item.board_count | range">
-			<td ng-repeat="cell in item.values" style="background-color: 3px solid {{cupboardCells[row * item.values.length + $index].color}}"><div class="image">
+			<td  width="130" height="130" ng-repeat="cell in item.values" style="background-color: 3px solid {{cupboardCells[row * item.values.length + $index].color}}"><div class="image">
 					<img width="100" height="100"
 						src="{{cupboardCells[row * item.values.length + $index].img}}"
 						title="{{cupboardCells[row * item.values.length + $index].name_en}}">

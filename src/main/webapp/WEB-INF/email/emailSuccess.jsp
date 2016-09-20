@@ -5,6 +5,7 @@
 <html>
 
 <head>
+ <link rel="stylesheet" href="css/preloader/preloader.css">
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.v1.1.css">
 <link rel="stylesheet" href="css/style.css">
@@ -13,6 +14,9 @@
 </head>
 
 <body ng-app="MyApp" ng-controller="AppCtrl">
+<div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
 	<jsp:include page="/WEB-INF/parts/header.jsp"></jsp:include>
 	
 	
@@ -41,7 +45,7 @@
 	<script src='js/app.js'></script>
 	<script src="js/jquery.validate.min.js"></script>
 
-
+<script src="js/preloader/preloader.js"></script>
 
 </body>
 <script type='text/ng-template' id='info.html'>
