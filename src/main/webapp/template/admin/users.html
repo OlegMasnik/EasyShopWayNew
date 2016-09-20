@@ -43,8 +43,7 @@
 	<table md-table>
 		<thead md-head md-order="query.order">
 			<tr md-row>
-<!-- 				<th><md-button ng-click="selectAll()">Select all</md-button></th> -->
-				<th><label><input input type="checkbox" id="select_all"> Select all</label></md-button></th>
+				<th><label><input input hidden="true" type="checkbox" id="select_all"> {{ 'SELECT_ALL' | translate }}</label></md-button></th>
 				<th md-column ng-repeat="column in autocolumn"
 					md-order-by="{{column.name}}"><span>{{column.display}}</span>
 				</th>
