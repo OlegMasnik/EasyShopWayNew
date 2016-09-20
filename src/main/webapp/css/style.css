@@ -253,14 +253,28 @@ footer {
 .head-profile-img {
     display: inline;
     margin: 0 auto;
-    height: 100%;
-    width: auto;
+    width: 100%;
+/*     height: auto; */
 }
 
 .profile-img-container {
-	height: 50px;
-	width: 50px;
-	overflow: hidden;
-	border-radius: 50%;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+/* 	height: 50px; */
+/* 	width: 50px; */
+/* 	overflow: hidden; */
+/* 	border-radius: 50%; */
+/* 	box-shadow: 0 0 10px rgba(0,0,0,0.5); */
+
+display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
+
+.profile-img-container:focus, .radio-el:focus {
+    outline: none !important;
+    border: 0 !important;
+ }

@@ -51,7 +51,7 @@
                 <div layout="row" flex style="color: black;">
                     <div layout-padding style="font-size: 35px;"  flex layout="row" layout-align="center center">{{ 'STEP_1' | translate }}</div>
                     
-                    <div ng-show="isUk()" flex layout="row" layout-align="center center">
+                    <div flex layout="row" layout-align="center center">
                         <div md-whiteframe="4" style="background-color: white;"><img style="width: 100%;" alt="tootorial" src="images/tootorial/1.png"></div>
                     </div>
                 </div>

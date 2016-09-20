@@ -33,14 +33,16 @@
 	<md-slidenav class="cabinet-sidenav" layout="column" md-is-locked-open="true"
 		layout="column" md-whiteframe="4"> <md-content  md-whiteframe="4"
 		layout="column" flex> <a href="#/">
-		<div class="cab-user-logo" layot="row" layout-padding>
-
-			<img src='${ user.image == "" ? "images/admin.png" : user.image}' alt="" class="profile-img">
-
-			<div ng-style="theme === 'dark' ? { 'color':'white' } : { 'color': 'black' }">
-				<c:out value="${ user.firstName}"></c:out>
-				<c:out value="${ user.lastName}"></c:out>
-			</div>
+		<div class="cab-user-logo" layot="row">
+			<div class="profile-img-container-new">
+									<img src='${ user.image == "" ? "images/admin.png" : user.image}' alt="" class="new-profile-img">
+								</div>
+			
+<%-- 			<img src='${ user.image == "" ? "images/admin.png" : user.image}' alt="" class="profile-img"> --%>
+<!-- 			<div > -->
+<%-- 				<c:out value="${ user.firstName}"></c:out> --%>
+<%-- 				<c:out value="${ user.lastName}"></c:out> --%>
+<!-- 			</div> -->
 		</div>
 	</a> <md-button href="#edit_map">{{ 'ADMIN_CABINET_MAP' | translate }}</md-button> 
 	<md-button href="#products">{{ 'ADMIN_CABINET_PRODUCTS' | translate }}</md-button> 

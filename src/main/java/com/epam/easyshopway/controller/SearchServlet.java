@@ -106,20 +106,24 @@ public class SearchServlet extends HttpServlet {
 					mapId = ((Long) jsonObject.get("mapId")).intValue();
 					Integer width = ((Long) jsonObject.get("width")).intValue();
 					Integer height = ((Long) jsonObject.get("height")).intValue();
-					Integer enter = ((Long) jsonObject.get("enter")).intValue();
+					Long enter = ((Long) jsonObject.get("enter"));
 
 					List<Long> walls = (List<Long>) jsonObject.get("walls");
 					List<Long> paydesks = (List<Long>) jsonObject.get("paydesks");
 					List<Long> cupboards = (List<Long>) jsonObject.get("cupboards");
 					List<List<Long>> products = (List<List<Long>>) jsonObject.get("products");
-					NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products,
-							cupboards);
-					n.start(enter);
+					
 					JSONArray path = new JSONArray();
 					JSONArray visited = new JSONArray();
-					path.addAll(n.path);
-					visited.addAll(n.visited);
 					JSONObject obj = new JSONObject();
+					
+					if(enter != null && paydesks != null && paydesks.size() > 0){
+						NearestNeighborhood n = new NearestNeighborhood(width, height, walls, paydesks, products,
+								cupboards);
+						n.start(enter.intValue());
+						path.addAll(n.path);
+						visited.addAll(n.visited);
+					}
 					obj.put("path", path);
 					obj.put("visited", visited);
 					try {
