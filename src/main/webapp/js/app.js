@@ -172,7 +172,13 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.'
+		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		
+		SEND_TO: 'Send to: ',
+		TITLE: 'Title',
+		MESSAGE: 'Message',
+		SEND: 'Send',
+		SELECT_ALL: 'Select all'
 		
 		
 	}).translations('uk', {
@@ -310,6 +316,11 @@ app.config(function($translateProvider) {
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
 		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
 		ZERO_USERS_SELECTED: "Виберіть користувачів",
+		SEND_TO: 'Оримувач: ',
+		TITLE: 'Заголовок',
+		MESSAGE: 'Текст повідомлення',
+		SEND: 'Відправити',
+		SELECT_ALL: 'Вибрати всіх'
 		
 	});
 	$translateProvider.preferredLanguage(lang);
