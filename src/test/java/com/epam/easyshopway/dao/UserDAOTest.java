@@ -77,7 +77,7 @@ public class UserDAOTest {
 		assertTrue("Checking if user with such email exists", userDAO.hasEmail(firstUser.getEmail()));
 		//deleting user
 		userDAO.delete(userDAO.getByEmail(firstUser.getEmail()).getId());
-		assertFalse("Checking if user exists after deleting", userDAO.hasEmail(firstUser.getEmail()));
+		assertNull("Checking if user exists after deleting", userDAO.getByEmail(firstUser.getEmail()));
 	}
 
 }
