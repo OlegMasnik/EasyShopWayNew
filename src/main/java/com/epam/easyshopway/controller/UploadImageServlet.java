@@ -50,12 +50,12 @@ public class UploadImageServlet extends HttpServlet {
 			FileItem item = (FileItem) iter.next();
 
 			if (!item.isFormField()) {
-				File deleteFile = null;
-				try {
-					deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
-				} catch (NullPointerException e) {
-					System.out.println("no image");
-				}
+//				File deleteFile = null;
+//				try {
+				File deleteFile = new File(getServletContext().getRealPath("/" + user.getImage()));
+//				} catch (NullPointerException e) {
+//					System.out.println("no image");
+//				}
 				String type = "" + item.getName().substring(item.getName().lastIndexOf('.') + 1);
 				String fName = "images/user/" + user.getId() + "." + type;
 				String absoluteDiskPath = getServletContext().getRealPath("/" + fName);

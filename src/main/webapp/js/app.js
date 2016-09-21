@@ -692,7 +692,6 @@ app
 														console.log('fail');
 													});
 								} else {
-									console.log("oq");
 									$scope.error = "Please fill all required fields.";
 								}
 							};
