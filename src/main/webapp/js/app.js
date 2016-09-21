@@ -68,6 +68,9 @@ app.config(function($translateProvider) {
 		ERROR_CONFIRMATION_EMAIL:'Error confirmation email',
 		SUCCESS_CONF_EMAIL:'Successful confirmation email',
 		
+		ERROR_CONFIRMATION_PASS:'Failed to change password',
+		SUCCESS_CONF_PASS:'Password changed successfully',
+		
 		RESET_PASS:'Reset password',
 		NEW_PASS:'New password',
 		REPEAT_PASS: 'Repeat password',
@@ -172,7 +175,7 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:'keys for navigations',
 		STEP_1:'STEP 1. Select shop which map you want to view.',
 		STEP_2:'STEP 2. Select goods from the list of proposed products.',
-		STEP_3:'STEP 3. Click "search" to build the recommended way.',
+		STEP_3:'STEP 3. Click "Show" to build the recommended way.',
 		
 		SEND_TO: 'Send to: ',
 		TITLE: 'Title',
@@ -214,6 +217,8 @@ app.config(function($translateProvider) {
 		
 		ERROR_CONFIRMATION_EMAIL:'Помилка підтвердження електронної пошти',
 		SUCCESS_CONF_EMAIL:'Успішне підтвердження через електронну пошту',
+		ERROR_CONFIRMATION_PASS:'Помилка зміни паролю',
+		SUCCESS_CONF_PASS:'Успішна зміна паролю',
 		
 		RESET_PASS:'Відновлення паролю',
 		NEW_PASS:'Новий пароль',
@@ -314,7 +319,7 @@ app.config(function($translateProvider) {
 		KEYS_FO_NAVIGATION:' для навігації',
 		STEP_1:'Крок 1. Оберіть магазин, мапу якого бажаєте переглянути.',
 		STEP_2:'Крок 2. Оберіть товари з переліку запропонованих товарів.',
-		STEP_3:'Крок 3. Натисніть кнопку "шукати" для побудови рекомендованого шляху.',
+		STEP_3:'Крок 3. Натисніть кнопку "Показати" для побудови рекомендованого шляху.',
 		ZERO_USERS_SELECTED: "Виберіть користувачів",
 		SEND_TO: 'Оримувач: ',
 		TITLE: 'Заголовок',
@@ -687,7 +692,6 @@ app
 														console.log('fail');
 													});
 								} else {
-									console.log("oq");
 									$scope.error = "Please fill all required fields.";
 								}
 							};

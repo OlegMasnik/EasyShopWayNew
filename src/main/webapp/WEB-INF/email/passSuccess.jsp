@@ -5,6 +5,7 @@
 <html>
 
 <head>
+ <link rel="stylesheet" href="css/preloader/preloader.css">
 <link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/angular-material.min.css">
 <link rel="stylesheet" href="css/style.css">
@@ -14,6 +15,9 @@
 </head>
 
 <body ng-app="MyApp">
+<div id="loader-wrapper">
+		<div id="loader"></div>
+	</div>
 	<jsp:include page="/WEB-INF/parts/header.jsp"></jsp:include>
 	
 	
@@ -21,7 +25,7 @@
 	
 	<div flex="30"></div>
 	
-	<h2 flex>Password changed successfully</h2>
+	<h2 flex>{{ 'SUCCESS_CONF_EMAIL' | translate }}</h2>
 	
 	</div>
 	
@@ -38,11 +42,12 @@
 	<script src='js/angular-animate.js'></script>
 	<script src='js/angular-material.min.js'></script>
 	<script src='js/angular-route.min.js'></script>
+	<script src='js/angular-translate.js'></script>
 
 	<script src='js/app.js'></script>
 	<script src="js/jquery.validate.min.js"></script>
 
-
+<script src="js/preloader/preloader.js"></script>
 
 </body>
 <script type='text/ng-template' id='info.html'>

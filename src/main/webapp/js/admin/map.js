@@ -432,7 +432,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
             }
             game = new Game(document.querySelector('canvas'), $scope.config);
             game.draw();
-            console.log(game);
         }
     }
 
@@ -570,7 +569,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
 	                    
 	            })
         	}
-            console.log($scope.cupboardCells);
             $scope.sendCupboardData();
             $mdDialog.hide();
         };
@@ -756,7 +754,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     .success(function (data, status, headers) {
                         console.log('update cupboard');
                         $scope.cupboards = data;
-                        console.log($scope.cupboards);
                         initCupBoard($scope.cupboards);
                         game.draw();
                     })
@@ -858,8 +855,6 @@ angular.module('MyApp').controller('MapCtrl', function ($mdToast, $route, $scope
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                 }
             }
-            
-            console.log(sendData);
 
             $http.post('/EasyShopWayNew/edit_map', sendData, config)
                 .success(function (data, status, headers) {
